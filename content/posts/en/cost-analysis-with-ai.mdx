@@ -1,0 +1,95 @@
+---
+title: "Cost Overrun +30% — How AI Found the Root Cause in Our Google Sheet"
+description: "Using AI to analyze sales data vs recipe specs in Google Sheets, we discovered a 30%+ cost variance in raw materials and pinpointed exactly where the waste was happening."
+date: 2026-03-02
+category: "AI for Restaurant"
+tags: ["cost-analysis", "restaurant", "google-sheets", "data-analysis", "variance"]
+---
+
+## That Feeling When Costs Are Higher Than They Should Be
+
+Most restaurant owners know their costs are "too high" but can't pinpoint **why** — where the waste is, how much, and what to fix.
+
+I was the same, until I let AI analyze the actual data.
+
+## How AI Helped Analyze
+
+### Step 1: Gather the Data
+
+You probably already have this in Google Sheets:
+- **Recipe specs** — what ingredients each dish uses and how much
+- **Sales data** — how many of each dish sold (from POS/GrabFood/delivery apps)
+- **Actual usage** — how much raw material was actually used (from inventory)
+
+### Step 2: Calculate "Should-Use" vs "Actual-Use"
+
+This is the core of the analysis:
+
+```
+Should-use = Sales × Recipe
+  e.g., 100 beef stew bowls × 0.15 kg/bowl = should use 15 kg beef
+
+Actual-use = Actual withdrawals from inventory
+  e.g., 20 kg beef was used
+
+Variance = (Actual - Should) / Should × 100%
+  = (20 - 15) / 15 × 100% = +33.3% 🔴
+```
+
+AI does this calculation for **every ingredient, every dish, every sales channel** all at once.
+
+### Step 3: Find the Culprits
+
+The analysis looked like this:
+
+| Ingredient | Should-use (kg) | Actual (kg) | Variance |
+|-----------|-----------------|-------------|----------|
+| Sirloin | 12.5 | 18.2 | +45.6% 🔴 |
+| Pork belly | 8.3 | 10.1 | +21.7% 🟡 |
+| Rice | 25.0 | 26.5 | +6.0% 🟢 |
+| Cilantro | 2.1 | 5.8 | +176.2% 🔴 |
+
+<Callout variant="warning" title="What We Discovered">
+The total variance across the restaurant was approximately **+30%** — meaning we were using 30% more raw materials than we should have been. Translated to money = tens of thousands of baht in hidden losses every month.
+</Callout>
+
+## Root Causes AI Helped Identify
+
+### 1. Yield Was Lower Than Expected
+Fresh meat purchased at 1 kg doesn't yield 1 kg of usable product — tendons, fat, and waste must be trimmed. Our recipe specs had incorrect yield numbers.
+
+### 2. Over-Withdrawal Without Checks
+Staff withdrew inventory without anyone comparing it to actual sales volumes.
+
+### 3. Delivery vs Dine-In Recipes Differed
+Dine-in portions were one size, delivery portions another — but the recipe specs didn't distinguish between them.
+
+## The Fixes
+
+```
+📋 Fix recipe specs — use real yield numbers
+📦 Set up withdrawal controls — auto-compare to sales
+📊 Weekly analysis — don't wait for month-end
+🔍 Separate delivery/dine-in recipes — different cost structures
+```
+
+## No Consultant Required
+
+All you need:
+1. **Data in Google Sheets** — recipes + sales
+2. **AI asking the right question** — "Given these sales, how much raw material should we have used?"
+
+AI isn't magic. It just **calculates in seconds what would take humans days to do by hand**.
+
+<Callout variant="success" title="Key Takeaway">
+If you have recipe specs and sales data in any system — you can get AI to analyze your costs immediately. No consultant needed. No waiting for month-end reports.
+</Callout>
+
+## Try It Yourself
+
+1. Open your Google Sheet with recipe specs
+2. Prepare daily sales data (from POS, delivery platforms)
+3. Ask AI: "Calculate should-use vs actual-use by ingredient"
+4. Look at the results — the highest variance is where to fix first
+
+The data doesn't have to be perfect. Just starting the analysis reveals things you've never seen before.

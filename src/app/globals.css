@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  /* Agency Brand Colors */
+  --color-primary: #2B4C7E;
+  --color-primary-light: #3A6BA5;
+  --color-primary-dark: #1E3A5F;
+  --color-secondary: #F39C12;
+  --color-secondary-light: #F5B041;
+  --color-secondary-dark: #D68910;
+  --color-accent: #27AE60;
+  --color-accent-light: #2ECC71;
+  --color-accent-dark: #1E8449;
+
+  /* Neutral palette */
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F8FAFC;
+  --color-surface-tertiary: #F1F5F9;
+  --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94A3B8;
+
+  /* Dark mode colors */
+  --color-dark-surface: #0F172A;
+  --color-dark-surface-secondary: #1E293B;
+  --color-dark-surface-tertiary: #334155;
+  --color-dark-border: #334155;
+  --color-dark-border-light: #1E293B;
+  --color-dark-text-primary: #F1F5F9;
+  --color-dark-text-secondary: #94A3B8;
+  --color-dark-text-tertiary: #64748B;
+
+  /* Typography scale */
+  --font-sans: "Inter", "Sarabun", system-ui, sans-serif;
+  --font-thai: "Sarabun", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing & sizing */
+  --container-article: 720px;
+  --container-wide: 1200px;
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-surface: #0F172A;
+  --color-surface-secondary: #1E293B;
+  --color-surface-tertiary: #334155;
+  --color-border: #334155;
+  --color-border-light: #1E293B;
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-text-tertiary: #64748B;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Thai text */
+:lang(th) {
+  font-family: var(--font-thai);
+}
+
+/* Prose overrides for article body */
+.prose {
+  --tw-prose-body: var(--color-text-primary);
+  --tw-prose-headings: var(--color-text-primary);
+  --tw-prose-links: var(--color-primary);
+  --tw-prose-bold: var(--color-text-primary);
+  --tw-prose-code: var(--color-primary);
+  --tw-prose-quotes: var(--color-text-secondary);
+  --tw-prose-quote-borders: var(--color-secondary);
+  max-width: var(--container-article);
+}
+
+.dark .prose {
+  --tw-prose-body: var(--color-dark-text-primary);
+  --tw-prose-headings: var(--color-dark-text-primary);
+  --tw-prose-links: var(--color-secondary);
+  --tw-prose-bold: var(--color-dark-text-primary);
+  --tw-prose-code: var(--color-secondary);
+  --tw-prose-quotes: var(--color-dark-text-secondary);
+  --tw-prose-quote-borders: var(--color-secondary);
+}
+
+/* Code blocks from rehype-pretty-code */
+[data-rehype-pretty-code-figure] pre {
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+[data-rehype-pretty-code-figure] code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  padding: 0 1rem;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  background-color: rgba(43, 76, 126, 0.1);
+  border-left: 3px solid var(--color-primary);
+  padding-left: calc(1rem - 3px);
+}
+
+.dark [data-rehype-pretty-code-figure] pre {
+  border-color: var(--color-dark-border);
+}
+
+.dark [data-rehype-pretty-code-figure] [data-highlighted-line] {
+  background-color: rgba(243, 156, 18, 0.1);
+  border-left-color: var(--color-secondary);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.dark ::selection {
+  background-color: var(--color-secondary);
+  color: var(--color-dark-surface);
+}

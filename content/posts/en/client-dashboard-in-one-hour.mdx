@@ -1,0 +1,118 @@
+---
+title: "Client Dashboard in One Hour — Built with AI, Zero Login Required"
+description: "How we built Client Summary Pages that clients can view on their phones to check project status, reducing 'how's it going?' messages. Now live for 4 clients."
+date: 2026-03-03
+category: "Agency Tools"
+tags: ["dashboard", "client-management", "agency", "web-development", "automation"]
+---
+
+## Every Time a Client Asks "How's It Going?"
+
+If you run an agency or freelance, you've heard this a thousand times.
+
+Every time it happens, you have to:
+1. Stop what you're working on
+2. Open Notion/Trello/Google Docs to gather info
+3. Summarize into a message
+4. Send via LINE/email
+
+**Repeat weekly, for every client.**
+
+## The Solution: Client Summary Pages
+
+I had AI build a webpage for each client showing:
+
+- **📋 Project status** — % complete, detail per phase
+- **📊 Campaign results** — real numbers, charts
+- **📅 Timeline** — upcoming milestones
+- **📎 Files** — download links for presentations, reports
+
+Clients get a private link → open on mobile → see everything. **No login required.**
+
+## From Brief → Live Page in 1 Hour
+
+```
+🤖 Tell AI: build a client summary page for [client name]
+  ↓
+📋 AI pulls data from project tracker + activity log
+  ↓
+💻 AI generates HTML page — responsive, polished, real data
+  ↓
+🚀 Deploy to server (single rsync command)
+  ↓
+🔗 Get link: lab.dopelab.studio/[client]-summary/
+  ↓
+📱 Send link to client
+```
+
+<Callout variant="info" title="Tech Stack">
+HTML + Tailwind CSS + Alpine.js → deployed as a static page on a Cloudways server. No backend, no database — just a single HTML file.
+</Callout>
+
+## What a Real Dashboard Looks Like
+
+Each page has 5 main sections:
+
+### 1. Overview Card
+Overall project status — Active/Completed/Pending, progress bars
+
+### 2. Project Details (Expandable)
+Each project expands to show:
+- Description + Objectives
+- Current status + % completion
+- Key deliverables + due dates
+
+### 3. Campaign Results
+Real numbers: impressions, clicks, conversions, ROAS
+
+### 4. Timeline
+Gantt-style timeline showing upcoming milestones
+
+### 5. Files & Resources
+Links to Google Drive, presentations, reports
+
+## Unexpected Benefits
+
+### Clients Ask Less
+When clients can see the data themselves → fewer questions → time saved for both sides.
+
+### Trust Goes Up
+"Seeing the work" at all times → clients feel the agency is actually working → trust increases.
+
+### It's a Sales Point
+New clients see the dashboard → feels professional → easier to close deals.
+
+### Updates Are Trivial
+Edit HTML → rsync to server → client sees it instantly. No deployment pipeline needed.
+
+## Cost
+
+| Item | Cost |
+|------|------|
+| Server (shared) | ~$6/month (shared with other projects) |
+| Domain | Already had one |
+| AI to build page | ~$0.30 per page (API cost) |
+| **Per client total** | **Nearly $0** |
+
+## 4 Live Clients
+
+Currently running 4 client summary pages:
+1. **MBOX Karaoke** — Q1 Campaign (5 expandable sections)
+2. **Under Dog** — Branding project
+3. **Bike Stock** — Social media setup
+4. **NNTN** — Restaurant operations overview
+
+All pages work on mobile, no login needed, shareable via LINE or any messenger.
+
+<Callout variant="success" title="Key Takeaway">
+Client dashboards don't need to be complex. A simple HTML page that's easy to update is enough. What matters is that clients can access it easily and see real data.
+</Callout>
+
+## For Agencies & Freelancers Who Want to Try
+
+1. **Create a template** — an HTML page you can fill with client data
+2. **Deploy simply** — GitHub Pages, Netlify, or any server you have
+3. **Share the link** — put it in the client's LINE group
+4. **Update regularly** — at least weekly
+
+Clients don't want complex systems. They just want to see that work is moving forward.

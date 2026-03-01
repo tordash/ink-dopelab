@@ -1,0 +1,120 @@
+---
+title: "11 AI Working Simultaneously — Agent Teams That Turn 3-Day Jobs into 2 Hours"
+description: "Using Claude Code Agent Teams to run 11 AI instances in parallel — Strategy, Content, Media, Data, Design — they communicate, divide work, and we just approve."
+date: 2026-03-04
+category: "AI Workflow"
+tags: ["agent-teams", "claude-code", "automation", "ai-workflow", "productivity"]
+---
+
+## If One AI Is Good...
+
+Imagine **11 of them** working simultaneously, each specialized in different areas, communicating with each other, dividing work autonomously.
+
+This is what **Claude Code Agent Teams** can do.
+
+## What 11 AIs Do
+
+### Marketing Team (5 agents)
+| AI | Role |
+|----|------|
+| **Strategy Director** | Market analysis, strategic planning |
+| **Content Strategist** | Captions, blog posts, ad copy |
+| **Media Planner** | Channel planning, budget allocation |
+| **Data Analyst** | Data analysis, reporting |
+| **Presentation Specialist** | Decks, slides, deliverables |
+
+### Web Team (4 agents)
+| AI | Role |
+|----|------|
+| **Web BA** | Requirements analysis |
+| **Web Designer** | UI/UX design |
+| **Web Developer** | Code implementation |
+| **Web Ops** | Testing, QA, deployment |
+
+### Support (2 agents)
+| AI | Role |
+|----|------|
+| **Tech Lead** | Security, infrastructure, code review |
+| **Project Manager** | Scheduling, tracking |
+
+## How It Works
+
+```
+📋 Tell Team Lead: "Create a marketing campaign for MBOX Karaoke"
+  ↓
+🧠 Team Lead plans → assigns tasks to members
+  ↓
+🤖🤖🤖 Multiple AIs work simultaneously:
+  - Strategy Director → market analysis + positioning
+  - Content Strategist → messaging framework
+  - Media Planner → channel strategy + budget
+  ↓
+💬 AIs communicate: "Strategy done, sending positioning to Content"
+  ↓
+📊 Results merge → Review → Approve
+```
+
+<Callout variant="info" title="Behind the Scenes">
+Each AI is a separate Claude instance working in its own worktree (isolated code copy). They communicate via a Shared Task List — like a real team using Trello.
+</Callout>
+
+## Real Example: Creating 7 Carousel Sets
+
+Recent project: 7 carousel content sets (5 slides each) for DopeLab.
+
+### Traditional Approach (one at a time)
+```
+1 set = 30 min research + 1 hr writing + 1 hr artwork
+7 sets × 2.5 hrs = 17.5 hours (3-4 work days)
+```
+
+### Agent Teams Approach
+```
+Team Lead plans (15 min)
+  ↓
+3 agents research in parallel (30 min)
+  ↓
+2 agents write captions in parallel (45 min)
+  ↓
+2 agents create artwork in parallel (45 min)
+  ↓
+Total: ~2 hours (vs 17.5 hours) ⚡
+```
+
+## Decision Matrix: When to Use
+
+```
+Simple tasks (1-3/10)    → Single AI
+  e.g.: fix typos, answer questions, translate
+
+Medium tasks (4-7/10)    → Sub-agents (2-3 instances)
+  e.g.: write blog, analyze data, build report
+
+Complex tasks (8-10/10)  → Agent Teams (5-11 instances) 🏆
+  e.g.: full campaign, build website, content production
+```
+
+<Callout variant="warning" title="Important Caveat">
+Agent Teams consume significantly more tokens (= higher cost). Only use them for tasks with complexity 8/10 or above. For simple tasks, a single AI is far more cost-effective.
+</Callout>
+
+## Key Rules
+
+### 1. Always Plan First
+Before deploying the team, have the Team Lead create a plan — define tasks, assign work, set priorities.
+
+### 2. Clear File Ownership
+Never let 2 AIs edit the same file → causes conflicts. Team Lead must specify who owns which file.
+
+### 3. Review Every Output
+AI works fast but isn't perfect every time. Always review before publishing.
+
+## Who Should Try This
+
+- **Agencies** that need to produce content for multiple clients simultaneously
+- **Startups** with small teams but large workloads
+- **Freelancers** who want to take on bigger projects without hiring a team
+
+<Callout variant="success" title="The Big Picture">
+Agent Teams aren't the future — they're the present. I use them for real work every day. The only limitation is token cost, but for genuinely complex work, the ROI is significant.
+</Callout>

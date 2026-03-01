@@ -1,0 +1,94 @@
+---
+title: "สั่งงาน AI จากมือถือ — Remote Dev Setup ที่ใช้จริงทุกวัน"
+description: "วิธี setup Tailscale + Termius + tmux ให้สั่งงาน Claude Code AI จากไหนก็ได้ ผ่าน iPhone เครื่องเดียว ไม่ต้องนั่งหน้าคอม"
+date: 2026-03-01
+category: "Developer Tools"
+tags: ["remote-dev", "tailscale", "tmux", "iphone", "claude-code"]
+featured: true
+---
+
+## ปัญหาที่เจอ
+
+ผมใช้ Claude Code (AI ที่ทำงานผ่าน terminal) ทำงานทุกวัน ทั้งเขียน code, วิเคราะห์ข้อมูล, สร้าง content — แต่ปัญหาคือ **ต้องนั่งหน้า Mac ตลอด**
+
+บางทีนอนอยู่บนเตียง อยากจะสั่ง AI ทำงานสักอย่าง... ก็ต้องลุกไปเปิดคอม ซึ่งมันไม่สะดวกเลย
+
+## Solution: 3 เครื่องมือที่ทำให้ทุกอย่างเปลี่ยน
+
+### 1. Tailscale — VPN ส่วนตัว ไม่ต้อง config อะไร
+
+Tailscale สร้าง private network ให้ทุกเครื่องที่ลง app เชื่อมถึงกันได้ ไม่ว่าจะอยู่ที่ไหนในโลก ไม่ต้อง port forward, ไม่ต้อง static IP
+
+```
+iPhone → Tailscale → Mac Mini (ที่บ้าน)
+```
+
+แค่ลง Tailscale ทั้ง iPhone และ Mac, login ด้วย account เดียวกัน — จบ เครื่องเห็นกัน
+
+### 2. Termius — SSH Client บน iPhone ที่ใช้งานได้จริง
+
+Termius เป็น SSH app ที่ดีที่สุดบน iOS ที่ผมเคยใช้ — UI สวย, รองรับ key authentication, มี snippets สำหรับ command ที่ใช้บ่อย
+
+ผมตั้ง connection ไว้แค่ครั้งเดียว:
+- **Host:** ชื่อ Tailscale ของ Mac
+- **User:** username ของ Mac
+- **Key:** SSH key ที่ generate ไว้
+
+หลังจากนั้น แค่เปิด Termius → แตะ 1 ที → เข้า terminal ของ Mac ได้เลย
+
+### 3. tmux — Session ที่ไม่มีวันหาย
+
+นี่คือตัวเปลี่ยนเกม ถ้าไม่ใช้ tmux พอปิด terminal session ทุกอย่างจะหายหมด แต่ tmux ทำให้:
+
+- **Session ค้างอยู่** แม้ปิด Termius ไปแล้ว
+- **กลับมาต่อได้ทันที** ด้วย `tmux attach`
+- **แบ่งหน้าจอได้** ดู output หลาย process พร้อมกัน
+
+```bash
+# สร้าง session ใหม่
+tmux new -s work
+
+# ออกจาก session (ยังทำงานอยู่ background)
+Ctrl+B แล้วกด D
+
+# กลับเข้า session เดิม
+tmux attach -t work
+```
+
+## Workflow จริงของผม
+
+```
+1. 📱 เปิด Termius บน iPhone
+2. 🔗 แตะ connection → SSH เข้า Mac ผ่าน Tailscale
+3. 💻 tmux attach → กลับเข้า session ที่ค้างไว้
+4. 🤖 สั่ง Claude Code ทำงาน
+5. 📱 ปิดจอ ไปทำอย่างอื่น
+6. 🔄 กลับมาเมื่อไหร่ก็ได้ → tmux attach → ดูผลงาน
+```
+
+<Callout variant="success" title="ผลลัพธ์จริง">
+ตอนนี้ผมสั่งงาน AI จากทุกที่ — นอนบนเตียง, นั่งร้านกาแฟ, แม้กระทั่งขณะนั่งรถ สั่งเสร็จก็ปิดจอรอ AI ทำงานเอง
+</Callout>
+
+## ค่าใช้จ่าย
+
+| เครื่องมือ | ราคา |
+|-----------|------|
+| Tailscale | **ฟรี** (Personal plan) |
+| Termius | **ฟรี** (Basic) หรือ Premium สำหรับ sync |
+| tmux | **ฟรี** (มาพร้อม macOS) |
+
+**รวม: ฿0/เดือน** — ใช้ได้ทันทีไม่มีค่าใช้จ่าย
+
+## Tips สำหรับคนที่จะลอง
+
+1. **ตั้ง hostname ใน Tailscale ให้จำง่าย** — เช่น `my-mac` แทนที่จะเป็น IP
+2. **ตั้ง SSH key ไม่ใช้ password** — ปลอดภัยกว่าและไม่ต้องพิมพ์ทุกครั้ง
+3. **ใช้ tmux resurrect plugin** — save/restore session layout ได้
+4. **สร้าง alias ใน shell** — เช่น `alias ai="tmux attach -t claude || tmux new -s claude"`
+
+## ใครที่ควรลอง?
+
+ถ้าคุณใช้ terminal เป็นประจำ ไม่ว่าจะ developer, data analyst, หรือคนที่ใช้ AI tools ผ่าน CLI — setup นี้จะเปลี่ยนวิธีทำงานของคุณไปเลย
+
+ไม่ต้องถูกผูกติดกับหน้าจอเครื่องเดียวอีกต่อไป

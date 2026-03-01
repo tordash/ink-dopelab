@@ -1,0 +1,94 @@
+---
+title: "Control AI from Your Phone — A Remote Dev Setup That Actually Works"
+description: "How to set up Tailscale + Termius + tmux to run Claude Code AI from anywhere using just your iPhone. No laptop required."
+date: 2026-03-01
+category: "Developer Tools"
+tags: ["remote-dev", "tailscale", "tmux", "iphone", "claude-code"]
+featured: true
+---
+
+## The Problem
+
+I use Claude Code (an AI that works through the terminal) every day — writing code, analyzing data, creating content. But the problem is **I have to be sitting at my Mac**.
+
+Sometimes I'm lying in bed and want to tell the AI to do something... but I'd have to get up and open the laptop. That's not practical.
+
+## The Solution: 3 Tools That Changed Everything
+
+### 1. Tailscale — A Private VPN with Zero Config
+
+Tailscale creates a private network connecting all your devices, anywhere in the world. No port forwarding, no static IP needed.
+
+```
+iPhone → Tailscale → Mac Mini (at home)
+```
+
+Just install Tailscale on both iPhone and Mac, log in with the same account — done. They can see each other.
+
+### 2. Termius — An SSH Client on iPhone That Actually Works
+
+Termius is the best SSH app on iOS I've ever used — clean UI, key authentication support, and snippets for frequently used commands.
+
+I set up the connection once:
+- **Host:** Mac's Tailscale hostname
+- **User:** Mac username
+- **Key:** Pre-generated SSH key
+
+After that, just open Termius → tap once → I'm in my Mac's terminal.
+
+### 3. tmux — Sessions That Never Die
+
+This is the game changer. Without tmux, closing the terminal kills everything. But tmux means:
+
+- **Sessions persist** even after closing Termius
+- **Reconnect instantly** with `tmux attach`
+- **Split screens** to monitor multiple processes
+
+```bash
+# Create a new session
+tmux new -s work
+
+# Detach (session keeps running in background)
+Ctrl+B then D
+
+# Reattach to existing session
+tmux attach -t work
+```
+
+## My Actual Workflow
+
+```
+1. 📱 Open Termius on iPhone
+2. 🔗 Tap connection → SSH into Mac via Tailscale
+3. 💻 tmux attach → Jump back into the running session
+4. 🤖 Tell Claude Code what to do
+5. 📱 Lock phone, go do something else
+6. 🔄 Come back anytime → tmux attach → check results
+```
+
+<Callout variant="success" title="Real Results">
+I now command AI from everywhere — in bed, at a coffee shop, even in the car. Just send the command and lock my phone while AI does the work.
+</Callout>
+
+## Cost
+
+| Tool | Price |
+|------|-------|
+| Tailscale | **Free** (Personal plan) |
+| Termius | **Free** (Basic) or Premium for sync |
+| tmux | **Free** (comes with macOS) |
+
+**Total: $0/month** — ready to use immediately.
+
+## Tips for Getting Started
+
+1. **Set a memorable Tailscale hostname** — like `my-mac` instead of an IP address
+2. **Use SSH keys, not passwords** — more secure and no typing every time
+3. **Install tmux resurrect plugin** — save/restore session layouts
+4. **Create a shell alias** — like `alias ai="tmux attach -t claude || tmux new -s claude"`
+
+## Who Should Try This?
+
+If you regularly use the terminal — whether you're a developer, data analyst, or anyone using AI tools via CLI — this setup will fundamentally change how you work.
+
+You don't have to be chained to one screen anymore.

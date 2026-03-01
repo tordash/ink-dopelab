@@ -1,0 +1,43 @@
+{
+  "site": {
+    "name": "INK by DopeLab",
+    "tagline": "AI × Digital Marketing — เรื่องเล่าจากคนทำจริง",
+    "description": "บล็อกเกี่ยวกับ AI, Digital Marketing, และ Business Automation จากประสบการณ์จริงของ DopeLab Studio"
+  },
+  "nav": {
+    "home": "หน้าแรก",
+    "blog": "บทความ",
+    "about": "เกี่ยวกับเรา",
+    "language": "EN"
+  },
+  "home": {
+    "hero_title": "AI × Digital Marketing",
+    "hero_subtitle": "เรื่องเล่าจากคนทำจริง",
+    "hero_description": "เราเอา AI มาใช้งานจริงในธุรกิจ — ทั้งบริหารร้านอาหาร, ทำ marketing, สร้าง content, และ automate ทุกอย่างที่ automate ได้ นี่คือบันทึกของเรา",
+    "featured": "บทความแนะนำ",
+    "latest": "บทความล่าสุด",
+    "read_more": "อ่านต่อ",
+    "view_all": "ดูทั้งหมด",
+    "min_read": "นาที"
+  },
+  "blog": {
+    "title": "บทความทั้งหมด",
+    "description": "เรื่องเล่า ประสบการณ์ และ case study จากการใช้ AI ในงานจริง",
+    "no_posts": "ยังไม่มีบทความ",
+    "back": "กลับ"
+  },
+  "article": {
+    "toc": "สารบัญ",
+    "share": "แชร์บทความนี้",
+    "related": "บทความที่เกี่ยวข้อง",
+    "published": "เผยแพร่",
+    "updated": "อัปเดต",
+    "reading_time": "อ่าน {minutes} นาที",
+    "tags": "แท็ก"
+  },
+  "footer": {
+    "copyright": "© {year} DopeLab Studio",
+    "built_with": "สร้างด้วย Next.js + AI",
+    "tagline": "Digital Marketing Agency ที่ใช้ AI ทำงานจริง"
+  }
+}

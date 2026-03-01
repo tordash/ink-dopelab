@@ -1,0 +1,118 @@
+---
+title: "Dashboard ส่งลูกค้าดูงาน Real-time — สร้างด้วย AI ใน 1 ชั่วโมง"
+description: "สร้าง Client Summary Page ที่ลูกค้าเปิดดูสถานะโปรเจ็คได้เอง ลดคำถาม 'งานถึงไหนแล้ว?' พร้อม live link สำหรับลูกค้า 4 ราย"
+date: 2026-03-03
+category: "Agency Tools"
+tags: ["dashboard", "client-management", "agency", "web-development", "automation"]
+---
+
+## ทุกครั้งที่ลูกค้าถาม "งานถึงไหนแล้ว?"
+
+ถ้าคุณเป็น agency หรือ freelancer คุณเคยได้ยินประโยคนี้แน่นอน
+
+แต่ละครั้งที่ลูกค้าถาม คุณต้อง:
+1. หยุดทำงานที่ทำอยู่
+2. เปิด Notion/Trello/Google Docs รวบรวมข้อมูล
+3. สรุปเป็นข้อความ
+4. ส่งไปทาง LINE/email
+
+**ซ้ำทุกสัปดาห์ ทุกลูกค้า**
+
+## Solution: Client Summary Page
+
+ผมให้ AI สร้าง webpage สำหรับแต่ละลูกค้า ที่แสดง:
+
+- **📋 สถานะโปรเจ็ค** — เสร็จกี่ %, รายละเอียดแต่ละ phase
+- **📊 ผลลัพธ์แคมเปญ** — ตัวเลขจริง, กราฟ
+- **📅 Timeline** — แผนงานข้างหน้า, milestone
+- **📎 ไฟล์งาน** — ลิงก์ดาวน์โหลด presentation, รายงาน
+
+ลูกค้าได้ลิงก์ส่วนตัว → เปิดจากมือถือ → เห็นทุกอย่าง **ไม่ต้อง login**
+
+## จาก Brief → Live Page ใน 1 ชั่วโมง
+
+```
+🤖 บอก AI: สร้าง client summary page สำหรับ [ชื่อลูกค้า]
+  ↓
+📋 AI ดึงข้อมูลจาก project tracker + activity log
+  ↓
+💻 AI สร้าง HTML page — responsive, สวย, มี data จริง
+  ↓
+🚀 Deploy ขึ้น server (rsync command เดียว)
+  ↓
+🔗 ได้ลิงก์: lab.dopelab.studio/[client]-summary/
+  ↓
+📱 ส่งลิงก์ให้ลูกค้า
+```
+
+<Callout variant="info" title="Tech ที่ใช้">
+HTML + Tailwind CSS + Alpine.js → deploy เป็น static page บน Cloudways server ไม่มี backend ไม่มี database — แค่ HTML ไฟล์เดียว
+</Callout>
+
+## ตัวอย่าง Dashboard จริง
+
+แต่ละ page มี 5 sections หลัก:
+
+### 1. Overview Card
+สถานะรวมของโปรเจ็ค — Active/Completed/Pending, progress bar
+
+### 2. Project Details (Expandable)
+แต่ละโปรเจ็คกดเปิดดูรายละเอียดได้:
+- Description + Objectives
+- Current status + % completion
+- Key deliverables + due dates
+
+### 3. Campaign Results
+ตัวเลขจริง: impressions, clicks, conversions, ROAS
+
+### 4. Timeline
+Gantt-style timeline แสดง milestones ข้างหน้า
+
+### 5. Files & Resources
+ลิงก์ไปยัง Google Drive, presentations, reports
+
+## ผลลัพธ์ที่ไม่คาดคิด
+
+### ลูกค้าถามน้อยลง
+เมื่อลูกค้าเห็นข้อมูลเอง → ไม่ต้องถาม → ประหยัดเวลาทั้ง 2 ฝ่าย
+
+### ความเชื่อมั่นสูงขึ้น
+"เห็นงาน" ตลอดเวลา → รู้สึกว่า agency ทำงานจริง → trust เพิ่ม
+
+### เป็นจุดขาย
+ลูกค้าใหม่เห็นว่ามี dashboard → รู้สึกว่าเป็นมืออาชีพ → ปิดงานง่ายขึ้น
+
+### Update ง่ายมาก
+แก้ HTML → rsync ขึ้น server → ลูกค้าเห็นทันที ไม่ต้องรอ deploy cycle
+
+## ค่าใช้จ่าย
+
+| รายการ | ค่าใช้จ่าย |
+|--------|-----------|
+| Server (shared) | ~฿200/เดือน (แชร์กับงานอื่น) |
+| Domain | มีอยู่แล้ว |
+| AI สร้าง page | ~฿10 ต่อ page (API cost) |
+| **รวมต่อลูกค้า** | **เกือบ ฿0** |
+
+## 4 ลูกค้าที่ใช้อยู่
+
+ตอนนี้มี 4 client summary pages ที่ใช้งานจริง:
+1. **MBOX Karaoke** — Q1 Campaign (5 expandable sections)
+2. **Under Dog** — Branding project
+3. **Bike Stock** — Social media setup
+4. **NNTN** — Restaurant operations overview
+
+ทุก page เปิดจากมือถือได้ ไม่ต้อง login ส่งทาง LINE ได้เลย
+
+<Callout variant="success" title="Key Takeaway">
+Client dashboard ไม่ต้องซับซ้อน HTML page ธรรมดาที่ update ง่ายก็พอ สิ่งสำคัญคือลูกค้าเข้าถึงได้ง่ายและเห็นข้อมูลจริง
+</Callout>
+
+## สำหรับ Agency/Freelancer ที่อยากลอง
+
+1. **สร้าง template** — HTML page ที่ใส่ข้อมูลลูกค้าได้ง่าย
+2. **Deploy ง่ายๆ** — GitHub Pages, Netlify, หรือ server ที่มี
+3. **ส่งลิงก์** — ใส่ใน LINE group ของลูกค้า
+4. **Update สม่ำเสมอ** — อย่างน้อยสัปดาห์ละครั้ง
+
+ลูกค้าไม่ได้อยากได้ระบบซับซ้อน แค่อยากเห็นว่างานเดินอยู่

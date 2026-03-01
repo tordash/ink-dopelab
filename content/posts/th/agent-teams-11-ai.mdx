@@ -1,0 +1,120 @@
+---
+title: "11 AI ทำงานพร้อมกัน — Agent Teams ที่ทำงาน 3 วัน เสร็จใน 2 ชั่วโมง"
+description: "ใช้ Claude Code Agent Teams สั่ง 11 AI instances ทำงานพร้อมกัน — Strategy, Content, Media, Data, Design — คุยกันเอง แบ่งงานเอง เราแค่ approve"
+date: 2026-03-04
+category: "AI Workflow"
+tags: ["agent-teams", "claude-code", "automation", "ai-workflow", "productivity"]
+---
+
+## ถ้า AI ตัวเดียวเก่งแล้ว...
+
+ลองจินตนาการว่ามี **11 ตัว** ทำงานพร้อมกัน แต่ละตัวเชี่ยวชาญคนละเรื่อง คุยกันเองได้ แบ่งงานกันเอง
+
+นี่คือสิ่งที่ **Claude Code Agent Teams** ทำได้
+
+## 11 AI ทำอะไรบ้าง
+
+### Marketing Team (5 ตัว)
+| AI | หน้าที่ |
+|----|--------|
+| **Strategy Director** | วิเคราะห์ตลาด วางแผนกลยุทธ์ |
+| **Content Strategist** | เขียน caption, blog, ad copy |
+| **Media Planner** | วางแผนสื่อ จัดสรรงบ |
+| **Data Analyst** | วิเคราะห์ข้อมูล สร้างรายงาน |
+| **Presentation Specialist** | สร้าง deck, slide, deliverable |
+
+### Web Team (4 ตัว)
+| AI | หน้าที่ |
+|----|--------|
+| **Web BA** | วิเคราะห์ requirements |
+| **Web Designer** | ออกแบบ UI/UX |
+| **Web Developer** | เขียน code |
+| **Web Ops** | Test, QA, deploy |
+
+### Support (2 ตัว)
+| AI | หน้าที่ |
+|----|--------|
+| **Tech Lead** | Security, infrastructure, code review |
+| **Project Manager** | จัดตาราง, ติดตามงาน |
+
+## วิธีทำงาน
+
+```
+📋 สั่ง Team Lead: "ทำ marketing campaign สำหรับ MBOX Karaoke"
+  ↓
+🧠 Team Lead วางแผน → แบ่ง task ให้สมาชิก
+  ↓
+🤖🤖🤖 หลาย AI ทำงานพร้อมกัน:
+  - Strategy Director → วิเคราะห์ตลาด + positioning
+  - Content Strategist → เขียน messaging framework
+  - Media Planner → วางแผนช่องทาง + งบ
+  ↓
+💬 AI คุยกันเอง: "Strategy เสร็จแล้ว ส่ง positioning ให้ Content"
+  ↓
+📊 ผลงานรวมเข้ามา → Review → Approve
+```
+
+<Callout variant="info" title="เบื้องหลัง">
+AI แต่ละตัวเป็น Claude instance แยก ทำงานใน worktree ของตัวเอง (สำเนา code แยก) สื่อสารกันผ่าน Shared Task List — เหมือนทีมคนจริงที่ใช้ Trello
+</Callout>
+
+## ตัวอย่างจริง: สร้าง Carousel 7 ชุด
+
+งานที่เพิ่งทำ: สร้าง carousel content 7 ชุด (5 slides ต่อชุด) สำหรับ DopeLab
+
+### แบบเดิม (ทำทีละชุด)
+```
+1 ชุด = research 30 นาที + เขียน 1 ชม. + สร้างรูป 1 ชม.
+7 ชุด × 2.5 ชม. = 17.5 ชั่วโมง (3-4 วันทำงาน)
+```
+
+### แบบ Agent Teams
+```
+Team Lead วางแผน (15 นาที)
+  ↓
+3 agents research พร้อมกัน (30 นาที)
+  ↓
+2 agents เขียน caption พร้อมกัน (45 นาที)
+  ↓
+2 agents สร้าง artwork พร้อมกัน (45 นาที)
+  ↓
+รวม: ~2 ชั่วโมง (vs 17.5 ชั่วโมง) ⚡
+```
+
+## Decision Matrix: เมื่อไหร่ควรใช้
+
+```
+งานง่าย (1-3/10)      → AI ตัวเดียว
+  เช่น: แก้ typo, ตอบคำถาม, แปลภาษา
+
+งานปานกลาง (4-7/10)   → Sub-agents (2-3 ตัว)
+  เช่น: เขียน blog, วิเคราะห์ data, สร้าง report
+
+งานซับซ้อน (8-10/10)  → Agent Teams (5-11 ตัว) 🏆
+  เช่น: Full campaign, สร้างเว็บ, content production
+```
+
+<Callout variant="warning" title="ข้อควรระวัง">
+Agent Teams กิน token เยอะมาก (= ค่าใช้จ่ายสูง) ใช้เฉพาะงานที่ complexity 8/10 ขึ้นไป งานง่ายๆ ใช้ AI ตัวเดียวคุ้มกว่า
+</Callout>
+
+## กฎสำคัญ
+
+### 1. Plan Mode ก่อนเสมอ
+ก่อนสั่ง Team ต้องให้ Team Lead วางแผนก่อน — กำหนด task, แบ่งงาน, จัดลำดับ
+
+### 2. แบ่งไฟล์ชัดเจน
+ห้าม 2 AI แก้ไฟล์เดียวกัน → เกิด conflict ดังนั้น Team Lead ต้องกำหนดว่าใครแก้ไฟล์ไหน
+
+### 3. Review ทุก output
+AI ทำงานเร็ว แต่ไม่ได้ perfect ทุกครั้ง ต้อง review ผลงานก่อน publish
+
+## ใครที่ควรลอง
+
+- **Agency** ที่ต้อง produce content หลาย client พร้อมกัน
+- **Startup** ที่ทีมเล็ก แต่งานเยอะ
+- **Freelancer** ที่อยากทำงานใหญ่โดยไม่ต้องจ้างทีม
+
+<Callout variant="success" title="ภาพรวม">
+Agent Teams ไม่ใช่อนาคต — มันเป็นปัจจุบัน ผมใช้มันทำงานจริงทุกวัน ข้อจำกัดเดียวคือต้นทุน token แต่สำหรับงานที่ซับซ้อนจริงๆ ROI คุ้มมาก
+</Callout>

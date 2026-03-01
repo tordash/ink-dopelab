@@ -1,0 +1,43 @@
+{
+  "site": {
+    "name": "INK by DopeLab",
+    "tagline": "AI × Digital Marketing — Stories from the Trenches",
+    "description": "A blog about AI, Digital Marketing, and Business Automation from real-world experience at DopeLab Studio"
+  },
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "language": "TH"
+  },
+  "home": {
+    "hero_title": "AI × Digital Marketing",
+    "hero_subtitle": "Stories from the Trenches",
+    "hero_description": "We use AI in real business — managing restaurants, running marketing campaigns, creating content, and automating everything we can. This is our journal.",
+    "featured": "Featured",
+    "latest": "Latest Articles",
+    "read_more": "Read more",
+    "view_all": "View all",
+    "min_read": "min"
+  },
+  "blog": {
+    "title": "All Articles",
+    "description": "Stories, experiences, and case studies from using AI in real work",
+    "no_posts": "No articles yet",
+    "back": "Back"
+  },
+  "article": {
+    "toc": "Table of Contents",
+    "share": "Share this article",
+    "related": "Related Articles",
+    "published": "Published",
+    "updated": "Updated",
+    "reading_time": "{minutes} min read",
+    "tags": "Tags"
+  },
+  "footer": {
+    "copyright": "© {year} DopeLab Studio",
+    "built_with": "Built with Next.js + AI",
+    "tagline": "A Digital Marketing Agency powered by AI"
+  }
+}

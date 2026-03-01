@@ -1,0 +1,165 @@
+import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
+import { getPostBySlug, getPostsByLocale, getRelatedPosts } from "@/lib/content";
+import { ArticleBody } from "@/components/blog/article-body";
+import { TableOfContents } from "@/components/blog/toc";
+import { ArticleCard } from "@/components/blog/article-card";
+import { createMetadata, articleJsonLd } from "@/lib/seo";
+import { formatDate } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
+import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
+import type { Locale } from "@/i18n/routing";
+
+export async function generateStaticParams() {
+  const allPosts = getPostsByLocale("th").concat(getPostsByLocale("en"));
+  return allPosts.map((post) => ({
+    locale: post.locale,
+    slug: post.slugAsParams,
+  }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const locale = (await getLocale()) as Locale;
+  const { slug } = await params;
+  const post = getPostBySlug(slug, locale);
+  if (!post) return {};
+
+  return createMetadata({
+    title: post.title,
+    description: post.description,
+    path: `/blog/${post.slugAsParams}`,
+    locale,
+    type: "article",
+  });
+}
+
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const locale = (await getLocale()) as Locale;
+  const { slug } = await params;
+  const post = getPostBySlug(slug, locale);
+
+  if (!post) notFound();
+
+  const related = getRelatedPosts(slug, locale);
+  const SITE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
+
+  const jsonLd = articleJsonLd({
+    title: post.title,
+    description: post.description,
+    date: post.date,
+    updated: post.updated,
+    url: `${SITE_URL}${post.permalink}`,
+    locale,
+  });
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <div className="mx-auto max-w-[var(--container-wide)] px-4 py-8 sm:px-6">
+        {/* Back link */}
+        <Link
+          href="/blog"
+          className="mb-6 inline-flex items-center gap-1 text-sm text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-text-primary)]"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          {locale === "th" ? "กลับ" : "Back"}
+        </Link>
+
+        {/* Article header */}
+        <header className="mx-auto mb-10 max-w-[var(--container-article)]">
+          <div className="mb-4 flex flex-wrap items-center gap-3">
+            <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-medium text-[var(--color-primary)]">
+              {post.category}
+            </span>
+            <span className="flex items-center gap-1 text-sm text-[var(--color-text-tertiary)]">
+              <Calendar className="h-3.5 w-3.5" />
+              {formatDate(post.date, locale)}
+            </span>
+            <span className="flex items-center gap-1 text-sm text-[var(--color-text-tertiary)]">
+              <Clock className="h-3.5 w-3.5" />
+              {post.metadata.readingTime}{" "}
+              {locale === "th" ? "นาที" : "min read"}
+            </span>
+          </div>
+
+          <h1 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+            {post.title}
+          </h1>
+
+          <p className="text-lg leading-relaxed text-[var(--color-text-secondary)]">
+            {post.description}
+          </p>
+        </header>
+
+        {/* Content + TOC layout */}
+        <div className="mx-auto max-w-[var(--container-wide)]">
+          <div className="lg:grid lg:grid-cols-[1fr_280px] lg:gap-10">
+            {/* Article body */}
+            <div className="mx-auto max-w-[var(--container-article)]">
+              <ArticleBody code={post.body} />
+
+              {/* Tags */}
+              {post.tags.length > 0 && (
+                <div className="mt-10 flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] pt-6">
+                  <Tag className="h-4 w-4 text-[var(--color-text-tertiary)]" />
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-[var(--color-surface-tertiary)] px-3 py-1 text-xs font-medium text-[var(--color-text-secondary)]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar TOC (desktop) */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-24">
+                <TableOfContents items={post.toc} />
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        {/* Related posts */}
+        {related.length > 0 && (
+          <section className="mx-auto mt-16 max-w-[var(--container-wide)] border-t border-[var(--color-border)] pt-10">
+            <h2 className="mb-6 text-lg font-semibold text-[var(--color-text-primary)]">
+              {locale === "th" ? "บทความที่เกี่ยวข้อง" : "Related Articles"}
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((post) => (
+                <ArticleCard
+                  key={post.slugAsParams}
+                  title={post.title}
+                  description={post.description}
+                  slug={post.slugAsParams}
+                  date={post.date}
+                  category={post.category}
+                  tags={post.tags}
+                  readingTime={post.metadata.readingTime}
+                  locale={locale}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </>
+  );
+}

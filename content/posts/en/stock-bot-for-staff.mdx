@@ -1,0 +1,123 @@
+---
+title: "Building a Chat Bot for Staff Inventory Reports — Just Type to Log"
+description: "A chat bot where staff just type 'received 5 bags sirloin 12.5 kg' and the system handles the rest — Bag IDs, database entry, and real-time stock updates, all automatically."
+date: 2026-03-03
+category: "AI for Restaurant"
+tags: ["chatbot", "automation", "restaurant", "inventory", "telegram"]
+---
+
+## The Problem: Too Many Steps = Nobody Does It
+
+Before the bot, logging inventory meant:
+1. Open Airtable → find the right table → fill the form
+2. Select ingredient type → enter weight → enter bag count
+3. Review → Submit
+
+Sounds manageable. But in reality, **staff receive deliveries at 6 AM surrounded by boxes of meat** — nobody wants to fill out forms.
+
+<Callout variant="warning" title="A Hard Truth">
+The best system is the one people actually use. If staff won't use it, it doesn't matter how good the system is.
+</Callout>
+
+## The Solution: A Chat Bot That Understands Human Language
+
+Instead of forms, I built a bot that accepts plain chat:
+
+```
+Staff: received sirloin 5 bags 12.5 kg
+
+Bot: ✅ Logged
+  📦 Sirloin — 5 bags, 12.5 kg
+  🏷️ Bag ID: BEEF000758 - BEEF000762
+  📊 Total stock: 23 bags (48.7 kg)
+```
+
+### What the Bot Does Behind the Scenes
+
+```
+📝 Receives message from staff
+  ↓
+🧠 Parses: ingredient name + bag count + weight
+  ↓
+🔍 Validates against ingredient database (273 items)
+  ↓
+🏷️ Auto-generates Bag IDs (1 per bag)
+  ↓
+💾 Saves to database
+  ↓
+📊 Updates real-time stock levels
+  ↓
+✅ Sends confirmation with summary
+```
+
+## From 5 Minutes → 10 Seconds
+
+| Step | Before (Form) | After (Bot) |
+|------|--------------|------------|
+| Open app | 15 sec | 3 sec (open chat) |
+| Enter data | 2-3 min | 5 sec (type 1 line) |
+| Review | 30 sec | Bot validates |
+| Submit | 15 sec | Automatic |
+| **Total** | **3-5 min** | **10 seconds** |
+
+Multiply by 40 entries per day = **2-3 hours saved daily**
+
+## What Makes the Bot Actually Usable
+
+### 1. Natural Language Understanding
+No rigid format required. Staff can type multiple ways:
+- "received sirloin 5 bags 12.5 kg"
+- "sirloin 5 bags 12.5"
+- "sirloin 5/12.5"
+
+### 2. Asks When Unsure
+```
+Staff: received beef 5 bags
+
+Bot: 🤔 Which type of beef?
+  1. Sirloin
+  2. Tenderloin
+  3. Flank steak
+
+Staff: 1
+
+Bot: ✅ What's the total weight?
+```
+
+### 3. Automatic Validation
+- Single bag over 5 kg → asks for confirmation
+- Ingredient not in system → alerts + offers to add
+- Weight doesn't make sense → asks again
+
+## Tech Stack
+
+| Component | Tool | Why |
+|-----------|------|-----|
+| Chat Interface | Telegram Bot API | Staff already use it |
+| AI Processing | Claude API | Understands Thai, accurate parsing |
+| Database | Airtable + SQLite | 2-layer (frontend + backend) |
+| Hosting | Agency server | Near-zero cost |
+
+## Lessons Learned
+
+### UX Beats Features
+The old system had every feature. Nobody used it. The bot has fewer features but is **so easy there's no excuse not to use it**.
+
+### Start with One Flow
+Don't build a bot that does everything. Start with just "receiving" — once people are comfortable, add "withdrawals" and "transfers."
+
+### Bot Data > Form Data
+Because staff log more frequently (every item vs. some items) → data is more complete → analysis is more accurate.
+
+<Callout variant="success" title="Results">
+Stock entries went from ~50/month to 757/month — not because we received more, but because staff actually logged every single item.
+</Callout>
+
+## Can You Build This?
+
+Yes, if you have:
+1. **A Telegram account** — create a bot via @BotFather
+2. **An ingredient list** — in Google Sheets or Airtable
+3. **AI** — Claude/ChatGPT to parse messages
+
+Start with a simple prototype: bot receives message → sends to Google Sheet. Upgrade later.
