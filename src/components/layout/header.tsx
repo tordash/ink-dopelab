@@ -42,6 +42,12 @@ export function Header() {
           >
             {t("blog")}
           </Link>
+          <Link
+            href="/about"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] hover:text-[var(--color-text-primary)]"
+          >
+            {t("about")}
+          </Link>
         </nav>
 
         {/* Actions */}
