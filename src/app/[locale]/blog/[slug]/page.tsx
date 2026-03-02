@@ -4,6 +4,7 @@ import { getPostBySlug, getPostsByLocale, getRelatedPosts } from "@/lib/content"
 import { ArticleBody } from "@/components/blog/article-body";
 import { TableOfContents } from "@/components/blog/toc";
 import { ArticleCard } from "@/components/blog/article-card";
+import { ShareButtons } from "@/components/blog/share-buttons";
 import { createMetadata, articleJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
@@ -52,12 +53,15 @@ export default async function ArticlePage({
   const SITE_URL =
     process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
 
+  const ogImage = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&locale=${locale}&category=${encodeURIComponent(post.category)}`;
+
   const jsonLd = articleJsonLd({
     title: post.title,
     description: post.description,
     date: post.date,
     updated: post.updated,
     url: `${SITE_URL}${post.permalink}`,
+    image: ogImage,
     locale,
   });
 
@@ -102,6 +106,23 @@ export default async function ArticlePage({
           <p className="text-lg leading-relaxed text-[var(--color-text-secondary)] sm:text-xl">
             {post.description}
           </p>
+
+          {/* Author byline */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-bold text-white">
+              DL
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[var(--color-text-primary)]">
+                DopeLab Studio
+              </p>
+              <p className="text-xs text-[var(--color-text-tertiary)]">
+                {locale === "th"
+                  ? "AI × Digital Marketing Agency"
+                  : "AI × Digital Marketing Agency"}
+              </p>
+            </div>
+          </div>
         </header>
 
         {/* Content + TOC layout */}
@@ -125,6 +146,9 @@ export default async function ArticlePage({
                   ))}
                 </div>
               )}
+
+              {/* Share buttons */}
+              <ShareButtons title={post.title} />
             </div>
 
             {/* Sidebar TOC (desktop) */}

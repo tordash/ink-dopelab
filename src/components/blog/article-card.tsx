@@ -1,7 +1,18 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/lib/utils";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  ArrowRight,
+  Cpu,
+  Terminal,
+  BarChart3,
+  UtensilsCrossed,
+  Palette,
+  Pen,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface ArticleCardProps {
   title: string;
@@ -16,6 +27,18 @@ interface ArticleCardProps {
   featured?: boolean;
 }
 
+const CATEGORY_STYLES: Record<string, { bg: string; icon: LucideIcon }> = {
+  "AI Workflow": { bg: "#2B4C7E", icon: Cpu },
+  "Developer Tools": { bg: "#27AE60", icon: Terminal },
+  "Agency Tools": { bg: "#F39C12", icon: BarChart3 },
+  "AI for Restaurant": { bg: "#C0392B", icon: UtensilsCrossed },
+  "AI Content": { bg: "#8E44AD", icon: Palette },
+};
+
+function getCategoryStyle(category: string) {
+  return CATEGORY_STYLES[category] || { bg: "#2B4C7E", icon: Pen };
+}
+
 export function ArticleCard({
   title,
   description,
@@ -27,6 +50,8 @@ export function ArticleCard({
   featured = false,
 }: ArticleCardProps) {
   const t = useTranslations("home");
+  const style = getCategoryStyle(category);
+  const Icon = style.icon;
 
   if (featured) {
     return (
@@ -34,22 +59,27 @@ export function ArticleCard({
         href={`/blog/${slug}`}
         className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/40 hover:shadow-xl hover:shadow-[var(--color-primary)]/5"
       >
-        {/* Top gradient accent */}
-        <div className="h-1.5 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)]" />
+        {/* Category color block */}
+        <div
+          className="flex h-20 items-center gap-3 px-6"
+          style={{ backgroundColor: style.bg }}
+        >
+          <Icon className="h-7 w-7 text-white/80" />
+          <span className="text-sm font-semibold text-white/90">
+            {category}
+          </span>
+        </div>
 
         <div className="flex flex-1 flex-col p-6 sm:p-8">
           {/* Meta row */}
           <div className="mb-4 flex items-center gap-3">
-            <span className="rounded-md bg-[var(--color-primary)] px-2.5 py-1 text-xs font-semibold text-white">
-              {category}
-            </span>
             <span className="flex items-center gap-1 text-xs text-[var(--color-text-tertiary)]">
               <Calendar className="h-3 w-3" />
               {formatDate(date, locale)}
             </span>
           </div>
 
-          {/* Title — prominent */}
+          {/* Title */}
           <h3 className="mb-3 text-xl font-bold leading-snug text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-primary)] sm:text-2xl">
             {title}
           </h3>
@@ -80,6 +110,9 @@ export function ArticleCard({
       href={`/blog/${slug}`}
       className="group flex flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/30 hover:shadow-lg hover:shadow-[var(--color-primary)]/5"
     >
+      {/* Category color strip */}
+      <div className="h-10" style={{ backgroundColor: style.bg }} />
+
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         {/* Meta row */}
         <div className="mb-3 flex items-center gap-2">

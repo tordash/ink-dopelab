@@ -15,7 +15,7 @@ export function Footer() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white">
               <Pen className="h-3.5 w-3.5" />
             </div>
-            <span className="text-lg font-bold text-[var(--color-text-primary)]">
+            <span className="text-lg font-bold font-[family-name:var(--font-typewriter)] text-[var(--color-text-primary)]">
               INK
             </span>
           </Link>

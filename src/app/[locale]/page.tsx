@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { getPostsByLocale, getFeaturedPosts } from "@/lib/content";
 import { ArticleCard } from "@/components/blog/article-card";
@@ -56,9 +56,17 @@ function HeroBadge() {
 
 function HeroContent() {
   const t = useTranslations("home");
+  const locale = useLocale();
+  const fontClass =
+    locale === "th"
+      ? "font-[family-name:var(--font-thai-display)]"
+      : "font-[family-name:var(--font-typewriter)]";
+
   return (
     <>
-      <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-5xl lg:text-6xl">
+      <h1
+        className={`mb-6 text-4xl font-extrabold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-5xl lg:text-6xl ${fontClass}`}
+      >
         {t("hero_subtitle")}
       </h1>
       <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] sm:text-xl">

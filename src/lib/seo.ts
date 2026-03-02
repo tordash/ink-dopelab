@@ -76,7 +76,9 @@ export function articleJsonLd({
     dateModified: updated || date,
     url,
     inLanguage: locale === "th" ? "th-TH" : "en-US",
-    image: image || undefined,
+    image:
+      image ||
+      `${SITE_URL}/api/og?title=${encodeURIComponent(title)}&locale=${locale}`,
     author: {
       "@type": "Organization",
       name: "DopeLab Studio",
