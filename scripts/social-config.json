@@ -1,0 +1,22 @@
+{
+  "accounts": {
+    "facebook": {
+      "accountId": "21397",
+      "pageId": "979026445285293",
+      "name": "DopeLab.Studio"
+    },
+    "instagram": {
+      "accountId": "33418",
+      "username": "dopelab.studio"
+    }
+  },
+  "defaults": {
+    "platform": "both",
+    "lang": "th",
+    "hashtags": ["#DopeLab", "#AIMarketing", "#INKbyDopeLab"]
+  },
+  "urls": {
+    "blotato_api": "https://api.blotato.com/api",
+    "blog_base": "https://ink.dopelab.studio"
+  }
+}
