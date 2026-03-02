@@ -2,6 +2,18 @@
 
 All notable changes to INK by DopeLab will be documented in this file.
 
+## [0.4.0] - 2026-03-02
+
+### Added
+- **About page** — `/[locale]/about` with 6 sections: hero, who we are (stat cards), AI team (6 agent cards), what is INK, tech stack (pill badges), CTA
+- **Content scaffolding script** — `scripts/new-article.sh` scaffolds TH+EN article templates with frontmatter, category picker, validation
+- **Auto-translate script** — `scripts/translate.sh` translates TH→EN via Claude API (curl + jq), with --dry-run and --force flags
+- **Navigation** — About link added to desktop header and mobile nav
+- **i18n** — 28 "about" translation keys (TH + EN)
+
+### Infrastructure
+- Agent Teams workflow: 3 parallel agents (about-page, content-cli, translate-cli) built Phase 3 concurrently
+
 ## [0.3.0] - 2026-03-02
 
 ### Added
