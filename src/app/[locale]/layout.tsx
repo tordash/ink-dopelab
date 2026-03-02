@@ -75,6 +75,14 @@ export default async function LocaleLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${sarabun.variable} ${specialElite.variable} ${charmonman.variable}`}
     >
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="INK by DopeLab"
+          href="/feed.xml"
+        />
+      </head>
       <body className="min-h-screen bg-[var(--color-surface)] font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <NextIntlClientProvider messages={messages}>

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { posts } from "#site/content";
+import { getAllCategories, getAllTags } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
@@ -13,6 +14,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: post.featured ? 0.9 : 0.7,
     }));
+
+  const categoryUrls = (["th", "en"] as const).flatMap((locale) =>
+    getAllCategories(locale).map((cat) => ({
+      url: `${SITE_URL}/${locale}/blog/category/${encodeURIComponent(cat)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }))
+  );
+
+  const tagUrls = (["th", "en"] as const).flatMap((locale) =>
+    getAllTags(locale).map((tag) => ({
+      url: `${SITE_URL}/${locale}/blog/tag/${encodeURIComponent(tag)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }))
+  );
 
   return [
     {
@@ -40,5 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     ...postUrls,
+    ...categoryUrls,
+    ...tagUrls,
   ];
 }

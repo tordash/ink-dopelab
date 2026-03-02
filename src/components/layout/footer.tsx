@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Pen } from "lucide-react";
+import { Pen, Rss } from "lucide-react";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -28,6 +28,15 @@ export function Footer() {
             <span>{t("copyright", { year })}</span>
             <span>·</span>
             <span>{t("built_with")}</span>
+            <span>·</span>
+            <a
+              href="/feed.xml"
+              className="inline-flex items-center gap-1 transition-colors hover:text-[var(--color-primary)]"
+              title="RSS Feed"
+            >
+              <Rss className="h-3.5 w-3.5" />
+              RSS
+            </a>
           </div>
         </div>
       </div>

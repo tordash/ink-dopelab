@@ -27,7 +27,7 @@ interface ArticleCardProps {
   featured?: boolean;
 }
 
-const CATEGORY_STYLES: Record<string, { bg: string; icon: LucideIcon }> = {
+export const CATEGORY_STYLES: Record<string, { bg: string; icon: LucideIcon }> = {
   "AI Workflow": { bg: "#2B4C7E", icon: Cpu },
   "Developer Tools": { bg: "#27AE60", icon: Terminal },
   "Agency Tools": { bg: "#F39C12", icon: BarChart3 },

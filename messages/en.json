@@ -24,7 +24,15 @@
     "title": "All Articles",
     "description": "Stories, experiences, and case studies from using AI in real work",
     "no_posts": "No articles yet",
-    "back": "Back"
+    "back": "Back",
+    "categories": "Categories",
+    "all": "All",
+    "all_tags": "All Tags",
+    "posts_in_category": "Articles in {category}",
+    "posts_with_tag": "Articles tagged #{tag}",
+    "post_count": "{count, plural, one {# article} other {# articles}}",
+    "no_results": "No articles found",
+    "rss_feed": "RSS Feed"
   },
   "article": {
     "toc": "Table of Contents",

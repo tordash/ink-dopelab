@@ -24,7 +24,15 @@
     "title": "บทความทั้งหมด",
     "description": "เรื่องเล่า ประสบการณ์ และ case study จากการใช้ AI ในงานจริง",
     "no_posts": "ยังไม่มีบทความ",
-    "back": "กลับ"
+    "back": "กลับ",
+    "categories": "หมวดหมู่",
+    "all": "ทั้งหมด",
+    "all_tags": "แท็กทั้งหมด",
+    "posts_in_category": "บทความในหมวด {category}",
+    "posts_with_tag": "บทความที่แท็ก #{tag}",
+    "post_count": "{count} บทความ",
+    "no_results": "ไม่พบบทความ",
+    "rss_feed": "RSS Feed"
   },
   "article": {
     "toc": "สารบัญ",
