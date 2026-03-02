@@ -5,6 +5,7 @@ import { ArticleBody } from "@/components/blog/article-body";
 import { TableOfContents } from "@/components/blog/toc";
 import { ArticleCard } from "@/components/blog/article-card";
 import { ShareButtons } from "@/components/blog/share-buttons";
+import { Comments } from "@/components/blog/comments";
 import { createMetadata, articleJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
@@ -159,6 +160,9 @@ export default async function ArticlePage({
             </aside>
           </div>
         </div>
+
+        {/* Comments */}
+        <Comments />
 
         {/* Related posts */}
         {related.length > 0 && (

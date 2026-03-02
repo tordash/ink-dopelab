@@ -43,7 +43,8 @@
     "published": "เผยแพร่",
     "updated": "อัปเดต",
     "reading_time": "อ่าน {minutes} นาที",
-    "tags": "แท็ก"
+    "tags": "แท็ก",
+    "comments": "ความคิดเห็น"
   },
   "about": {
     "hero_badge": "เกี่ยวกับเรา",

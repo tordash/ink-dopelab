@@ -43,7 +43,8 @@
     "published": "Published",
     "updated": "Updated",
     "reading_time": "{minutes} min read",
-    "tags": "Tags"
+    "tags": "Tags",
+    "comments": "Comments"
   },
   "about": {
     "hero_badge": "About Us",
