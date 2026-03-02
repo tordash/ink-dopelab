@@ -2,6 +2,20 @@
 
 All notable changes to INK by DopeLab will be documented in this file.
 
+## [0.5.0] - 2026-03-02
+
+### Added
+- **Blotato auto-post** — `scripts/post-social.sh` posts articles to FB/IG via Blotato API with AI-generated captions
+- **Social visual generator** — `scripts/create-social-visual.sh` creates carousel/quotes/video from articles via Blotato Visual API
+- **Social config** — `scripts/social-config.json` with DopeLab.Studio account settings
+- **Giscus comments** — GitHub Discussions-powered comments on every article, dark mode + locale-aware
+- **@giscus/react** — New dependency for comments component
+
+### Infrastructure
+- GitHub Discussions enabled on tordash/ink-dopelab
+- 4 parallel agents built Phase 4 (social-post, social-visual, vercel-deploy, giscus-comments)
+- Vercel auto-deploy: requires manual GitHub App install (see README)
+
 ## [0.4.0] - 2026-03-02
 
 ### Added
