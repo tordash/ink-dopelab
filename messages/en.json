@@ -32,7 +32,9 @@
     "posts_with_tag": "Articles tagged #{tag}",
     "post_count": "{count, plural, one {# article} other {# articles}}",
     "no_results": "No articles found",
-    "rss_feed": "RSS Feed"
+    "rss_feed": "RSS Feed",
+    "search": "Search",
+    "search_placeholder": "Search articles..."
   },
   "article": {
     "toc": "Table of Contents",

@@ -32,7 +32,9 @@
     "posts_with_tag": "บทความที่แท็ก #{tag}",
     "post_count": "{count} บทความ",
     "no_results": "ไม่พบบทความ",
-    "rss_feed": "RSS Feed"
+    "rss_feed": "RSS Feed",
+    "search": "ค้นหา",
+    "search_placeholder": "ค้นหาบทความ..."
   },
   "article": {
     "toc": "สารบัญ",
