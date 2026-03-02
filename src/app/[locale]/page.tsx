@@ -19,7 +19,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden border-b border-[var(--color-border)] bg-[#0a0a0a]">
         {/* Layer 1: Background image */}
         <img
-          src="/hero-bg.png"
+          src="/hero-bg.jpg"
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"

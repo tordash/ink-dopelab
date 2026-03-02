@@ -52,7 +52,7 @@ function HeroSection() {
     <section className="relative overflow-hidden border-b border-[var(--color-border)] bg-[#0a0a0a]">
       {/* Background image — flowing ink + golden particles */}
       <img
-        src="/about-hero-bg.png"
+        src="/about-hero-bg.jpg"
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50"
