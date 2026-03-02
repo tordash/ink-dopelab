@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { createMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
+import { HeroBackground } from "@/components/hero-background";
 import {
   Bot,
   Brain,
@@ -48,17 +49,28 @@ export default async function AboutPage() {
 function HeroSection() {
   const t = useTranslations("about");
   return (
-    <section className="border-b border-[var(--color-border)] bg-gradient-to-b from-[var(--color-surface)] to-[var(--color-surface-secondary)]">
-      <div className="mx-auto max-w-[var(--container-wide)] px-4 py-16 sm:px-6 sm:py-24">
+    <section className="relative overflow-hidden border-b border-[var(--color-border)] bg-[#0a0a0a]">
+      {/* Background image — flowing ink + golden particles */}
+      <img
+        src="/about-hero-bg.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50"
+      />
+      {/* Particle animation */}
+      <HeroBackground />
+      {/* Overlay for text readability */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
+      <div className="relative mx-auto max-w-[var(--container-wide)] px-4 py-16 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)]/20 bg-[var(--color-primary)]/5 px-5 py-2 text-sm font-medium text-[var(--color-primary)]">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10 px-5 py-2 text-sm font-medium text-[#FFCC00]">
             <Bot className="h-4 w-4" />
             <span>{t("hero_badge")}</span>
           </div>
-          <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-5xl">
+          <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">
             {t("hero_title")}
           </h1>
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-300 sm:text-xl">
             {t("hero_description")}
           </p>
         </div>
@@ -230,7 +242,7 @@ function CTASection() {
   const t = useTranslations("about");
   return (
     <section className="border-t border-[var(--color-border)] py-12 sm:py-16">
-      <div className="mx-auto max-w-2xl rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] p-8 text-center text-white sm:p-12">
+      <div className="mx-auto max-w-2xl rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#000000] p-8 text-center text-white sm:p-12">
         <h2 className="mb-4 text-2xl font-bold sm:text-3xl">
           {t("cta_title")}
         </h2>
@@ -238,10 +250,10 @@ function CTASection() {
           {t("cta_description")}
         </p>
         <a
-          href="https://dopelab.studio"
+          href="https://www.facebook.com/profile.php?id=61585916640581"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-[var(--color-primary)] transition-transform hover:scale-105"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#FFCC00] px-6 py-3 font-semibold text-[#1A1A1A] transition-transform hover:scale-105"
         >
           {t("cta_button")}
           <ArrowRight className="h-4 w-4" />

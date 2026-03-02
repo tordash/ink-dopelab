@@ -3,7 +3,7 @@ import { getLocale } from "next-intl/server";
 import { getPostBySlug, getPostsByLocale, getRelatedPosts } from "@/lib/content";
 import { ArticleBody } from "@/components/blog/article-body";
 import { TableOfContents } from "@/components/blog/toc";
-import { ArticleCard } from "@/components/blog/article-card";
+import { ArticleCard, CATEGORY_STYLES } from "@/components/blog/article-card";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { Comments } from "@/components/blog/comments";
 import { createMetadata, articleJsonLd } from "@/lib/seo";
@@ -98,7 +98,13 @@ export default async function ArticlePage({
         {/* Article header */}
         <header className="mx-auto mb-12 max-w-[var(--container-article)]">
           <div className="mb-5 flex flex-wrap items-center gap-3">
-            <span className="rounded-md bg-[var(--color-primary)] px-3 py-1 text-xs font-semibold text-white">
+            <span
+              className="flex items-center gap-1.5 rounded-md bg-[#FFCC00] px-3 py-1 text-xs font-semibold text-[#1A1A1A]"
+            >
+              <span
+                className="inline-block h-3 w-3 rounded-sm"
+                style={{ backgroundColor: (CATEGORY_STYLES[post.category] || { bg: "#1A1A1A" }).bg }}
+              />
               {post.category}
             </span>
             <span className="flex items-center gap-1.5 text-sm text-[var(--color-text-tertiary)]">
@@ -122,17 +128,17 @@ export default async function ArticlePage({
 
           {/* Author byline */}
           <div className="mt-6 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-bold text-white">
-              DL
-            </div>
+            <img
+              src="/author-tor.jpg"
+              alt="Tor Supakit"
+              className="h-10 w-10 rounded-full object-cover"
+            />
             <div>
               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                DopeLab Studio
+                Tor Supakit
               </p>
               <p className="text-xs text-[var(--color-text-tertiary)]">
-                {locale === "th"
-                  ? "AI × Digital Marketing Agency"
-                  : "AI × Digital Marketing Agency"}
+                AI × Digital Marketing Agency
               </p>
             </div>
           </div>

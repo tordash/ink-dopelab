@@ -2,6 +2,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { getPostsByLocale, getFeaturedPosts } from "@/lib/content";
 import { ArticleCard } from "@/components/blog/article-card";
+import { HeroBackground } from "@/components/hero-background";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, Pen } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
@@ -15,10 +16,21 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="border-b border-[var(--color-border)] bg-gradient-to-b from-[var(--color-surface)] to-[var(--color-surface-secondary)]">
-        <div className="mx-auto max-w-[var(--container-wide)] px-4 py-16 sm:px-6 sm:py-24">
+      <section className="relative overflow-hidden border-b border-[var(--color-border)] bg-[#0a0a0a]">
+        {/* Layer 1: Background image */}
+        <img
+          src="/hero-bg.png"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
+        />
+        {/* Layer 2: Particle animation */}
+        <HeroBackground />
+        {/* Layer 3: Overlay for text readability */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 to-black/70" />
+        <div className="relative mx-auto max-w-[var(--container-wide)] px-4 py-16 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)]/20 bg-[var(--color-primary)]/5 px-5 py-2 text-sm font-medium text-[var(--color-primary)]">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10 px-5 py-2 text-sm font-medium text-[#FFCC00]">
               <Pen className="h-4 w-4" />
               <HeroBadge />
             </div>
@@ -59,17 +71,17 @@ function HeroContent() {
   const locale = useLocale();
   const fontClass =
     locale === "th"
-      ? "font-[family-name:var(--font-thai-display)]"
+      ? "font-[family-name:var(--font-thai)]"
       : "font-[family-name:var(--font-typewriter)]";
 
   return (
     <>
       <h1
-        className={`mb-6 text-4xl font-extrabold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-5xl lg:text-6xl ${fontClass}`}
+        className={`mb-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl ${fontClass}`}
       >
         {t("hero_subtitle")}
       </h1>
-      <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] sm:text-xl">
+      <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-300 sm:text-xl">
         {t("hero_description")}
       </p>
     </>

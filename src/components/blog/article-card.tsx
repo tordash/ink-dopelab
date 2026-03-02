@@ -36,17 +36,105 @@ interface ArticleCardProps {
   featured?: boolean;
 }
 
-export const CATEGORY_STYLES: Record<string, { bg: string; icon: LucideIcon }> = {
-  "AI Workflow": { bg: "#2B4C7E", icon: Cpu },
-  "Developer Tools": { bg: "#27AE60", icon: Terminal },
-  "Agency Tools": { bg: "#F39C12", icon: BarChart3 },
-  "AI for Restaurant": { bg: "#C0392B", icon: UtensilsCrossed },
-  "AI Content": { bg: "#8E44AD", icon: Palette },
+export const CATEGORY_STYLES: Record<
+  string,
+  { bg: string; bgDark: string; text: string; textDark: string; icon: LucideIcon }
+> = {
+  "AI Workflow": {
+    bg: "#1A1A1A",
+    bgDark: "#FFCC00",
+    text: "#FFFFFF",
+    textDark: "#1A1A1A",
+    icon: Cpu,
+  },
+  "Developer Tools": {
+    bg: "#333333",
+    bgDark: "#8AB4F8",
+    text: "#FFFFFF",
+    textDark: "#1A1A1A",
+    icon: Terminal,
+  },
+  "Agency Tools": {
+    bg: "#D4AA00",
+    bgDark: "#FFD740",
+    text: "#FFFFFF",
+    textDark: "#1A1A1A",
+    icon: BarChart3,
+  },
+  "AI for Restaurant": {
+    bg: "#8B4513",
+    bgDark: "#D4915A",
+    text: "#FFFFFF",
+    textDark: "#1A1A1A",
+    icon: UtensilsCrossed,
+  },
+  "AI Content": {
+    bg: "#555555",
+    bgDark: "#B0B0B0",
+    text: "#FFFFFF",
+    textDark: "#1A1A1A",
+    icon: Palette,
+  },
+};
+
+const DEFAULT_STYLE = {
+  bg: "#1A1A1A",
+  bgDark: "#FFCC00",
+  text: "#FFFFFF",
+  textDark: "#1A1A1A",
+  icon: Pen,
 };
 
 function getCategoryStyle(category: string) {
-  return CATEGORY_STYLES[category] || { bg: "#2B4C7E", icon: Pen };
+  return CATEGORY_STYLES[category] || DEFAULT_STYLE;
 }
+
+/**
+ * Shared CSS for category-colored elements.
+ * Uses CSS custom properties (--cat-bg, --cat-bg-dark, etc.) set per-card via inline style.
+ * Dark mode switches via the .dark class (next-themes).
+ */
+const CATEGORY_CSS = `
+  .cat-strip {
+    background-color: var(--cat-bg);
+  }
+  .dark .cat-strip {
+    background-color: var(--cat-bg-dark);
+  }
+  .cat-pill {
+    background-color: var(--cat-bg);
+    color: var(--cat-text);
+  }
+  .dark .cat-pill {
+    background-color: var(--cat-bg-dark);
+    color: var(--cat-text-dark);
+  }
+  .cat-header {
+    background-color: var(--cat-bg);
+  }
+  .dark .cat-header {
+    background-color: var(--cat-bg-dark);
+  }
+  .cat-header-content {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .dark .cat-header-content {
+    color: var(--cat-text-dark);
+  }
+  .cat-header-icon {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .dark .cat-header-icon {
+    color: var(--cat-text-dark);
+    opacity: 0.8;
+  }
+  .cat-top-bar {
+    background-color: var(--cat-bg);
+  }
+  .dark .cat-top-bar {
+    background-color: var(--cat-bg-dark);
+  }
+`;
 
 export function ArticleCard({
   title,
@@ -63,36 +151,45 @@ export function ArticleCard({
   const style = getCategoryStyle(category);
   const Icon = style.icon;
 
+  // CSS custom properties for per-card category colors (cascade to child .cat-* elements)
+  const cardCssVars = {
+    "--cat-bg": style.bg,
+    "--cat-bg-dark": style.bgDark,
+    "--cat-text": style.text,
+    "--cat-text-dark": style.textDark,
+  } as React.CSSProperties;
+
   if (featured) {
     return (
       <Link
         href={`/blog/${slug}`}
         className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/40 hover:shadow-xl hover:shadow-[var(--color-primary)]/5"
+        style={cardCssVars}
       >
+        <style>{CATEGORY_CSS}</style>
+
+        {/* Category color accent — left strip (4px) */}
+        <div className="absolute left-0 top-0 z-10 h-full w-1 rounded-l-2xl cat-strip" />
+
         {/* Cover image or category color block */}
         {cover ? (
-          <div className="relative aspect-[16/9] overflow-hidden">
+          <div className="relative aspect-[16/9] max-h-[360px] overflow-hidden">
             <img
               src={cover.src}
               alt={title}
               loading="lazy"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            <span
-              className="absolute left-3 top-3 flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold text-white shadow-sm"
-              style={{ backgroundColor: style.bg }}
-            >
+            {/* Category pill overlaid on image */}
+            <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold shadow-sm cat-pill">
               <Icon className="h-3.5 w-3.5" />
               {category}
             </span>
           </div>
         ) : (
-          <div
-            className="flex h-20 items-center gap-3 px-6"
-            style={{ backgroundColor: style.bg }}
-          >
-            <Icon className="h-7 w-7 text-white/80" />
-            <span className="text-sm font-semibold text-white/90">
+          <div className="flex h-20 items-center gap-3 px-6 cat-header">
+            <Icon className="h-7 w-7 cat-header-icon" />
+            <span className="text-sm font-semibold cat-header-content">
               {category}
             </span>
           </div>
@@ -136,28 +233,43 @@ export function ArticleCard({
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/30 hover:shadow-lg hover:shadow-[var(--color-primary)]/5"
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/30 hover:shadow-lg hover:shadow-[var(--color-primary)]/5"
+      style={cardCssVars}
     >
-      {/* Cover image or category color strip */}
+      <style>{CATEGORY_CSS}</style>
+
+      {/* Category color accent — left strip (4px) */}
+      <div className="absolute left-0 top-0 z-10 h-full w-1 rounded-l-xl cat-strip" />
+
+      {/* Cover image or category color top bar */}
       {cover ? (
-        <div className="relative h-40 overflow-hidden">
+        <div className="relative aspect-[16/9] max-h-[280px] overflow-hidden">
           <img
             src={cover.src}
             alt={title}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
+          {/* Category pill overlaid on image */}
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold shadow-sm cat-pill">
+            <Icon className="h-3.5 w-3.5" />
+            {category}
+          </span>
         </div>
       ) : (
-        <div className="h-10" style={{ backgroundColor: style.bg }} />
+        <div className="h-2 cat-top-bar" />
       )}
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         {/* Meta row */}
         <div className="mb-3 flex items-center gap-2">
-          <span className="rounded-md bg-[var(--color-surface-tertiary)] px-2 py-0.5 text-xs font-semibold text-[var(--color-text-secondary)]">
-            {category}
-          </span>
+          {/* Category pill (always visible — when cover exists it's on the image, otherwise inline here) */}
+          {!cover && (
+            <span className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-0.5 text-xs font-semibold cat-pill">
+              <Icon className="h-3 w-3" />
+              {category}
+            </span>
+          )}
           <span className="text-xs text-[var(--color-text-tertiary)]">
             {formatDate(date, locale)}
           </span>

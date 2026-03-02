@@ -3,39 +3,31 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
-import { Inter, Sarabun, Special_Elite, Charmonman } from "next/font/google";
+import { League_Spartan, Kanit, Special_Elite } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import "@/app/globals.css";
 
-const inter = Inter({
+const leagueSpartan = League_Spartan({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-league",
   display: "swap",
 });
 
-const sarabun = Sarabun({
-  weight: ["300", "400", "500", "600", "700"],
+const kanit = Kanit({
+  weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["thai", "latin"],
-  variable: "--font-sarabun",
+  variable: "--font-kanit",
   display: "swap",
 });
 
-// Typewriter/ink display font (English) — for logo & accents
+// Typewriter/ink display font (English) — for INK wordmark only
 const specialElite = Special_Elite({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-typewriter",
-  display: "swap",
-});
-
-// Vintage Thai display font — for Thai logo & accents
-const charmonman = Charmonman({
-  weight: ["400", "700"],
-  subsets: ["thai", "latin"],
-  variable: "--font-thai-display",
   display: "swap",
 });
 
@@ -74,7 +66,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${inter.variable} ${sarabun.variable} ${specialElite.variable} ${charmonman.variable}`}
+      className={`${leagueSpartan.variable} ${kanit.variable} ${specialElite.variable}`}
     >
       <head>
         <link

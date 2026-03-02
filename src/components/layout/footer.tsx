@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Pen, Rss } from "lucide-react";
+import { Rss } from "lucide-react";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -12,9 +12,11 @@ export function Footer() {
         <div className="flex flex-col items-center gap-6 text-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white">
-              <Pen className="h-3.5 w-3.5" />
-            </div>
+            <img
+              src="/logo-sphere.jpg"
+              alt="DopeLab"
+              className="h-8 w-8 rounded-lg object-cover"
+            />
             <span className="text-lg font-bold font-[family-name:var(--font-typewriter)] text-[var(--color-text-primary)]">
               INK
             </span>

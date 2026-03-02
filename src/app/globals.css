@@ -2,16 +2,16 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Agency Brand Colors */
-  --color-primary: #2B4C7E;
-  --color-primary-light: #3A6BA5;
-  --color-primary-dark: #1E3A5F;
-  --color-secondary: #F39C12;
-  --color-secondary-light: #F5B041;
-  --color-secondary-dark: #D68910;
-  --color-accent: #27AE60;
-  --color-accent-light: #2ECC71;
-  --color-accent-dark: #1E8449;
+  /* DopeLab Brand Colors */
+  --color-primary: #1A1A1A;
+  --color-primary-light: #333333;
+  --color-primary-dark: #000000;
+  --color-secondary: #FFCC00;
+  --color-secondary-light: #FFD633;
+  --color-secondary-dark: #D4AA00;
+  --color-accent: #FFCC00;
+  --color-accent-light: #FFD633;
+  --color-accent-dark: #D4AA00;
 
   /* Neutral palette */
   --color-surface: #FFFFFF;
@@ -24,18 +24,18 @@
   --color-text-tertiary: #94A3B8;
 
   /* Dark mode colors */
-  --color-dark-surface: #0F172A;
-  --color-dark-surface-secondary: #1E293B;
-  --color-dark-surface-tertiary: #334155;
-  --color-dark-border: #334155;
-  --color-dark-border-light: #1E293B;
+  --color-dark-surface: #191919;
+  --color-dark-surface-secondary: #222222;
+  --color-dark-surface-tertiary: #2A2A2A;
+  --color-dark-border: #333333;
+  --color-dark-border-light: #2A2A2A;
   --color-dark-text-primary: #F1F5F9;
   --color-dark-text-secondary: #94A3B8;
-  --color-dark-text-tertiary: #64748B;
+  --color-dark-text-tertiary: #718BA0;
 
   /* Typography scale */
-  --font-sans: "Inter", "Sarabun", system-ui, sans-serif;
-  --font-thai: "Sarabun", "Inter", system-ui, sans-serif;
+  --font-sans: "League Spartan", "Kanit", system-ui, sans-serif;
+  --font-thai: "Kanit", "League Spartan", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* Spacing & sizing */
@@ -45,14 +45,17 @@
 
 /* Dark mode overrides */
 .dark {
-  --color-surface: #0F172A;
-  --color-surface-secondary: #1E293B;
-  --color-surface-tertiary: #334155;
-  --color-border: #334155;
-  --color-border-light: #1E293B;
+  --color-primary: #FFCC00;
+  --color-primary-light: #FFD633;
+  --color-primary-dark: #D4AA00;
+  --color-surface: #191919;
+  --color-surface-secondary: #222222;
+  --color-surface-tertiary: #2A2A2A;
+  --color-border: #333333;
+  --color-border-light: #2A2A2A;
   --color-text-primary: #F1F5F9;
   --color-text-secondary: #94A3B8;
-  --color-text-tertiary: #64748B;
+  --color-text-tertiary: #718BA0;
 }
 
 /* Base styles */
@@ -160,10 +163,16 @@ body {
 .prose blockquote {
   border-left-width: 4px;
   border-left-color: var(--color-secondary);
-  background-color: var(--color-surface-secondary);
+  background-color: #F0F0F0;
   padding: 1rem 1.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
   font-style: normal;
+  color: #1A1A1A;
+}
+
+.prose blockquote p,
+.prose blockquote strong {
+  color: #1A1A1A;
 }
 
 /* Inline code */
@@ -211,7 +220,13 @@ body {
 }
 
 .dark .prose blockquote {
-  background-color: var(--color-dark-surface-secondary);
+  background-color: #2a2a2a;
+  color: #F1F5F9;
+}
+
+.dark .prose blockquote p,
+.dark .prose blockquote strong {
+  color: #F1F5F9;
 }
 
 .dark .prose :not(pre) > code {
@@ -223,10 +238,10 @@ body {
    ============================================= */
 [data-rehype-pretty-code-figure] pre {
   border-radius: 0.75rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid #2a2a2a;
   padding: 1rem;
   overflow-x: auto;
-  background-color: var(--color-surface-secondary) !important;
+  background-color: #1a1b26 !important;
 }
 
 [data-rehype-pretty-code-figure] code {
@@ -240,18 +255,18 @@ body {
 }
 
 [data-rehype-pretty-code-figure] [data-highlighted-line] {
-  background-color: rgba(43, 76, 126, 0.1);
+  background-color: rgba(26, 26, 26, 0.1);
   border-left: 3px solid var(--color-primary);
   padding-left: calc(1rem - 3px);
 }
 
 .dark [data-rehype-pretty-code-figure] pre {
-  border-color: var(--color-dark-border);
-  background-color: var(--color-dark-surface-secondary) !important;
+  border-color: #333333;
+  background-color: #1a1b26 !important;
 }
 
 .dark [data-rehype-pretty-code-figure] [data-highlighted-line] {
-  background-color: rgba(243, 156, 18, 0.1);
+  background-color: rgba(255, 204, 0, 0.15);
   border-left-color: var(--color-secondary);
 }
 

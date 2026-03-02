@@ -33,19 +33,19 @@ export async function GET(request: Request) {
   let fonts: { name: string; data: ArrayBuffer; style: "normal" }[] = [];
 
   try {
-    const [specialElite, charmonman] = await Promise.all([
-      loadFont("Special Elite", 400),
-      loadFont("Charmonman", 700),
+    const [leagueSpartan, kanit] = await Promise.all([
+      loadFont("League Spartan", 700),
+      loadFont("Kanit", 700),
     ]);
     fonts = [
-      { name: "Special Elite", data: specialElite, style: "normal" },
-      { name: "Charmonman", data: charmonman, style: "normal" },
+      { name: "League Spartan", data: leagueSpartan, style: "normal" },
+      { name: "Kanit", data: kanit, style: "normal" },
     ];
   } catch {
     // Fallback: render without custom fonts
   }
 
-  const titleFont = locale === "th" ? "Charmonman" : "Special Elite";
+  const titleFont = locale === "th" ? "Kanit" : "League Spartan";
   const titleSize = title.length > 40 ? 48 : 56;
 
   return new ImageResponse(
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)",
+          background: "linear-gradient(135deg, #191919 0%, #222222 50%, #191919 100%)",
           position: "relative",
         }}
       >
@@ -65,7 +65,7 @@ export async function GET(request: Request) {
           style={{
             width: "100%",
             height: "6px",
-            background: "linear-gradient(90deg, #2B4C7E 0%, #F39C12 50%, #27AE60 100%)",
+            background: "linear-gradient(90deg, #000000 0%, #FFCC00 50%, #000000 100%)",
             display: "flex",
           }}
         />
@@ -91,12 +91,12 @@ export async function GET(request: Request) {
             >
               <div
                 style={{
-                  backgroundColor: "rgba(243, 156, 18, 0.2)",
-                  border: "1px solid rgba(243, 156, 18, 0.4)",
+                  backgroundColor: "rgba(255, 204, 0, 0.2)",
+                  border: "1px solid rgba(255, 204, 0, 0.4)",
                   borderRadius: "20px",
                   padding: "6px 16px",
                   fontSize: "16px",
-                  color: "#F5B041",
+                  color: "#FFD633",
                   display: "flex",
                 }}
               >
@@ -137,11 +137,11 @@ export async function GET(request: Request) {
                 width: "36px",
                 height: "36px",
                 borderRadius: "8px",
-                backgroundColor: "#2B4C7E",
+                backgroundColor: "#FFCC00",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "white",
+                color: "#1A1A1A",
                 fontSize: "14px",
                 fontWeight: 700,
               }}
@@ -163,7 +163,7 @@ export async function GET(request: Request) {
           <div
             style={{
               fontSize: "16px",
-              color: "#64748B",
+              color: "#718BA0",
               display: "flex",
             }}
           >

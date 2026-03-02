@@ -1,25 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" fill="none">
   <defs>
     <filter id="s3" x="-4%" y="-4%" width="108%" height="112%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#2B4C7E" flood-opacity="0.12"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1A1A1A" flood-opacity="0.12"/>
     </filter>
     <linearGradient id="navyGrad3" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#2B4C7E"/>
-      <stop offset="100%" stop-color="#1a3a66"/>
+      <stop offset="0%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#000000"/>
     </linearGradient>
     <linearGradient id="timelineGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#2B4C7E"/>
-      <stop offset="40%" stop-color="#2B4C7E"/>
-      <stop offset="60%" stop-color="#F39C12"/>
-      <stop offset="100%" stop-color="#F39C12"/>
+      <stop offset="0%" stop-color="#1A1A1A"/>
+      <stop offset="40%" stop-color="#1A1A1A"/>
+      <stop offset="60%" stop-color="#FFCC00"/>
+      <stop offset="100%" stop-color="#FFCC00"/>
     </linearGradient>
     <linearGradient id="goldGrad3" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#F39C12"/>
-      <stop offset="100%" stop-color="#E67E22"/>
+      <stop offset="0%" stop-color="#FFCC00"/>
+      <stop offset="100%" stop-color="#D4AA00"/>
     </linearGradient>
     <linearGradient id="greenGrad3" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#27AE60"/>
-      <stop offset="100%" stop-color="#1e8c4d"/>
+      <stop offset="0%" stop-color="#D4AA00"/>
+      <stop offset="100%" stop-color="#b89900"/>
     </linearGradient>
     <!-- Agent icon clipPath -->
     <clipPath id="circClip">
@@ -32,8 +32,8 @@
   <rect x="0" y="0" width="900" height="4" rx="2" fill="url(#timelineGrad)"/>
 
   <!-- Title -->
-  <text x="450" y="38" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="18" font-weight="700" fill="#2B4C7E">Building INK by DopeLab: The Pipeline</text>
-  <text x="450" y="56" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" fill="#64748B">From Single Agent Scaffold to Multi-Agent Production Blog</text>
+  <text x="450" y="38" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="18" font-weight="700" fill="#1A1A1A">Building INK by DopeLab: The Pipeline</text>
+  <text x="450" y="56" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="11" fill="#64748B">From Single Agent Scaffold to Multi-Agent Production Blog</text>
 
   <!-- ===== TIMELINE BAR ===== -->
   <!-- Timeline line -->
@@ -43,160 +43,160 @@
 
   <!-- ===== PHASE 0 ===== -->
   <!-- Timeline dot -->
-  <circle cx="100" cy="190" r="8" fill="#2B4C7E" stroke="#FFFFFF" stroke-width="2"/>
-  <text x="100" y="193" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">0</text>
+  <circle cx="100" cy="190" r="8" fill="#1A1A1A" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="100" y="193" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">0</text>
 
   <!-- Card (above) -->
-  <rect x="45" y="78" width="110" height="90" rx="10" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#s3)"/>
-  <rect x="45" y="78" width="110" height="24" rx="10" fill="#2B4C7E"/>
-  <rect x="45" y="92" width="110" height="10" fill="#2B4C7E"/>
-  <text x="100" y="96" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 0</text>
-  <text x="100" y="118" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Scaffold</text>
-  <text x="100" y="133" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Next.js 16</text>
-  <text x="100" y="145" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Velite + MDX</text>
-  <text x="100" y="157" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">next-intl</text>
+  <rect x="45" y="78" width="110" height="90" rx="10" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.5" filter="url(#s3)"/>
+  <rect x="45" y="78" width="110" height="24" rx="10" fill="#1A1A1A"/>
+  <rect x="45" y="92" width="110" height="10" fill="#1A1A1A"/>
+  <text x="100" y="96" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 0</text>
+  <text x="100" y="118" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Scaffold</text>
+  <text x="100" y="133" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Next.js 16</text>
+  <text x="100" y="145" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Velite + MDX</text>
+  <text x="100" y="157" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">next-intl</text>
   <!-- Connector line -->
-  <line x1="100" y1="168" x2="100" y2="182" stroke="#2B4C7E" stroke-width="1.5"/>
+  <line x1="100" y1="168" x2="100" y2="182" stroke="#1A1A1A" stroke-width="1.5"/>
 
   <!-- Mode label -->
-  <rect x="62" y="204" width="76" height="18" rx="4" fill="#EBF5FF"/>
-  <text x="100" y="216" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="600" fill="#2B4C7E">Single Agent</text>
+  <rect x="62" y="204" width="76" height="18" rx="4" fill="#F5F5F5"/>
+  <text x="100" y="216" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="600" fill="#1A1A1A">Single Agent</text>
 
   <!-- ===== PHASE 1 ===== -->
-  <circle cx="250" cy="190" r="8" fill="#2B4C7E" stroke="#FFFFFF" stroke-width="2"/>
-  <text x="250" y="193" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">1</text>
+  <circle cx="250" cy="190" r="8" fill="#1A1A1A" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="250" y="193" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">1</text>
 
   <!-- Card (below) -->
-  <rect x="195" y="232" width="110" height="90" rx="10" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#s3)"/>
-  <rect x="195" y="232" width="110" height="24" rx="10" fill="#2B4C7E"/>
-  <rect x="195" y="246" width="110" height="10" fill="#2B4C7E"/>
-  <text x="250" y="250" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 1</text>
-  <text x="250" y="272" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">MVP Polish</text>
-  <text x="250" y="287" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">OG images</text>
-  <text x="250" y="299" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Custom fonts</text>
-  <text x="250" y="311" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Article cards</text>
+  <rect x="195" y="232" width="110" height="90" rx="10" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.5" filter="url(#s3)"/>
+  <rect x="195" y="232" width="110" height="24" rx="10" fill="#1A1A1A"/>
+  <rect x="195" y="246" width="110" height="10" fill="#1A1A1A"/>
+  <text x="250" y="250" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 1</text>
+  <text x="250" y="272" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">MVP Polish</text>
+  <text x="250" y="287" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">OG images</text>
+  <text x="250" y="299" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Custom fonts</text>
+  <text x="250" y="311" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Article cards</text>
   <!-- Connector line -->
-  <line x1="250" y1="198" x2="250" y2="232" stroke="#2B4C7E" stroke-width="1.5"/>
+  <line x1="250" y1="198" x2="250" y2="232" stroke="#1A1A1A" stroke-width="1.5"/>
 
   <!-- Mode label -->
-  <rect x="212" y="164" width="76" height="18" rx="4" fill="#EBF5FF"/>
-  <text x="250" y="176" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="600" fill="#2B4C7E">Single Agent</text>
+  <rect x="212" y="164" width="76" height="18" rx="4" fill="#F5F5F5"/>
+  <text x="250" y="176" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="600" fill="#1A1A1A">Single Agent</text>
 
   <!-- ===== PHASE 2 ===== -->
-  <circle cx="400" cy="190" r="8" fill="#2B4C7E" stroke="#FFFFFF" stroke-width="2"/>
-  <text x="400" y="193" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">2</text>
+  <circle cx="400" cy="190" r="8" fill="#1A1A1A" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="400" y="193" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">2</text>
 
   <!-- Card (above) -->
-  <rect x="345" y="78" width="110" height="90" rx="10" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#s3)"/>
-  <rect x="345" y="78" width="110" height="24" rx="10" fill="#2B4C7E"/>
-  <rect x="345" y="92" width="110" height="10" fill="#2B4C7E"/>
-  <text x="400" y="96" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 2</text>
-  <text x="400" y="118" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Features</text>
-  <text x="400" y="133" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Categories</text>
-  <text x="400" y="145" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Tags + RSS</text>
-  <text x="400" y="157" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Search</text>
-  <line x1="400" y1="168" x2="400" y2="182" stroke="#2B4C7E" stroke-width="1.5"/>
+  <rect x="345" y="78" width="110" height="90" rx="10" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.5" filter="url(#s3)"/>
+  <rect x="345" y="78" width="110" height="24" rx="10" fill="#1A1A1A"/>
+  <rect x="345" y="92" width="110" height="10" fill="#1A1A1A"/>
+  <text x="400" y="96" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 2</text>
+  <text x="400" y="118" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Features</text>
+  <text x="400" y="133" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Categories</text>
+  <text x="400" y="145" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Tags + RSS</text>
+  <text x="400" y="157" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Search</text>
+  <line x1="400" y1="168" x2="400" y2="182" stroke="#1A1A1A" stroke-width="1.5"/>
 
   <!-- Mode label -->
-  <rect x="362" y="204" width="76" height="18" rx="4" fill="#EBF5FF"/>
-  <text x="400" y="216" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="600" fill="#2B4C7E">Single Agent</text>
+  <rect x="362" y="204" width="76" height="18" rx="4" fill="#F5F5F5"/>
+  <text x="400" y="216" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="600" fill="#1A1A1A">Single Agent</text>
 
   <!-- ===== TRANSITION MARKER ===== -->
   <!-- Vertical dashed line -->
-  <line x1="480" y1="70" x2="480" y2="340" stroke="#F39C12" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
-  <rect x="460" y="345" width="40" height="20" rx="4" fill="#FEF3C7" stroke="#F39C12" stroke-width="1"/>
-  <text x="480" y="359" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8" font-weight="700" fill="#E67E22">SHIFT</text>
+  <line x1="480" y1="70" x2="480" y2="340" stroke="#FFCC00" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+  <rect x="460" y="345" width="40" height="20" rx="4" fill="#FFF8E1" stroke="#FFCC00" stroke-width="1"/>
+  <text x="480" y="359" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="8" font-weight="700" fill="#D4AA00">SHIFT</text>
 
   <!-- ===== PHASE 3 (Agent Teams Start) ===== -->
-  <circle cx="550" cy="190" r="10" fill="#F39C12" stroke="#FFFFFF" stroke-width="2"/>
-  <text x="550" y="193" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">3</text>
+  <circle cx="550" cy="190" r="10" fill="#FFCC00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="550" y="193" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">3</text>
 
   <!-- Card (below) — highlighted -->
-  <rect x="493" y="232" width="114" height="105" rx="10" fill="#FFFBEB" stroke="#F39C12" stroke-width="2" filter="url(#s3)"/>
+  <rect x="493" y="232" width="114" height="105" rx="10" fill="#FFFBEB" stroke="#FFCC00" stroke-width="2" filter="url(#s3)"/>
   <rect x="493" y="232" width="114" height="24" rx="10" fill="url(#goldGrad3)"/>
   <rect x="493" y="246" width="114" height="10" fill="url(#goldGrad3)"/>
-  <text x="550" y="250" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 3</text>
-  <text x="550" y="272" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">About + Scripts</text>
-  <text x="550" y="287" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">About page</text>
-  <text x="550" y="299" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Helper scripts</text>
-  <text x="550" y="311" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Config refactor</text>
+  <text x="550" y="250" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 3</text>
+  <text x="550" y="272" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">About + Scripts</text>
+  <text x="550" y="287" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">About page</text>
+  <text x="550" y="299" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Helper scripts</text>
+  <text x="550" y="311" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Config refactor</text>
   <!-- Agent icons -->
-  <circle cx="530" cy="326" r="6" fill="#F39C12" opacity="0.3"/>
-  <circle cx="545" cy="326" r="6" fill="#F39C12" opacity="0.3"/>
-  <circle cx="560" cy="326" r="6" fill="#F39C12" opacity="0.3"/>
-  <text x="530" y="329" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">A</text>
-  <text x="545" y="329" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">B</text>
-  <text x="560" y="329" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">C</text>
-  <line x1="550" y1="198" x2="550" y2="232" stroke="#F39C12" stroke-width="1.5"/>
+  <circle cx="530" cy="326" r="6" fill="#FFCC00" opacity="0.3"/>
+  <circle cx="545" cy="326" r="6" fill="#FFCC00" opacity="0.3"/>
+  <circle cx="560" cy="326" r="6" fill="#FFCC00" opacity="0.3"/>
+  <text x="530" y="329" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">A</text>
+  <text x="545" y="329" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">B</text>
+  <text x="560" y="329" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">C</text>
+  <line x1="550" y1="198" x2="550" y2="232" stroke="#FFCC00" stroke-width="1.5"/>
 
   <!-- Mode label -->
-  <rect x="508" y="164" width="84" height="18" rx="4" fill="#FEF3C7" stroke="#F39C12" stroke-width="1"/>
-  <text x="550" y="176" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#E67E22">3 Agent Team</text>
+  <rect x="508" y="164" width="84" height="18" rx="4" fill="#FFF8E1" stroke="#FFCC00" stroke-width="1"/>
+  <text x="550" y="176" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#D4AA00">3 Agent Team</text>
 
   <!-- ===== PHASE 4 ===== -->
-  <circle cx="700" cy="190" r="10" fill="#F39C12" stroke="#FFFFFF" stroke-width="2"/>
-  <text x="700" y="193" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">4</text>
+  <circle cx="700" cy="190" r="10" fill="#FFCC00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="700" y="193" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">4</text>
 
   <!-- Card (above) — highlighted -->
-  <rect x="643" y="68" width="114" height="105" rx="10" fill="#FFFBEB" stroke="#F39C12" stroke-width="2" filter="url(#s3)"/>
+  <rect x="643" y="68" width="114" height="105" rx="10" fill="#FFFBEB" stroke="#FFCC00" stroke-width="2" filter="url(#s3)"/>
   <rect x="643" y="68" width="114" height="24" rx="10" fill="url(#goldGrad3)"/>
   <rect x="643" y="82" width="114" height="10" fill="url(#goldGrad3)"/>
-  <text x="700" y="86" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 4</text>
-  <text x="700" y="108" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Integrations</text>
-  <text x="700" y="123" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Blotato publish</text>
-  <text x="700" y="135" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Giscus comments</text>
-  <text x="700" y="147" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Auto-deploy</text>
+  <text x="700" y="86" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 4</text>
+  <text x="700" y="108" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Integrations</text>
+  <text x="700" y="123" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Blotato publish</text>
+  <text x="700" y="135" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Giscus comments</text>
+  <text x="700" y="147" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Auto-deploy</text>
   <!-- Agent icons -->
-  <circle cx="677" cy="162" r="6" fill="#F39C12" opacity="0.3"/>
-  <circle cx="692" cy="162" r="6" fill="#F39C12" opacity="0.3"/>
-  <circle cx="707" cy="162" r="6" fill="#F39C12" opacity="0.3"/>
-  <circle cx="722" cy="162" r="6" fill="#F39C12" opacity="0.3"/>
-  <text x="677" y="165" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">A</text>
-  <text x="692" y="165" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">B</text>
-  <text x="707" y="165" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">C</text>
-  <text x="722" y="165" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" fill="#E67E22">D</text>
-  <line x1="700" y1="173" x2="700" y2="182" stroke="#F39C12" stroke-width="1.5"/>
+  <circle cx="677" cy="162" r="6" fill="#FFCC00" opacity="0.3"/>
+  <circle cx="692" cy="162" r="6" fill="#FFCC00" opacity="0.3"/>
+  <circle cx="707" cy="162" r="6" fill="#FFCC00" opacity="0.3"/>
+  <circle cx="722" cy="162" r="6" fill="#FFCC00" opacity="0.3"/>
+  <text x="677" y="165" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">A</text>
+  <text x="692" y="165" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">B</text>
+  <text x="707" y="165" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">C</text>
+  <text x="722" y="165" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" fill="#D4AA00">D</text>
+  <line x1="700" y1="173" x2="700" y2="182" stroke="#FFCC00" stroke-width="1.5"/>
 
   <!-- Mode label -->
-  <rect x="658" y="204" width="84" height="18" rx="4" fill="#FEF3C7" stroke="#F39C12" stroke-width="1"/>
-  <text x="700" y="216" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#E67E22">4 Agent Team</text>
+  <rect x="658" y="204" width="84" height="18" rx="4" fill="#FFF8E1" stroke="#FFCC00" stroke-width="1"/>
+  <text x="700" y="216" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#D4AA00">4 Agent Team</text>
 
   <!-- ===== PHASE 5 (Current) ===== -->
-  <circle cx="820" cy="190" r="10" fill="#27AE60" stroke="#FFFFFF" stroke-width="3"/>
-  <text x="820" y="193" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">5</text>
+  <circle cx="820" cy="190" r="10" fill="#D4AA00" stroke="#FFFFFF" stroke-width="3"/>
+  <text x="820" y="193" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#FFFFFF">5</text>
   <!-- Pulse ring -->
-  <circle cx="820" cy="190" r="16" fill="none" stroke="#27AE60" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="820" cy="190" r="16" fill="none" stroke="#D4AA00" stroke-width="1.5" opacity="0.3"/>
 
   <!-- Card (below) — current, green highlight -->
-  <rect x="763" y="232" width="114" height="90" rx="10" fill="#ECFDF5" stroke="#27AE60" stroke-width="2" filter="url(#s3)"/>
+  <rect x="763" y="232" width="114" height="90" rx="10" fill="#FFF8E1" stroke="#D4AA00" stroke-width="2" filter="url(#s3)"/>
   <rect x="763" y="232" width="114" height="24" rx="10" fill="url(#greenGrad3)"/>
   <rect x="763" y="246" width="114" height="10" fill="url(#greenGrad3)"/>
-  <text x="820" y="250" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 5</text>
-  <text x="820" y="272" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Images + SVG</text>
-  <text x="820" y="287" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Hero images</text>
-  <text x="820" y="299" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">Inline diagrams</text>
-  <text x="820" y="311" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#64748B">OG thumbnails</text>
-  <line x1="820" y1="198" x2="820" y2="232" stroke="#27AE60" stroke-width="1.5"/>
+  <text x="820" y="250" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">PHASE 5</text>
+  <text x="820" y="272" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="9.5" font-weight="600" fill="#1E293B">Images + SVG</text>
+  <text x="820" y="287" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Hero images</text>
+  <text x="820" y="299" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">Inline diagrams</text>
+  <text x="820" y="311" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7.5" fill="#64748B">OG thumbnails</text>
+  <line x1="820" y1="198" x2="820" y2="232" stroke="#D4AA00" stroke-width="1.5"/>
 
   <!-- Mode label -->
-  <rect x="776" y="164" width="88" height="18" rx="4" fill="#ECFDF5" stroke="#27AE60" stroke-width="1"/>
-  <text x="820" y="176" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="7" font-weight="700" fill="#27AE60">CURRENT</text>
+  <rect x="776" y="164" width="88" height="18" rx="4" fill="#FFF8E1" stroke="#D4AA00" stroke-width="1"/>
+  <text x="820" y="176" text-anchor="middle" font-family="League Spartan, Kanit, sans-serif" font-size="7" font-weight="700" fill="#D4AA00">CURRENT</text>
 
   <!-- ===== Bottom Legend ===== -->
   <rect x="40" y="380" width="820" height="46" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" filter="url(#s3)"/>
 
   <!-- Legend items -->
-  <circle cx="80" cy="403" r="7" fill="#2B4C7E"/>
-  <text x="95" y="407" font-family="Inter, Sarabun, sans-serif" font-size="9" fill="#475569">Single Agent Phase</text>
+  <circle cx="80" cy="403" r="7" fill="#1A1A1A"/>
+  <text x="95" y="407" font-family="League Spartan, Kanit, sans-serif" font-size="9" fill="#475569">Single Agent Phase</text>
 
-  <circle cx="230" cy="403" r="7" fill="#F39C12"/>
-  <text x="245" y="407" font-family="Inter, Sarabun, sans-serif" font-size="9" fill="#475569">Agent Teams Phase</text>
+  <circle cx="230" cy="403" r="7" fill="#FFCC00"/>
+  <text x="245" y="407" font-family="League Spartan, Kanit, sans-serif" font-size="9" fill="#475569">Agent Teams Phase</text>
 
-  <circle cx="380" cy="403" r="7" fill="#27AE60"/>
-  <text x="395" y="407" font-family="Inter, Sarabun, sans-serif" font-size="9" fill="#475569">Current Phase</text>
+  <circle cx="380" cy="403" r="7" fill="#D4AA00"/>
+  <text x="395" y="407" font-family="League Spartan, Kanit, sans-serif" font-size="9" fill="#475569">Current Phase</text>
 
   <line x1="510" y1="395" x2="510" y2="412" stroke="#E2E8F0" stroke-width="1"/>
 
-  <text x="540" y="400" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#94A3B8">Stack:</text>
-  <text x="540" y="414" font-family="Inter, Sarabun, sans-serif" font-size="9" font-weight="600" fill="#2B4C7E">Next.js 16 + Velite + MDX + Tailwind v4 + Vercel</text>
+  <text x="540" y="400" font-family="League Spartan, Kanit, sans-serif" font-size="8.5" fill="#94A3B8">Stack:</text>
+  <text x="540" y="414" font-family="League Spartan, Kanit, sans-serif" font-size="9" font-weight="600" fill="#1A1A1A">Next.js 16 + Velite + MDX + Tailwind v4 + Vercel</text>
 </svg>

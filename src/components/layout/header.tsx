@@ -5,8 +5,6 @@ import { Link } from "@/i18n/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { LocaleSwitcher } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
-import { Pen } from "lucide-react";
-
 export function Header() {
   const t = useTranslations("nav");
 
@@ -15,9 +13,11 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white transition-transform group-hover:scale-105">
-            <Pen className="h-4 w-4" />
-          </div>
+          <img
+            src="/logo-sphere.jpg"
+            alt="DopeLab"
+            className="h-9 w-9 rounded-lg object-cover transition-transform group-hover:scale-105"
+          />
           <div className="flex flex-col">
             <span className="font-[family-name:var(--font-typewriter)] text-xl leading-tight tracking-wide text-[var(--color-text-primary)]">
               INK
