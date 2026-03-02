@@ -32,14 +32,15 @@ export function ArticleCard({
     return (
       <Link
         href={`/blog/${slug}`}
-        className="group relative block overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all hover:border-[var(--color-primary)]/30 hover:shadow-lg"
+        className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/40 hover:shadow-xl hover:shadow-[var(--color-primary)]/5"
       >
-        {/* Featured gradient accent */}
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)]" />
+        {/* Top gradient accent */}
+        <div className="h-1.5 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)]" />
 
-        <div className="p-6 sm:p-8">
-          <div className="mb-3 flex items-center gap-3">
-            <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-medium text-[var(--color-primary)]">
+        <div className="flex flex-1 flex-col p-6 sm:p-8">
+          {/* Meta row */}
+          <div className="mb-4 flex items-center gap-3">
+            <span className="rounded-md bg-[var(--color-primary)] px-2.5 py-1 text-xs font-semibold text-white">
               {category}
             </span>
             <span className="flex items-center gap-1 text-xs text-[var(--color-text-tertiary)]">
@@ -48,20 +49,23 @@ export function ArticleCard({
             </span>
           </div>
 
-          <h2 className="mb-3 text-xl font-bold leading-snug text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-primary)] sm:text-2xl">
+          {/* Title — prominent */}
+          <h3 className="mb-3 text-xl font-bold leading-snug text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-primary)] sm:text-2xl">
             {title}
-          </h2>
+          </h3>
 
-          <p className="mb-4 text-sm leading-relaxed text-[var(--color-text-secondary)] line-clamp-3">
+          {/* Description */}
+          <p className="mb-6 flex-1 text-sm leading-relaxed text-[var(--color-text-secondary)] line-clamp-3 sm:text-base">
             {description}
           </p>
 
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1 text-xs text-[var(--color-text-tertiary)]">
-              <Clock className="h-3 w-3" />
+          {/* Footer */}
+          <div className="flex items-center justify-between border-t border-[var(--color-border-light)] pt-4">
+            <span className="flex items-center gap-1.5 text-xs text-[var(--color-text-tertiary)]">
+              <Clock className="h-3.5 w-3.5" />
               {readingTime} {t("min_read")}
             </span>
-            <span className="flex items-center gap-1 text-sm font-medium text-[var(--color-primary)] transition-transform group-hover:translate-x-1">
+            <span className="flex items-center gap-1 text-sm font-semibold text-[var(--color-primary)] transition-transform group-hover:translate-x-1">
               {t("read_more")}
               <ArrowRight className="h-4 w-4" />
             </span>
@@ -74,28 +78,34 @@ export function ArticleCard({
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group block overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-all hover:border-[var(--color-primary)]/30 hover:shadow-md"
+      className="group flex flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/30 hover:shadow-lg hover:shadow-[var(--color-primary)]/5"
     >
-      <div className="mb-2.5 flex items-center gap-2">
-        <span className="rounded-full bg-[var(--color-surface-tertiary)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-text-secondary)]">
-          {category}
-        </span>
-        <span className="text-xs text-[var(--color-text-tertiary)]">
-          {formatDate(date, locale)}
-        </span>
-      </div>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {/* Meta row */}
+        <div className="mb-3 flex items-center gap-2">
+          <span className="rounded-md bg-[var(--color-surface-tertiary)] px-2 py-0.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            {category}
+          </span>
+          <span className="text-xs text-[var(--color-text-tertiary)]">
+            {formatDate(date, locale)}
+          </span>
+        </div>
 
-      <h3 className="mb-2 text-base font-semibold leading-snug text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-primary)]">
-        {title}
-      </h3>
+        {/* Title */}
+        <h3 className="mb-2 text-base font-bold leading-snug text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-primary)] sm:text-lg">
+          {title}
+        </h3>
 
-      <p className="mb-3 text-sm leading-relaxed text-[var(--color-text-secondary)] line-clamp-2">
-        {description}
-      </p>
+        {/* Description */}
+        <p className="mb-4 flex-1 text-sm leading-relaxed text-[var(--color-text-secondary)] line-clamp-2">
+          {description}
+        </p>
 
-      <div className="flex items-center gap-1 text-xs text-[var(--color-text-tertiary)]">
-        <Clock className="h-3 w-3" />
-        {readingTime} {t("min_read")}
+        {/* Footer */}
+        <div className="flex items-center gap-1.5 text-xs text-[var(--color-text-tertiary)]">
+          <Clock className="h-3.5 w-3.5" />
+          {readingTime} {t("min_read")}
+        </div>
       </div>
     </Link>
   );

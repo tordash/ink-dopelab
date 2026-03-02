@@ -79,27 +79,27 @@ export default async function ArticlePage({
         </Link>
 
         {/* Article header */}
-        <header className="mx-auto mb-10 max-w-[var(--container-article)]">
-          <div className="mb-4 flex flex-wrap items-center gap-3">
-            <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-medium text-[var(--color-primary)]">
+        <header className="mx-auto mb-12 max-w-[var(--container-article)]">
+          <div className="mb-5 flex flex-wrap items-center gap-3">
+            <span className="rounded-md bg-[var(--color-primary)] px-3 py-1 text-xs font-semibold text-white">
               {post.category}
             </span>
-            <span className="flex items-center gap-1 text-sm text-[var(--color-text-tertiary)]">
+            <span className="flex items-center gap-1.5 text-sm text-[var(--color-text-tertiary)]">
               <Calendar className="h-3.5 w-3.5" />
               {formatDate(post.date, locale)}
             </span>
-            <span className="flex items-center gap-1 text-sm text-[var(--color-text-tertiary)]">
+            <span className="flex items-center gap-1.5 text-sm text-[var(--color-text-tertiary)]">
               <Clock className="h-3.5 w-3.5" />
               {post.metadata.readingTime}{" "}
               {locale === "th" ? "นาที" : "min read"}
             </span>
           </div>
 
-          <h1 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+          <h1 className="mb-5 text-3xl font-extrabold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl lg:text-5xl">
             {post.title}
           </h1>
 
-          <p className="text-lg leading-relaxed text-[var(--color-text-secondary)]">
+          <p className="text-lg leading-relaxed text-[var(--color-text-secondary)] sm:text-xl">
             {post.description}
           </p>
         </header>
@@ -139,9 +139,12 @@ export default async function ArticlePage({
         {/* Related posts */}
         {related.length > 0 && (
           <section className="mx-auto mt-16 max-w-[var(--container-wide)] border-t border-[var(--color-border)] pt-10">
-            <h2 className="mb-6 text-lg font-semibold text-[var(--color-text-primary)]">
-              {locale === "th" ? "บทความที่เกี่ยวข้อง" : "Related Articles"}
-            </h2>
+            <div className="mb-8 flex items-center gap-3">
+              <div className="h-7 w-1 rounded-full bg-[var(--color-accent)]" />
+              <h2 className="text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
+                {locale === "th" ? "บทความที่เกี่ยวข้อง" : "Related Articles"}
+              </h2>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((post) => (
                 <ArticleCard

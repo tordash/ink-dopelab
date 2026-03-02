@@ -1,5 +1,6 @@
 import { defineConfig, defineCollection, s } from "velite";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
 const posts = defineCollection({
@@ -49,6 +50,7 @@ export default defineConfig({
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
+      rehypeSlug,
       [rehypePrettyCode, { theme: "github-dark-dimmed", keepBackground: true }],
     ],
   },

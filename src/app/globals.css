@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   /* Agency Brand Colors */
@@ -72,7 +73,9 @@ body {
   font-family: var(--font-thai);
 }
 
-/* Prose overrides for article body */
+/* =============================================
+   Prose (article body) — heading & content styles
+   ============================================= */
 .prose {
   --tw-prose-body: var(--color-text-primary);
   --tw-prose-headings: var(--color-text-primary);
@@ -81,9 +84,104 @@ body {
   --tw-prose-code: var(--color-primary);
   --tw-prose-quotes: var(--color-text-secondary);
   --tw-prose-quote-borders: var(--color-secondary);
+  --tw-prose-counters: var(--color-text-secondary);
+  --tw-prose-bullets: var(--color-text-tertiary);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border-light);
+  --tw-prose-captions: var(--color-text-tertiary);
   max-width: var(--container-article);
 }
 
+/* Heading styles — make them prominent */
+.prose h2 {
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid var(--color-border);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.prose h3 {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.prose h4 {
+  margin-top: 1.5em;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875em;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+}
+
+/* Strong emphasis */
+.prose strong {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Lists — better spacing */
+.prose ul > li,
+.prose ol > li {
+  padding-left: 0.25em;
+}
+
+/* Tables — cleaner look */
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.prose thead th {
+  background-color: var(--color-surface-tertiary);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.875em;
+}
+
+.prose tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Blockquotes — styled */
+.prose blockquote {
+  border-left-width: 4px;
+  border-left-color: var(--color-secondary);
+  background-color: var(--color-surface-secondary);
+  padding: 1rem 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: normal;
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+  background-color: var(--color-surface-tertiary);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+/* Horizontal rules */
+.prose hr {
+  border-color: var(--color-border);
+  margin: 3em 0;
+}
+
+/* Dark mode prose */
 .dark .prose {
   --tw-prose-body: var(--color-dark-text-primary);
   --tw-prose-headings: var(--color-dark-text-primary);
@@ -92,14 +190,43 @@ body {
   --tw-prose-code: var(--color-secondary);
   --tw-prose-quotes: var(--color-dark-text-secondary);
   --tw-prose-quote-borders: var(--color-secondary);
+  --tw-prose-counters: var(--color-dark-text-secondary);
+  --tw-prose-bullets: var(--color-dark-text-tertiary);
+  --tw-prose-hr: var(--color-dark-border);
+  --tw-prose-th-borders: var(--color-dark-border);
+  --tw-prose-td-borders: var(--color-dark-border-light);
+  --tw-prose-captions: var(--color-dark-text-tertiary);
 }
 
-/* Code blocks from rehype-pretty-code */
+.dark .prose h2 {
+  border-bottom-color: var(--color-dark-border);
+}
+
+.dark .prose h3 {
+  color: var(--color-secondary);
+}
+
+.dark .prose thead th {
+  background-color: var(--color-dark-surface-tertiary);
+}
+
+.dark .prose blockquote {
+  background-color: var(--color-dark-surface-secondary);
+}
+
+.dark .prose :not(pre) > code {
+  background-color: var(--color-dark-surface-tertiary);
+}
+
+/* =============================================
+   Code blocks from rehype-pretty-code
+   ============================================= */
 [data-rehype-pretty-code-figure] pre {
   border-radius: 0.75rem;
   border: 1px solid var(--color-border);
   padding: 1rem;
   overflow-x: auto;
+  background-color: var(--color-surface-secondary) !important;
 }
 
 [data-rehype-pretty-code-figure] code {
@@ -120,6 +247,7 @@ body {
 
 .dark [data-rehype-pretty-code-figure] pre {
   border-color: var(--color-dark-border);
+  background-color: var(--color-dark-surface-secondary) !important;
 }
 
 .dark [data-rehype-pretty-code-figure] [data-highlighted-line] {
@@ -127,7 +255,9 @@ body {
   border-left-color: var(--color-secondary);
 }
 
-/* Selection */
+/* =============================================
+   Selection
+   ============================================= */
 ::selection {
   background-color: var(--color-primary);
   color: white;

@@ -76,7 +76,7 @@ export default async function LocaleLayout({
       className={`${inter.variable} ${sarabun.variable} ${specialElite.variable} ${charmonman.variable}`}
     >
       <body className="min-h-screen bg-[var(--color-surface)] font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <NextIntlClientProvider messages={messages}>
             <div className="flex min-h-screen flex-col">
               <Header />

@@ -27,7 +27,7 @@ export default async function BlogListPage() {
       <BlogHeader />
 
       {posts.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <ArticleCard
               key={post.slugAsParams}
@@ -52,11 +52,11 @@ export default async function BlogListPage() {
 function BlogHeader() {
   const t = useTranslations("blog");
   return (
-    <div className="mb-10">
-      <h1 className="mb-2 text-3xl font-bold text-[var(--color-text-primary)]">
+    <div className="mb-12">
+      <h1 className="mb-3 text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
         {t("title")}
       </h1>
-      <p className="text-lg text-[var(--color-text-secondary)]">
+      <p className="text-lg text-[var(--color-text-secondary)] sm:text-xl">
         {t("description")}
       </p>
     </div>
