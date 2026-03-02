@@ -15,6 +15,14 @@ interface PostData {
   category: string;
   tags: string[];
   readingTime: number;
+  cover?: {
+    src: string;
+    width: number;
+    height: number;
+    blurDataURL: string;
+    blurWidth: number;
+    blurHeight: number;
+  };
 }
 
 interface BlogContentProps {
@@ -64,6 +72,7 @@ export function BlogContent({
               tags={post.tags}
               readingTime={post.readingTime}
               locale={locale}
+              cover={post.cover}
             />
           ))}
         </div>

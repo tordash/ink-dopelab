@@ -2,6 +2,7 @@
 title: "สร้างบล็อกด้วย AI 7 ตัวทำงานพร้อมกัน — เบื้องหลัง INK by DopeLab"
 description: "เราใช้ Claude Code Agent Teams สร้างบล็อก INK by DopeLab ตั้งแต่ศูนย์ — 7 AI agents ทำงานพร้อมกันสร้าง About page, scripts, comments system ใน session เดียว"
 date: 2026-03-02
+cover: ../covers/building-blog-with-agent-teams.png
 category: "AI Workflow"
 tags: ["agent-teams", "claude-code", "next-js", "automation", "blog"]
 featured: true
@@ -23,6 +24,8 @@ draft: false
 Agent Teams คือ feature ของ Claude Code ที่ให้ **หลาย Claude instance ทำงานพร้อมกัน** แต่ละตัวทำงานใน worktree แยก (สำเนา code ของตัวเอง) สื่อสารกันผ่าน Shared Task List
 
 ผมใช้มันสร้างบล็อกนี้ใน session เดียว แบ่งเป็น 5 phases:
+
+![Blog Build Pipeline — 5 Phases จาก scaffold ถึง production](/diagrams/blog-build-pipeline.svg)
 
 ```
 Phase 0: Scaffold (single agent)

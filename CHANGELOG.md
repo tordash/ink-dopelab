@@ -2,6 +2,23 @@
 
 All notable changes to INK by DopeLab will be documented in this file.
 
+## [0.6.0] - 2026-03-02
+
+### Added
+- **AI cover images** — 8 photorealistic cover images generated via Nano Banana 2 (Gemini), processed by Velite with blur placeholders
+- **Cover image UI** — Article cards (featured + regular), article pages, and blog listing all display cover images with hover effects
+- **SVG diagrams** — 3 professional diagrams: Agent Teams Architecture, Stock Management Flow, Blog Build Pipeline
+- **Diagram references** — SVG diagrams embedded in 3 articles (TH+EN): agent-teams, stock-management, building-blog
+
+### Changed
+- `ArticleCard` component: accepts optional `CoverImage` prop, renders cover or falls back to category color blocks
+- Article page: hero cover image displayed before title (full-width, rounded, max-height 400px)
+- Blog listing + homepage: pass cover data to all article cards
+
+### Infrastructure
+- 3 parallel agents built Phase 5 (cover-ui, cover-gen, svg-diagrams)
+- Gemini batch generation with state tracking and resume support
+
 ## [0.5.0] - 2026-03-02
 
 ### Added

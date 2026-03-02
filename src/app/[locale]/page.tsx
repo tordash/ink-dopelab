@@ -104,6 +104,7 @@ function FeaturedSection({
             tags={post.tags}
             readingTime={post.metadata.readingTime}
             locale={locale}
+            cover={post.cover}
             featured
           />
         ))}
@@ -149,6 +150,7 @@ function LatestSection({
             tags={post.tags}
             readingTime={post.metadata.readingTime}
             locale={locale}
+            cover={post.cover}
           />
         ))}
       </div>

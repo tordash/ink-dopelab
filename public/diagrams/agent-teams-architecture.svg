@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" fill="none">
+  <defs>
+    <filter id="shadow1" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#2B4C7E" flood-opacity="0.12"/>
+    </filter>
+    <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2B4C7E"/>
+      <stop offset="100%" stop-color="#1a3a66"/>
+    </linearGradient>
+    <linearGradient id="techGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#27AE60"/>
+      <stop offset="100%" stop-color="#1e8c4d"/>
+    </linearGradient>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F39C12"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#27AE60"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="620" rx="12" fill="#F8FAFC"/>
+  <rect x="0" y="0" width="800" height="4" rx="2" fill="url(#headerGrad)"/>
+
+  <!-- Title -->
+  <text x="400" y="38" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="18" font-weight="700" fill="#2B4C7E">AI Agent Teams Architecture</text>
+  <text x="400" y="56" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" fill="#64748B">11 Specialized Agents / 4 Teams / Coordinated by Team Lead</text>
+
+  <!-- Team Lead (Top Center) -->
+  <rect x="310" y="72" width="180" height="50" rx="10" fill="url(#headerGrad)" filter="url(#shadow1)"/>
+  <text x="400" y="95" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">TEAM LEAD</text>
+  <text x="400" y="112" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" fill="#B0C4DE">Coordinates All Teams</text>
+
+  <!-- Connection lines from Team Lead -->
+  <!-- To Marketing -->
+  <line x1="345" y1="122" x2="190" y2="170" stroke="#F39C12" stroke-width="2" marker-end="url(#arrowGold)"/>
+  <!-- To Web -->
+  <line x1="455" y1="122" x2="610" y2="170" stroke="#F39C12" stroke-width="2" marker-end="url(#arrowGold)"/>
+  <!-- To Tech Lead -->
+  <line x1="400" y1="122" x2="400" y2="170" stroke="#27AE60" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowGreen)"/>
+
+  <!-- ===== MARKETING TEAM (Left Branch) ===== -->
+  <rect x="40" y="165" width="300" height="28" rx="6" fill="#2B4C7E" opacity="0.08"/>
+  <text x="190" y="184" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#2B4C7E">MARKETING TEAM</text>
+
+  <!-- Strategy Director -->
+  <rect x="100" y="204" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="122" cy="226" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="122" y="230" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">1</text>
+  <text x="200" y="222" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Strategy Director</text>
+  <text x="200" y="238" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Analysis, Planning, Positioning</text>
+
+  <!-- Arrow down -->
+  <line x1="190" y1="248" x2="190" y2="268" stroke="#F39C12" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+
+  <!-- Content Strategist -->
+  <rect x="100" y="272" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="122" cy="294" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="122" y="298" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">2</text>
+  <text x="200" y="290" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Content Strategist</text>
+  <text x="200" y="306" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Messaging, Creative Direction</text>
+
+  <!-- Arrow down -->
+  <line x1="190" y1="316" x2="190" y2="336" stroke="#F39C12" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+
+  <!-- Media Planner -->
+  <rect x="100" y="340" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="122" cy="362" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="122" y="366" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">3</text>
+  <text x="200" y="358" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Media Planner</text>
+  <text x="200" y="374" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Budget, Campaigns, Channels</text>
+
+  <!-- Arrow down -->
+  <line x1="190" y1="384" x2="190" y2="404" stroke="#F39C12" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+
+  <!-- Data Analyst -->
+  <rect x="100" y="408" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="122" cy="430" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="122" y="434" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">4</text>
+  <text x="200" y="426" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Data Analyst</text>
+  <text x="200" y="442" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Analytics, Reporting, Insights</text>
+
+  <!-- ===== WEB TEAM (Right Branch) ===== -->
+  <rect x="460" y="165" width="300" height="28" rx="6" fill="#2B4C7E" opacity="0.08"/>
+  <text x="610" y="184" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#2B4C7E">WEB TEAM</text>
+
+  <!-- Web BA -->
+  <rect x="520" y="204" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="542" cy="226" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="542" y="230" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">5</text>
+  <text x="620" y="222" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Web BA</text>
+  <text x="620" y="238" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Requirements, Sitemap, Stories</text>
+
+  <!-- Arrow down -->
+  <line x1="610" y1="248" x2="610" y2="268" stroke="#F39C12" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+
+  <!-- Web Designer -->
+  <rect x="520" y="272" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="542" cy="294" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="542" y="298" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">6</text>
+  <text x="620" y="290" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Web Designer</text>
+  <text x="620" y="306" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">UX/UI, Wireframes, Mockups</text>
+
+  <!-- Arrow down -->
+  <line x1="610" y1="316" x2="610" y2="336" stroke="#F39C12" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+
+  <!-- Web Developer -->
+  <rect x="520" y="340" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="542" cy="362" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="542" y="366" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">7</text>
+  <text x="620" y="358" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Web Developer</text>
+  <text x="620" y="374" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Frontend, Backend, APIs</text>
+
+  <!-- Arrow down -->
+  <line x1="610" y1="384" x2="610" y2="404" stroke="#F39C12" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+
+  <!-- Web Ops -->
+  <rect x="520" y="408" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5" filter="url(#shadow1)"/>
+  <circle cx="542" cy="430" r="10" fill="#2B4C7E" opacity="0.15"/>
+  <text x="542" y="434" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#2B4C7E">8</text>
+  <text x="620" y="426" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="11" font-weight="600" fill="#1E293B">Web Ops</text>
+  <text x="620" y="442" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#64748B">Testing, QA, SEO, Deploy</text>
+
+  <!-- ===== TECH LEAD (Center — Cross-team) ===== -->
+  <rect x="330" y="178" width="140" height="50" rx="10" fill="url(#techGrad)" filter="url(#shadow1)"/>
+  <text x="400" y="201" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">TECH LEAD</text>
+  <text x="400" y="218" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8.5" fill="#E8F5E9">Cross-Team Authority</text>
+
+  <!-- Tech Lead cross-team connections (dashed) -->
+  <path d="M 330 203 Q 295 203 280 226" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M 470 203 Q 505 203 520 226" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arrowGreen)"/>
+
+  <!-- Tech Lead to Web Developer (review) -->
+  <path d="M 470 210 Q 510 290 520 362" stroke="#27AE60" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="502" y="290" font-family="Inter, Sarabun, sans-serif" font-size="7.5" fill="#27AE60" transform="rotate(-70 502 290)">code review</text>
+
+  <!-- ===== Message Passing Indicators ===== -->
+  <!-- Bidirectional arrow Marketing <-> Web -->
+  <path d="M 280 320 Q 400 300 520 320" stroke="#F39C12" stroke-width="1" stroke-dasharray="5,4" fill="none"/>
+  <text x="400" y="296" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="8" fill="#F39C12" font-style="italic">shared task list + messages</text>
+
+  <!-- ===== Bottom Legend / Summary ===== -->
+  <rect x="40" y="480" width="720" height="120" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" filter="url(#shadow1)"/>
+
+  <!-- Legend title -->
+  <text x="400" y="505" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="12" font-weight="600" fill="#2B4C7E">How Agents Communicate</text>
+
+  <!-- Legend items -->
+  <!-- Solid arrow -->
+  <line x1="80" y1="530" x2="130" y2="530" stroke="#F39C12" stroke-width="2" marker-end="url(#arrowGold)"/>
+  <text x="140" y="534" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#475569">Direct workflow handoff</text>
+
+  <!-- Dashed arrow -->
+  <line x1="80" y1="555" x2="130" y2="555" stroke="#27AE60" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+  <text x="140" y="559" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#475569">Cross-team review / authority</text>
+
+  <!-- Team box -->
+  <rect x="420" y="520" width="16" height="16" rx="4" fill="#FFFFFF" stroke="#2B4C7E" stroke-width="1.5"/>
+  <text x="444" y="533" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#475569">Agent node</text>
+
+  <!-- Lead box -->
+  <rect x="420" y="545" width="16" height="16" rx="4" fill="url(#headerGrad)"/>
+  <text x="444" y="558" font-family="Inter, Sarabun, sans-serif" font-size="10" fill="#475569">Team Lead / Authority</text>
+
+  <!-- Stats -->
+  <text x="400" y="585" text-anchor="middle" font-family="Inter, Sarabun, sans-serif" font-size="9" fill="#94A3B8">11 Agents  |  4 Teams  |  Shared Task List  |  Parallel Execution  |  Claude Opus 4.6</text>
+</svg>

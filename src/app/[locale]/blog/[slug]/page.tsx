@@ -83,6 +83,18 @@ export default async function ArticlePage({
           {locale === "th" ? "กลับ" : "Back"}
         </Link>
 
+        {/* Cover image */}
+        {post.cover && (
+          <div className="mx-auto mb-8 max-w-[var(--container-article)] overflow-hidden rounded-2xl">
+            <img
+              src={post.cover.src}
+              alt={post.title}
+              loading="eager"
+              className="h-auto max-h-[400px] w-full object-cover"
+            />
+          </div>
+        )}
+
         {/* Article header */}
         <header className="mx-auto mb-12 max-w-[var(--container-article)]">
           <div className="mb-5 flex flex-wrap items-center gap-3">
@@ -185,6 +197,7 @@ export default async function ArticlePage({
                   tags={post.tags}
                   readingTime={post.metadata.readingTime}
                   locale={locale}
+                  cover={post.cover}
                 />
               ))}
             </div>

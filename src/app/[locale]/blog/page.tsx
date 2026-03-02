@@ -36,6 +36,7 @@ export default async function BlogListPage() {
     category: post.category,
     tags: post.tags,
     readingTime: post.metadata.readingTime,
+    cover: post.cover,
   }));
 
   return (
