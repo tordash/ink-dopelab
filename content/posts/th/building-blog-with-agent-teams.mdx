@@ -1,0 +1,196 @@
+---
+title: "สร้างบล็อกด้วย AI 7 ตัวทำงานพร้อมกัน — เบื้องหลัง INK by DopeLab"
+description: "เราใช้ Claude Code Agent Teams สร้างบล็อก INK by DopeLab ตั้งแต่ศูนย์ — 7 AI agents ทำงานพร้อมกันสร้าง About page, scripts, comments system ใน session เดียว"
+date: 2026-03-02
+category: "AI Workflow"
+tags: ["agent-teams", "claude-code", "next-js", "automation", "blog"]
+featured: true
+draft: false
+---
+
+บทความนี้เป็น meta article — ผมเขียนเรื่องเครื่องมือที่ใช้สร้างบล็อกที่คุณกำลังอ่านอยู่นี้
+
+## ปัญหา: อยากมีบล็อก แต่ไม่มีเวลาสร้าง
+
+ผมรัน agency เล็กๆ ที่ใช้ AI ทำงานแทบทุกอย่าง มี projects ลูกค้า 5 brands, ร้านอาหารที่ต้องดูแล operations, ระบบ stock, ระบบขาย — งานล้นมืออยู่แล้ว
+
+แต่ก็อยากมี **บล็อกสำหรับ agency** สักที ไว้บันทึกสิ่งที่เรียนรู้จากการทำงานจริง ไม่ใช่บทความ AI ทั่วไปที่เขียนจากทฤษฎี แต่เป็น case study จริงจาก production
+
+ปัญหาคือ: การสร้างบล็อกตั้งแต่ศูนย์ต้องทำหลายอย่าง — scaffold, design, about page, scripts, comments system, social sharing, i18n — ถ้าทำทีละอย่างก็หลายวัน
+
+## Solution: Claude Code Agent Teams
+
+Agent Teams คือ feature ของ Claude Code ที่ให้ **หลาย Claude instance ทำงานพร้อมกัน** แต่ละตัวทำงานใน worktree แยก (สำเนา code ของตัวเอง) สื่อสารกันผ่าน Shared Task List
+
+ผมใช้มันสร้างบล็อกนี้ใน session เดียว แบ่งเป็น 5 phases:
+
+```
+Phase 0: Scaffold (single agent)
+Phase 1: MVP Polish (single agent)
+Phase 2: Features (single agent)
+Phase 3: 3 agents พร้อมกัน ← Agent Teams เริ่มตรงนี้
+Phase 4: 4 agents พร้อมกัน
+```
+
+Phase 0-2 ผมทำแบบ single agent ปกติ เพราะงาน sequential — สร้าง scaffold ก่อน แล้ว polish UI ทีละจุด พอ base พร้อมแล้วค่อยปล่อย Agent Teams
+
+## Phase 3: สามตัวพร้อมกัน
+
+commit `6a03343` — 2026-03-02 14:18
+
+ผม spawn 3 agents ที่ทำงานคนละเรื่อง ไม่แตะไฟล์กัน:
+
+| Agent | งาน | Output |
+|-------|------|--------|
+| **about-page** | สร้าง About page (/about) — 6 sections | `src/app/[locale]/about/page.tsx` + i18n keys |
+| **content-cli** | สร้าง scaffold script สำหรับบทความใหม่ | `scripts/new-article.sh` (255 บรรทัด) |
+| **translate-cli** | สร้าง auto-translate script TH→EN | `scripts/translate.sh` (285 บรรทัด) |
+
+ทั้ง 3 agents ทำเสร็จพร้อมกัน ได้ **881 บรรทัด code ใหม่** ใน 7 ไฟล์
+
+<Callout variant="info" title="file ownership สำคัญมาก">
+กฎสำคัญที่สุดของ Agent Teams: ห้าม 2 agents แก้ไฟล์เดียวกัน ผมต้องวางแผนล่วงหน้าว่า agent ไหนจะแตะไฟล์อะไร — about-page ได้ `src/app/[locale]/about/` ทั้ง folder, content-cli ได้ `scripts/new-article.sh`, translate-cli ได้ `scripts/translate.sh` เฉพาะ i18n keys ใน `messages/*.json` ต้องให้ agent เดียวเป็นคนเพิ่ม (about-page) เพื่อไม่ให้ชนกัน
+</Callout>
+
+### About page ที่ได้
+
+Agent สร้าง About page ที่มี 6 sections ครบ:
+- Hero section
+- Who we are (stat cards)
+- AI Team (6 agent cards)
+- What is INK (concept)
+- Tech stack (pill badges)
+- CTA
+
+ทั้งหมดรองรับ dark/light mode และ i18n (TH+EN) ตั้งแต่แรก
+
+### scripts ที่ได้
+
+`new-article.sh` — สั่ง scaffold บทความใหม่ เลือก category จาก 5 ตัวเลือก ใส่ tags ได้ สร้าง template TH+EN อัตโนมัติ บทความที่คุณอ่านอยู่ก็ scaffold ด้วย script ตัวนี้:
+
+```bash
+./scripts/new-article.sh building-blog-with-agent-teams \
+  --category "AI Workflow" \
+  --tags "agent-teams,claude-code,next-js,automation,blog"
+```
+
+`translate.sh` — แปล TH→EN อัตโนมัติผ่าน Claude API ใช้ curl + jq ไม่พึ่ง SDK มี `--dry-run` สำหรับ preview
+
+## Phase 4: สี่ตัวพร้อมกัน
+
+commits `e85d7ae` ถึง `76a3b32` — 2026-03-02 14:39-14:42
+
+Phase นี้ spawn 4 agents:
+
+| Agent | งาน | Output |
+|-------|------|--------|
+| **social-post** | Blotato auto-post script | `scripts/post-social.sh` (483 บรรทัด) |
+| **social-visual** | Carousel/visual generator | `scripts/create-social-visual.sh` (482 บรรทัด) |
+| **vercel-deploy** | เช็ค Vercel auto-deploy config | Config verification |
+| **giscus-comments** | Comments system (GitHub Discussions) | `src/components/blog/comments.tsx` (40 บรรทัด) |
+
+ได้ **987+ บรรทัด code ใหม่** จาก social scripts อย่างเดียว
+
+### Comments component ที่ได้
+
+Giscus agent สร้าง React component ที่:
+- ใช้ `@giscus/react` เชื่อมกับ GitHub Discussions
+- รองรับ dark mode (ดูจาก `next-themes`)
+- เปลี่ยนภาษาตาม locale (TH/EN)
+- Lazy mount (ไม่ render จนกว่า client mount)
+
+```tsx
+// src/components/blog/comments.tsx
+"use client";
+
+import GiscusComponent from "@giscus/react";
+import { useTheme } from "next-themes";
+import { useLocale } from "next-intl";
+
+export function Comments() {
+  const { resolvedTheme } = useTheme();
+  const locale = useLocale();
+
+  return (
+    <GiscusComponent
+      repo="tordash/ink-dopelab"
+      repoId="R_kgDORb6CeA"
+      mapping="pathname"
+      theme={resolvedTheme === "dark" ? "dark_dimmed" : "light"}
+      lang={locale === "th" ? "th" : "en"}
+    />
+  );
+}
+```
+
+40 บรรทัด ทำงานได้ครบ ลองเลื่อนลงไปดูด้านล่างบทความนี้ — comment section ที่เห็นก็สร้างด้วย agent ตัวนี้
+
+## ผลลัพธ์
+
+### Timeline จริง (จาก git log)
+
+```
+01:09  — .env.example
+10:32  — Typography fix
+11:38  — Phase 1: OG images, brand fonts, share buttons
+12:19  — Phase 2: Category/tag pages, RSS, search
+14:18  — Phase 3: About page + 2 scripts (3 agents)
+14:39  — Phase 4a: Social scripts (2 agents)
+14:42  — Phase 4b: Giscus comments (1 agent)
+14:42  — CHANGELOG update
+```
+
+Phase 3 (3 agents) เสร็จภายใน **~2 นาที** หลัง Phase 2 จบ
+Phase 4 (4 agents) เสร็จภายใน **~3 นาที** หลัง Phase 3
+
+### สิ่งที่ได้ทั้งหมด
+
+| ประเภท | จำนวน |
+|--------|-------|
+| Bash scripts | 4 ตัว (1,505 บรรทัด) |
+| Config file | 1 ตัว (22 บรรทัด) |
+| React components | 1 ตัว (40 บรรทัด) |
+| Pages | 2 (About TH+EN) |
+| i18n keys | 28 keys (TH+EN) |
+| **รวม code ใหม่** | **~1,900 บรรทัด** |
+
+ทั้งหมดนี้จาก 2 phases ที่ใช้เวลารวม **~5 นาที**
+
+## ข้อจำกัดที่ต้องรู้
+
+### 1. Token cost สูงมาก
+
+Agent Teams spawn หลาย Claude instance พร้อมกัน แต่ละตัวก็กิน token ของมันเอง Phase 3 (3 agents) + Phase 4 (4 agents) = 7 instances ทั้งหมด ค่า token ไม่ใช่ 7 เท่าของ single agent (เพราะ context สั้นกว่า) แต่ก็มากกว่าทำ sequential แน่นอน
+
+### 2. File conflict เป็นปัญหาจริง
+
+ถ้าวางแผนไม่ดี 2 agents อาจแก้ไฟล์เดียวกัน → merge conflict ผมเจอตอน i18n keys ที่หลาย agents อยากเพิ่ม ต้อง centralize ให้ agent เดียวรับผิดชอบ
+
+### 3. ไม่เหมาะกับงานที่ต้อง sequential
+
+ถ้างาน B ต้องรอผลจากงาน A เสร็จก่อน → ใช้ Agent Teams ไม่คุ้ม ต้องเลือกงานที่ **parallelize ได้จริง** ถึงจะเร็วขึ้น
+
+<Callout variant="warning" title="เมื่อไหร่ควร (และไม่ควร) ใช้">
+**ใช้:** งานที่แบ่งเป็น tasks อิสระได้ชัดเจน ไฟล์ไม่ซ้อนกัน เช่น สร้าง 3 scripts พร้อมกัน, สร้าง page + component + config พร้อมกัน
+
+**ไม่ใช้:** งานที่ต้อง iterate ไปมา, ต้องดู output ของ task ก่อนหน้าก่อนทำต่อ, หรืองานเล็กที่ single agent ทำได้ใน 30 วินาที
+</Callout>
+
+## Tech Stack ที่ได้ท้ายสุด
+
+ทั้งบล็อก INK by DopeLab ประกอบด้วย:
+
+- **Framework:** Next.js 16 + Velite (MDX content layer)
+- **i18n:** next-intl (TH default + EN)
+- **Styling:** Tailwind v4 + custom CSS variables (dark/light)
+- **Fonts:** Inter + Sarabun (body), Special Elite + Charmonman (display)
+- **Comments:** Giscus (GitHub Discussions)
+- **Analytics:** Vercel Analytics
+- **Deploy:** Vercel (auto-deploy จาก GitHub push)
+- **Content:** 8 articles (TH+EN = 16 files MDX)
+
+สร้างทั้งหมดใน **1 วัน** ตั้งแต่ `git init` ถึง production ที่ [ink.dopelab.studio](https://ink.dopelab.studio)
+
+<Callout variant="success" title="สรุป">
+Agent Teams ไม่ใช่ magic — มันเป็นเครื่องมือที่ต้องวางแผนก่อนใช้ ต้องแบ่งไฟล์ให้ชัด ต้องเลือกงานที่ parallelize ได้ แต่ถ้าใช้ถูกจังหวะ มันเปลี่ยนงาน 2-3 ชั่วโมงให้เป็น 5 นาทีได้จริง บล็อกที่คุณอ่านอยู่นี้คือหลักฐาน
+</Callout>
