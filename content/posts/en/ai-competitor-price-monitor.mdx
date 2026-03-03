@@ -1,0 +1,136 @@
+---
+title: "AI Caught Fake Pricing — When 'Cheaper' Doesn't Mean 'Available'"
+description: "We built an AI system to monitor competitor prices for an E-commerce client — scraped 600+ products, matched them automatically, compared prices, checked stock, and discovered competitors were faking prices on out-of-stock items."
+date: 2026-03-03
+cover: ../covers/ai-competitor-price-monitor.jpg
+category: "AI Workflow"
+tags: ["e-commerce", "price-monitoring", "web-scraping", "automation", "data-analysis"]
+featured: true
+draft: false
+---
+
+An E-commerce client told us "our competitor is cheaper on almost everything." So we built an AI system to check automatically — and found something unexpected.
+
+## The Problem: Manual Price Checking Doesn't Scale
+
+The client sells 500+ SKUs. Multiple competitors, each changing prices daily. Comparing products one by one across multiple stores would take a full day of manual work.
+
+And even then, the comparison would be misleading — because **a lower price doesn't mean the product is actually available.**
+
+## Solution: AI Pipeline in 6 Steps
+
+We built a single script that runs the entire pipeline in 20 seconds:
+
+```
+1. Scrape client's products (175 items)
+2. Scrape competitor's products (468 items) via API
+3. Auto-match products — brand + model + type
+4. Compare prices for every match
+5. ★ Check stock — is the product actually available?
+6. Write report to Google Sheet with color highlights
+```
+
+### Why "Matching" Is Hard
+
+The same product has different names across stores:
+
+| Our Store | Competitor |
+|-----------|-----------|
+| "Brand X 20000 Puffs Disposable Pod" | "Brand-X 20K Disposable" |
+| "Brand Y Pod Juice 15K (Cartridge)" | "Brand Y 15000 Puffs Pod Juice" |
+
+The AI has to normalize names, extract brand names, parse puff counts from multiple formats (20000, 20K, 20000 Puffs), and match based on:
+
+1. **Brand** — dictionary of 60+ brands with aliases
+2. **Puff count** — exact match or ±10% tolerance
+3. **Sub-type** — cartridge vs device vs starter kit (must be same type)
+
+Out of 175 x 468 = **81,900 possible pairs**, the AI found 50 actual matches.
+
+## Plot Twist: Fake Pricing Detected
+
+The initial comparison looked alarming:
+
+> 29 items where the competitor listed a lower price... **scary, right?**
+
+But when we added step 5 — **actual stock checking** — the picture changed completely:
+
+| Status | Count | Meaning |
+|--------|-------|---------|
+| **Real Threat** (cheaper + in stock) | 15 | Must adjust pricing |
+| **Fake Pricing** (cheaper + out of stock) | 14 | Ignore |
+| **We're Cheaper** | 13 | Safe |
+| **Same Price** | 8 | OK |
+
+**From 29 apparent losses → only 15 real ones (48% less panic)**
+
+All 14 "cheaper" items had zero stock — every single variant showed 0% availability. We tested 19 items manually: stock = 0 on all of them.
+
+## Red / Green / Grey Framework
+
+We created a simple framework so the client can read price comparisons instantly:
+
+| Color | Meaning | Action |
+|-------|---------|--------|
+| **Red** | Competitor cheaper + **in stock** | Real threat — take action |
+| **Green** | We're cheaper | Safe |
+| **Grey** | Competitor cheaper + **out of stock** | Fake pricing — don't panic |
+
+<Callout variant="warning" title="Why 'Grey' matters">
+Without stock checking, the client would panic over 29 items — thinking they're losing on all of them. In reality, only 15 are real threats. Some competitors deliberately set low prices on products they don't actually sell, just to look competitive in search results or comparison tools.
+</Callout>
+
+## Google Sheet Output
+
+The pipeline writes results to Google Sheet automatically with 4 tabs:
+
+| Tab | Content |
+|-----|---------|
+| **Dashboard** | Overview — wins, losses, draws per competitor |
+| **vs [Competitor]** | Per-product comparison + red/green/grey highlighting |
+| **Our Products** | Full product list with prices + stock |
+| **Competitor Products** | Raw scraped data |
+
+**Red rows** = act immediately
+**Grey rows** = ignore (fake pricing)
+**Green rows** = you're safe
+
+The client opens the Sheet and knows exactly what to do — no analysis needed.
+
+## Technical Notes
+
+### Supported Platforms
+
+| Platform | Scraping Method | Stock Check |
+|----------|----------------|-------------|
+| **Shopify** | `/products.json` API (fast) | `variant.available` field |
+| **WooCommerce** | HTML parsing (category pages) | `outofstock` CSS class |
+
+Shopify is much easier — the JSON API gives you products + variants + stock in one call. WooCommerce requires HTML parsing page by page, but it works.
+
+### Product Matching Algorithm
+
+```python
+# Simplified matching logic
+1. Extract brand (60+ brands, longest-match-wins)
+2. Extract puff count (regex: "20000 Puffs", "20K", standalone digits)
+3. Check sub-type (cartridge vs device vs kit)
+4. Score: exact puffs = 100, ±10% = 80, brand only = 70
+5. Accept matches >= 70
+```
+
+Match accuracy is roughly **85-90%** — some products have names too different to match automatically. We keep adding aliases to improve accuracy over time.
+
+## Results
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Time to check | All day (manual) | **20 seconds** |
+| Coverage | A few dozen | **175 vs 468** products |
+| Stock verification | Never checked | **Every product + variant** |
+| Accuracy | No percentages | **Real data + color highlights** |
+| Panic level | High | **48% less** (fake pricing filtered) |
+
+<Callout variant="success" title="Lesson Learned">
+Price data alone is not enough — you must check stock availability every time. Otherwise you'll panic over "low prices" that nobody can actually buy. If a competitor seems cheaper on everything, be suspicious before you believe it.
+</Callout>
