@@ -36,14 +36,14 @@ draft: false
 
 | ร้านเรา | ร้านคู่แข่ง |
 |---------|-----------|
-| "Brand X 20000 Puffs Disposable Pod" | "Brand-X 20K Disposable" |
-| "Brand Y Pod Juice 15K (หัวน้ำยา)" | "Brand Y 15000 Puffs Pod Juice" |
+| "Brand X Wireless Earbuds Pro" | "Brand-X Pro TWS Earbuds" |
+| "Brand Y Speaker 20W Portable" | "Brand Y Portable Speaker (20 Watt)" |
 
-AI ต้อง normalize ชื่อ แยก brand ออกมา แยก puff count จากหลาย format (20000, 20K, 20000 Puffs) แล้วจับคู่โดยดูจาก:
+AI ต้อง normalize ชื่อ แยก brand ออกมา แยก spec จากหลาย format แล้วจับคู่โดยดูจาก:
 
 1. **Brand** — dictionary 60+ แบรนด์พร้อม alias
-2. **Puff count** — match exact หรือ ±10%
-3. **Sub-type** — หัวน้ำยา vs เครื่อง vs starter kit (ต้องเป็นประเภทเดียวกัน)
+2. **Model/Spec** — match exact หรือ ±10%
+3. **Sub-type** — อุปกรณ์เสริม vs ตัวเครื่อง vs ชุดพร้อมใช้ (ต้องเป็นประเภทเดียวกัน)
 
 ใน 175 x 468 = **81,900 คู่ที่เป็นไปได้** AI จับคู่ได้ 50 คู่ที่ match จริง
 
@@ -113,9 +113,9 @@ Shopify ง่ายกว่ามาก — มี JSON API ให้ดึง
 ```python
 # Simplified matching logic
 1. Extract brand (60+ brands, longest-match-wins)
-2. Extract puff count (regex: "20000 Puffs", "20K", standalone digits)
-3. Check sub-type (pod juice vs device vs kit)
-4. Score: exact puffs = 100, ±10% = 80, brand only = 70
+2. Extract model/spec (regex: model numbers, wattage, capacity)
+3. Check sub-type (accessory vs device vs bundle)
+4. Score: exact spec = 100, ±10% = 80, brand only = 70
 5. Accept matches >= 70
 ```
 
