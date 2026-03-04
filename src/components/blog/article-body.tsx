@@ -7,6 +7,7 @@ import { ImageFigure } from "@/components/mdx/image-figure";
 import { YouTubeEmbed } from "@/components/mdx/youtube-embed";
 import { CopyableCode } from "@/components/mdx/copy-code";
 import { ProsCons } from "@/components/mdx/pros-cons";
+import { SvgEmbed } from "@/components/mdx/svg-embed";
 
 const sharedComponents = {
   Callout,
@@ -14,6 +15,7 @@ const sharedComponents = {
   YouTubeEmbed,
   ProsCons,
   pre: CopyableCode,
+  SvgEmbed,
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <figure className="my-6">
       {/* eslint-disable-next-line @next/next/no-img-element */}
