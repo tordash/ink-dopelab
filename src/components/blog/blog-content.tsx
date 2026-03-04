@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { ArticleCard, CATEGORY_STYLES } from "./article-card";
 import { SearchPosts } from "./search-posts";
 import { Link } from "@/i18n/navigation";
-import { Hash } from "lucide-react";
+import { Hash, ChevronLeft, ChevronRight } from "lucide-react";
+
+const POSTS_PER_PAGE = 9;
 
 interface PostData {
   slugAsParams: string;
@@ -41,8 +43,20 @@ export function BlogContent({
   const t = useTranslations("blog");
   const allSlugs = posts.map((p) => p.slugAsParams);
   const [visibleSlugs, setVisibleSlugs] = useState<string[]>(allSlugs);
+  const [page, setPage] = useState(1);
 
   const filteredPosts = posts.filter((p) => visibleSlugs.includes(p.slugAsParams));
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const paginatedPosts = filteredPosts.slice(
+    (page - 1) * POSTS_PER_PAGE,
+    page * POSTS_PER_PAGE
+  );
+
+  // Reset page when search results change
+  const slugKey = useMemo(() => visibleSlugs.join(","), [visibleSlugs]);
+  useEffect(() => {
+    setPage(1);
+  }, [slugKey]);
 
   return (
     <>
@@ -59,9 +73,9 @@ export function BlogContent({
 
       <CategoryPills categories={categories} />
 
-      {filteredPosts.length > 0 ? (
+      {paginatedPosts.length > 0 ? (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredPosts.map((post) => (
+          {paginatedPosts.map((post) => (
             <ArticleCard
               key={post.slugAsParams}
               title={post.title}
@@ -84,8 +98,60 @@ export function BlogContent({
         </div>
       )}
 
+      {totalPages > 1 && (
+        <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+      )}
+
       {tags.length > 0 && <TagCloud tags={tags} />}
     </>
+  );
+}
+
+function Pagination({
+  page,
+  totalPages,
+  onPageChange,
+}: {
+  page: number;
+  totalPages: number;
+  onPageChange: (p: number) => void;
+}) {
+  const t = useTranslations("blog");
+
+  return (
+    <div className="mt-10 flex items-center justify-center gap-2">
+      <button
+        onClick={() => onPageChange(page - 1)}
+        disabled={page <= 1}
+        className="inline-flex items-center gap-1 rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] disabled:pointer-events-none disabled:opacity-40"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        {t("prev_page")}
+      </button>
+
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+        <button
+          key={p}
+          onClick={() => onPageChange(p)}
+          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+            p === page
+              ? "bg-[var(--color-primary)] text-white"
+              : "border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-tertiary)]"
+          }`}
+        >
+          {p}
+        </button>
+      ))}
+
+      <button
+        onClick={() => onPageChange(page + 1)}
+        disabled={page >= totalPages}
+        className="inline-flex items-center gap-1 rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] disabled:pointer-events-none disabled:opacity-40"
+      >
+        {t("next_page")}
+        <ChevronRight className="h-4 w-4" />
+      </button>
+    </div>
   );
 }
 

@@ -35,7 +35,9 @@
     "no_results": "ไม่พบบทความ",
     "rss_feed": "RSS Feed",
     "search": "ค้นหา",
-    "search_placeholder": "ค้นหาบทความ..."
+    "search_placeholder": "ค้นหาบทความ...",
+    "prev_page": "ก่อนหน้า",
+    "next_page": "ถัดไป"
   },
   "article": {
     "toc": "สารบัญ",

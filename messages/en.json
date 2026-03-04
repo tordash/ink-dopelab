@@ -35,7 +35,9 @@
     "no_results": "No articles found",
     "rss_feed": "RSS Feed",
     "search": "Search",
-    "search_placeholder": "Search articles..."
+    "search_placeholder": "Search articles...",
+    "prev_page": "Previous",
+    "next_page": "Next"
   },
   "article": {
     "toc": "Table of Contents",
