@@ -8,6 +8,7 @@
     "home": "Home",
     "blog": "Blog",
     "about": "About",
+    "contact": "Contact",
     "language": "TH"
   },
   "home": {
@@ -83,6 +84,15 @@
     "cta_title": "Want to Work With Us?",
     "cta_description": "If you want a marketing team that actually uses AI, let's talk",
     "cta_button": "Visit DopeLab Studio"
+  },
+  "contact": {
+    "hero_title": "Contact Us",
+    "hero_description": "Interested in our services or want to discuss Digital Marketing + AI? Reach out anytime",
+    "line_title": "LINE Official Account",
+    "line_description": "Chat with us directly — fastest response",
+    "fb_title": "Facebook Page",
+    "fb_description": "Follow our work and send us a message",
+    "hours_note": "We typically respond within 24 hours on business days (Mon-Fri 9:00-18:00)"
   },
   "footer": {
     "copyright": "© {year} DopeLab Studio",

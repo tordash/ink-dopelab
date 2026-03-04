@@ -48,6 +48,12 @@ export function Header() {
           >
             {t("about")}
           </Link>
+          <Link
+            href="/contact"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] hover:text-[var(--color-text-primary)]"
+          >
+            {t("contact")}
+          </Link>
         </nav>
 
         {/* Actions */}

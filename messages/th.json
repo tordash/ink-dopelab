@@ -8,6 +8,7 @@
     "home": "หน้าแรก",
     "blog": "บทความ",
     "about": "เกี่ยวกับเรา",
+    "contact": "ติดต่อ",
     "language": "EN"
   },
   "home": {
@@ -83,6 +84,15 @@
     "cta_title": "สนใจทำงานกับเรา?",
     "cta_description": "ถ้าคุณอยากได้ marketing team ที่ใช้ AI จริงจัง มาคุยกัน",
     "cta_button": "ไปที่ DopeLab Studio"
+  },
+  "contact": {
+    "hero_title": "ติดต่อเรา",
+    "hero_description": "สนใจใช้บริการ หรืออยากปรึกษาเรื่อง Digital Marketing + AI? ทักมาได้เลย",
+    "line_title": "LINE Official Account",
+    "line_description": "แชทกับเราโดยตรง — ตอบเร็วที่สุด",
+    "fb_title": "Facebook Page",
+    "fb_description": "ติดตามผลงานและส่งข้อความหาเรา",
+    "hours_note": "ตอบกลับภายใน 24 ชั่วโมงในวันทำการ (จ-ศ 9:00-18:00)"
   },
   "footer": {
     "copyright": "© {year} DopeLab Studio",

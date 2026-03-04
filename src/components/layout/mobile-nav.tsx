@@ -43,6 +43,13 @@ export function MobileNav() {
             >
               {t("about")}
             </Link>
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)]"
+            >
+              {t("contact")}
+            </Link>
           </nav>
         </div>
       )}
