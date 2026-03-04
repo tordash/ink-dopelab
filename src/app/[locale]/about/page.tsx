@@ -250,7 +250,7 @@ function CTASection() {
           {t("cta_description")}
         </p>
         <a
-          href="https://www.facebook.com/profile.php?id=61585916640581"
+          href="https://line.me/R/ti/p/@dopelab.studio"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-lg bg-[#FFCC00] px-6 py-3 font-semibold text-[#1A1A1A] transition-transform hover:scale-105"
