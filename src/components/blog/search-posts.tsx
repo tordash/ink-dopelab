@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
+import Fuse from "fuse.js";
 
 interface Post {
   slugAsParams: string;
@@ -21,21 +22,29 @@ export function SearchPosts({ posts, onFilter }: SearchPostsProps) {
   const t = useTranslations("blog");
   const [query, setQuery] = useState("");
 
+  const fuse = useMemo(
+    () =>
+      new Fuse(posts, {
+        keys: [
+          { name: "title", weight: 0.4 },
+          { name: "description", weight: 0.3 },
+          { name: "category", weight: 0.2 },
+          { name: "tags", weight: 0.1 },
+        ],
+        threshold: 0.4,
+        ignoreLocation: true,
+      }),
+    [posts]
+  );
+
   function handleChange(value: string) {
     setQuery(value);
     if (!value.trim()) {
       onFilter(posts.map((p) => p.slugAsParams));
       return;
     }
-    const q = value.toLowerCase();
-    const matched = posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(q) ||
-        post.description.toLowerCase().includes(q) ||
-        post.category.toLowerCase().includes(q) ||
-        post.tags.some((tag) => tag.toLowerCase().includes(q))
-    );
-    onFilter(matched.map((p) => p.slugAsParams));
+    const results = fuse.search(value);
+    onFilter(results.map((r) => r.item.slugAsParams));
   }
 
   return (
