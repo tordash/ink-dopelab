@@ -54,7 +54,7 @@ export function Callout({
       )}
     >
       <Icon className={cn("mt-0.5 h-5 w-5 shrink-0", iconColor)} />
-      <div className={cn("text-sm leading-relaxed", text)}>
+      <div className={cn("text-sm leading-relaxed [&_a]:underline [&_a]:font-semibold [&_a]:decoration-current", text)}>
         {title && <p className="mb-1 font-semibold">{title}</p>}
         <div>{children}</div>
       </div>
