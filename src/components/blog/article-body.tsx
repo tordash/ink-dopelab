@@ -4,10 +4,16 @@ import * as runtime from "react/jsx-runtime";
 import { useMemo } from "react";
 import { Callout } from "@/components/mdx/callout";
 import { ImageFigure } from "@/components/mdx/image-figure";
+import { YouTubeEmbed } from "@/components/mdx/youtube-embed";
+import { CopyableCode } from "@/components/mdx/copy-code";
+import { ProsCons } from "@/components/mdx/pros-cons";
 
 const sharedComponents = {
   Callout,
   ImageFigure,
+  YouTubeEmbed,
+  ProsCons,
+  pre: CopyableCode,
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <figure className="my-6">
       {/* eslint-disable-next-line @next/next/no-img-element */}
