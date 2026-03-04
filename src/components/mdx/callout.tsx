@@ -48,13 +48,13 @@ export function Callout({
   return (
     <div
       className={cn(
-        "my-6 flex gap-3 rounded-xl border p-4",
+        "not-prose my-6 flex gap-3 rounded-xl border p-4",
         bg,
         border
       )}
     >
       <Icon className={cn("mt-0.5 h-5 w-5 shrink-0", iconColor)} />
-      <div className={cn("text-sm leading-relaxed [&_a]:underline [&_a]:font-semibold [&_a]:decoration-current", text)}>
+      <div className={cn("text-sm leading-relaxed [&_strong]:!text-inherit [&_a]:!text-inherit [&_a]:underline [&_a]:font-semibold", text)}>
         {title && <p className="mb-1 font-semibold">{title}</p>}
         <div>{children}</div>
       </div>
