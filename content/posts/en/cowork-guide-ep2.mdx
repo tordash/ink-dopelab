@@ -2,7 +2,7 @@
 title: "Organize 500 Files in 5 Minutes — Claude Cowork EP.2"
 description: "Use Claude Cowork to organize hundreds of messy files — rename, categorize, build folder structures, all with a single command. No dragging and dropping required."
 date: 2026-03-08
-cover: ../covers/cowork-guide-ep1.jpg
+cover: ../covers/cowork-guide-ep2.jpg
 category: "AI Guide"
 tags: ["claude-cowork", "file-management", "productivity", "beginner-guide", "automation"]
 draft: false
@@ -37,7 +37,7 @@ That's it. Claude will:
 1. **Scan every file** — read filenames + contents
 2. **Auto-categorize** — figure out which client and type each file belongs to
 3. **Create folders** — build a structure that fits your workflow
-4. **Rename files** — from `IMG_4392.jpg` to `MBOX-Invoice-Feb2026.jpg`
+4. **Rename files** — from `IMG_4392.jpg` to `ClientA-Invoice-Feb2026.jpg`
 5. **Move everything** — every file in the right place
 
 ---
@@ -63,21 +63,21 @@ Projects/
 ### After (Claude organizes it)
 ```
 Projects/
-├── MBOX-Karaoke/
+├── Client-A/
 │   ├── Briefs/
-│   │   └── MBOX-Q1-Campaign-Brief-v3.docx
+│   │   └── ClientA-Q1-Campaign-Brief-v3.docx
 │   ├── Artwork/
-│   │   └── MBOX-Carousel-Draft.psd
+│   │   └── ClientA-Carousel-Draft.psd
 │   └── Invoice/
-│       └── MBOX-Invoice-Feb2026.pdf
+│       └── ClientA-Invoice-Feb2026.pdf
 │
-├── Food-Stock/
+├── Client-B/
 │   ├── Reports/
-│   │   └── Food-Stock-Sales-Jan2026.xlsx
+│   │   └── ClientB-Sales-Jan2026.xlsx
 │   ├── Screenshots/
-│   │   └── Food-Stock-Website-Homepage.png
+│   │   └── ClientB-Website-Homepage.png
 │   └── Presentations/
-│       └── Food-Stock-Kickoff-Deck-v3.pptx
+│       └── ClientB-Kickoff-Deck-v3.pptx
 │
 ├── Reports/
 │   └── Monthly-Revenue-Q4.csv
@@ -96,7 +96,7 @@ Projects/
 
 Instead of just saying "organize my files," add context:
 
-> "Organize files by client (MBOX, Food Stock, NNTN). Create subcategories — Brief, Artwork, Report, Invoice. If a file doesn't clearly belong to any client, put it in an Uncategorized folder."
+> "Organize files by client (Client A, Client B, Client C). Create subcategories — Brief, Artwork, Report, Invoice. If a file doesn't clearly belong to any client, put it in an Uncategorized folder."
 
 The clearer your rules → the better the result.
 
@@ -110,7 +110,7 @@ Claude will show you the plan → you review → approve → then it executes.
 
 ### 3. Batch Rename
 
-> "Rename all files using the pattern [Client]-[Type]-[Date].ext — for example MBOX-Invoice-20260215.pdf"
+> "Rename all files using the pattern [Client]-[Type]-[Date].ext — for example ClientA-Invoice-20260215.pdf"
 
 Claude will rename every file to match the pattern — no more `Document (3).pdf`.
 
