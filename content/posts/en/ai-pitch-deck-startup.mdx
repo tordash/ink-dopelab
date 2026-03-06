@@ -1,0 +1,207 @@
+---
+title: "Build a Fundraising Pitch Deck with AI — From Research to Slides in One Day"
+description: "Need to raise funding? AI helps you build a complete Pitch Deck — Market Research, Financial Model, Storytelling, Slide Design — output as a 12-15 slide PPTX ready to present."
+date: 2026-03-05
+cover: ../covers/ai-pitch-deck-startup.jpg
+category: "Startup & Investment"
+tags: ["pitch-deck", "startup", "fundraising", "presentation", "financial-model"]
+draft: false
+featured: false
+---
+
+## The First Thing an Investor Asks For
+
+I've talked to plenty of founders who have great ideas, working products, but are stuck at the same point — **no pitch deck ready to present**.
+
+Some can do it themselves but it takes 2-3 weeks. Others hire an agency for $1,500-3,000.
+
+The problem isn't just time or money. It's not knowing **what investors actually want to see**. Sometimes you have all the data but can't tell the story. Sometimes you're a great storyteller but the numbers don't hold up.
+
+AI helps with all of it.
+
+---
+
+## Tools I Actually Use
+
+**Primary tools:**
+- **Claude Code** + `/pptx` skill — generates a .pptx file with structure, copy, and speaker notes ready to go
+- **Claude Code** + `/presentation-builder` skill — creates an interactive HTML presentation you can present straight from the browser
+
+**Alternatives if you don't use Claude Code:**
+- **Gamma.app** — type one prompt, get a beautiful slide deck with content instantly. Free tier available.
+- **Pitch.com** — polished templates designed specifically for startup decks, works with AI
+- **Beautiful.ai** — AI auto-layouts your slides. Move one element and the whole design adjusts.
+- **ChatGPT + PowerPoint** — have ChatGPT write the outline + copy, then paste into PowerPoint manually
+
+---
+
+## What a Good Pitch Deck Needs
+
+Most investors want to see 5 things before they agree to a meeting:
+
+1. **What's the problem** — is it big enough? Who has this problem?
+2. **How is your solution different** — why you?
+3. **How big is the market** — clear TAM/SAM/SOM?
+4. **Are the numbers credible** — revenue model, unit economics, projections?
+5. **Is the team capable** — do you have the right people for this problem?
+
+Answer all five convincingly and your chances of getting that next meeting go way up.
+
+---
+
+## AI Helps Across the Entire Flow
+
+### Step 1: Market Research
+
+AI searches and summarizes market size, competitive landscape, and industry trends automatically.
+
+**Market Research prompt:**
+
+```
+Do market research for a pitch deck for a [business type] in [country/region].
+
+I need:
+1. TAM (Total Addressable Market) — full market size with sources
+2. SAM (Serviceable Addressable Market) — the portion we can realistically reach
+3. SOM (Serviceable Obtainable Market) — target for the first 3 years
+4. Competitor matrix — 3-5 competitors comparing features / pricing / strengths / weaknesses
+5. 2-3 industry trends that support the timing of this business
+
+Format the output so it can go directly into slides.
+```
+
+What you get:
+- TAM figures with cited sources
+- Competitor matrix comparing features and pricing
+- Trends that support your timing
+
+### Step 2: Financial Model
+
+This is the part that terrifies most founders. But AI can build a model from whatever data you have.
+
+**Financial Projection prompt:**
+
+```
+Build a 3-year financial projection for a [SaaS / marketplace / retail / service] business.
+
+Assumptions:
+- Selling price: [amount] per [unit/month/year]
+- Cost per unit (COGS): [amount]
+- Customers in month 1: [number]
+- Monthly growth rate: [%]
+- Fixed monthly expenses: rent [x], salaries [x], marketing [x]
+- Starting capital: [amount]
+
+Output needed:
+1. Revenue projection years 1-3 (Pessimistic / Base / Optimistic)
+2. Break-even point — month [x]
+3. Unit economics: LTV and CAC
+4. Monthly cash flow — which month does cash run out without funding?
+
+Format as tables ready to copy into slides.
+```
+
+What you get:
+- **Revenue Projection** for 3 years (three scenarios)
+- **Break-even Point** — when do you turn profitable?
+- **Unit Economics** — LTV/CAC ratio
+- **Cash Flow** — will you run out of money before you raise?
+
+### Step 3: Storytelling
+
+This is where most pitch decks fall apart — all the data is there but it's told in the wrong order.
+
+AI helps structure the narrative:
+
+> "Start with a problem people can relate to → show how big the market is → explain why existing solutions fall short → present your solution → prove it with numbers → ask for funding to do this."
+
+This structure works for investors anywhere in the world.
+
+**Full Deck prompt:**
+
+```
+Create a pitch deck for [company name / business type] seeking [amount] in funding.
+
+Business info:
+- Problem: [describe]
+- Solution: [describe]
+- Target customer: [who]
+- Revenue model: [how you make money]
+- Traction so far: [revenue / users / partnerships]
+- Team: [size + key backgrounds]
+
+Create these slides: Problem, Solution, Market Size, Business Model,
+Traction, Competitive Advantage, Go-to-Market, Financial Projection,
+Team, The Ask
+
+For each slide: headline (1 sentence) + 3-4 bullet points + speaker notes.
+```
+
+### Step 4: Slide Design and Export
+
+AI generates the slide structure with:
+- Layout per page (chart, table, bullet points, visuals)
+- Copy for each slide (not walls of text)
+- Speaker notes for when you present
+
+**Exporting with Claude Code:**
+
+For a .pptx file (editable in PowerPoint):
+```
+/pptx [paste the outline AI created above]
+```
+
+For an HTML presentation (present from the browser, no software needed):
+```
+/presentation-builder [paste the same outline]
+```
+
+---
+
+## Output: 12-15 Slides
+
+| # | Slide | Content |
+|---|---|---|
+| 1 | Cover | Company name, tagline, date |
+| 2 | Problem | The problem you solve + how big it is |
+| 3 | Solution | Product/Service overview |
+| 4 | Market Size | TAM / SAM / SOM |
+| 5 | Product Demo | Screenshots / demo or product mockup |
+| 6 | Business Model | Revenue streams, pricing |
+| 7 | Traction | Existing metrics (if any) |
+| 8 | Competitive Advantage | Differentiation |
+| 9 | Go-to-Market | Customer acquisition strategy |
+| 10 | Financial Projection | 3 years — Revenue, Expense, Profit |
+| 11 | Team | Backgrounds and why you're the right people |
+| 12 | The Ask | How much, and what you'll use it for |
+
+Export as **PPTX** (editable in PowerPoint) or **HTML** (present from the browser).
+
+---
+
+## Time Comparison
+
+| Task | DIY | With AI |
+|---|---|---|
+| Market Research | 3-5 days | 2-3 hours |
+| Financial Model | 2-3 days | 1 hour |
+| Slide Writing | 3-5 days | 2-3 hours |
+| Design | 3-7 days | 1-2 hours |
+| **Total** | **2-3 weeks** | **1 day** |
+
+---
+
+## The Bottom Line
+
+A great pitch deck doesn't come from beautiful PowerPoint slides. It comes from a **story that answers every investor question** and **numbers that hold up to scrutiny**.
+
+AI handles both — 10x faster and far cheaper than hiring an agency.
+
+If you have a startup idea in your head but no deck yet — let AI draft the first version. Then refine the parts you know best yourself.
+
+---
+
+## Read More
+
+- [AI-Powered SEO Audit for Your Website](/en/blog/ai-seo-audit-website)
+- [AI-Powered Menu Engineering for Restaurants](/en/blog/ai-menu-design-restaurant)

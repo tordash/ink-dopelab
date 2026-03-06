@@ -1,0 +1,208 @@
+---
+title: "AI Sales Analytics Across 3 Channels — One Dashboard to Rule Them All"
+description: "Restaurants selling on 3 channels get reports in 3 different formats. AI pulls data from email automatically every day, merges it into one dashboard — and reveals that real profit is very different from what you'd expect."
+date: 2026-03-05
+cover: ../covers/ai-sales-analytics-3-channels.jpg
+category: "Data & Analytics"
+tags: ["sales-analytics", "data-driven", "restaurant", "delivery-platform", "dashboard"]
+draft: false
+featured: false
+---
+
+## The Multi-Channel Data Nightmare
+
+My restaurant sells through 3 main channels:
+
+1. **Dine-in** — data from POS
+2. **Delivery Platform A** — sends PDF reports via email
+3. **Delivery Platform B** — sends CSV reports via email
+
+Every channel sends data daily, but **the formats are completely different**.
+
+POS sends HTML, Platform A sends PDF, Platform B sends CSV — each summarizing sales in different units. Some include GP already deducted, some don't. Some include packaging costs, some don't.
+
+**The result: not a single month with reliable consolidated numbers.**
+
+## Before AI: Manual Spreadsheet Wrangling Every Week
+
+The old workflow looked like this — every week I had to:
+- Dig through email for report files
+- Copy numbers into Excel by hand
+- Calculate GP deductions manually
+- Merge everything into a grand total
+
+It took about **1-2 hours per week** and was error-prone.
+
+## The Tools I Actually Used
+
+**My main stack:**
+- **Claude Code** — wrote Python scripts to parse each data format
+- **Gmail IMAP** — pulls emails automatically via Python `imaplib`
+- **SQLite** — stores data locally, lightweight, fast, no server needed
+- **Python pandas** — handles tables, pivot calculations by menu item
+
+**No-code alternatives:**
+- **Google Sheets + Apps Script** — if your data volume is small, a simple Apps Script can pull CSVs from email into Sheets
+- **n8n** — use the "Gmail", "CSV", and "Google Sheets" nodes, drag-and-drop to connect them — minimal coding, great for visual automation
+
+## After AI: Fully Automated, Every Day
+
+I had Claude Code build a system that:
+
+### Pulls data from email automatically
+
+Every morning, the script:
+1. Connects to Gmail via IMAP
+2. Finds emails from Platform A, Platform B, and the POS system
+3. Downloads attachments (PDF/CSV) or reads the email body (HTML)
+4. Parses out the data — sales totals, order counts, GP amounts
+
+**The prompt I gave Claude Code to write the email script:**
+
+```
+Write a Python script that automatically pulls sales data from Gmail.
+
+Details:
+- Gmail: use IMAP (imaplib)
+- Emails from Platform A: sender "no-reply@platform-a.com"
+  Has PDF attachment named "sales-report-*.pdf"
+  Net sales figure is in the PDF on a line starting with "Net Sales:"
+- Emails from Platform B: sender "report@platform-b.com"
+  Has CSV attachment
+  Sales amount is in column "order_amount", GP is in column "commission"
+- Emails from POS: sender "report@pos-system.com"
+  Data is in the email body as an HTML table
+  Need the row containing "Total Sales"
+
+Output: save to SQLite table daily_sales
+columns: date, channel, gross_sales, gp_amount, net_sales
+```
+
+### Parses each format differently
+
+```
+PDF (Platform A) → pdfplumber extracts text → regex finds "Net Sales: X,XXX.XX"
+CSV (Platform B) → pandas read_csv → sum the relevant columns
+HTML (POS)       → BeautifulSoup parses the table → extracts the Total row
+```
+
+Claude Code wrote all of this. I just explained where the data lives in each format and showed it sample files.
+
+### Calculates real profit automatically
+
+What platforms report is "sales" — not "profit."
+
+Restaurants selling through delivery platforms have to deduct GP (Gross Profit sharing), which is massive — some platforms take **40-50% of gross sales**. And that's before packaging, bags, and labels.
+
+The system calculates:
+
+```
+Real profit = Sales - GP - packaging - raw material cost
+```
+
+Then displays profit margin per order and per menu item.
+
+<Callout variant="info" title="Why GP Must Be Calculated Separately">
+Platforms typically report only the "amount received" after GP deduction, but don't break down the GP percentage per SKU. Without doing the math yourself, you'll never know which menu items are actually profitable.
+</Callout>
+
+## What We Discovered in the Data
+
+### Finding 1: Some Menu Items Lose Money After GP
+
+A few low-priced items were bestsellers on delivery, but when you factor in GP, packaging, and raw materials — **the margin was negative**.
+
+The more we sold, the more we lost.
+
+Without consolidated numbers like this, we'd never have known — the gross sales figures looked great.
+
+### Finding 2: Total Sales Were Higher Than Expected, But Profit Was Lower
+
+Combined sales across 3 channels were higher than estimated, but after deducting delivery GP — **net profit was significantly lower than expected**.
+
+This data drove the decision to push dine-in sales harder for certain menu items rather than delivery.
+
+### Finding 3: The "Best-Selling" Channel Wasn't the Most Profitable
+
+The platform with the most orders wasn't the platform generating the most net profit, because GP rates differ between platforms.
+
+This only becomes obvious when you have a dashboard that consolidates all channels in one place.
+
+## The Dashboard
+
+The consolidated dashboard shows:
+
+| Data | Details |
+|------|---------|
+| Total sales | Broken down by channel + combined |
+| GP deducted | Per channel, per day |
+| Net profit | After GP + packaging |
+| Top menu items | Ranked by sales vs. by profit |
+| Weekly trend | Week-over-week comparison |
+
+It updates automatically every morning. I just open it and look — no manual work needed.
+
+<Callout variant="success" title="Key Takeaway">
+The data sitting in your email every day is incredibly valuable — it's just not being parsed yet. AI handles the boring, error-prone part so you can focus on making decisions from the data instead.
+</Callout>
+
+## How to Get Started
+
+**Step 1: Gather sample reports**
+
+Download reports from every channel for 1 month — PDF, CSV, whatever format. Figure out where the key numbers live in each one.
+
+**Step 2: Explain the data layout to AI**
+
+Open Claude Code and send a prompt like this:
+
+```
+I have sales reports from 2 delivery platforms in different formats.
+I want to merge the data into a single table.
+
+Platform A sends CSV with these columns:
+[paste the CSV header row here]
+Net sales after GP deduction is in column: "settlement_amount"
+
+Platform B sends PDF
+[attach a sample PDF or describe where the numbers are]
+
+I need a Python script that:
+1. Reads both file types automatically from a folder
+2. Merges into one table: date, channel, gross_sales, gp_deducted, net_sales
+3. Exports as a daily CSV
+```
+
+**Step 3: Decide where to store your data**
+
+- **Google Sheets** — fine for getting started; Python can push data via the Google Sheets API
+- **SQLite** — if you have a lot of data or want complex queries; free, no server needed
+- **Airtable** — if you want a UI to browse data without building a dashboard yourself
+
+**Step 4: Create the report template you want to see**
+
+```
+I have daily sales data in Google Sheets called "Sales Data"
+columns: date, channel, gross_sales, gp_deducted, net_sales
+
+Create a Google Apps Script that:
+1. Summarizes net_sales daily, broken down by channel
+2. Calculates profit % relative to gross_sales
+3. Displays a summary in a sheet called "Weekly Report"
+   format: week, channel_a_net, channel_b_net, total, avg_margin%
+4. Runs on a trigger every Monday at 8:00 AM automatically
+```
+
+**Step 5: Set up a cron job to run automatically**
+
+If you're using a Python script on Mac:
+
+```bash
+# Open the crontab editor
+crontab -e
+
+# Add this line — runs every morning at 7:00 AM
+0 7 * * * /usr/bin/python3 /path/to/your/fetch-sales.py >> /tmp/sales-log.txt 2>&1
+```
+
+The first setup might take half a day, but after that the system runs on its own every day — zero maintenance.

@@ -1,0 +1,174 @@
+---
+title: "A Simple CRM That AI Built for Free"
+description: "Salesforce costs hundreds a month — skip it. AI can design a CRM on Airtable or Google Sheets that tracks customers, sends birthday reminders, flags follow-ups, and shows a dashboard. No code required."
+date: 2026-03-05
+cover: ../covers/ai-simple-crm.jpg
+category: "Business Operations"
+tags: ["crm", "airtable", "google-sheets", "small-business", "customer-management"]
+draft: false
+featured: false
+---
+
+## How Many Regulars Can You Actually Remember?
+
+Small businesses have more repeat customers than they think — but ask who likes what, whose birthday is this month, or who hasn't come back in a while, and nobody can answer.
+
+That knowledge lives in employees' heads. Which means the day someone quits, the data walks out the door with them.
+
+Big companies solve this with CRM — Salesforce, HubSpot, Zoho — costing hundreds to thousands a month. That's not realistic for a small business.
+
+So I had AI design a simple CRM on Airtable — **2 hours to set up, zero cost**.
+
+---
+
+## The Tools I Actually Used
+
+**Option A — Airtable (recommended):**
+- **Airtable Free** (airtable.com) — supports 1,000 records, create views + filters, has a mobile app
+- Use **Claude Code** or **ChatGPT** to design the structure and write automation scripts
+
+**Option B — Google Sheets (100% free):**
+- **Google Sheets** — no cost, everyone already has it
+- Use **Google Apps Script** (free) for automation like birthday reminders
+- **Claude Code** or **ChatGPT** writes the script for you — no coding knowledge needed
+
+**Optional add-ons:**
+- **Zapier / Make.com** — connect Airtable to LINE/email for automated notifications (free tier available)
+
+---
+
+## What a Small Business Actually Needs from a CRM
+
+CRM (Customer Relationship Management) sounds complicated, but what a small business really needs is:
+
+- **Record customer info** — name, phone, birthday, preferences
+- **Track interactions** — what they bought, when, last visit date
+- **Get reminders** — customer birthdays, pending follow-ups
+- **See a dashboard** — who are the top customers, who's gone quiet
+
+That's it. No complex automations or AI scoring needed.
+
+---
+
+## How AI Helps Build the CRM
+
+### Step 1: Design the Structure (20 minutes)
+
+Open Claude or ChatGPT and use this prompt:
+
+```
+Design a CRM for [business type, e.g., massage spa / clinic / retail shop]:
+- What to track: customer info, purchase history, birthday, special notes, follow-up tasks
+- Platform: Airtable (or Google Sheets)
+- No code — use the tool's built-in features
+
+Respond in this format:
+Table name → fields → field type (Text/Number/Date/Link/Select)
+```
+
+AI will suggest a structure like:
+
+**Table 1: Customers**
+- Full name (Text), Phone (Phone), LINE ID (Text)
+- Birthday (Date), Customer tier (Single Select: VIP/Regular/New)
+- Notes (Long Text — preferences, things to watch out for)
+
+**Table 2: Visits / Purchases**
+- Link to Customer (Link to Customers table)
+- Visit date (Date), Spend amount (Currency), Items ordered (Text)
+- Rating (Number 1-5), Notes (Text)
+
+**Table 3: Follow-up Tasks**
+- Link to Customer (Link to Customers table)
+- Follow-up date (Date), Topic (Text)
+- Status (Single Select: pending/done)
+
+### Step 2: Create the Airtable Base and Views (30 minutes)
+
+Go to airtable.com, create a Base, and add tables and fields following AI's recommended structure.
+
+Then ask AI:
+
+```
+Suggest views to create in Airtable for this CRM,
+with step-by-step filter instructions for each:
+1. Customers with birthdays this month
+2. Customers who haven't visited in 30 days
+3. Pending follow-up tasks
+4. Top customers (sorted by total spend)
+```
+
+AI will tell you exactly which filters to set, for example:
+- Birthday This Month: `IS({Birthday}, SAME_MONTH, TODAY())`
+- No visit in 30 days: filter last visit date, `is before`, `30 days ago`
+- Pending follow-ups: filter Status = "pending" AND due date `is before or on` today
+
+### Step 3: Add Automated Reminders
+
+**If you're using Airtable — no code needed:**
+In Airtable, go to Automations, choose trigger "Record matches condition", set it to fire when birthday = this month, then send an email or notification.
+
+**If you're using Google Sheets — use Apps Script:**
+
+```
+Write a Google Apps Script for a Google Sheets CRM:
+- Sheet called "Customers" has columns: Name (A), Phone (B), LINE (C), Birthday (D)
+- Every morning at 9 AM: check which customers have birthdays this month
+- Send an email notification to [my email] listing those customers
+- Script should run on a daily Time-driven trigger
+```
+
+Copy the script AI generates, open Google Sheets, go to Extensions, Apps Script, paste the code, save, and set up the Trigger.
+
+### Step 4: Write the Usage SOP (20 minutes)
+
+The best system in the world is useless if the team doesn't use it. Try this prompt:
+
+```
+Write an SOP for staff to use this CRM:
+- Simple language, no technical jargon
+- Step-by-step: what to fill in when a customer makes a purchase
+- Which views to check daily and weekly
+- Keep it to 1 page max
+```
+
+You'll get a one-page document that any employee can understand in 5 minutes.
+
+---
+
+## What You Get (Without Writing a Single Line of Code)
+
+After following these steps:
+
+| Capability | How |
+|---|---|
+| Record customer data | Airtable form on mobile |
+| Check birthdays this month | "Birthday This Month" view |
+| Spot inactive customers | "No visit in 30+ days" view |
+| Follow-up task list | Follow-up tasks table |
+| Overview dashboard | Airtable dashboard block |
+| Automated reminders | Airtable Automation or Apps Script |
+
+**Cost:** Airtable's Free tier supports 1,000 records — plenty for a small business just starting out.
+
+---
+
+## Limitations to Know About
+
+This kind of CRM can't do everything:
+
+- **Airtable Free has limits** — over 1,000 records means upgrading ($20/month) or switching to Google Sheets
+- **Advanced automation** — if you want auto-send LINE messages, you'll need Zapier/Make (limited free tier)
+- **Data entry discipline is required** — the best system is worthless if nobody fills it in
+
+But for a business that currently has nothing — this beats relying on staff memory every time.
+
+---
+
+## Start Simple, Start Now
+
+Salesforce makes sense for businesses with complex sales teams — but if you have a few hundred customers and just need to "remember customer info + track follow-ups," there's no reason to pay big money.
+
+AI designs the structure that fits your business, writes the automation scripts, and creates the team SOP — all in 2 hours, using tools you already have.
+
+A simple system that actually gets used beats a complex system that nobody touches.

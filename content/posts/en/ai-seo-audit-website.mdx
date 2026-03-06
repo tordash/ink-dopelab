@@ -1,0 +1,178 @@
+---
+title: "AI SEO Audit — Find Out Why Google Can't See Your Website"
+description: "Beautiful website but zero search traffic? AI can audit meta tags, page speed, mobile responsiveness, keywords, and broken links — with an actionable fix list. No SEO specialist needed."
+date: 2026-03-05
+cover: ../covers/ai-seo-audit-website.jpg
+category: "SEO & Web"
+tags: ["seo-audit", "website", "google-search", "page-speed", "meta-tags"]
+draft: false
+featured: false
+---
+
+## Beautiful Website, Invisible to Google
+
+I see this all the time — a client spends thousands on a gorgeous website with all the right information, but when their customers search for the business on Google, nothing comes up.
+
+The problem isn't the design. It's **SEO that was never set up in the first place**.
+
+An SEO audit used to require a specialist or tools like Ahrefs/SEMrush that cost hundreds a month. Now I do it myself with AI in 20-30 minutes.
+
+---
+
+## The Tools I Actually Used
+
+**Primary tools:**
+- **Claude Code** — crawls the URL, reads source code, checks meta tags and heading structure
+- **Lighthouse CLI** — measures Core Web Vitals and Page Speed (built into Chrome DevTools)
+- **Google Search Console** — shows indexing status, coverage errors, and real-world Core Web Vitals from actual users
+
+**Alternatives if you don't use Claude Code:**
+- **Screaming Frog SEO Spider** — free for up to 500 URLs, crawls your site and exports CSV
+- **PageSpeed Insights** (pagespeed.web.dev) — free performance measurement, nothing to install
+- **Ahrefs Free Tools** (ahrefs.com/free-seo-tools) — checks broken links and meta tags for free
+
+---
+
+## 5 Things AI Checks For You
+
+### 1. Are Your Meta Tags Complete?
+
+Meta title and meta description are the first things Google reads. If they're missing or misconfigured — Google has no idea what the page is about.
+
+What AI checks:
+- **Title tag** — does it exist? Over 60 characters? Contains the target keyword?
+- **Meta description** — does it exist? Over 160 characters? Compelling enough to click?
+- **Open Graph tags** — so sharing on Facebook/messaging apps shows a proper preview
+- **H1 heading** — only one per page? Aligned with the title?
+
+**The prompt I actually used:**
+
+```
+Audit the SEO of website [URL] and report findings on:
+
+1. Meta tags: title, description, Open Graph — complete? Too long? Contains primary keyword?
+2. Heading structure: How many H1s? Duplicates? H2/H3 hierarchy correct?
+3. Mobile responsive: font size, touch targets, mobile layout
+4. Page speed: issues found, specify which elements are causing slowness
+5. Keyword density: what keyword does this page seem to target? Where is it distributed?
+6. Broken links: 404s or incorrect redirects
+
+Format results as a table: Issue | Priority (High/Medium/Low) | Fix
+```
+
+### 2. Mobile Responsive
+
+Google uses **Mobile-First Indexing** — meaning it evaluates your site from the mobile version first. If your site looks broken on phones, your ranking drops.
+
+AI checks: whether fonts are readable on mobile, buttons are tappable, layout doesn't break.
+
+### 3. Page Speed
+
+Slow site = people leave = Google drops your ranking. Google requires passing 3 **Core Web Vitals**:
+
+- **LCP (Largest Contentful Paint)** — should be under 2.5 seconds
+- **CLS (Cumulative Layout Shift)** — layout shouldn't jump around during load
+- **INP (Interaction to Next Paint)** — clicks should feel responsive
+
+**Measuring Page Speed with Lighthouse CLI:**
+
+```bash
+# Install (if you haven't already)
+npm install -g lighthouse
+
+# Run an audit and export as an HTML report
+lighthouse https://yourwebsite.com --output html --output-path ./seo-report.html
+
+# Check just the performance score
+lighthouse https://yourwebsite.com --only-categories=performance --output json | jq '.categories.performance.score'
+```
+
+AI tells you which metrics failed and what's causing it — uncompressed images, slow-loading JavaScript, etc.
+
+### 4. Are Keywords Matching Your Target?
+
+A site might have great content but use the wrong keywords. For example, customers search for "BBQ restaurant downtown" but the website only says "quality dining experience" — with no mention of location.
+
+AI analyzes: keyword density, keyword distribution across headings and body text, internal linking between pages.
+
+### 5. Broken Links
+
+Broken links = bad user experience + Google doesn't like it. A 404 error on an important page will tank your rankings.
+
+AI scans the entire site and reports every broken link, along with which page it's on.
+
+---
+
+## What AI Delivers
+
+The output isn't just a list of problems — it's an **actionable fix list** you can work through immediately:
+
+| Issue | Priority | Fix |
+|---|---|---|
+| Missing meta description on Contact page | High | Add 150-character description with business USP |
+| Hero image is 3.2 MB | High | Compress to under 200 KB |
+| Duplicate H1 across 3 pages | Medium | Make each page's H1 unique |
+| Link to deleted /about-old page | Medium | Redirect to /about |
+
+---
+
+## The Actual Step-by-Step: Which Tool > Does What > Gets What
+
+**Step 1: Run Lighthouse** to get a performance score and Core Web Vitals baseline
+- Tool: Lighthouse CLI or PageSpeed Insights
+- Input: the website URL
+- Output: score 0-100 + list of issues with explanations
+
+**Step 2: Have AI check meta tags and structure** using the prompt above
+- Tool: Claude Code
+- Input: URL + target keywords
+- Output: issues table + fix list sorted by priority
+
+**Step 3: Have AI prioritize the fixes** so you start with the highest-impact items
+
+```
+From the SEO audit results above, rank the fix list by impact (high -> low),
+considering:
+- Greatest effect on Google ranking
+- Quick wins that don't require major code changes
+- Direct impact on user experience
+
+For each fix, estimate: time needed and which file to edit
+```
+
+**Step 4: Have AI write new meta descriptions** for every page that's broken
+
+```
+Write a new meta description for [page name] on a [business type] website
+Primary keyword: [keyword]
+Business USP: [differentiator]
+Length: no more than 155 characters
+Must be click-worthy + include the primary keyword in the first sentence
+```
+
+---
+
+## It Takes 20 Minutes
+
+All you need: a website URL + the keywords you want to rank for.
+
+AI will:
+1. Crawl the site automatically
+2. Check every point listed above
+3. Produce a report with priorities and a fix list
+4. If the brief is good enough, it'll even write new meta descriptions for you
+
+---
+
+## The Bottom Line
+
+SEO audits don't require a specialist anymore. AI covers all 5 areas — fast audit, clear fix list, act on it immediately.
+
+If you have a website but traffic is low — start with an audit. Stop guessing where the problem is.
+
+---
+
+## Further Reading
+
+- [AI Cost Analysis for Restaurant Menus — Know Your Real Margin Before You Sell](/en/blog/ai-menu-design-restaurant)
+- [Build a Startup Pitch Deck with AI](/en/blog/ai-pitch-deck-startup)
