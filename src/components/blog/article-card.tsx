@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/lib/utils";
@@ -174,10 +175,15 @@ export function ArticleCard({
         {/* Cover image or category color block */}
         {cover ? (
           <div className="relative aspect-[16/9] max-h-[360px] overflow-hidden">
-            <img
+            <Image
               src={cover.src}
               alt={title}
-              loading="lazy"
+              width={cover.width}
+              height={cover.height}
+              placeholder="blur"
+              blurDataURL={cover.blurDataURL}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              priority
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
             {/* Category pill overlaid on image */}
@@ -244,10 +250,14 @@ export function ArticleCard({
       {/* Cover image or category color top bar */}
       {cover ? (
         <div className="relative aspect-[16/9] max-h-[280px] overflow-hidden">
-          <img
+          <Image
             src={cover.src}
             alt={title}
-            loading="lazy"
+            width={cover.width}
+            height={cover.height}
+            placeholder="blur"
+            blurDataURL={cover.blurDataURL}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
           {/* Category pill overlaid on image */}
