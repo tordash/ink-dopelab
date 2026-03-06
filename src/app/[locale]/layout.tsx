@@ -5,9 +5,11 @@ import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import { League_Spartan, Kanit, Special_Elite } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { SearchProvider } from "@/components/layout/search-provider";
 import "@/app/globals.css";
 
 const leagueSpartan = League_Spartan({
@@ -69,6 +71,18 @@ export default async function LocaleLayout({
       className={`${leagueSpartan.variable} ${kanit.variable} ${specialElite.variable}`}
     >
       <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SVY8Q547WJ"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SVY8Q547WJ');
+          `}
+        </Script>
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -80,7 +94,7 @@ export default async function LocaleLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <NextIntlClientProvider messages={messages}>
             <div className="flex min-h-screen flex-col">
-              <Header />
+              <Header searchSlot={<SearchProvider locale={locale as "th" | "en"} />} />
               <main className="flex-1">{children}</main>
               <Footer />
             </div>
