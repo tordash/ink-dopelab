@@ -6,6 +6,7 @@ import { TableOfContents } from "@/components/blog/toc";
 import { ArticleCard, CATEGORY_STYLES } from "@/components/blog/article-card";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { Comments } from "@/components/blog/comments";
+// import { Newsletter } from "@/components/blog/newsletter";
 import { createMetadata, articleJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
@@ -30,12 +31,19 @@ export async function generateMetadata({
   const post = getPostBySlug(slug, locale);
   if (!post) return {};
 
+  const SITE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
+  const coverImage = post.cover
+    ? `${SITE_URL}${post.cover.src}`
+    : undefined;
+
   return createMetadata({
     title: post.title,
     description: post.description,
     path: `/blog/${post.slugAsParams}`,
     locale,
     type: "article",
+    image: coverImage,
   });
 }
 
@@ -54,7 +62,9 @@ export default async function ArticlePage({
   const SITE_URL =
     process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
 
-  const ogImage = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&locale=${locale}&category=${encodeURIComponent(post.category)}`;
+  const articleImage = post.cover
+    ? `${SITE_URL}${post.cover.src}`
+    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&locale=${locale}&category=${encodeURIComponent(post.category)}`;
 
   const jsonLd = articleJsonLd({
     title: post.title,
@@ -62,7 +72,7 @@ export default async function ArticlePage({
     date: post.date,
     updated: post.updated,
     url: `${SITE_URL}${post.permalink}`,
-    image: ogImage,
+    image: articleImage,
     locale,
   });
 
@@ -178,6 +188,9 @@ export default async function ArticlePage({
             </aside>
           </div>
         </div>
+
+        {/* Newsletter — hidden until backend is ready */}
+        {/* <Newsletter /> */}
 
         {/* Comments */}
         <Comments />
