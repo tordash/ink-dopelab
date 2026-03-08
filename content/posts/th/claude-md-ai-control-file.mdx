@@ -1,0 +1,196 @@
+---
+title: "CLAUDE.md — ไฟล์ 300 บรรทัดที่ควบคุม AI ทั้งระบบ"
+description: "ทำไมแค่ถาม Claude Code ไม่พอ? ผมเขียน CLAUDE.md 300 บรรทัดที่ AI อ่านทุก session — 16 sections, 11 agents, 14 MCP servers บริหาร agency 6 ลูกค้า + ร้านอาหารพร้อมกัน"
+date: 2026-03-19
+cover: ../covers/claude-md-ai-control-file.jpg
+category: "Behind the System"
+tags: ["claude-code", "claude-md", "ai-workflow", "system-design", "agent-routing", "behind-the-system"]
+draft: false
+featured: true
+---
+
+## ทำไมแค่ "ถาม AI" ไม่พอ
+
+ปัญหาที่ผมเจอในช่วงแรกที่ใช้ Claude Code คือ ทุก session ผมต้องอธิบายซ้ำ
+
+"เราทำ digital marketing agency นะ มีลูกค้า X มีระบบ Y ใช้ database Z..."
+
+เสียเวลา 5-10 นาที ก่อนที่จะเริ่มทำงานจริง
+
+และถ้าลืมบอกอะไรบางอย่าง AI ก็ทำงานไม่ตรง workflow ที่วางไว้
+
+ปัญหาไม่ได้อยู่ที่ AI ฉลาดพอหรือเปล่า ปัญหาอยู่ที่ **AI ไม่รู้ว่าคุณคือใคร** ทุกครั้งที่เปิด session ใหม่ มันเริ่มต้นจากศูนย์
+
+## CLAUDE.md คืออะไร
+
+`CLAUDE.md` คือ config file ที่วางไว้ใน root ของ project
+
+Claude Code อ่านไฟล์นี้ **ทุก session อัตโนมัติ** ก่อนทำงานอะไรทั้งนั้น
+
+คิดแบบนี้ — เหมือน briefing document ที่มอบให้พนักงานใหม่ ก่อนเริ่มงานวันแรก คุณไม่ต้องพูดซ้ำทุกวัน เพราะเขียนไว้หมดแล้ว
+
+## Structure จริง — 16 Sections
+
+ไฟล์ CLAUDE.md ของผมมี **16 sections** ครอบคลุมทุกอย่างที่ AI ต้องรู้
+
+### Section 1: What This Workspace Is
+
+บอกก่อนเลยว่า workspace นี้คืออะไร ทำอะไร scope ครอบคลุมอะไรบ้าง ไม่ให้ AI เดาเอง
+
+ของผมครอบคลุมสองส่วนหลัก:
+- **Digital Marketing Agency** — บริการลูกค้า ทั้ง strategy, media, content, analytics, web
+- **Restaurant Operations** — จัดการธุรกิจร้านอาหารส่วนตัว ทั้งต้นทุน สต็อค เมนู ยอดขาย
+
+### Section 3–4: AI Team + Agent Routing Table
+
+นี่คือส่วนที่ผมชอบสุด
+
+ผมมี **11 AI agents แบ่ง 4 ทีม**:
+
+| ทีม | Agents | หน้าที่ |
+|-----|--------|---------|
+| Marketing Team (5) | Strategy, Content, Media, Data, Presentation | บริการลูกค้า |
+| Web Team (4) | BA, Designer, Developer, Ops | สร้าง/แก้ไขเว็บ |
+| Technical (1) | Tech Lead | Security, infra, code review |
+| Operations (1) | Project Manager | Coordination, timeline |
+
+และที่สำคัญกว่าคือ **Agent Routing Table** — ตารางที่บอกว่า "งานแบบไหน → ให้ใครทำ"
+
+```
+New website     → BA → Designer → Dev → Tech Lead review → Deploy
+Create content  → Content Strategist → Presentation
+Analyze data    → Data Analyst → Presentation
+New campaign    → Strategy Director → Media Planner → Data Analyst
+Deploy          → Developer → Tech Lead approve → Ops deploy
+```
+
+พอมี routing table ชัด AI รู้เองว่าต้องทำ workflow ไหน ไม่ต้องบอกทุกครั้ง
+
+### Section 5: Active Integrations
+
+รายการเครื่องมือทั้งหมดที่ใช้ พร้อม credentials path และ connection method
+
+**MCP Servers (14 ตัว):**
+- Notion — Agency Command Center
+- Slack — team communication
+- Google Drive — shared files
+- Canva — design generation
+- NotebookLM — RAG research
+- Google Calendar — scheduling
+- Chrome (Claude in Chrome) — browser automation
+- SQLite × 3 databases
+- GitHub, DuckDuckGo, Google Search, Tavily, Firecrawl, Puppeteer
+
+**API Services (10):**
+Airtable, Gmail IMAP, WordPress, ElevenLabs, Cloudways (2 servers), name.com, Cloudflare
+
+AI รู้ว่ามีเครื่องมืออะไรบ้าง ดึงจากไหน เชื่อมต่อยังไง ไม่ต้องบอกใหม่ทุก session
+
+### Section 6: Data Infrastructure
+
+บอก database structure และ data pipeline ทั้งหมด
+
+ผมมี 3 SQLite databases:
+- `agency.db` — จัดการ 6 clients (projects, tasks, activity)
+- `nntn.db` — ร้านอาหาร (เมนู ต้นทุน สต็อค ยอดขาย)
+- `foodstock.db` — อีก client หนึ่ง (partners, leads)
+
+AI รู้ว่าต้องดึงข้อมูลจาก database ไหน ยังไง ไม่ต้องอธิบาย schema ใหม่ทุกครั้ง
+
+### Section 8: Task Management Architecture
+
+กฎ workflow ที่บังคับทำทุก session
+
+```
+ทำ task เสร็จ → UPDATE agency.db SET dirty=1
+จบ session    → push sync to Notion
+เริ่ม session  → query v_active_tasks จาก DB (0 API calls)
+```
+
+agency.db คือ Source of Truth ไม่ใช่ Notion — AI รู้กฎนี้จาก CLAUDE.md ไม่ต้องเตือนทุกครั้ง
+
+### Section 15–16: Agent Teams + Claude Brain
+
+Section 15 บอก 7 Agent Teams สำหรับงานซับซ้อน — Marketing Campaign, Web Dev, Content Production, Data & Ops, SEO Article, Client Onboarding, Artwork
+
+Section 16 บอก Claude Brain — ระบบ long-term memory ที่เก็บความรู้ข้าม sessions ใน 4 ประเภท: Episodic, Semantic, Procedural, Meta
+
+## ผลลัพธ์จริง — Before vs After
+
+**ก่อนมี CLAUDE.md:**
+- ต้องอธิบาย context ใหม่ทุก session
+- เสียเวลา 5-10 นาทีก่อนเริ่มงานจริง
+- AI ทำงาน inconsistent เพราะไม่รู้ workflow
+- ลืม tool ที่มีอยู่ ไม่ใช้ให้ครบ
+
+**หลังมี CLAUDE.md:**
+- AI รู้ context ทันทีตั้งแต่ประโยคแรก
+- เริ่มทำงานได้เลย ไม่ต้องเกริ่น
+- Follow กฎเหล็กอัตโนมัติ (task tracking, session protocol, Slack notifications)
+- รู้ว่าใช้ tool ไหน ยังไง และเมื่อไหร่
+
+**Investment:** เขียนครั้งเดียว ใช้ทุก session หลังจากนั้น
+
+## 3 สิ่งที่ควรใส่ใน CLAUDE.md ของคุณ
+
+ถ้าจะเริ่มเขียน CLAUDE.md วันนี้ ขอแนะนำ 3 ส่วนที่สำคัญที่สุด:
+
+### 1. บอกว่าคุณคือใคร ทำอะไร
+
+```markdown
+## What This Workspace Is
+
+**Owner:** [ชื่อ] — [role]
+**Scope:** [ประเภทงาน/ธุรกิจ]
+
+| ด้าน | ขอบเขต |
+|------|--------|
+| [งาน 1] | [รายละเอียด] |
+| [งาน 2] | [รายละเอียด] |
+```
+
+อย่าให้ AI เดาเอง บอกตรงๆ ว่า workspace นี้คือ freelancer, startup, agency, หรืออะไร
+
+### 2. รายการ Tools ที่ใช้
+
+```markdown
+## Active Integrations
+
+| Tool | Purpose | How to Connect |
+|------|---------|----------------|
+| [Tool] | [ทำอะไร] | [วิธีเชื่อมต่อ] |
+```
+
+รวม databases, APIs, MCP servers ทั้งหมด พร้อม credentials path (ไม่ใช่ตัว credentials จริง) และ connection method
+
+### 3. กฎการทำงาน (CRITICAL Rules)
+
+```markdown
+## Rules (ต้องทำทุกครั้ง)
+
+- ทำ task เสร็จ → อัพเดท [database/notion/sheet]
+- ก่อนเขียน code → เช็ค [tool list] ก่อน
+- ห้าม [สิ่งที่ห้ามทำ] — เพราะ [เหตุผล]
+```
+
+เขียนให้ชัด AI ทำตามถ้าคุณบอก
+
+## ทำไม CLAUDE.md คือสิ่งที่คนส่วนใหญ่ข้าม
+
+คนส่วนใหญ่ใช้ Claude Code แบบ reactive — เปิดขึ้นมา พิมพ์สิ่งที่อยากได้ แล้วก็งงว่าทำไมผลลัพธ์ไม่ตรง
+
+ปัญหาคือ AI ทำงานได้ดีแค่ไหน ขึ้นอยู่กับ context ที่มีอยู่
+
+`CLAUDE.md` คือการลงทุน upfront ที่ได้ผล compound ทุก session ยิ่งทำงานด้วยกันนาน ยิ่ง AI เข้าใจ workflow และทำงานได้ตรง
+
+สำหรับผม 300 บรรทัด = ลงทุนครั้งเดียว ทุก session หลังจากนั้น AI ทำงานได้ทันที ไม่ต้องอธิบาย ไม่ต้องเตือน ไม่ต้องซ้ำ
+
+## เริ่มต้นได้เลย
+
+ไม่ต้องสมบูรณ์แบบตั้งแต่แรก เริ่มจาก 3 ส่วนที่แนะนำไปก่อน แล้วค่อยเพิ่ม sections ตามที่ต้องการ
+
+CLAUDE.md ที่ดีเติบโตไปพร้อมกับ workflow ของคุณ — เหมือน knowledge base ที่อัพเดทตามประสบการณ์จริง
+
+---
+
+*บทความนี้เป็นส่วนหนึ่งของ Behind the System Series — โชว์ระบบจริงที่ DopeLab ใช้บริหาร agency + ธุรกิจอาหาร ด้วย Claude Code ทุกวัน*

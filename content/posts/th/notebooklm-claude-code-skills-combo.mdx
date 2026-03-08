@@ -1,0 +1,184 @@
+---
+title: "NLM + Claude Code Skills — Combo ที่ไม่มีใครพูดถึง"
+description: "ดู YouTube 10 คลิป แล้วได้ 5 posts ใน 1 ชั่วโมง ด้วย workflow ที่เอา NotebookLM (Research Engine) มาต่อกับ Claude Code Skills (Production Engine) — pipeline ที่เราใช้จริงทุกวัน"
+date: 2026-03-08
+cover: ../covers/notebooklm-claude-code-skills-combo.jpg
+category: "YouTube Digest"
+tags: ["notebooklm", "claude-code", "skills", "content-workflow", "research", "automation"]
+draft: false
+featured: false
+---
+
+## ดู YouTube 10 คลิป แล้วได้ 5 Posts ใน 1 ชั่วโมง
+
+ไม่ใช่เพราะพิมพ์เร็ว
+
+แต่เพราะผมไม่ได้ "ดู" YouTube แบบปกติ — มี workflow ที่ทำให้ **Research + Production วิ่งพร้อมกัน**
+
+นี่คือ combo ที่ผมใช้ทุกวัน และสังเกตว่ายังไม่มีใครพูดถึงการเอาสองอย่างนี้มาต่อกัน
+
+## ปัญหาของการ Research แบบเดิม
+
+ถ้าทำ content อยู่ คุณน่าจะเจอปัญหานี้:
+
+- ดู **10 คลิป** = เสีย **10 ชั่วโมง**
+- จำได้แค่ **20%** — สมองมีจำกัด
+- **Synthesis ไม่เกิด** — เชื่อมจุดข้ามคลิปไม่ได้ดี
+- ได้ 1 คลิป → สรุป 1 ความเห็น (มุมแคบ)
+
+ผลคือ content ส่วนใหญ่มาจากคลิปเดียว แล้วเรียกว่า "research" ทั้งที่ภาพรวม topic ยังขาดอีกมาก
+
+## Pipeline ที่ใช้จริง
+
+```
+YouTube (7-10 คลิป) → NotebookLM → Claude Code Skills → 5 formats
+```
+
+ทั้ง pipeline ใช้เวลาประมาณ 1 ชั่วโมง แทน 8-10 ชั่วโมงแบบเดิม
+
+## Step 1: NotebookLM — Research Engine
+
+[NotebookLM](https://notebooklm.google.com) คือ tool จาก Google ที่ทำให้คุณ:
+
+1. **Add YouTube URL** → NLM อ่าน transcript อัตโนมัติ ฟรี
+2. **ถามคำถาม** ข้ามทุก source พร้อมกัน
+3. ได้ **synthesis** ที่เชื่อมจุดข้ามทุกคลิป
+
+ต่างจากการดู YouTube ปกติตรงที่ — NLM ไม่ลืม ไม่เมื่อย และเชื่อมจุดได้ดีกว่าสมองมนุษย์
+
+### 3 คำถามที่ใช้ทุกครั้ง
+
+เมื่อ add คลิปครบแล้ว ผมถาม NLM 3 คำถามนี้เสมอ:
+
+```
+1. "ภาพรวมของ topic นี้ตาม [N] คลิปที่ add ไว้?"
+2. "มีมุมหรือ insight ที่คนไม่ค่อยพูดถึง มีอะไรที่ยังขาดอยู่?"
+3. "ตัวเลขหรือ data ที่น่าสนใจที่สุดจากทุก source?"
+```
+
+คำถามที่ 2 สำคัญที่สุด — มันหา **Unique Angle** ที่ทำให้ content ของเราต่างจากคนอื่นที่ดูคลิปเดียวกัน
+
+## Step 2: Claude Code Skills — Production Engine
+
+Skills = ไฟล์ `SKILL.md` ที่สอน Claude ว่าต้องทำอะไรในแบบเฉพาะของเรา
+
+ต่างจาก prompt ปกติตรงที่ **consistent** — สั่งครั้งเดียว ได้ผลลัพธ์เดิมทุกครั้ง ไม่ต้องพิมพ์ instructions ซ้ำ
+
+### Skills ที่ใช้ใน Content Pipeline
+
+| Skill | ทำอะไร | Output |
+|-------|---------|--------|
+| `/short-video-script` | สร้าง shot list + VO | Script 60-90s |
+| `/presentation-builder` | HTML carousel | 9 slides 1080x1080 |
+| `/plan-content` | Content calendar | จาก brief |
+| `/branded-client-report` | รายงานลูกค้า | On-brand format |
+| `/data-insight-engine` | วิเคราะห์ข้อมูล | ตาราง + insight |
+
+เมื่อมี NLM insights แล้ว → ส่ง brief ให้ Skills → แต่ละ Skill ผลิต format ของตัวเอง
+
+## Step 3: จาก 1 NLM Insight → 5 Formats
+
+จาก insights ชุดเดียว Skills ผลิตได้ทั้งหมด:
+
+| Format | Skill ที่ใช้ | เวลาโดยประมาณ |
+|--------|-------------|----------------|
+| **Caption Facebook** | ไม่ต้อง Skill — เขียนจาก insight | ~5 นาที |
+| **Artwork HTML** (1080x1350) | frontend-design approach | ~10 นาที |
+| **Carousel 9 slides** | `/presentation-builder` | ~15 นาที |
+| **Video Script** 60-90s | `/short-video-script` | ~10 นาที |
+| **Blog Post** (MDX) | ไม่ต้อง Skill — เขียนเต็ม | ~15 นาที |
+
+**รวม: ประมาณ 55 นาที** สำหรับ content ที่ปกติใช้ทั้งวัน
+
+## ทำไม Combo นี้ถึงไม่มีใครพูดถึง?
+
+สิ่งที่ผมสังเกตคือ:
+
+- **NLM users** ส่วนใหญ่ใช้เพื่อ research อย่างเดียว ไม่ต่อ production
+- **Claude Code users** ส่วนใหญ่เริ่มจาก brief เปล่า ไม่มี research engine ข้างหลัง
+
+คนที่รู้จัก NLM มักไม่รู้จัก Claude Skills
+คนที่รู้จัก Claude Skills มักยังใช้ Google/YouTube แบบเดิมสำหรับ research
+
+แต่ถ้าเอาสองอย่างมาต่อกัน:
+
+> **NLM = Research Engine → Claude Skills = Production Engine**
+> Research + Production วิ่งพร้อมกัน = Scale ได้จริง
+
+## ตัวเลขจริงจาก Post #27
+
+Post นี้เอง ผลิตจาก workflow ที่มันเล่าถึง:
+
+- **7 คลิป YouTube** add ลง NLM
+- **3 คำถาม synthesis** ที่ถาม NLM
+- **5 Skill calls** ผลิต 5 formats
+- **เวลารวม: ~55 นาที**
+
+ถ้าไม่ใช้ pipeline นี้: ประมาณ 8-10 ชั่วโมง
+
+Research quality ก็ดีกว่าด้วย เพราะ synthesis ข้าม 7 คลิปได้จริง ไม่ใช่แค่ดูคลิปเดียวแล้วเขียน
+
+## ลองทำตามได้เลย
+
+### ขั้นตอนที่ 1: เริ่มต้นกับ NLM
+
+```
+1. ไป https://notebooklm.google.com
+2. สร้าง notebook ใหม่สำหรับ topic ที่สนใจ
+3. Add source → YouTube URL (ไม่ต้องดาวน์โหลด transcript เอง)
+4. ทำซ้ำ 7-10 คลิป
+```
+
+### ขั้นตอนที่ 2: ถาม 3 คำถาม Synthesis
+
+```
+คำถาม 1: "ช่วยสรุปภาพรวมของ [TOPIC]
+จากทุก source ที่มีใน notebook นี้"
+
+คำถาม 2: "มีมุมหรือ insight เกี่ยวกับ [TOPIC]
+ที่คนไม่ค่อยพูดถึง หรือมีอะไรที่ยังขาดอยู่
+จากการวิเคราะห์ทุก source?"
+
+คำถาม 3: "ตัวเลข สถิติ หรือ data
+ที่น่าสนใจที่สุดจากทุก source?"
+```
+
+### ขั้นตอนที่ 3: ต่อกับ Claude Code Skills
+
+ถ้ามี Claude Code แล้ว — เอา NLM insights มาเป็น brief แล้วเรียก Skills:
+
+```bash
+# ในการสนทนากับ Claude Code
+/short-video-script [NLM insights เป็น brief]
+/presentation-builder [NLM insights เป็น brief]
+```
+
+ถ้ายังไม่มี Skills — แค่ paste NLM insights เข้า Claude.ai แล้วบอกว่าอยากได้ format อะไร ก็ได้ผลที่ดีกว่าเริ่มจากเปล่ามาก
+
+## สิ่งที่ NLM ทำได้ที่ YouTube ปกติทำไม่ได้
+
+| ความสามารถ | YouTube ปกติ | NotebookLM |
+|------------|-------------|------------|
+| Synthesis ข้าม 10 คลิป | ไม่ได้ (ต้องจำเอง) | ทำได้ทันที |
+| หา Unique Angle | ขึ้นกับ insight ส่วนตัว | ถามได้โดยตรง |
+| ดึง Quote/Data สำคัญ | ต้องจด ต้องจำ | ถามได้ทุกเวลา |
+| เปรียบเทียบความเห็นข้าม creator | ไม่ได้ | ทำได้โดยตรง |
+| เวลาที่ใช้ | 10 ชั่วโมง | ~20 นาที |
+
+## บทสรุป
+
+การ research แบบเดิม คือดูทีละคลิป ไม่ได้ synthesis ใช้เวลามาก และได้ผลที่ขึ้นกับว่าจำอะไรได้บ้าง
+
+NLM + Claude Code Skills เปลี่ยนสมการนี้:
+
+- **NLM** → อ่านทั้งหมด ถามได้ทุกอย่าง synthesis ข้าม 10 คลิปใน 1 นาที
+- **Skills** → ผลิต content จาก insights อัตโนมัติ consistent ทุกครั้ง
+- **ผลลัพธ์** → Research + Production pipeline ที่ scale ได้จริง
+
+สองอย่างรวมกัน = คนเดียวทำงานได้เท่ากับทีม 5 คน
+
+ลองเริ่มจาก NLM ก่อน ไม่ต้องมี Skills ก็ได้ แค่เอา 7 คลิปใส่ notebook แล้วถาม 3 คำถามที่บอกไว้ รับรองว่า research ดีขึ้นทันที
+
+---
+
+*Workflow นี้คือสิ่งที่เราใช้จริงทุกวันที่ DopeLab — Post #27 นี้เอง ผลิตโดย pipeline ที่มันเล่าถึง*

@@ -1,0 +1,179 @@
+---
+title: "Claude Code แทนที่ Lead Gen Agency ทั้งทีม — เรียนรู้จาก ColdIQ $7M ARR"
+description: "ColdIQ agency ขนาด $7M ARR โชว์ workflow จริงที่ใช้ Claude Code สร้าง outbound campaign ทั้งหมดในเซสชั่นเดียว ICP scoring, waterfall email enrichment, AI copy generation, และ campaign upload — จาก 3-5 ชั่วโมง เหลือ 20 นาที"
+date: 2026-03-08
+cover: ../covers/cold-iq-claude-code-lead-gen.jpg
+category: "YouTube Digest"
+tags: ["claude-code", "lead-gen", "b2b-sales", "outbound", "gtm", "agency", "automation", "cold-iq"]
+draft: false
+featured: false
+---
+
+> **สรุปจาก:** ColdIQ Webinar — "Claude Code just replaced your lead generation agency" (YouTube, Feb 27, 2026) และ Blog "How Claude Code Builds an Entire Outbound Campaign in Under 20 Minutes"
+
+## Agency $7M ARR โชว์ workflow ที่เปลี่ยน outbound sales ตลอดกาล
+
+**ColdIQ** คือ B2B lead generation agency ที่สร้างรายได้ **$7M ARR** มีลูกค้ากว่า 100 บริษัท ด้วย packages $5,000-$10,000 ต่อเดือน และ onboard ลูกค้าใหม่กว่า **30 รายต่อ quarter**
+
+เมื่อ February 27, 2026 Kenny Damian ที่ดูแล outbound ของ ColdIQ ได้ demo live ผ่าน webinar ที่มีนักการตลาดลงทะเบียนกว่า **2,000+ คน** — โชว์การสร้าง outbound campaign ทั้งหมดด้วย Claude Code ในเซสชั่นเดียว ใช้เวลาไม่ถึง 20 นาที
+
+ตัวเลขที่น่าตกใจ: งานที่เคยใช้เวลา **3-5 ชั่วโมง** ต่อ 1 campaign (500 leads) บัดนี้ใช้เวลาเพียง **20 นาที**
+
+## ปัญหาของ outbound campaign แบบเดิม
+
+ก่อนจะดูว่า Claude Code ทำอะไรได้ ต้องเข้าใจก่อนว่า workflow เดิมมันแย่แค่ไหน
+
+Campaign building แบบดั้งเดิมผ่าน **5 ขั้นตอนแยกกัน ด้วย 5 tools แยกกัน:**
+
+1. **List building** — ดึง company list ใน Clay
+2. **ICP Scoring** — score แต่ละ account ใน spreadsheet ด้วย formula
+3. **Email Enrichment** — หา email ใน Apollo, Prospeo, FullEnrich ทีละตัว
+4. **Copy Writing** — เขียน email ด้วยมือ ทุก segment ทุก variation
+5. **Campaign Upload** — อัพโหลดขึ้น Instantly ทีละ field ทีละ step
+
+สำหรับ 500 leads = **3-5 ชั่วโมง** ก่อน email ตัวแรกจะออกจากระบบ
+
+ปัญหาไม่ใช่แต่ละ step — ปัญหาคือ **handoff** ระหว่าง step: export CSV, reformat, clean data, paste ไปที่อื่น, ทำซ้ำ ทุก handoff คือจุดที่ข้อมูลพัง มี copy-paste error หรือเสียเวลาโดยไม่ได้ value
+
+## วิธีที่ Claude Code เปลี่ยน workflow นี้
+
+Claude Code รัน workflow ทั้งหมดใน **1 terminal session** เรียก API โดยตรง, process ข้อมูลใน memory, และ push output ไปยัง sending platform โดยไม่เคย leave terminal
+
+### Step 1: ICP Scoring ด้วยภาษาธรรมดา
+
+Kenny ไม่ต้องสร้าง formula ใน spreadsheet อีกต่อไป เขาแค่บอก Claude Code เป็นภาษาธรรมดาว่า "เหมาะ" หมายความว่าอะไร:
+
+```
+"Score companies based on: industry fit (SaaS preferred),
+company size (50-500 employees), recent funding signals,
+hiring activity for SDR/AE roles, and tech stack indicators"
+```
+
+Claude Code อ่านทุก company ใน list และ assign priority tier โดยเข้าใจ context — ไม่ใช่แค่ keyword matching:
+
+- บริษัทที่เพิ่ง raise + กำลัง hire SDR = **Tier 1** (เหมาะมาก)
+- บริษัท 50 คนที่ flat มา 2 ปี = **Tier 3** (เหมาะน้อย)
+
+**ผลลัพธ์:** จาก 45 นาที → **ไม่ถึง 3 นาที**
+
+ถ้า criteria เปลี่ยน แก้ prompt บรรทัดเดียว ไม่ต้อง rebuild formula ทั้งชุด
+
+### Step 2: Waterfall Email Enrichment
+
+Claude Code call API หลาย provider ตามลำดับโดยอัตโนมัติ:
+
+```
+Provider 1: Apollo (database ใหญ่สุด, fast API)
+  ↓ ถ้าไม่ได้
+Provider 2: Prospeo (แข็งแกร่งสำหรับ European domains)
+  ↓ ถ้ายังไม่ได้
+Provider 3: FullEnrich (aggregate จากหลาย source)
+  ↓ ยังไม่ได้อีก
+Provider 4: Wiza / LeadMagic
+```
+
+ทั้งหมดนี้รันใน **1 loop** โดยไม่มีใครนั่งดู ไม่มีการ export CSV ระหว่าง provider ไม่มีการ merge spreadsheet ด้วยมือ Claude Code filter low-confidence results ออกเองและ keep เฉพาะ verified addresses
+
+### Step 3: AI Copy ที่ Personalized จริง
+
+Claude Code ไม่ได้เขียน email จากศูนย์ — ColdIQ ให้มันดู **best-performing templates** ที่เคยสร้าง pipeline หลักล้านเป็น reference ร่วมกับ copywriting rules ที่ชัดเจน:
+
+```
+- ไม่เกิน 100 คำต่อ email
+- ไม่มี jargon
+- Subject line เหมือน colleague ส่งให้กัน
+- CTA แบบ yes/no
+- บรรทัดแรกต้องตอบ "ทำไมคุณ ทำไมตอนนี้"
+```
+
+Claude Code generate email sequence 4 ฉบับ พร้อม dynamic variables ที่ personalized ตาม buying signal:
+
+| Signal | Opening ที่ได้ |
+|--------|----------------|
+| เพิ่ง raise funding | เปิดด้วย funding round + scale challenge |
+| กำลัง hire SDR | เปิดด้วย outbound scaling challenge |
+| Tech stack X | เปิดด้วย integration opportunity |
+
+**ผลลัพธ์:** output ออกมา **85% พร้อมส่ง** — เหลือ edit 10 นาที แทนที่จะต้องเขียนจากศูนย์ 1 ชั่วโมง
+
+### Step 4: One-Click Campaign Upload
+
+ขั้นตอนสุดท้ายที่คนมักมองข้าม — upload campaign เข้า Instantly ปกติใช้เวลา 20 นาทีกดปุ่มใน UI
+
+Claude Code ใช้ Instantly API เพียง **1 call:**
+
+```python
+# Claude Code handles all of this automatically:
+# - Create campaign
+# - Upload lead list with enriched fields
+# - Attach email sequences (properly threaded)
+# - Configure sending schedule
+# - Set deliverability standards
+```
+
+Campaign live และพร้อมส่ง โดยไม่มีใครแตะ platform UI เลย
+
+## ผลลัพธ์ที่ได้จริง
+
+| Metric | Before | After |
+|--------|--------|-------|
+| เวลาต่อ campaign (500 leads) | 3-5 ชั่วโมง | 20 นาที |
+| ICP Scoring | 45 นาที | 3 นาที |
+| Copy writing | 1 ชั่วโมง | 10 นาที (editing) |
+| Campaign upload | 20 นาที | 1 API call |
+| Campaigns ต่อสัปดาห์ (per engineer) | 2-3 | 5-10 |
+| Headcount สำหรับ campaign ops | 3 คน | 1 คน + Claude Code |
+
+## ไม่ใช่แค่ Proof of Concept — นี่คือ Production Workflow
+
+สิ่งสำคัญที่ ColdIQ เน้นย้ำ: demo นี้ไม่ใช่การทดลอง มันคือ **production workflow** ที่รันบน real data กับ live API connections emails ถูก upload ขึ้น Instantly พร้อมส่งจริง
+
+อย่างไรก็ตาม พวกเขายังมี **human review step** ก่อน activate campaign เสมอ — Claude Code ทำ assembly แต่ senior person ต้อง review ICP scoring logic, spot-check enrichment results, และอ่าน copy ก่อน hit send
+
+**automation ลด 4 ชั่วโมงของ manual work แต่ human oversight 15-20 นาทีคือสิ่งที่รักษา quality ไว้**
+
+## Tech Stack ที่ ColdIQ ใช้
+
+```
+Claude Code          — orchestrate ทุกอย่างใน 1 terminal session
+Clay                 — list building + data orchestration
+Apollo               — email enrichment (primary)
+Prospeo              — email enrichment (EU-focused)
+FullEnrich           — email enrichment (aggregator)
+Instantly            — campaign sending platform
+n8n                  — workflow automation (onboarding + lead scoring)
+Attio                — CRM
+PredictLeads         — intent signals (hiring, funding, tech adoption)
+AirOps               — programmatic SEO
+```
+
+## Quote ที่น่าจำ
+
+> "Claude Code ไม่ได้ replace strategy — มัน replace execution layer ระหว่าง strategy กับ live campaign"
+>
+> "The campaign building bottleneck is gone. What matters now is the quality of your strategy, your targeting, and your offer."
+>
+> — ColdIQ (Michel Lieben, Founder)
+
+## ทำไมถึง relevant สำหรับ Agency ไทย
+
+ผมทำ agency เหมือน ColdIQ แต่ภาษาไทยและตลาดต่างกัน สิ่งที่ ColdIQ demo ตรงกับสิ่งที่เราสร้างอยู่มาก
+
+**ต่างกันตรงนี้:** ColdIQ ใช้ Claude Code เพื่อ campaign building เป็นหลัก แต่เราใช้มันครอบคลุมทุกส่วน — content, data analysis, reporting, operations
+
+**lesson ที่ได้จาก case นี้:** bottleneck ไม่ใช่ไอเดีย มันคือ execution ระหว่างไอเดียกับ live output Claude Code เอา execution burden ออกไป เหลือแค่ strategy และ judgment ที่คนต้องทำจริงๆ
+
+## ลองเริ่มใช้ workflow นี้
+
+ถ้าคุณทำ B2B sales หรือ agency และยังสร้าง outbound campaign ด้วยมือ ลองเริ่มจาก:
+
+1. **กำหนด ICP criteria ให้ชัด** — เขียนเป็นภาษาธรรมดาว่า "ลูกค้าเหมาะ" หมายถึงอะไร
+2. **สร้าง email templates ที่ดีก่อน** — Claude Code ดีที่สุดเมื่อมี reference ที่แข็งแกร่ง
+3. **setup API keys** สำหรับ enrichment providers ที่ใช้ (Apollo, Prospeo, ฯลฯ)
+4. **เริ่มจาก 1 campaign เล็กๆ** — ทดสอบ workflow ก่อน scale
+
+จำไว้: Claude Code ทำ assembly แต่ strategy และ judgment ยังต้องมาจากคุณ
+
+---
+
+*สรุปจาก: [Claude Code just replaced your lead generation agency](https://www.youtube.com/watch?v=iTg-nXaqCEA) — ColdIQ Webinar (Feb 27, 2026) และ [How Claude Code Builds an Entire Outbound Campaign in Under 20 Minutes](https://coldiq.com/blog/how-claude-code-builds-an-entire-outbound-campaign-in-under-20-minutes) — coldiq.com*
