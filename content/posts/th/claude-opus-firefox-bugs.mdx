@@ -1,0 +1,142 @@
+---
+title: "Claude Opus 4.6 หาบัค Firefox ได้ 22 ตัว ใน 2 สัปดาห์ — ด้วยค่า API $4,000"
+description: "ทีม security researcher ปล่อย Claude Opus 4.6 เข้าตรวจ codebase Firefox 6,000 ไฟล์ C++ พบ 22 vulnerabilities (14 high severity) เจอ use-after-free ใน 20 นาที ด้วยต้นทุนแค่ $4,000 — เทียบกับ pentest firm $30K-$150K+"
+date: 2026-03-08
+cover: ../covers/claude-opus-firefox-bugs.jpg
+category: "AI News"
+tags: ["claude-opus", "cybersecurity", "firefox", "ai-security", "vulnerability", "penetration-testing", "bug-hunting"]
+draft: false
+featured: false
+---
+
+> **Source:** The Hacker News, Mar 7, 2026
+
+## ข่าวอะไร?
+
+มกราคม 2026 ทีม security researcher กลุ่มหนึ่งทดลองทำสิ่งที่ฟังดูบ้า — ปล่อย **Claude Opus 4.6** เข้าตรวจ codebase ของ Firefox แบบอัตโนมัติ โดยไม่มีนักวิเคราะห์นั่งดู
+
+ผ่านไป 2 สัปดาห์ ผลที่ได้:
+
+- พบ **22 vulnerabilities** รวม: **14 high severity**, 7 moderate, 1 low
+- ส่ง **112 unique reports** ให้ Mozilla
+- สแกน **6,000 ไฟล์ C++** ครบทั้ง codebase
+- ต้นทุนรวม: **ประมาณ $4,000** ค่า API credits
+
+Mozilla ตอบรับรายงาน แก้ไข และ patch ออกมาใน **Firefox 148**
+
+เทียบกับค่าจ้าง pentest firm ทั่วไปที่อยู่ที่ **$30,000 - $150,000+** ต่อการ audit หนึ่งครั้ง
+
+## ตัวเลขที่น่าสะดุด
+
+ตัวเลขที่ผมอ่านแล้วต้องหยุดคิดคือ — **20 นาที**
+
+นั่นคือเวลาที่ Claude ใช้ค้นหา use-after-free bug ตัวแรกในส่วนของ JavaScript engine ตั้งแต่เริ่มรัน
+
+Use-after-free เป็น class ของ bug ที่อันตราย โปรแกรมเข้าถึง memory หลังจาก free ไปแล้ว — เปิดช่องให้ attacker เขียนทับ memory แล้วควบคุม execution ได้ เป็น bug ที่นักวิเคราะห์ต้องนั่งไล่ logic ของโค้ดทีละชั้น ใช้เวลาเป็นวัน
+
+Claude ทำในครึ่งชั่วโมง
+
+Bug ที่ร้ายแรงที่สุดที่พบคือ **CVE-2026-2796** — JIT miscompilation ใน WebAssembly ได้คะแนน CVSS **9.8 จาก 10** (Critical) หมายความว่าถ้า attacker exploit ได้ มันอาจควบคุมเครื่องของผู้ใช้ได้เลย
+
+```
+Summary: 22 vulnerabilities found
+- Critical (CVSS 9.8): 1  →  CVE-2026-2796 (JIT/WebAssembly)
+- High severity:       13
+- Moderate:            7
+- Low:                 1
+
+Files scanned: ~6,000 C++ files
+Time:          2 weeks
+Cost:          ~$4,000 API credits
+Reports filed: 112 unique
+Fixed in:      Firefox 148
+```
+
+## Finding Bugs ≠ Exploiting Bugs
+
+ข้อมูลที่น่าสนใจที่สุด และสื่อส่วนใหญ่พลาดรายงาน คือตัวเลขนี้:
+
+Claude ส่งรายงาน 112 รายการ แต่สามารถพัฒนา **working exploit ได้แค่ 2 จาก 112** ตัว
+
+นั่นคืออัตรา exploit success แค่ประมาณ **1.8%**
+
+ฟังดูเหมือน fail แต่ผมมองว่านี่คือข่าวดี
+
+AI เก่งมากในการ **scan หาความผิดปกติ** — อ่าน code เป็นหมื่นๆ บรรทัด จับรูปแบบที่อาจเป็น vulnerability ได้เร็วและแม่นกว่าคน แต่การ **exploit จริง** ต้องการความเข้าใจ context ลึกกว่า — เข้าใจว่า memory state ณ ตอนนั้นเป็นยังไง ระบบ mitigation ชนิดไหนกำลังทำงาน จะ bypass ยังไง ต้องใช้ creativity และ intuition แบบที่ AI ยังทำได้จำกัด
+
+แปลว่า AI กำลังทำให้ **defense ถูกลง** แต่ยังไม่ได้ทำให้ **offense ง่ายขึ้น** อย่างมีนัยสำคัญ — อย่างน้อยในตอนนี้
+
+## ราคาเทียบกัน
+
+นี่คือตัวเลขที่เปลี่ยน perspective ผมมากที่สุด:
+
+| วิธี | ราคา | เวลา |
+|------|------|------|
+| Pentest firm (standard) | $30,000 - $150,000+ | 2-8 สัปดาห์ |
+| Claude Opus 4.6 (ในข่าวนี้) | ~$4,000 | 2 สัปดาห์ |
+| Mozilla ทำเอง (follow-up) | ไม่เปิดเผย | ต่อเนื่อง |
+
+หลังจากรับรายงานชุดแรก Mozilla เอา approach เดียวกันนี้ไปรัน security audit เพิ่มเอง แล้วพบ **90 vulnerabilities เพิ่มเติม**
+
+ตัวเลขที่น่าสนใจอีกอย่าง: ถ้าคิดต่อ bug ที่พบ $4,000 หารด้วย 22 bugs = **ประมาณ $182 ต่อ vulnerability** — ต่ำกว่า bounty ที่ Mozilla จ่ายนักวิจัยอิสระต่อ bug เยอะมาก
+
+มีอีกมิติหนึ่งที่คนมักมองข้าม: ต้นทุน $4,000 นี้ **รวม context ของทั้ง codebase แล้ว** Claude ไม่ได้สแกน file ทีละไฟล์แบบ grep ธรรมดา แต่ทำความเข้าใจว่า function A ถูกเรียกจาก B, C, D, ตัวแปรใดถูกส่งผ่าน, boundary check มีอยู่ที่ไหนบ้าง — นั่นคือ **program analysis แบบ deep** ที่ tool อัตโนมัติทั่วไปยังทำได้ไม่ถึง
+
+ถ้าเทียบกับ Bug Bounty program ของ Mozilla ที่จ่าย $1,000 - $10,000 ต่อ valid bug ขึ้นกับ severity — $4,000 สำหรับ 22 bugs ถือว่า cost-effective อย่างมาก
+
+## สิ่งที่ธุรกิจไทยควรรู้
+
+ข่าวนี้ไม่ได้เกี่ยวกับ Firefox เท่านั้น
+
+ประเด็นจริงคือ **security audit กำลังกลายเป็นสิ่งที่ SME เข้าถึงได้**
+
+ก่อนหน้านี้ ถ้าคุณมี web app, internal tool, หรือ API ที่ต้องการ security review จริงๆ คุณต้องจ้าง pentest firm ด้วยงบ 6 หลักขึ้น หรือหา security engineer ที่ต้องจ่ายเงินเดือนสูง ทำให้ธุรกิจส่วนใหญ่ skip ขั้นตอนนี้ไป และไม่มีใครพูดถึงมันจนกว่าจะโดน hack
+
+ตอนนี้ landscape เปลี่ยนแล้ว:
+
+**ธุรกิจที่ได้ประโยชน์ทันที:**
+- บริษัทที่มี in-house dev team และมี codebase ของตัวเอง
+- SaaS หรือ startup ที่ต้องการ security posture ที่ดีก่อน fundraise หรือ enterprise sales
+- Agency ที่ส่งมอบ web application ให้ลูกค้า — ทำ audit ก่อน handover ได้โดยไม่ต้องเพิ่มงบมาก
+- ธุรกิจที่มี API เชื่อมกับ payment gateway หรือข้อมูลลูกค้า
+
+**สิ่งที่ยังต้องมีคน:**
+- ตีความผล audit — AI พบ bug แต่ต้องมีคนตัดสินใจว่า patch แบบไหนถูก และ prioritize อะไรก่อน
+- Exploit development ถ้าต้องการ penetration test จริงๆ เพื่อ demonstrate risk ให้ board เห็น
+- Business logic vulnerabilities — ช่องโหว่ที่มาจากการออกแบบ flow ไม่ใช่ code เช่น privilege escalation ผ่าน race condition ใน checkout flow
+
+### วิธีที่ธุรกิจเริ่มได้จริง
+
+ถ้าคุณมี codebase และอยากทดลอง approach นี้ โครงสร้างที่ทีมนักวิจัยใช้โดยหลักๆ คือ:
+
+```
+1. ให้ Claude อ่าน directory structure ทั้งหมดก่อน
+   → สร้าง mental map ของ codebase
+
+2. กำหนด attack surface ที่จะโฟกัส
+   → input parsing, authentication, memory management
+
+3. วน loop: ให้ Claude อ่านไฟล์ที่เกี่ยวข้อง
+   → วิเคราะห์ pattern → flag จุดน่าสงสัย
+
+4. Triage รายงานด้วย engineer จริง
+   → validate, prioritize, plan fix
+```
+
+ไม่ต้องรัน automated scanner แบบ zero-context — ยิ่งให้ context มาก ผลยิ่งดี
+
+AI security audit ไม่ได้แทน security engineer แต่เป็น **force multiplier** — engineer 1 คนทำงานได้ระดับที่เดิมต้องใช้ทีม 5 คน และสำหรับ SME ที่ยังไม่มี security specialist ทำแบบนี้ยังดีกว่าไม่ทำอะไรเลย
+
+ผมมองว่าอีก 1-2 ปี AI-assisted security audit จะกลายเป็น standard practice สำหรับทุกโปรเจ็คที่ส่งมอบ web application — เหมือนที่ automated testing กลายเป็น norm ในยุคที่ผ่านมา ถ้าวันนี้เราขายเว็บโดยไม่รัน test ลูกค้าก็ไม่รับ — อีกไม่นาน security audit ก็จะเป็นแบบนั้น
+
+## Takeaway
+
+- Claude Opus 4.6 พบ 22 bugs ใน Firefox ด้วยต้นทุน $4,000 เทียบกับ pentest firm ที่ $30K-$150K+
+- Bug ตัวแรก (use-after-free) พบใน 20 นาที, Bug ร้ายสุด CVSS 9.8
+- AI ยังสร้าง working exploit ได้แค่ 1.8% ของ bugs ที่พบ — defense ได้ประโยชน์มากกว่า offense
+- Mozilla ใช้ approach เดียวกันพบ bugs เพิ่มอีก 90 ตัว
+- Security audit กำลังเข้าถึงได้สำหรับธุรกิจที่ไม่ใช่ enterprise — นี่คือ shift ที่สำคัญ
+
+---
+
+*อ้างอิง: [AI-Powered Pentesting: Claude Opus 4.6 Finds 22 Firefox Vulnerabilities in Two Weeks](https://thehackernews.com/) — The Hacker News, Mar 7, 2026*

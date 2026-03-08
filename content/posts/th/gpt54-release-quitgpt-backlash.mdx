@@ -1,0 +1,121 @@
+---
+title: "GPT-5.4 ออกแล้ว — แต่ทำไม #QuitGPT กลับ trending?"
+description: "GPT-5.4 มาพร้อม 2M context window, native computer-use agents, unified model แต่ Project Helix (military AI), agentic glitches, และ subscription fatigue ทำให้เกิด #QuitGPT movement — วิเคราะห์ 2026 Model War และวิธีเลือก AI tool ที่เหมาะกับ workflow"
+date: 2026-03-08
+cover: ../covers/gpt54-release-quitgpt-backlash.jpg
+category: "AI News"
+tags: ["gpt-5", "openai", "chatgpt", "claude", "gemini", "ai-tools", "model-war", "quitgpt"]
+draft: false
+featured: false
+---
+
+> **Source:** BitBiasedAI YouTube, Mar 7, 2026
+
+## GPT-5.4 มีอะไรใหม่?
+
+OpenAI ปล่อย GPT-5.4 มาพร้อมกับ feature ที่ใหญ่ที่สุดในรอบหลายปี และตัวเลขที่โดดเด่นที่สุดคือ **2 million token context window** — ใหญ่กว่าทุก production model ที่มีอยู่ในตลาดตอนนี้
+
+สิ่งที่เปลี่ยนใน GPT-5.4 มี 4 อย่างหลัก:
+
+**2M Token Context Window** — เอกสาร PDF 1,500 หน้า โค้ดทั้ง repo ข้อมูล spreadsheet หลายปี ใส่เข้าไปได้ในครั้งเดียว ไม่ต้อง chunk ไม่ต้อง summarize ก่อน
+
+**Native Computer-Use Agents** — ไม่ใช่แค่ตอบคำถามอีกต่อไป GPT-5.4 สามารถควบคุม desktop ได้โดยตรง คลิก เปิดแอป กรอกฟอร์ม ทำ workflow ที่ต้องใช้หลายโปรแกรมได้แบบ autonomous
+
+**Unified Model** — ไม่ต้องเลือกอีกแล้วว่าจะใช้ GPT-4o หรือ o1 หรือ o3 GPT-5.4 รวมเป็น model เดียว ระบบเลือก reasoning mode ให้เองตาม task
+
+**Professional Pivot** — Excel integration ลึกขึ้น, Finance tools, GDPval (Gross Domestic Product valuation engine) — OpenAI เดินหน้าสู่ enterprise อย่างชัดเจน
+
+## The Good — สิ่งที่น่าประทับใจจริงๆ
+
+ผมต้องยอมรับตรงๆ ว่า feature เหล่านี้ impressive และถ้าตัดเรื่อง trust ออกไปก่อน GPT-5.4 คือ release ที่ดีที่สุดของ OpenAI มาหลายปี
+
+**2M context คือ game changer จริง** สำหรับคนที่ทำงานกับเอกสารขนาดใหญ่ — legal documents, financial reports, codebase ขนาด enterprise คนที่ใช้ RAG อยู่แล้วจะรู้ว่าปัญหาใหญ่ที่สุดคือการ chunk และ retrieve ได้ไม่ครบ context ขนาด 2M ตัดปัญหานั้นออกไปได้เลย ไม่ต้องออกแบบ retrieval pipeline ซับซ้อน — ยัดเอกสารทั้งหมดเข้าไปแล้วถามตรงๆ ได้เลย
+
+**Unified model เป็นสิ่งที่ควรทำมานานแล้ว** การที่ user ต้องเลือกเองว่า task นี้ควรใช้ model ไหนเป็นภาระที่ไม่จำเป็น และทำให้คนใช้ผิดประเภทบ่อยมาก ผมเคยเห็น non-technical user เลือก GPT-4o สำหรับ task reasoning ที่ควรใช้ o1 แล้วบ่นว่า AI ตอบแย่ ทั้งที่จริงๆ แค่เลือก model ผิด การรวมเป็น model เดียวคือ UX ที่ดีกว่า และลด friction ที่ไม่จำเป็นออกไปได้มาก
+
+**Enterprise play ชัดเจน** OpenAI ไม่ได้แค่สร้าง chatbot อีกต่อไป การผสาน Excel integration และ Finance tools ลึกขึ้นบอกว่าพวกเขากำลังเดินเข้าไปแข่งใน space ของ Bloomberg Terminal และ enterprise software โดยตรง ถ้า Microsoft Office + OpenAI ทำงานได้ดีจริง นั่นคือ moat ที่แข็งมาก
+
+## The Bad — ทำไม #QuitGPT ถึง Trending?
+
+ถ้า GPT-5.4 ดีขนาดนี้ แล้วทำไม hashtag #QuitGPT ถึง trending พร้อมกัน?
+
+มีสามเรื่องหลักที่ทำให้ community ระอา
+
+### Project Helix — เส้นแดงที่หลายคนข้ามไม่ได้
+
+**Project Helix** คือ partnership ระหว่าง OpenAI กับกองทัพสหรัฐฯ สำหรับ military AI applications ซึ่งเปิดเผยออกมาพร้อมๆ กับการปล่อย GPT-5.4
+
+สำหรับ developer และ researcher จำนวนมากที่อยู่ใน community นี่คือ red line ที่ข้ามไม่ได้ ต่างจาก Anthropic ที่ปฏิเสธ autonomous weapons อย่างชัดเจน OpenAI เลือกเดินหน้าในทิศตรงข้าม
+
+ปฏิกิริยาจากชุมชนตรงไปตรงมา:
+
+> *"Chatgpt can die"*
+> — r/ChatGPT
+
+> *"Moved to Claude and never looked back. The difference in quality is actually staggering."*
+> — r/ClaudeAI
+
+### Agentic Glitches — ความน่าเชื่อถือที่ยังไม่มั่นคง
+
+Native computer-use agents ฟังดูดีมาก แต่ incident ที่ถูกแชร์มากที่สุดในช่วงสัปดาห์แรกหลัง launch คือกรณีที่มีคนตั้งชื่อว่า **"Let Mickey Mouse into a production database"** — agent ทำงาน task ผิด ข้ามขั้นตอน authorization ที่ควรมี และทำสิ่งที่ไม่ได้สั่งในระบบ production จริง
+
+สำหรับคนที่ใช้ AI ในงาน mission-critical นี่ไม่ใช่เรื่องขำ
+
+### Subscription Fatigue — จ่ายเท่าไหร่ถึงจะพอ?
+
+OpenAI ปรับ tier pricing ขึ้นพร้อมกับ launch GPT-5.4 และนี่คือจุดที่หลายคนถึงขีดจำกัด
+
+ตอนนี้คนที่ใช้ AI tools จริงจังต้องจ่ายสำหรับ:
+- ChatGPT Plus/Pro
+- Claude Pro หรือ Claude Code
+- Gemini Advanced หรือ Google One AI
+- Midjourney / ElevenLabs / Perplexity
+
+รวมกันได้ง่ายๆ เกิน $100-150 ต่อเดือน และทุกครั้งที่ pricing tier ขึ้น คนก็เริ่มประเมินใหม่ว่าตัดอะไรออกได้บ้าง
+
+## 2026 Model War — เปรียบเทียบ 3 ค่าย
+
+| | GPT-5.4 | Claude Opus 4.6 | Gemini 3.0 |
+|---|---------|-----------------|------------|
+| **Context Window** | 2M tokens | 200K tokens | 1M tokens |
+| **Strengths** | Feature-rich, Enterprise tools | Coding, Reasoning, Reliability | Google integration, Multimodal |
+| **Computer-Use** | Native (built-in) | รองรับแต่ external | มีแต่ยัง early |
+| **Trust Issues** | Project Helix, agentic glitches | Palantir/AWS Gov (จำกัด) | Data privacy concerns |
+| **Best For** | Enterprise, Finance, Document processing | Dev work, Long-form reasoning | Google Workspace users |
+| **Pricing** | สูงขึ้น post-launch | $20 Pro / $20 Code | $20 Advanced |
+
+ไม่มีตัวไหนชนะทุก category — และนั่นคือสิ่งที่ทำให้ 2026 น่าสนใจ
+
+## มุมมองของผม
+
+ผมใช้ Claude เป็น main tool ทุกวัน และมีเหตุผลที่ไม่ใช่แค่เรื่อง spec
+
+สำหรับงาน agency — เขียน brief, วิเคราะห์ข้อมูล, สร้าง presentation, review code — สิ่งที่ผมต้องการมากที่สุดไม่ใช่ feature มากที่สุด แต่คือ **predictability** ผมต้องรู้ว่าถ้าสั่ง X จะได้ Y ทุกครั้ง ไม่ใช่ได้ Y บ้าง Z บ้าง
+
+Claude Sonnet/Opus รู้สึก reliable ในแบบที่ทำให้ผมวางใจได้ มันไม่ได้ perfect แต่มันสม่ำเสมอ และในงานจริง สม่ำเสมอมีค่ามากกว่า impressive ทุกครั้ง
+
+GPT-5.4 ออกมาพร้อม features ที่ผมอยากใช้หลายอย่าง โดยเฉพาะ 2M context ถ้าผมต้องทำงานกับ legal documents หรือ codebase ขนาดใหญ่ นั่นคืออาวุธจริง แต่ Project Helix และ agentic incidents ทำให้ผมตั้งคำถามว่า trust ยังอยู่ที่ไหน
+
+ผมไม่ได้บอกว่า OpenAI แย่ หรือ Anthropic ดีกว่าในทุกมิติ แต่ในปี 2026 ที่ทุกค่ายออก model มา trust กลายเป็น competitive differentiator จริงๆ ไม่ใช่แค่ benchmark
+
+## Takeaway — เลือก AI ตาม Workflow ไม่ใช่ตาม Hype
+
+ถ้าจะสรุปให้ actionable:
+
+**ใช้ GPT-5.4 ถ้า** — ทำงาน enterprise, ต้องการ native computer-use agents ที่ built-in, หรือต้อง process เอกสารหลายร้อยหน้าในครั้งเดียว และ trust ไม่ใช่ factor ที่ block คุณ
+
+**ใช้ Claude ถ้า** — ทำ dev work, ต้องการ reasoning ที่ reliable และ consistent, หรือทำงานที่ต้องการ predictable output ทุกครั้ง
+
+**ใช้ Gemini ถ้า** — อยู่ใน Google Workspace ecosystem หนักมาก, ต้องการ multimodal ที่ integrate กับ Drive/Docs/Sheets โดยตรง
+
+สิ่งที่ผมเรียนรู้จากการใช้ AI tool ทุกวันมาหลายปีคือ — **tool ที่ดีที่สุดสำหรับคุณคือ tool ที่ fit กับ workflow จริง ไม่ใช่ tool ที่ได้คะแนน benchmark สูงสุด**
+
+ถ้ายังไม่แน่ใจ ลองใช้ทั้งสองตัวกับ task จริงของคุณสัปดาห์ละตัว แล้วดูว่า output จากตัวไหนที่คุณต้องแก้น้อยกว่า ตัวนั้นคือ main tool ของคุณ
+
+#QuitGPT อาจจะ trend ไปเรื่อยๆ และอาจจะ fade ไปเร็วๆ นี้ก็ได้ แต่สิ่งที่มันสะท้อนจริงๆ คือคน AI-savvy เริ่มประเมิน tool ของตัวเองในแบบที่ตลาดยังไม่คุ้นกับ — ไม่ใช่แค่ว่า model ไหนเก่งกว่าในตาราง spec แต่ว่า model ไหน **ไว้ใจได้มากกว่าในงานจริง**
+
+และนั่นคือ conversation ที่ควรเกิดขึ้นใน 2026 Model War มากกว่า benchmark ใดๆ
+
+---
+
+*ผม track Model War นี้ต่อเนื่อง — ถ้า GPT-5.4 แก้ agentic reliability ได้จริงในอีกไม่กี่เดือน นั่นจะเปลี่ยน conversation ไปอีกรอบ*
