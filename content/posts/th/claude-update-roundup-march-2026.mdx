@@ -1,0 +1,76 @@
+---
+title: "Claude Update Roundup มี.ค. 2026 — 5 อัพเดทที่เปลี่ยนวิธีทำงาน"
+description: "สรุป Claude updates ล่าสุด: Opus 4.6, Skills 2.0, Agent Teams, Voice Mode, IDE integration — review จากมุมคนใช้จริงทุกวัน ไม่ใช่แค่อ่านข่าว"
+date: 2026-03-11
+cover: ../covers/claude-update-roundup-march-2026.jpg
+category: "News & Tools"
+tags: ["claude-update", "opus-4", "skills", "agent-teams", "news"]
+draft: false
+---
+
+## ทำไมถึงเขียน Update Roundup
+
+![ทำไมถึงเขียน Update Roundup](/images/blog/claude-update-roundup-march-2026.jpg)
+
+ข่าว AI ออกทุกวัน แต่ส่วนใหญ่เป็น "announcement" — บอกว่ามีอะไรใหม่ แต่ไม่ได้บอกว่า **ใช้จริงแล้วเป็นยังไง**
+
+ผมใช้ Claude Code ทำงานจริงทุกวัน (รัน agency + ร้านอาหาร) ดังนั้น review นี้มาจาก production use ไม่ใช่แค่ลองเล่น
+
+## 1. Opus 4.6 — Model ที่ฉลาดที่สุดตอนนี้
+
+- Code generation ดีขึ้นชัดเจน — เขียน production code ได้ดีกว่าเดิม
+- Reasoning ลึกขึ้น — หา 22 bugs ใน Firefox codebase
+- เขียน SQL query ที่มี JOIN 5-6 tables ถูกต้องตั้งแต่รอบแรก
+- เขียน Thai content ที่เป็นธรรมชาติขึ้น
+
+## 2. Skills 2.0 — สร้าง "ทักษะ" ให้ AI
+
+Skills คือ reusable instructions ที่สอนให้ AI ทำงานเฉพาะทาง:
+
+```
+/deploy → AI อ่าน SKILL.md → ทำตาม step 1-2-3 → deploy production
+```
+
+Skills 2.0 เพิ่ม:
+- `${CLAUDE_SKILL_DIR}` — skill อ้างอิงไฟล์ของตัวเองได้
+- Hooks — run script ก่อน/หลัง skill
+- Eval system — ทดสอบ performance ของ skill ได้
+
+ผมมี 11+ skills: `/deploy`, `/presentation-builder`, `/svg-diagram`, `/create-artwork`
+
+## 3. Agent Teams — หลาย AI ทำงานพร้อมกัน
+
+- Spawn หลาย Claude instances พร้อมกัน
+- แต่ละตัวทำงาน isolated (worktree แยก)
+- สื่อสารกันผ่าน Shared Task List
+
+ผมตั้ง 7 teams (11 instances) — งาน full campaign ที่เคยใช้ 2-3 วัน → **เสร็จใน 2 ชั่วโมง**
+
+<Callout variant="warning" title="ข้อควรรู้">
+Agent Teams กิน token เยอะมาก — ใช้เฉพาะงาน complexity 8/10 ขึ้นไป งานง่ายๆ ใช้ AI ตัวเดียวคุ้มกว่า
+</Callout>
+
+## 4. Voice Mode — พูดสั่ง AI
+
+- กด Spacebar ค้าง → พูดสั่งได้
+- รองรับ 20 ภาษา
+- **ยังไม่รองรับภาษาไทย** ดังนั้นผมใช้น้อย
+
+## 5. Claude Code ใน IDE
+
+- ใช้ได้ใน VS Code + JetBrains
+- Panel แยกในตัว editor
+- ผมยังใช้ terminal เป็นหลัก แต่สำหรับคนที่อยู่ใน VS Code ตลอด — นี่คือ game changer
+
+## สรุป: อะไรที่ควรลองก่อน
+
+| ถ้าคุณเป็น... | ลองก่อน |
+|-------------|--------|
+| มือใหม่ | Skills — สร้าง 1 skill ที่ใช้บ่อย |
+| Developer | Opus 4.6 — ลองงาน code ที่เคยไม่ได้ |
+| ทำงานหลาย projects | Agent Teams — ลอง 2 agents ก่อน |
+| ไม่ชอบพิมพ์ | Voice Mode (ถ้าใช้ EN) |
+
+<Callout variant="success" title="สรุป">
+Claude มี.ค. 2026 กระโดดไปไกลมาก Opus 4.6 + Skills 2.0 + Agent Teams รวมกัน ทำให้ AI ไม่ใช่แค่ "เครื่องมือ" อีกต่อไป — มันเป็น team member จริงๆ ที่มี skill มี memory มี workflow ของตัวเอง
+</Callout>

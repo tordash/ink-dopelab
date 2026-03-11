@@ -1,0 +1,145 @@
+---
+title: "Victor Perez สอนสร้าง 5 AI Agents — เปรียบกับระบบ 7 Teams ที่ใช้จริง"
+description: "สรุป approach ของ Victor Perez (180K views) เรื่อง Multi-Agent Workflow และเปรียบเทียบกับ DopeLab's 7 Agent Teams ที่ใช้งานจริงทุกวัน — อะไรเหมือน อะไรต่าง อะไรดีกว่า"
+date: 2026-03-11
+cover: ../covers/agent-teams-victor-perez.jpg
+category: "AI Workflow"
+tags: ["agent-teams", "multi-agent", "claude-code", "automation", "youtube-digest"]
+draft: false
+---
+
+## Victor Perez กับวิดีโอที่ได้ 180K Views ใน 3 วัน
+
+![Victor Perez กับวิดีโอที่ได้ 180K Views ใน 3 วัน](/images/blog/agent-teams-victor-perez.jpg)
+
+วิดีโอ "Build 5 AI Agents That Work Together" ของ Victor Perez ได้ 180K views ภายใน 3 วัน
+ไม่ใช่เพราะชื่อ clickbait แต่เพราะมันตอบคำถามที่คนถามจริงๆ
+
+**"Multi-Agent System ทำงานยังไงในทางปฏิบัติ?"**
+
+ก่อนที่ผมจะเล่าว่าระบบของผมต่างออกไปยังไง ขอสรุป approach ของ Victor ก่อน
+
+## Victor Perez's 5-Agent System
+
+Victor ออกแบบระบบแบบ **Sequential Pipeline** — agents ทำงานต่อกันเป็นลำดับ:
+
+```
+Agent 1: Research Agent
+→ รับ topic → ค้นหาข้อมูลจาก web → สรุป key points
+
+Agent 2: Planning Agent
+→ รับ key points จาก Research → แยก task ออกเป็นชิ้นย่อย
+
+Agent 3: Writing Agent
+→ รับ plan จาก Planner → เขียน content draft
+
+Agent 4: Review Agent
+→ รับ draft จาก Writer → ตรวจ accuracy, tone, structure
+
+Agent 5: Publisher Agent
+→ รับ approved draft → Format ให้เหมาะกับ platform → โพสต์
+```
+
+สิ่งที่ดีคือ **ชัดเจน เข้าใจง่าย implement ได้ใน 1 วัน**
+
+สิ่งที่จำกัดคือ linear — agent ต้องรอกัน ทำพร้อมกันไม่ได้
+
+## DopeLab's 7 Teams — ต่างออกไปยังไง
+
+ผมพัฒนาระบบ Agent Teams มาใช้ใน agency ตั้งแต่ต้นปี 2026 ตอนนี้มี 7 teams รวม 11 AI instances
+
+### Parallel แทน Sequential
+
+```
+Victor's System:
+R → P → W → Rv → Pub (ทำทีละขั้น)
+
+DopeLab's System:
+      Team Lead (วางแผน)
+       ↙          ↘
+ Marketing Team   Web Team
+ 5 agents         4 agents
+ (ทำพร้อมกัน)    (ทำพร้อมกัน)
+       ↘          ↙
+    Tech Lead + PM
+    (ตรวจ + approve)
+```
+
+### Marketing Team (5 ตัว)
+
+| Agent | หน้าที่หลัก |
+|-------|-----------|
+| Strategy Director | วิเคราะห์ตลาด, positioning, framework |
+| Content Strategist | Caption, blog, messaging, brief |
+| Media Planner | Budget allocation, channel strategy |
+| Data Analyst | Analytics, performance reporting |
+| Presentation Specialist | Decks, slides, client deliverables |
+
+### Web Team (4 ตัว)
+
+| Agent | หน้าที่หลัก |
+|-------|-----------|
+| Web BA | Requirements, sitemap, user stories |
+| Web Designer | UI/UX, wireframes, HTML mockups |
+| Web Developer | Frontend + backend, API integration |
+| Web Ops | Testing, QA, SEO, deployment |
+
+### Cross-Team Authority (2 ตัว)
+
+- **Tech Lead** — Security review, infrastructure, code review สำหรับทุก team
+- **Project Manager** — Timeline, coordination, task tracking
+
+## ตัวอย่างจริง: Full Campaign ใน 2 ชั่วโมง
+
+**โจทย์:** สร้าง Q1 marketing campaign สำหรับ Client A (karaoke venue)
+
+**แบบเดิม (ทำคนเดียว):**
+```
+Research ตลาด: 3-4 ชม. + เขียน strategy: 2 ชม.
+สร้าง content calendar: 2 ชม. + เขียน ad copy: 3 ชม.
+ทำ media plan: 2 ชม. → รวม: ~12-13 ชั่วโมง (2 วัน)
+```
+
+**แบบ Agent Teams:**
+```
+Team Lead วางแผน: 15 นาที
+Strategy + Content + Media ทำพร้อมกัน: 45 นาที
+Data Analyst สร้าง framework: 30 นาที
+Presentation Specialist รวม deliverables: 30 นาที
+รวม: ~2 ชั่วโมง (ลด 85%)
+```
+
+<Callout variant="info" title="Context สำคัญ">
+2 ชั่วโมงนี้ไม่รวมเวลา review และ revision ของผม การ approve แต่ละ step ยังต้องใช้เวลา แต่งานหนักที่สุดเปลี่ยนจากเราทำเอง → AI ทำ เราแค่ approve
+</Callout>
+
+## Decision Matrix: เมื่อไหร่ควรใช้แบบไหน
+
+```
+ความซับซ้อน 1-4/10   → AI ตัวเดียว
+ความซับซ้อน 4-7/10   → Sequential (แบบ Victor)
+ความซับซ้อน 7-10/10  → Parallel Teams (แบบ DopeLab)
+```
+
+## สิ่งที่ Victor พูดถูกต้อง 100%
+
+> "The quality of your agents depends entirely on the quality of your prompts."
+
+นี่คือสิ่งที่ผมเจอจริง — ครั้งแรกที่ลองใช้ Agent Teams ผลลัพธ์แย่มาก เพราะ brief ไม่ชัด
+
+สิ่งที่แก้ปัญหาได้:
+- เขียน CLAUDE.md ให้ละเอียด (agent personality + boundaries)
+- กำหนดไฟล์ที่แต่ละ agent รับผิดชอบชัดเจน (ห้าม 2 ตัวแก้ไฟล์เดียวกัน)
+- Plan Mode ก่อนเสมอ — ให้ Team Lead วางแผนก่อนลงมือ
+
+<Callout variant="warning" title="ข้อควรระวัง">
+Agent Teams กิน token เยอะมาก งาน 2 ชั่วโมงอาจใช้ token เท่ากับงาน AI ตัวเดียว 1 วัน คำนวณ ROI ก่อนใช้กับทุกงาน
+</Callout>
+
+## สรุป
+
+Victor Perez สร้าง system ที่ดีมากสำหรับการเริ่มต้น ถ้าคุณยังไม่เคยทำ Multi-Agent ให้เริ่มจาก 5 agents แบบเขาก่อน
+
+แต่ถ้าคุณทำงาน agency หรือดูแลหลาย client พร้อมกัน การ scale ขึ้นเป็น parallel teams จะเปลี่ยนเกมได้จริง
+
+สิ่งที่ผมอยากให้ลอง: เริ่มจาก 2 agents ทำงานพร้อมกันก่อน ดูว่า workflow ของคุณรับมือได้มั้ย แล้วค่อย scale

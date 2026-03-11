@@ -1,0 +1,142 @@
+---
+title: "ติดตั้ง Claude Code จาก 0 — 5 นาทีเปลี่ยนวิธีทำงาน"
+description: "Tutorial สำหรับคนที่ไม่เคยใช้ Claude Code — ตั้งแต่ติดตั้ง Node.js ถึงสั่ง AI ทำงานครั้งแรก ไม่ต้องมีพื้นฐาน programming"
+date: 2026-03-11
+cover: ../covers/install-claude-code-from-zero.jpg
+category: "Tutorial"
+tags: ["tutorial", "claude-code", "setup", "beginner", "installation"]
+draft: false
+---
+
+## ทำไมถึงเขียนบทความนี้
+
+![ทำไมถึงเขียนบทความนี้](/images/blog/install-claude-code-from-zero.jpg)
+
+ตั้งแต่เริ่มโพส DopeLab มา คำถามที่ DM มาเยอะที่สุดคือ:
+
+> "ติดตั้ง Claude Code ยังไงครับ?"
+
+บทความนี้จะพาไปตั้งแต่ 0 — ไม่ต้องมีพื้นฐาน coding ไม่ต้องเป็น developer
+
+## สิ่งที่ต้องมี
+
+| สิ่งที่ต้องมี | ทำไม |
+|-------------|------|
+| คอมพิวเตอร์ (Mac/Windows/Linux) | Claude Code ทำงานบน terminal |
+| Internet | ดาวน์โหลด + เชื่อมต่อ API |
+| Anthropic account | login ผ่าน claude.ai |
+| Claude Max ($100/mo) หรือ API credits | ต้องมี subscription |
+
+<Callout variant="info" title="Claude Max vs API">
+**Claude Max ($100/mo)** — unlimited ใช้ได้ไม่อั้น เหมาะสำหรับคนใช้เยอะ (ผมใช้แบบนี้)
+
+**API credits** — จ่ายตามใช้ เริ่มต้น $5 ก็ได้ เหมาะลองก่อน
+</Callout>
+
+## Step 1: ติดตั้ง Node.js
+
+### Mac
+```bash
+brew install node
+# หรือไป nodejs.org → Download LTS → กด Install
+```
+
+### Windows
+```
+1. ไป https://nodejs.org
+2. กดดาวน์โหลด LTS (ตัวเลขใหญ่สีเขียว)
+3. เปิด installer → กด Next ไปเรื่อยๆ
+```
+
+### เช็คว่าติดตั้งสำเร็จ
+```bash
+node -v
+# ต้องเห็น v20.x.x หรือ v22.x.x
+```
+
+## Step 2: ติดตั้ง Claude Code
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+รอ 30 วินาที — 1 นาที
+
+```bash
+claude --version
+```
+
+## Step 3: Login ครั้งแรก
+
+```bash
+claude
+```
+
+ครั้งแรกจะเปิด browser ให้ login → Authorize → กลับมาที่ Terminal พร้อมใช้งาน
+
+## Step 4: ใช้งานครั้งแรก
+
+```bash
+cd ~/Desktop/my-project
+claude
+```
+
+ลองสั่ง:
+```
+> สร้างเว็บไซต์ portfolio ง่ายๆ ที่มีชื่อผม รูป และ 3 ผลงาน
+```
+
+Claude Code จะสร้างไฟล์ให้ ถามก่อนเขียน (กด Y เพื่อ approve)
+
+**แค่นี้คุณใช้ Claude Code ได้แล้ว**
+
+## Step 5 (สำคัญ!): สร้าง CLAUDE.md
+
+ไฟล์ที่เปลี่ยน Claude Code จาก "AI ทั่วไป" เป็น "AI ที่รู้จักงานคุณ":
+
+```markdown
+# My Project
+
+## ผมทำอะไร
+- ผมเป็นเจ้าของร้านกาแฟ
+- ต้องการเว็บไซต์สำหรับร้าน
+
+## สิ่งที่อยากได้
+- ภาษาไทย
+- Design minimal สีเอิร์ธโทน
+- มีเมนู + ราคา + Google Maps
+```
+
+ทุกครั้งที่เปิด Claude Code ในโฟลเดอร์นี้ AI จะอ่าน CLAUDE.md ก่อน → **จำ context ได้ทันที**
+
+## Tips สำหรับมือใหม่
+
+### 1. อย่ากลัวผิด
+Claude Code **ถามก่อนทุกครั้ง** ที่จะแก้ไฟล์ ใช้ Git revert ได้ถ้าไม่ถูกใจ
+
+### 2. สั่งเป็นภาษาไทยได้
+```
+> สร้างหน้า About Us ที่เล่าเรื่องราวร้าน
+> แก้สีพื้นหลังเป็นสีครีม
+```
+
+### 3. เริ่มจาก project เล็กๆ
+ลองจาก "สร้างเว็บ 1 หน้า" ก่อน เข้าใจวิธีทำงานแล้วค่อย scale
+
+<Callout variant="warning" title="สิ่งที่ต้องระวัง">
+Claude Code ทำงานบน **เครื่องคุณจริงๆ** — มันอ่าน/เขียนไฟล์ได้ ดังนั้นอ่าน prompt ก่อน approve ทุกครั้ง ใช้ Git เป็น backup
+</Callout>
+
+## FAQ
+
+**Q: ต้องเป็น programmer ไหม?** — ไม่ต้อง พิมพ์ภาษาไทย/อังกฤษ สั่งได้เลย
+
+**Q: ค่าใช้จ่ายเท่าไหร่?** — Claude Max $100/mo (unlimited) หรือ API แบบ pay-per-use
+
+**Q: Mac vs Windows ต่างกันไหม?** — ไม่ต่าง ใช้ได้เหมือนกัน
+
+**Q: ใช้บนมือถือได้ไหม?** — ได้ ผ่าน remote access (Termius + Tailscale)
+
+<Callout variant="success" title="สรุป">
+Claude Code ติดตั้ง 5 นาที ใช้งานได้ทันที ไม่ต้อง config ซับซ้อน สิ่งที่ทำให้ต่างจาก ChatGPT คือมันทำงานบนไฟล์จริง สั่ง 1 ประโยค ได้ผลงานจริง ลองเลยครับ
+</Callout>

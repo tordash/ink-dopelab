@@ -1,0 +1,104 @@
+---
+title: "Claude Brain — ระบบความจำระยะยาวที่ทำให้ AI ไม่ลืม"
+description: "วิธีสร้าง long-term memory ให้ Claude Code ด้วย Obsidian + Git — โครงสร้างเลียนแบบสมองมนุษย์ (Episodic/Semantic/Procedural/Meta) ที่ใช้จริงทุกวัน"
+date: 2026-03-11
+cover: ../covers/claude-brain-long-term-memory.jpg
+category: "Behind the System"
+tags: ["claude-brain", "long-term-memory", "obsidian", "claude-code", "behind-the-system"]
+draft: false
+---
+
+## ปัญหา: AI ลืมทุกอย่างทุกครั้งที่เปิดใหม่
+
+![ปัญหา: AI ลืมทุกอย่างทุกครั้งที่เปิดใหม่](/images/blog/claude-brain-long-term-memory.jpg)
+
+ทุก AI chatbot มีปัญหาเดียวกัน — context window มีจำกัด พอเปิด session ใหม่ ทุกอย่างหายหมด
+
+ผมเจอปัญหานี้ตอนรัน agency ที่ดูแล 6 ลูกค้าพร้อมกัน แต่ละ client มี preferences ต่างกัน มี project ค้างหลายอัน มีกฎเฉพาะที่ห้ามฝ่าฝืน
+
+**ทุกเช้าที่เปิด Claude Code ต้องอธิบายใหม่ทั้งหมด** — ใครคือลูกค้า DB schema เป็นยังไง เมื่อวานทำอะไรค้าง กฎอะไรบ้างที่ต้องทำตาม
+
+มันไม่ scale
+
+## Solution: สร้าง "สมอง" ให้ AI
+
+ผมสร้างระบบชื่อ **Claude Brain** — long-term memory system ที่อยู่ใน Git repo ทำงานร่วมกับ Obsidian vault
+
+โครงสร้างเลียนแบบ Human Memory Model:
+
+```
+brain/
+├── Episodic/          # จำเหตุการณ์ — sessions, milestones, decisions
+│   ├── sessions/      # บันทึก session สำคัญ
+│   └── decisions/     # การตัดสินใจ + เหตุผล
+├── Semantic/          # จำความรู้ — clients, technical, marketing
+│   ├── clients/       # ข้อมูลลูกค้าทุกราย
+│   ├── business/      # ความรู้ธุรกิจ
+│   └── technical/     # เทคนิค infrastructure
+├── Procedural/        # จำวิธีทำ — workflows, patterns, lessons
+│   ├── workflows/     # ขั้นตอนที่พิสูจน์แล้ว
+│   └── patterns/      # รูปแบบที่เจอซ้ำ
+└── Meta/              # จำเรื่องตัวเอง — กฎเหล็ก, self-reflection
+    └── rules.md       # กฎ 16 ข้อ (CRITICAL)
+```
+
+### Entry Point: _Index.md
+
+ทุก session เริ่มต้น AI อ่าน `brain/_Index.md` — Map of Content ที่เชื่อมไปยังทุก note ด้วย [[wikilinks]]
+
+AI ไม่ต้องอ่านทุกไฟล์ — อ่าน index แล้วโหลด on-demand ตามงานที่ต้องทำ
+
+## ตัวอย่างจริง: กฎเหล็กที่ป้องกันข้อผิดพลาด
+
+Session 87 — AI ลืม INSERT activity_feed ตอนปิด session ทำให้ log หาย
+
+แก้ยังไง? เพิ่มกฎ:
+
+> **กฎ 2:** ปิด session → อ่าน checklist ก่อนทำ! (ห้ามทำจากความจำ!)
+
+ตั้งแต่เพิ่มกฎนี้ ไม่เคยลืมอีกเลย เพราะ **กฎอยู่ใน brain/Meta/rules.md** — AI อ่านทุก session
+
+นี่คือพลังของ long-term memory: **ผิดครั้งเดียว → แก้ครั้งเดียว → ไม่ผิดซ้ำ**
+
+## Obsidian Integration
+
+Claude Brain อยู่ใน Git repo (`brain/` folder) แต่เชื่อมกับ Obsidian vault ผ่าน symlink:
+
+```
+Obsidian vault/Claude Brain → brain/
+```
+
+ทำให้:
+- Owner อ่าน/แก้ brain notes ผ่าน Obsidian UI ได้
+- AI อ่าน/แก้ผ่าน Read/Write tools ใน terminal
+- ทุกอย่าง version controlled ด้วย Git
+- Push/pull ระหว่าง Mac + iPhone ได้
+
+<Callout variant="info" title="ทำไมไม่ใช้ CLAUDE.md อย่างเดียว?">
+CLAUDE.md เหมาะสำหรับ project instructions ที่ไม่เปลี่ยนบ่อย แต่ brain/ เก็บ dynamic knowledge ที่โตขึ้นทุกวัน — session notes, client discoveries, lessons learned ของที่ CLAUDE.md รองรับไม่ได้
+</Callout>
+
+## ตัวเลขจริง
+
+| Metric | Value |
+|--------|-------|
+| Brain files | 40+ markdown files |
+| Total knowledge | ~15,000 words |
+| Clients tracked | 6 (with full context) |
+| Rules enforced | 16 ข้อ ทุก session |
+| Cross-references | 100+ [[wikilinks]] |
+
+## วิธีเริ่มต้นสำหรับคุณ
+
+ไม่จำเป็นต้องซับซ้อนเท่านี้ตั้งแต่แรก เริ่มจาก:
+
+1. สร้าง `brain/` folder ใน project
+2. เขียน `rules.md` — 3-5 กฎสำคัญที่สุด
+3. เขียน `clients.md` — ข้อมูล client ที่ทำงานด้วยบ่อยสุด
+4. เพิ่มใน CLAUDE.md: "ทุก session อ่าน brain/ ก่อน"
+
+แค่นี้ AI จะเริ่มจำได้แล้ว ค่อยขยายเมื่อเจอ pattern ที่ต้องจำ
+
+<Callout variant="success" title="สรุป">
+Long-term memory ไม่ใช่ feature ที่ AI มีมาให้ — ต้องสร้างเอง Claude Brain เปลี่ยนจาก "AI ที่ลืมทุกอย่าง" เป็น "AI ที่รู้จักธุรกิจผมดีกว่าพนักงานใหม่" และมันอยู่แค่ใน markdown files ธรรมดาๆ
+</Callout>
