@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <title>Perplexity Personal Computer — Architecture Diagram</title>
+  <desc>แสดง ecosystem ของ Perplexity Personal Computer: Mac mini เป็นศูนย์กลาง เชื่อม local apps, cloud, remote access, และ enterprise</desc>
+
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="centerGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="cloudGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="localGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="remoteGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="entGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="100%" stop-color="#DC2626"/>
+    </linearGradient>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F59E0B"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3B82F6"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 26px; font-weight: 700; fill: #F5F5F5; }
+    .subtitle { font-family: 'Inter', 'Sarabun', sans-serif; font-size: 13px; font-weight: 400; fill: #94A3B8; }
+    .node-label { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 15px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+    .node-sub { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 11px; font-weight: 400; fill: rgba(255,255,255,0.85); text-anchor: middle; }
+    .detail-label { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 11px; font-weight: 400; fill: #94A3B8; text-anchor: middle; }
+    .badge { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; fill: #050912; text-anchor: middle; dominant-baseline: central; }
+    .brand { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; fill: #475569; }
+    .edge { stroke-width: 2; fill: none; }
+    .edge-glow { stroke-width: 6; fill: none; opacity: 0.15; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="#050912" rx="0"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.04">
+    <line x1="0" y1="337" x2="1200" y2="337" stroke="#F59E0B" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="675" stroke="#F59E0B" stroke-width="0.5"/>
+    <circle cx="600" cy="337" r="200" stroke="#3B82F6" stroke-width="0.5" fill="none"/>
+    <circle cx="600" cy="337" r="320" stroke="#3B82F6" stroke-width="0.5" fill="none"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="42" text-anchor="middle" class="title">Perplexity Personal Computer</text>
+  <text x="600" y="62" text-anchor="middle" class="subtitle">AI Agent Ecosystem — Mac mini ที่ทำงานแทนคุณ 24/7</text>
+
+  <!-- ========== EDGES (draw first) ========== -->
+
+  <!-- Center → Left (Local Apps) -->
+  <line x1="520" y1="337" x2="280" y2="337" class="edge-glow" stroke="#10B981"/>
+  <line x1="520" y1="337" x2="280" y2="337" class="edge" stroke="#10B981" stroke-dasharray="8,4"/>
+
+  <!-- Center → Right (Cloud) -->
+  <line x1="680" y1="337" x2="920" y2="337" class="edge-glow" stroke="#3B82F6"/>
+  <line x1="680" y1="337" x2="920" y2="337" class="edge" stroke="#3B82F6" stroke-dasharray="8,4"/>
+
+  <!-- Center → Top (Remote) -->
+  <line x1="600" y1="260" x2="600" y2="150" class="edge-glow" stroke="#8B5CF6"/>
+  <line x1="600" y1="260" x2="600" y2="150" class="edge" stroke="#8B5CF6" stroke-dasharray="8,4"/>
+
+  <!-- Center → Bottom (Enterprise) -->
+  <line x1="600" y1="415" x2="600" y2="510" class="edge-glow" stroke="#EF4444"/>
+  <line x1="600" y1="415" x2="600" y2="510" class="edge" stroke="#EF4444" stroke-dasharray="8,4"/>
+
+  <!-- ========== CENTER NODE: Mac mini ========== -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="277" width="160" height="120" rx="16" fill="url(#centerGrad)"/>
+    <rect x="520" y="277" width="160" height="120" rx="16" fill="none" stroke="#FCD34D" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  <text x="600" y="318" class="node-label" font-size="17">Mac mini</text>
+  <text x="600" y="340" class="node-label" font-size="13" font-weight="400">Personal Computer</text>
+  <text x="600" y="362" class="node-sub" font-size="11">AI Agent 24/7</text>
+  <text x="600" y="382" class="node-sub" font-size="10">20 Frontier Models</text>
+
+  <!-- ========== LEFT NODE: Local Apps ========== -->
+  <g filter="url(#softShadow)">
+    <rect x="100" y="287" width="180" height="100" rx="14" fill="#0F172A" stroke="#10B981" stroke-width="1.5"/>
+  </g>
+  <text x="190" y="322" class="node-label" fill="#10B981" font-size="14">Local Apps &amp; Files</text>
+  <text x="190" y="344" class="detail-label" fill="#6EE7B7">เข้าถึงไฟล์ แอปในเครื่อง</text>
+  <text x="190" y="362" class="detail-label" fill="#6EE7B7">Finder, Terminal, Notes...</text>
+
+  <!-- ========== RIGHT NODE: Perplexity Cloud ========== -->
+  <g filter="url(#softShadow)">
+    <rect x="920" y="277" width="200" height="120" rx="14" fill="#0F172A" stroke="#3B82F6" stroke-width="1.5"/>
+  </g>
+  <text x="1020" y="310" class="node-label" fill="#60A5FA" font-size="14">Perplexity Cloud</text>
+  <text x="1020" y="332" class="detail-label" fill="#93C5FD">Search API</text>
+  <text x="1020" y="350" class="detail-label" fill="#93C5FD">Agent API</text>
+  <text x="1020" y="368" class="detail-label" fill="#93C5FD">Sandbox API</text>
+  <text x="1020" y="386" class="detail-label" fill="#93C5FD">Embeddings API</text>
+
+  <!-- ========== TOP NODE: Remote Access ========== -->
+  <g filter="url(#softShadow)">
+    <rect x="470" y="90" width="260" height="60" rx="14" fill="#0F172A" stroke="#8B5CF6" stroke-width="1.5"/>
+  </g>
+  <text x="600" y="116" class="node-label" fill="#A78BFA" font-size="14">Remote Access</text>
+  <text x="600" y="136" class="detail-label" fill="#C4B5FD">สั่งจาก iPhone · iPad · คอมอีกเครื่อง</text>
+
+  <!-- ========== BOTTOM NODE: Enterprise ========== -->
+  <g filter="url(#softShadow)">
+    <rect x="400" y="510" width="400" height="100" rx="14" fill="#0F172A" stroke="#EF4444" stroke-width="1.5"/>
+  </g>
+  <text x="600" y="540" class="node-label" fill="#FCA5A5" font-size="14">Enterprise Connectors</text>
+
+  <!-- Enterprise badges -->
+  <g>
+    <rect x="430" y="555" width="80" height="24" rx="6" fill="#1E293B"/>
+    <text x="470" y="570" class="detail-label" fill="#94A3B8" font-size="10">Snowflake</text>
+  </g>
+  <g>
+    <rect x="520" y="555" width="76" height="24" rx="6" fill="#1E293B"/>
+    <text x="558" y="570" class="detail-label" fill="#94A3B8" font-size="10">Salesforce</text>
+  </g>
+  <g>
+    <rect x="606" y="555" width="72" height="24" rx="6" fill="#1E293B"/>
+    <text x="642" y="570" class="detail-label" fill="#94A3B8" font-size="10">HubSpot</text>
+  </g>
+  <g>
+    <rect x="688" y="555" width="52" height="24" rx="6" fill="#1E293B"/>
+    <text x="714" y="570" class="detail-label" fill="#94A3B8" font-size="10">Slack</text>
+  </g>
+
+  <text x="600" y="600" class="detail-label" fill="#FCA5A5" font-size="10">$1.6M saved · 3.25 ปีของงาน ใน 4 สัปดาห์</text>
+
+  <!-- ========== SECURITY BADGES ========== -->
+  <g transform="translate(75, 500)">
+    <rect width="100" height="28" rx="6" fill="#1E293B" stroke="#475569" stroke-width="0.5"/>
+    <text x="50" y="18" class="detail-label" fill="#94A3B8" font-size="10">🔒 Audit Trail</text>
+  </g>
+  <g transform="translate(75, 535)">
+    <rect width="100" height="28" rx="6" fill="#1E293B" stroke="#475569" stroke-width="0.5"/>
+    <text x="50" y="18" class="detail-label" fill="#94A3B8" font-size="10">⛔ Kill Switch</text>
+  </g>
+  <g transform="translate(75, 570)">
+    <rect width="100" height="28" rx="6" fill="#1E293B" stroke="#475569" stroke-width="0.5"/>
+    <text x="50" y="18" class="detail-label" fill="#94A3B8" font-size="10">✅ SOC 2 Type II</text>
+  </g>
+
+  <!-- ========== LEGEND ========== -->
+  <g transform="translate(960, 500)">
+    <text x="0" y="0" class="detail-label" fill="#64748B" font-size="10" text-anchor="start">LEGEND</text>
+    <line x1="0" y1="14" x2="20" y2="14" stroke="#10B981" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="28" y="18" class="detail-label" fill="#6EE7B7" font-size="9" text-anchor="start">Local</text>
+    <line x1="0" y1="32" x2="20" y2="32" stroke="#3B82F6" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="28" y="36" class="detail-label" fill="#93C5FD" font-size="9" text-anchor="start">Cloud</text>
+    <line x1="0" y1="50" x2="20" y2="50" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="28" y="54" class="detail-label" fill="#C4B5FD" font-size="9" text-anchor="start">Remote</text>
+    <line x1="0" y1="68" x2="20" y2="68" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="28" y="72" class="detail-label" fill="#FCA5A5" font-size="9" text-anchor="start">Enterprise</text>
+  </g>
+
+  <!-- Brand -->
+  <text x="1170" y="660" text-anchor="end" class="brand">DopeLab Studio</text>
+</svg>

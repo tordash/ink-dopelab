@@ -1,0 +1,107 @@
+---
+title: "Perplexity Personal Computer — AI Agent ที่รันบน Mac mini 24/7 แทนคุณ"
+description: "Perplexity เปิดตัว Personal Computer — AI Agent ที่รันบน Mac mini ตลอด 24 ชม. เข้าถึงไฟล์ แอป และเครื่องมือทั้งหมดของคุณ สั่งงานจากที่ไหนก็ได้ ประหยัดแรงงาน $1.6M ใน 4 สัปดาห์"
+date: 2026-03-14
+cover: ../covers/perplexity-personal-computer-always-on-ai.jpg
+category: "News & Tools"
+tags: ["perplexity", "ai-agent", "personal-computer", "mac-mini", "news", "automation"]
+draft: false
+---
+
+## Mac mini ที่ทำงานแทนคุณ 24/7
+
+![Perplexity Personal Computer](/images/blog/perplexity-personal-computer-always-on-ai.jpg)
+
+จินตนาการว่ามี AI นั่งหน้าคอมแทนคุณ — เปิดแอป, จัดไฟล์, ค้นข้อมูล, ทำรายงาน — ตลอด 24 ชั่วโมง ไม่หลับ ไม่หยุด
+
+นั่นคือสิ่งที่ **Perplexity** เพิ่งเปิดตัวเมื่อ 2 วันก่อน ชื่อว่า **"Personal Computer"**
+
+ไม่ใช่แค่ chatbot — แต่เป็น AI Agent เต็มรูปแบบที่รันบน Mac mini จริงๆ เข้าถึงไฟล์ในเครื่อง เปิดแอปได้ สั่งงานจาก iPhone ข้างนอกได้
+
+## มันคืออะไรกันแน่?
+
+Personal Computer = **ตัวแทนดิจิทัลของคุณ** (Digital Proxy) ที่:
+
+- รันบน **Mac mini เฉพาะ** ที่เปิดตลอด 24/7
+- เชื่อมต่อกับ **local apps + ไฟล์ในเครื่อง** ของคุณ
+- ใช้ **20 frontier AI models** ทำงานร่วมกัน (multi-model orchestration)
+- สั่งงานจากที่ไหนก็ได้ — มือถือ, แท็บเล็ต, คอมอีกเครื่อง
+- มี **audit trail** ทุก session + **kill switch** ถ้าอะไรผิดพลาด
+
+ให้นึกภาพว่า คุณมี intern ที่ฉลาดมาก นั่งหน้าคอมแทนคุณ ทำงาน routine ให้ทั้งวัน — แต่เป็น AI
+
+## ตัวเลขที่น่าสนใจ
+
+Perplexity อ้างว่าจากการทดสอบภายใน **16,000+ queries** เทียบกับ benchmark จาก McKinsey, Harvard, MIT, BCG:
+
+| ตัวเลข | รายละเอียด |
+|--------|------------|
+| **$1.6M** | ลดต้นทุนแรงงานที่ประหยัดได้ |
+| **3.25 ปี** | ปริมาณงานที่ทำเสร็จใน **4 สัปดาห์** |
+| **20 models** | AI models ที่ทำงานร่วมกัน (Frontier models) |
+| **40+ tools** | Finance tools สำหรับ SEC, FactSet, S&P Global |
+
+ตัวเลขเหล่านี้มาจาก internal benchmark — ต้องรอดู third-party validation แต่ถ้าใกล้เคียงจริง ก็น่าสนใจมาก
+
+## Enterprise Version — เชื่อมทุกเครื่องมือ
+
+นอกจาก Personal Computer สำหรับคนทั่วไป ยังมี **Computer for Enterprise** ที่:
+
+- เชื่อมต่อ **Snowflake, Salesforce, HubSpot** + อีกหลายร้อย platform
+- Financial analyst สั่ง query revenue by vertical จาก Snowflake ได้เลย
+- Sales team ดึง CRM data + competitive context พร้อมกัน
+- ใช้ใน **Slack** ได้ — DM หรือ shared channel
+- สร้าง dashboards, financial models, decks โดยไม่ต้องรอ data scientist
+
+## 4 APIs ใหม่สำหรับ Developer
+
+Perplexity เปิด 4 APIs ที่เหมือน building blocks ของ Computer:
+
+1. **Search API** — ค้นหาข้อมูลพร้อม citation
+2. **Agent API** — สั่ง multi-step tasks
+3. **Sandbox API** — สร้าง environment ปลอดภัยสำหรับ execute code
+4. **Embeddings API** — สำหรับ retrieval + ranking systems
+
+สำหรับ developer ที่สร้างผลิตภัณฑ์ที่ต้องการ accuracy + action ในระบบเดียว — นี่คือ toolkit ที่น่าสนใจ
+
+## เทียบกับเครื่องมืออื่น
+
+| Feature | Perplexity PC | Claude Computer Use | OpenClaw (Open Source) |
+|---------|:---:|:---:|:---:|
+| Local file access | ✅ | ✅ | ✅ |
+| 24/7 always-on | ✅ | ❌ | ✅ (ต้อง setup เอง) |
+| Multi-model | ✅ (20 models) | ❌ (Claude only) | ✅ (เลือกได้) |
+| Remote access | ✅ | ❌ | ❌ (ต้อง Tailscale) |
+| Kill switch | ✅ | ❌ | ❌ |
+| Enterprise ready | ✅ | ❌ | ❌ |
+| ราคา | Waitlist (ยังไม่ประกาศ) | API pricing | ฟรี |
+
+## มุม DopeLab — ทำไมถึงสำคัญ
+
+ผมรัน agency ด้วย Claude Code 24/7 บน MacBook อยู่แล้ว — terminal เปิดตลอด, Cron job ทุกเช้า, หลาย agent ทำงานพร้อมกัน
+
+Perplexity Personal Computer ไปอีกขั้น: **dedicated hardware** (Mac mini) + **multi-model** + **remote access**
+
+สิ่งที่น่าจับตา:
+- **Multi-model orchestration** — ใช้ 20 models ร่วมกัน ไม่ผูกกับ AI ตัวเดียว
+- **Enterprise connectors** — Salesforce, HubSpot, Snowflake ในตัว
+- **Agent API** — developer สร้าง custom agent ได้
+
+สิ่งที่ต้องระวัง:
+- ตัวเลข $1.6M เป็น internal benchmark — ยังไม่มี third-party verify
+- **Security** ของ local file access — ให้ AI เข้าถึงทุกไฟล์ในเครื่อง ต้องไว้ใจ
+- Ars Technica เตือนว่ามีเรื่อง AI agents ทำลายข้อมูลใน local machine อยู่เป็นประจำ
+
+## สรุป: ควรรอ หรือกระโดดเลย?
+
+**ตอนนี้:** Waitlist เปิดแล้ว แต่ยังไม่มีราคา ยังเป็น early access
+
+**ถ้าคุณเป็น SME/Agency:** รอดูราคาก่อน ตอนนี้ Claude Code + Mac ธรรมดาก็ทำได้เยอะแล้ว ไม่ต้องรีบ
+
+**ถ้าคุณเป็น Developer:** Agent API + Sandbox API น่าสนใจมาก — ลอง integrate ได้เลย
+
+**ถ้าคุณเป็น Enterprise:** Computer for Enterprise + Slack integration อาจคุ้มค่า ถ้าใช้ Snowflake/Salesforce อยู่แล้ว
+
+---
+
+เซฟไว้ ส่งให้ทีมที่สนใจ AI Agent — เรื่องนี้จะเป็น trend สำคัญของปี 2026 แน่นอน 📌
