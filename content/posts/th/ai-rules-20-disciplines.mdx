@@ -1,0 +1,157 @@
+---
+title: "กฎเหล็ก 20 ข้อ — วินัยที่ทำให้ AI ทำงานเหมือนพนักงานประจำ"
+description: "20 กฎเหล็กที่ DopeLab ใช้ควบคุม AI ทุก session — จากบทเรียนจริงที่โดนด่า 2 ครั้ง เพราะ AI ลืมทำตาม checklist"
+date: 2026-03-15
+cover: ../covers/ai-rules-20-disciplines.jpg
+category: "AI Workflow"
+tags: ["AI rules", "discipline", "Claude Code", "session protocol", "BTS", "productivity"]
+featured: true
+---
+
+## AI ไม่ได้โง่ — แต่ไม่มีวินัย ถ้าไม่มีกฎ
+
+ผมใช้ Claude Code ทำงานทุกวันมา 2 เดือน ผ่าน 90+ sessions
+
+สิ่งที่เรียนรู้: **AI ทำงานดีมากถ้าบอกชัด แต่จะลืมทุกอย่างถ้าไม่มีกฎบังคับ**
+
+ผมโดนด่า (ด่าตัวเอง) 2 ครั้ง:
+1. **Session 87** — AI ลืม INSERT activity_feed เพราะทำจากความจำไม่ได้อ่าน checklist
+2. **Session ล่าสุด** — AI ใช้ CaptionedVideo (component กาก) แทน DopelabVideo เพราะไม่อ่าน KB ก่อนทำ
+
+ทั้ง 2 ครั้งเกิดจากสาเหตุเดียวกัน: **ไม่มีกฎบังคับให้อ่านก่อนทำ**
+
+เลยสร้างกฎเหล็ก 20 ข้อที่ AI ต้องปฏิบัติตามทุก session
+
+---
+
+## 5 กฎเหล็กที่ Impact สูงสุด
+
+### กฎ 5: เช็ควันที่จริงก่อนทำอะไร
+
+<Callout variant="warning" title="ทำไมสำคัญ">
+AI อาจ hallucinate วันที่ — คิดว่าวันนี้เป็นอีกวัน แล้วทำงานผิดบริบท
+</Callout>
+
+ทุก session เริ่มต้นด้วย `date` — เช็ควันเวลาจริงก่อน ไม่เชื่อความจำ AI
+
+### กฎ 2: ปิด session ต้องอ่าน checklist (ห้ามทำจากความจำ!)
+
+นี่คือกฎที่โดนด่าเพราะฝ่าฝืน:
+
+```
+ปิด session → ต้องทำตามลำดับ ห้ามข้าม:
+1. INSERT activity_feed (สรุปงานลง database)
+2. Notion sync (push dirty records)
+3. Brain extraction (สกัดความรู้)
+4. Slack summary (แจ้งทีม)
+5. DB sync to server
+```
+
+**บทเรียน:** AI ทำจากความจำ = ลืมข้อ 1 ทุกครั้ง → ต้องบังคับให้อ่าน checklist
+
+### กฎ 14: Body Double + ADHD Support
+
+ผมเป็น ADHD — สมองต้องการ external structure
+
+กฎนี้บังคับให้ AI เป็น "body double":
+- ถ้าจะเปิดงานใหม่ → เช็คงานค้างก่อน บอกว่า "มีงานค้าง X ชิ้น ปิดก่อนมั้ย?"
+- ถ้าเห็นกระโดดข้ามงาน → เตือนกลับมา task เดิม
+- ถ้าทำงานดึกเกิน (หลัง 2 ทุ่ม) → เตือนให้พัก
+- เตือนแบบเพื่อน ไม่ใช่แบบ bot
+
+### กฎ 17: Cross-check AI ทุกงานลูกค้า
+
+**ห้ามส่งงานลูกค้าโดยไม่ cross-check ด้วย AI ตัวอื่น**
+
+- งานส่งลูกค้า → `aichat "review มีอะไรตกหล่น?"` ก่อนส่ง
+- Sales content → ถาม AI ตัวอื่นเพิ่มไอเดีย hook/angle
+- ตัดสินใจสำคัญ → `gemini` ถาม second opinion
+
+### กฎ 12: สกัดความรู้ก่อนปิด session (MANDATORY)
+
+ทุก session ต้องสกัดสิ่งที่เรียนรู้ลง brain/ — ห้ามปิดโดยไม่สกัด
+
+ทำไม? เพราะ session ที่ 90 AI ต้องฉลาดกว่า session ที่ 1 ถ้าไม่สกัด ก็เท่ากับทำงานฟรี
+
+---
+
+## หมวดหมู่กฎเหล็ก 20 ข้อ
+
+### Session Management (5 ข้อ)
+| # | กฎ | ทำไม |
+|---|-----|------|
+| 1 | Task Management — Local-First | agency.db = source of truth |
+| 2 | ปิด session → อ่าน checklist | โดนด่าแล้ว 1 ครั้ง |
+| 5 | เช็ควันที่จริงก่อนทุก session | AI hallucinate วันที่ได้ |
+| 8 | Daily Summary ทุกเช้า | สรุปงานเมื่อวานให้เจ้าของ |
+| 9 | Memory Review ก่อนจบวัน | update brain files |
+
+### Communication (4 ข้อ)
+| # | กฎ | ทำไม |
+|---|-----|------|
+| 3 | New task → แจ้ง Slack ทุกครั้ง | เจ้าของต้องรู้ |
+| 4 | ข้อความ Claude → ขึ้นต้น 🤖 | แยก AI vs คน |
+| 7 | ปิด session → สรุป Slack | tracking |
+| 11 | Git commit → ละเอียด + Slack | audit trail |
+
+### Quality Control (4 ข้อ)
+| # | กฎ | ทำไม |
+|---|-----|------|
+| 12 | สกัดความรู้ก่อนปิด session | long-term memory |
+| 13 | Research-first (งานใหม่) | ดูคนเก่งทำยังไงก่อน |
+| 17 | Cross-check AI ทุกงานลูกค้า | ป้องกัน blind spot |
+| 19 | อ่าน KB ก่อนผลิต video | โดนด่าแล้ว 1 ครั้ง |
+
+### Productivity (4 ข้อ)
+| # | กฎ | ทำไม |
+|---|-----|------|
+| 14 | Body Double + ADHD Support | เจ้าของเป็น ADHD |
+| 15 | Sales Proposal 7 จังหวะ | ห้ามข้ามขั้นตอน |
+| 16 | CLI-First | เร็วกว่า MCP/GUI |
+| 20 | Deliverable → Drive Sync | เจ้าของดูจากมือถือได้ |
+
+### Infrastructure (3 ข้อ)
+| # | กฎ | ทำไม |
+|---|-----|------|
+| 6 | DB Sync to Cloudways ทุก session | backup |
+| 10 | Task Integrity | ป้องกัน data corruption |
+| 18 | Multi-Agent Shared Memory | ป้องกัน conflict |
+
+---
+
+## ผลลัพธ์: AI ที่ Self-Correcting
+
+หลังจากมีกฎเหล็ก 20 ข้อ:
+
+| Before | After |
+|--------|-------|
+| AI ลืม activity_feed | Checklist บังคับทุกข้อ |
+| ใช้ component ผิด | อ่าน KB ก่อนทำทุกครั้ง |
+| งานลูกค้ามี blind spot | Cross-check ด้วย AI ตัวอื่น |
+| กระโดดข้ามงาน | Body double เตือน |
+| session ปิดแล้วลืมหมด | สกัด brain/ ทุกครั้ง |
+
+**กฎเหล็กไม่ได้ทำให้ AI ฉลาดขึ้น — แต่ทำให้ AI มีวินัย**
+
+และวินัย = ผลลัพธ์ที่ consistent ทุกวัน
+
+---
+
+## 3 กฎที่ทุกคนควรเริ่มใช้
+
+ไม่ต้องมี 20 ข้อเหมือน DopeLab — เริ่มจาก 3 ข้อนี้:
+
+### 1. เขียน "System Prompt" ให้ AI
+บอก AI ว่ามันคือใคร ทำอะไร มีข้อมูลอะไร — เหมือนให้ job description กับพนักงานใหม่
+
+### 2. สร้าง Checklist ปิดงาน
+ทุกครั้งที่ใช้ AI เสร็จ → บันทึกสิ่งที่ทำ + สิ่งที่เรียนรู้ ไม่งั้นจะลืมหมด
+
+### 3. Cross-check ก่อนส่งงาน
+ก่อนส่งงานที่ AI ทำ → ให้ AI ตัวอื่นตรวจ หรืออ่านเองอีกรอบ
+
+---
+
+*ติดตาม DopeLab — วินัยที่ทำให้ AI ทำงานได้จริง ไม่ใช่แค่ demo*
+
+*เซฟไว้ ส่งให้คนที่เพิ่งเริ่มใช้ AI ทำงาน*
