@@ -1,0 +1,162 @@
+---
+title: "ผลิต 7 วิดีโอใน 1 วัน — AI Video Pipeline ที่ทำจริง"
+description: "BTS วิธีที่ DopeLab ผลิต 7 short videos + schedule 14 posts ใน 1 วัน โดยไม่มีทีม — ใช้ ElevenLabs + Remotion + FFmpeg + Blotato ทั้งหมด"
+date: 2026-03-15
+cover: ../covers/7-videos-1-day-pipeline.jpg
+category: "AI Workflow"
+tags: ["video production", "AI pipeline", "ElevenLabs", "Remotion", "FFmpeg", "BTS"]
+featured: true
+---
+
+## 7 วิดีโอ + 14 โพสต์ ใน 1 วัน — ไม่มีทีม
+
+14 มีนาคม 2026 ผมผลิต DopeLab short videos 7 คลิป + schedule ลง Facebook Page และ Instagram Reels ทั้ง 14 posts — ใน 1 วัน
+
+ไม่ได้จ้างใคร ไม่มี video editor ไม่มีทีม content
+
+ทำด้วย AI pipeline ล้วนๆ
+
+<Callout variant="info" title="ทำไมเรื่องนี้สำคัญ">
+ปกติ 1 คนผลิต short video ได้ 1-2 คลิป/วัน (ถ้ารวม research + script + VO + edit + thumbnail + caption + schedule)
+Pipeline นี้ทำได้ 7 คลิป = เร็วขึ้น 3.5-7 เท่า
+</Callout>
+
+---
+
+## Pipeline: 5 ขั้นตอน
+
+### Step 1: Script + Voiceover
+
+| เครื่องมือ | หน้าที่ |
+|-----------|--------|
+| **Claude Code** | เขียน script (Thai, 30-40 วินาที) |
+| **ElevenLabs** | Gen voiceover (tor-instant2 voice, eleven_v3 model) |
+| **Whisper** | ดึง timestamps จาก audio จริง (ห้าม estimate!) |
+
+**กฎเหล็ก:** Whisper ใช้แค่ timestamps — text ต้องมาจาก script (Whisper สะกดไทยผิดหมด)
+
+### Step 2: Background + Cover
+
+| เครื่องมือ | หน้าที่ |
+|-----------|--------|
+| **Veo 3** (Google AI Studio) | Gen video background 9:16 (8 วินาที × 4-5 clips) |
+| **Nano Banana 2** (Gemini) | Gen cover image (0.2 วินาที flash ต้นคลิป) |
+
+ทั้งสอง gen พร้อมกันได้ ไม่ต้องรอ
+
+### Step 3: Render
+
+| เครื่องมือ | หน้าที่ |
+|-----------|--------|
+| **Remotion** | Render DopelabVideo composition — captions sync กับ VO + video background + infographic slides |
+
+Remotion render ใช้เวลาประมาณ 2-3 นาที/คลิป
+
+### Step 4: Post-Processing (FFmpeg 3 ขั้น)
+
+```
+RAW.mp4 → BGM Mix → Fade In/Out → Cover Overlay → FINAL.mp4
+```
+
+| ขั้น | ทำอะไร | ค่า Golden Preset |
+|------|--------|------------------|
+| **BGM Mix** | ผสมเพลง background | volume 0.25, fade in 1s, fade out 2s |
+| **Fade** | เปิด-ปิดคลิปนุ่มๆ | video: in 0.5s out 1s / audio: in 0.5s out 1.5s |
+| **Cover** | Flash cover image ต้นคลิป | 0.2 วินาที |
+
+### Step 5: Upload + Schedule
+
+| เครื่องมือ | หน้าที่ |
+|-----------|--------|
+| **rclone** | Upload ขึ้น Google Drive + share link |
+| **Blotato** | Schedule ลง Facebook Page + Instagram Reels |
+
+---
+
+## Golden Preset V11 — ค่าที่ลงตัวหลังทดลอง 10 เวอร์ชัน
+
+| Component | ค่า |
+|-----------|-----|
+| VO volume | 1.38 (Remotion) |
+| SFX volume | 0.88 (Remotion) |
+| BGM volume | 0.25 (FFmpeg) |
+| Overlay opacity | 75% |
+| Cover flash | 0.2 วินาที |
+| Video fade in | 0.5 วินาที |
+| Video fade out | 1.0 วินาที |
+| Audio fade in | 0.5 วินาที |
+| Audio fade out | 1.5 วินาที |
+
+ค่าเหล่านี้มาจากการทดลอง V1 ถึง V11 — ฟัง feedback จากเจ้าของทุกรอบ
+
+---
+
+## 7 วิดีโอที่ผลิตวันนั้น
+
+| # | Topic | Duration |
+|---|-------|----------|
+| 1 | Claude Brain — Long-Term Memory | 31s |
+| 2 | AI ฆ่า Design Process | 36s |
+| 3 | GPT-5.4 vs Claude — ใครชนะ | 41s |
+| 4 | IMAP Email Pipeline — ดึงยอดขายอัตโนมัติ | 31s |
+| 5 | Install Claude Code — สอนตั้งแต่ศูนย์ | 38s |
+| 6 | Claude Update มีนาคม — สรุป 5 นาที | 37s |
+| 7 | AI Tools Monthly Review | 41s |
+
+ทุกคลิปใช้ Golden Preset เดียวกัน — เปลี่ยนแค่ script, VO, background
+
+---
+
+## ต้นทุนจริง
+
+| รายการ | ค่าใช้จ่าย |
+|--------|-----------|
+| ElevenLabs (VO 7 คลิป) | ~$3 (จาก Pro plan $22/เดือน) |
+| Veo 3 (background 28 clips) | $0 (free tier) |
+| NB2 (cover 7 images) | $0 (free tier) |
+| Remotion | $0 (open source) |
+| FFmpeg | $0 (open source) |
+| Blotato (schedule 14 posts) | $0 (free trial) |
+| **รวม** | **~$3 สำหรับ 7 วิดีโอ** |
+
+เทียบกับจ้าง freelance video editor: **7 คลิป × 2,000 บาท = 14,000 บาท**
+
+---
+
+## สิ่งที่เรียนรู้
+
+### 1. Whisper ภาษาไทย = garbage text
+Whisper ถอดเสียงภาษาไทยออกมาเป็นภาษาเขมร/มั่ว → ต้อง fix ทุกไฟล์ ใช้แค่ timestamps แล้วใส่ text จาก script
+
+### 2. Background ไม่ต้องสร้างใหม่ทุกคลิป
+Veo 3 gen 7 clips dark tech background → ใช้ซ้ำได้ทุกคลิป DopeLab (เพราะ style เดียวกัน)
+
+### 3. Batch = ได้ rhythm
+ทำทีละ 1 คลิป มัน inefficient → ทำ batch (render ทั้ง 7 + FFmpeg ทั้ง 7 + upload ทั้ง 7) เร็วกว่ามาก
+
+### 4. Golden Preset ประหยัดเวลามหาศาล
+ไม่ต้อง tweak ค่าทุกคลิป — ใช้ค่าเดียวกันหมด สิ่งเดียวที่เปลี่ยนคือ content
+
+---
+
+## ใครทำตามได้บ้าง?
+
+### ทำได้เลย (ง่าย)
+- ใช้ ChatGPT/Claude เขียน script
+- ใช้ ElevenLabs gen voiceover
+- ใช้ CapCut/Canva ตัดต่อ + ใส่ caption
+
+### ทำได้ถ้ามี dev background
+- ตั้ง Remotion pipeline
+- FFmpeg post-processing
+- Blotato scheduling API
+
+### DopeLab สอนให้ได้
+- ติดตาม DopeLab สำหรับ tutorial ทำ video pipeline ตั้งแต่ศูนย์
+- หรือให้ DopeLab ทำให้ — ติดต่อ DM
+
+---
+
+*ติดตาม DopeLab — BTS จากคนที่ใช้ AI ทำงานจริงทุกวัน*
+
+*แชร์ให้เพื่อนที่ทำ content — ให้เขารู้ว่าโลกเปลี่ยนไปแล้ว*
