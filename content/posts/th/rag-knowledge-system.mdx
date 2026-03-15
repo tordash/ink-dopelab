@@ -1,0 +1,146 @@
+---
+title: "RAG Knowledge System — สอน AI ค้นข้อมูล 2,456 เอกสาร ใน 2 วินาที"
+description: "สร้างระบบ RAG (Retrieval-Augmented Generation) ที่ให้ AI ค้นข้อมูลธุรกิจ 2,456 docs ได้ทันที — ChromaDB + bge-m3 + Knowledge Graph จาก Obsidian wikilinks"
+date: 2026-03-15
+cover: ../covers/rag-knowledge-system.jpg
+category: "AI Workflow"
+tags: ["RAG", "ChromaDB", "knowledge graph", "vector search", "Obsidian", "BTS"]
+featured: true
+---
+
+## ปัญหา: AI ลืมทุกอย่างเมื่อปิด session
+
+ใช้ AI มาเดือนกว่า สะสมข้อมูลไว้กว่า 2,000 ไฟล์ — client profiles, เมนูร้านอาหาร, session notes, workflow patterns, ข้อมูลธุรกิจ
+
+แต่ทุกครั้งที่เปิด session ใหม่ AI ก็ลืมหมด ต้องอ่านไฟล์ใหม่ทุกครั้ง
+
+**ปัญหาจริง:** ถ้าถามว่า "ต้นทุนเมนูเกาเหลาเท่าไหร่?" AI ต้อง grep ไฟล์ → เปิด database → query → สรุป = **ช้า 30-60 วินาที**
+
+ผมเลยสร้าง RAG Knowledge System ให้ AI ค้นได้ใน **2 วินาที**
+
+---
+
+## RAG คืออะไร?
+
+<Callout variant="info" title="RAG = Retrieval-Augmented Generation">
+ระบบที่ให้ AI **ค้นข้อมูลจริงก่อนตอบ** แทนที่จะตอบจากความจำอย่างเดียว
+
+เหมือน: แทนที่จะถามคนที่ "จำอะไรได้บ้าง" → ถามคนที่ "มีสารานุกรมอยู่ในมือ แล้วเปิดหาก่อนตอบ"
+</Callout>
+
+---
+
+## สิ่งที่สร้าง: 3 Collections, 2,456 Documents
+
+| Collection | Documents | ข้อมูลอะไร |
+|-----------|-----------|-----------|
+| **brain_knowledge** | ~200 | Session notes, decisions, patterns, workflows, technical knowledge |
+| **nntn_menus** | ~600 | เมนูหน้าร้าน + delivery + ต้นทุน + ส่วนผสม + กำไร |
+| **client_profiles** | ~100 | Client info, brand guides, activity logs |
+| **documents** | ~1,500 | PDFs, spreadsheets, exported data |
+
+### เทคโนโลยีที่ใช้
+
+| Component | Tool | ทำไม |
+|-----------|------|------|
+| **Vector Database** | ChromaDB | Open source, เร็ว, รัน local ได้ |
+| **Embedding Model** | bge-m3 | รองรับภาษาไทย + อังกฤษ + multilingual |
+| **Knowledge Graph** | Custom (Python) | 249 nodes, 657 edges จาก Obsidian [[wikilinks]] |
+| **Search** | Hybrid (BM25 + Vector + RRF) | แม่นกว่า vector อย่างเดียว |
+
+---
+
+## ใช้งานจริง: 10 คำสั่ง
+
+```
+rag "ต้นทุนเกาเหลา"          → ค้นทุก collection
+rag brain "session protocol"    → ค้นเฉพาะ brain/
+rag menu "เมนูเนื้อโกเบ"       → ค้นเมนู + ต้นทุน
+rag client "dopelab brand"     → ค้นข้อมูลลูกค้า
+rag graph "Claude Code"        → ค้น + ขยายผลด้วย graph
+rag hybrid "video pipeline"    → BM25 + Vector hybrid
+rag neighbors "dopelab"        → ดู connection ของ node
+rag path "nntn" "dopelab"      → หาเส้นทางระหว่าง 2 nodes
+rag reindex                    → Re-index หลังแก้ไฟล์
+rag stats                      → สถานะ collections
+```
+
+### Before vs After
+
+| | Before RAG | After RAG |
+|---|-----------|-----------|
+| **ค้นเมนู** | SQL query → 10 วินาที | `rag menu "เกาเหลา"` → 2 วินาที |
+| **หา client info** | อ่านไฟล์ 5 ไฟล์ → 30 วินาที | `rag client "dopelab"` → 2 วินาที |
+| **หา session note** | grep brain/ → guess path → 20 วินาที | `rag brain "video pipeline"` → 2 วินาที |
+| **เชื่อมโยงข้อมูล** | อ่าน wikilinks ด้วยตา → นาที | `rag graph "query"` → 3 วินาที |
+
+---
+
+## Knowledge Graph: สิ่งที่ทำให้ RAG ฉลาดขึ้น
+
+ระบบ RAG ทั่วไปค้นแค่ **text similarity** — แต่ระบบนี้มี **Knowledge Graph** ที่สร้างจาก Obsidian [[wikilinks]]
+
+- **249 nodes** (ทุกไฟล์ใน brain/)
+- **657 edges** (ทุก [[link]] ระหว่างไฟล์)
+
+ทำให้ค้นหาแบบ **multi-hop** ได้:
+- ถาม "video pipeline" → เจอ brain file → graph ขยายไปเจอ ElevenLabs, Remotion, DopeLab, FFmpeg
+- ผลลัพธ์ครอบคลุมกว่า text search อย่างเดียว
+
+---
+
+## Auto Re-Index ทุก 2 ชั่วโมง
+
+ตั้ง cron job ให้ re-index อัตโนมัติ:
+- เช็ค file hash → ถ้ามีไฟล์ใหม่/แก้ไข → re-embed เฉพาะไฟล์ที่เปลี่ยน
+- ไม่ต้อง re-index ทั้งหมด → ประหยัด compute
+
+---
+
+## ต้นทุน
+
+| รายการ | ค่าใช้จ่าย |
+|--------|-----------|
+| ChromaDB | $0 (open source, run local) |
+| bge-m3 | $0 (open source model) |
+| Python scripts | $0 (เขียนเอง) |
+| Storage | ~100 MB |
+| **รวม** | **$0** |
+
+เทียบกับ Pinecone ($70/เดือน) หรือ Weaviate Cloud ($25/เดือน) — ระบบนี้ฟรีทั้งหมด
+
+---
+
+## ใครทำตามได้?
+
+### ง่ายสุด: ใช้ NotebookLM
+- Feed เอกสาร → ถามคำถาม → ได้คำตอบจาก source จริง
+- ฟรี ไม่ต้อง code
+
+### กลาง: ใช้ n8n + Vector Store
+- n8n มี Pinecone/Qdrant nodes
+- สร้าง RAG workflow แบบ visual
+
+### Advanced: สร้างเอง (แบบ DopeLab)
+- ChromaDB + embedding model + Python
+- ต้องมี dev background
+- แต่ flexible ที่สุด ปรับแต่งได้ทุกอย่าง
+
+---
+
+## สรุป: RAG เปลี่ยนวิธีที่ AI ใช้ข้อมูล
+
+| ไม่มี RAG | มี RAG |
+|----------|--------|
+| AI ตอบจากความจำ (อาจผิด) | AI ค้นข้อมูลจริงก่อนตอบ (แม่น) |
+| ต้องอ่านไฟล์ใหม่ทุก session | ค้นได้ทันที 2 วินาที |
+| ข้อมูลกระจัด | ทุกอย่างอยู่ในที่เดียว searchable |
+| ไม่เห็นความเชื่อมโยง | Knowledge Graph เชื่อมทุกอย่าง |
+
+สำหรับธุรกิจที่มีข้อมูลเยอะ (เมนู, ลูกค้า, สูตร, ราคา, ยอดขาย) — RAG คือสิ่งที่ทำให้ AI กลายเป็น **สมองที่สอง** ที่จำทุกอย่างได้
+
+---
+
+*ติดตาม DopeLab สำหรับระบบ AI ที่สร้างจริง ไม่ใช่แค่ demo*
+
+*เซฟไว้ ส่งให้ทีม IT ของคุณ*
