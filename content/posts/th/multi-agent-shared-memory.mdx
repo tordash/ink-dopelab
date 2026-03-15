@@ -1,0 +1,138 @@
+---
+title: "Multi-Agent — ให้ AI 3 ตัวทำงานพร้อมกัน ไม่ชนกัน"
+description: "ระบบ Shared Memory ที่ให้ AI หลายตัวทำงานพร้อมกันในโปรเจคเดียว — มี Bulletin Board, Territory System, และ Protocol ป้องกัน conflict"
+date: 2026-03-15
+cover: ../covers/multi-agent-shared-memory.jpg
+category: "AI Workflow"
+tags: ["multi-agent", "shared memory", "Claude Code", "parallel", "BTS", "agent teams"]
+featured: true
+---
+
+## ปัญหา: AI 1 ตัวไม่พอ
+
+เมื่อทำงานหลายอย่างพร้อมกัน — ผลิต content, วิเคราะห์ข้อมูล, deploy เว็บ — AI 1 ตัวทำได้ทีละอย่าง
+
+ถ้าเปิดหลาย terminal ให้ AI หลายตัวทำงานพร้อมกัน?
+
+**ปัญหาใหญ่:** AI ตัวที่ 1 แก้ไฟล์ A → AI ตัวที่ 2 แก้ไฟล์ A เหมือนกัน → **conflict** → งานพังทั้งคู่
+
+ผมเจอปัญหานี้จริง — session number ซ้ำ, file conflict, worktree ค้าง, ความจำไม่เชื่อมกัน
+
+เลยสร้าง **Multi-Agent Shared Memory System**
+
+---
+
+## 3 ชั้นความจำที่เชื่อมกัน
+
+<Callout variant="info" title="Architecture">
+AI ทุกตัวเข้าถึงข้อมูลร่วมกันผ่าน 3 ชั้น — real-time, session-end, permanent
+</Callout>
+
+| ชั้น | ไฟล์ | ความเร็ว | ใช้เมื่อ |
+|------|------|----------|---------|
+| **Bulletin Board** | `.claude/BULLETIN.md` | Real-time | ทุก milestone ระหว่างงาน |
+| **Brain** | `brain/` (100+ files) | จบงาน | สกัดความรู้ถาวร |
+| **Activity DB** | `agency.db` | จบ session | log ถาวร |
+
+### Bulletin Board — กระดานข่าวกลาง
+
+เหมือนกระดาน whiteboard ในออฟฟิศ — ทุกคนเขียนได้ ทุกคนอ่านได้
+
+ข้อมูลที่เขียน:
+- **Active Now** — ใครกำลังทำอะไร (ป้องกันทำซ้ำ)
+- **Updates** — สิ่งที่ค้นพบ/เสร็จแล้ว
+- **Decisions** — ตัดสินใจแล้วอะไรบ้าง
+- **Blockers** — ติดปัญหาอะไร
+- **Handoffs** — ส่งต่องานให้ตัวอื่น
+
+---
+
+## Territory System — แบ่งเขต ป้องกัน conflict
+
+**กฎเหล็ก:** ห้าม 2 AI แก้ไฟล์เดียวกันพร้อมกัน
+
+| Territory | AI ตัวไหน | ไฟล์ที่แก้ได้ |
+|-----------|----------|-------------|
+| **dopelab-content** | Terminal 1 | `clients/dopelab/*` |
+| **nntn-ops** | Terminal 2 | `NNTN/*`, `brain/Semantic/business/*` |
+| **web-deploy** | Terminal 3 | `tools/*`, deploy scripts |
+
+Protected files (เฉพาะ terminal หลัก): `claude.md`, `MEMORY.md`, `brain/_Index.md`
+
+---
+
+## Protocol สั้นๆ
+
+```
+เริ่มงาน → อ่าน BULLETIN → ประกาศ Active Now → เช็ค territory
+ระหว่างงาน → เจออะไรสำคัญ → เขียน BULLETIN ทันที
+จบงาน → ลบ Active Now → สกัด brain/ → commit → git push
+```
+
+### Session Naming (ป้องกันซ้ำ)
+```
+✅ 2026-03-15-dopelab-batch.md    (unique เสมอ)
+❌ session-99-topic.md             (ซ้ำเมื่อหลาย agent)
+```
+
+### Commit Convention
+```
+[territory] สรุปงาน
+เช่น: [nntn-ops] Stock 13MAR — 8 transactions
+      [dopelab-content] 7 video batch production
+```
+
+---
+
+## ใช้จริง: 3 AI ทำงานพร้อมกัน
+
+**สถานการณ์:** เช้าวันจันทร์ — ต้องทำ 3 อย่างพร้อมกัน
+
+| Terminal | Territory | งาน |
+|----------|-----------|-----|
+| 1 | dopelab-content | ผลิต 7 วิดีโอ DopeLab |
+| 2 | nntn-ops | Update สต็อคร้านอาหาร |
+| 3 | vc-ops | สร้าง LINE broadcast VC |
+
+**ทั้ง 3 ตัวทำงานพร้อมกัน** — ไม่ต้องรอ ไม่ชนกัน
+
+Terminal 1 เจอว่า Whisper ไทย = garbage text → เขียน BULLETIN ทันที → Terminal 2,3 อ่านเจอ → รู้แล้วว่าอย่าพึ่ง Whisper text
+
+**นี่คือ shared learning แบบ real-time**
+
+---
+
+## ผลลัพธ์
+
+| แบบเดิม (1 AI) | Multi-Agent (3 AI) |
+|-----------------|-------------------|
+| ทำทีละอย่าง | ทำ 3 อย่างพร้อมกัน |
+| 3 ชั่วโมง = 1 โปรเจค | 3 ชั่วโมง = 3 โปรเจค |
+| file conflict | Territory System ป้องกัน |
+| ลืมข้ามตัว | Bulletin Board แชร์ข้อมูล |
+| session number ซ้ำ | Date-based naming |
+
+**Throughput เพิ่ม ~3 เท่า** โดยไม่เสีย quality
+
+---
+
+## ใครทำตามได้?
+
+### Level 1: เปิด 2 ChatGPT tabs
+- Tab 1 = research | Tab 2 = เขียน
+- แชร์ข้อมูลด้วย copy-paste (manual แต่ได้ผล)
+
+### Level 2: Claude Code 2 terminals
+- Terminal 1 ทำงาน A | Terminal 2 ทำงาน B
+- ใช้ BULLETIN.md เป็น shared note
+
+### Level 3: Full Protocol (แบบ DopeLab)
+- Territory System + Bulletin Board + Brain extraction
+- Commit convention + Protected files
+- Auto re-index shared knowledge
+
+---
+
+*ติดตาม DopeLab — ระบบ AI ที่ไม่มีใครในไทยทำ*
+
+*เซฟไว้ ส่งให้ทีม dev ที่อยากให้ AI ทำงานเป็นทีม*
