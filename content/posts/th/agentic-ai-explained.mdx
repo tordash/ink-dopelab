@@ -1,0 +1,149 @@
+---
+title: "Agentic AI คืออะไร? — แนวคิดที่ทุกธุรกิจต้องรู้ก่อนคู่แข่ง"
+description: "Agentic AI คือ AI ที่วางแผน ลงมือทำ และปรับตัวเองได้ ไม่ใช่แค่ตอบคำถาม — ทำไมถึงเป็น buzzword อันดับ 1 ของ 2026 และ SME ไทยจะเริ่มใช้ได้ยังไง?"
+date: 2026-03-15
+cover: ../covers/agentic-ai-explained.jpg
+category: "AI Guide"
+tags: ["Agentic AI", "AI automation", "n8n", "Claude Code", "NVIDIA GTC", "SME"]
+featured: true
+---
+
+## AI ที่ "ทำงานเอง" ไม่ใช่แค่ "ตอบคำถาม"
+
+ถ้าคุณใช้ ChatGPT หรือ Claude ทุกวัน คุณกำลังใช้ AI แบบ **chatbot** — คุณถาม มันตอบ คุณสั่ง มันทำ
+
+แต่ **Agentic AI** คือขั้นต่อไปที่ต่างกันสิ้นเชิง:
+
+<Callout variant="info" title="Agentic AI คืออะไร?">
+AI ที่สามารถ **วางแผน → ลงมือทำ → ตรวจสอบผล → ปรับตัว** ได้ด้วยตัวเอง โดยไม่ต้องรอคำสั่งทุกขั้นตอน
+</Callout>
+
+คิดแบบนี้:
+- **Chatbot** = พนักงานเสิร์ฟ — คุณสั่ง เขาเอาของมาให้
+- **Copilot** = ผู้ช่วย — คุณทำงาน เขาแนะนำข้างๆ
+- **Agentic AI** = ผู้จัดการ — คุณบอกเป้าหมาย เขาวางแผน แบ่งงาน ทำเอง แล้วรายงานให้
+
+---
+
+## ทำไม 2026 ถึงเป็น "ปีของ Agentic AI"
+
+ทุกเจ้าใหญ่กำลังวิ่งไปทางเดียวกัน:
+
+| บริษัท | ทำอะไร |
+|--------|--------|
+| **NVIDIA** | GTC 2026 (16 มี.ค.) — เปิดตัว Vera Rubin chip 336B transistors สร้างมาเพื่อ Agentic AI โดยเฉพาะ |
+| **Google** | Gemini Workspace — "Fill with Gemini" ค้น Gmail + สร้าง Sheets อัตโนมัติ |
+| **Zapier/n8n/Make** | ทั้ง 3 เปลี่ยนจาก linear automation → agentic loops (user growth 70%+) |
+| **Gartner** | คาดว่า 80% ของ marketing automation จะใช้ AI ภายในสิ้นปี 2026 |
+| **Anthropic** | Claude Code agent teams — AI หลายตัวทำงานพร้อมกัน |
+
+---
+
+## ตัวอย่างจริง: Agentic AI ทำอะไรได้?
+
+### ตัวอย่าง 1: ร้านอาหาร (Chatbot vs Agentic)
+
+**Chatbot:**
+> คุณ: "วัตถุดิบอะไรใกล้หมด?"
+> AI: "เนื้อสันนอก เหลือ 3 ถุง"
+> คุณ: "สั่งเพิ่มได้มั้ย?"
+> AI: "ต้องสั่งผ่าน supplier ครับ"
+
+**Agentic AI:**
+> AI สังเกตว่าเนื้อสันนอกเหลือ 3 ถุง → เช็คยอดขายเฉลี่ย → คำนวณว่าต้องสั่ง 10 ถุง → ส่ง LINE แจ้ง supplier → รายงานให้เจ้าของรู้
+
+ไม่ต้องถาม ไม่ต้องสั่ง — AI **ทำเอง**
+
+### ตัวอย่าง 2: Agency (DopeLab ใช้จริง)
+
+**Chatbot:**
+> คุณ: "เขียน caption ให้หน่อย"
+> AI: เขียน caption 1 อัน
+> คุณ: "ทำ artwork ด้วย"
+> AI: ทำ artwork 1 อัน
+
+**Agentic (Agent Teams):**
+> คุณ: "ผลิต content ชุด QuitGPT"
+> AI Team Lead → มอบหมาย researcher ค้นข้อมูล → content writer เขียน blog + caption → designer ทำ carousel → video producer ทำ script → ทุกอย่างส่งให้เจ้าของ approve ทีเดียว
+
+DopeLab ใช้ระบบนี้จริง — 7 agent teams, แต่ละทีมมี 4-5 AI agents ทำงานแบ่งหน้าที่กัน
+
+---
+
+## เครื่องมือ Agentic AI ที่ใช้ได้ตอนนี้
+
+### สำหรับ Non-Technical
+
+| เครื่องมือ | ราคา | เหมาะกับ |
+|-----------|------|---------|
+| **Zapier AI Actions** | $20-50/เดือน | ตอบ email อัตโนมัติ, จัดการ lead |
+| **Make.com Agent Mode** | $9-16/เดือน | สร้าง workflow ที่ปรับตัวเองได้ |
+| **ChatGPT + Sora/DALL-E** | $20/เดือน | สร้าง content อัตโนมัติ |
+
+### สำหรับ Technical
+
+| เครื่องมือ | ราคา | เหมาะกับ |
+|-----------|------|---------|
+| **n8n + AI Agents** | ฟรี (self-host) | workflow automation + AI decision-making |
+| **Claude Code Agent Teams** | Pro plan | multi-agent parallel tasks |
+| **Claude Code /loop + cron** | Pro plan | recurring automated tasks |
+
+---
+
+## SME ไทยเริ่มได้ยังไง?
+
+### Level 1: ง่ายสุด (วันนี้เลย)
+- ใช้ **ChatGPT** ตอบ email + สรุปเอกสาร
+- ตั้ง **Zapier** ส่ง notification เมื่อมี order ใหม่
+
+### Level 2: กลาง (สัปดาห์หน้า)
+- สร้าง **n8n workflow** ให้ AI ตอบ LINE OA อัตโนมัติ
+- ใช้ **Claude Code** สร้าง report อัตโนมัติทุกเช้า
+
+### Level 3: Advanced (เดือนหน้า)
+- **Agent Teams** ให้ AI หลายตัวทำงานพร้อมกัน
+- **Cron scheduling** ให้ AI ทำงานซ้ำทุกวันโดยไม่ต้องสั่ง
+- **Multi-step agents** วางแผน → ลงมือทำ → ตรวจสอบ → รายงาน
+
+---
+
+## ข้อจำกัดที่ต้องรู้
+
+<Callout variant="warning" title="Agentic AI ยังไม่สมบูรณ์">
+- **ผิดพลาดได้** — ยังต้องมีคนตรวจสอบผลลัพธ์ (human-in-the-loop)
+- **แพงกว่า chatbot** — ใช้ token มากกว่า 3-5 เท่า เพราะ AI คิดหลายรอบ
+- **ไม่เหมาะกับทุกงาน** — งานที่ต้องความแม่นยำ 100% (การเงิน, กฎหมาย) ยังต้องคนตรวจ
+- **Setup ซับซ้อน** — ไม่ใช่แค่กด ปุ่มเดียว ต้องออกแบบ workflow
+</Callout>
+
+---
+
+## DopeLab ใช้ Agentic AI ยังไง?
+
+ผมใช้ Claude Code แบบ Agentic ทุกวัน:
+
+1. **Agent Teams (7 ทีม)** — Marketing, Web, Content, Data, SEO, Onboarding, Artwork
+2. **/loop command** — สั่งให้ monitor ราคาคู่แข่งทุก 2 ชั่วโมง
+3. **Cron scheduling** — re-index knowledge base อัตโนมัติทุก 2 ชั่วโมง
+4. **Multi-agent** — 3 AI terminals ทำงานพร้อมกัน แบ่ง territory ไม่ชนกัน
+5. **Shared Memory** — AI ทุกตัวเขียนข้อมูลลง bulletin board ที่ตัวอื่นอ่านได้
+
+ผลลัพธ์: **เมื่อวานผลิต 7 วิดีโอ + 14 scheduled posts ใน 1 วัน** — ปกติ 1 คนทำ content ได้ 1-2 ชิ้น/วัน
+
+---
+
+## สรุป: Agentic AI = ขั้นต่อไปที่หลีกเลี่ยงไม่ได้
+
+| ยุค | AI ทำอะไร | คุณทำอะไร |
+|-----|----------|----------|
+| **Chatbot** (2023) | ตอบคำถาม | ถามทุกอย่าง |
+| **Copilot** (2024) | แนะนำข้างๆ | ตัดสินใจเอง |
+| **Agentic** (2026) | วางแผน + ทำ + ปรับ | ตั้งเป้า + ตรวจผล |
+
+ธุรกิจที่เริ่มเรียนรู้ Agentic AI ตอนนี้ จะได้เปรียบอย่างมหาศาล — เพราะคู่แข่งยังติดอยู่กับ "ถาม-ตอบ"
+
+---
+
+*ติดตาม DopeLab สำหรับ AI ที่ใช้งานจริง ไม่ใช่แค่ concept*
+
+*เซฟไว้ ส่งให้เจ้านายหรือทีมของคุณ*
