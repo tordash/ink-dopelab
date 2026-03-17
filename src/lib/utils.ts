@@ -6,9 +6,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(date: string, locale: string = "th") {
-  return new Date(date).toLocaleDateString(locale === "th" ? "th-TH" : "en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  return new Date(date).toLocaleDateString(
+    locale === "th" ? "th-TH" : "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    }
+  );
 }

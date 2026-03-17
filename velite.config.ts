@@ -27,8 +27,19 @@ const posts = defineCollection({
       const pathParts = data.path.replace(/^posts\//, "").split("/");
       const locale = pathParts[0] as "th" | "en";
       const slugAsParams = pathParts.slice(1).join("/");
+
+      // Fix readingTime for Thai: Velite splits by spaces (wrong for Thai).
+      // Thai "words" average ~10 chars each. Multiply wordCount by 10 to get
+      // estimated char count, then divide by 500 chars/min Thai reading speed.
+      let readingTime = data.metadata.readingTime;
+      if (locale === "th") {
+        const estimatedChars = data.metadata.wordCount * 10;
+        readingTime = Math.max(2, Math.round(estimatedChars / 500));
+      }
+
       return {
         ...data,
+        metadata: { ...data.metadata, readingTime },
         locale,
         slug: `${locale}/${slugAsParams}`,
         slugAsParams,

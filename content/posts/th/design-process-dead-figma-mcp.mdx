@@ -1,0 +1,147 @@
+---
+title: "AI ฆ่า Design Process — Claude Code + Figma MCP ทำให้ Designer ต้องปรับตัว"
+description: "Jenny Wen (Head of Design ที่ Claude, อดีต Figma) ประกาศว่า Design Process ตายแล้ว, Figma + Anthropic ปล่อย MCP integration, คนสร้าง Design Studio plugin 9 roles 16 commands — Designer ต้องปรับตัวยังไง? สรุปทุกสัญญาณจากวงใน + community + ประสบการณ์จริง"
+date: "2026-03-11"
+category: "AI News"
+tags: ["claude-code", "figma", "design", "mcp", "design-process", "ai-tools"]
+cover: "../covers/design-process-dead-figma-mcp.jpg"
+draft: false
+featured: false
+---
+
+## Head of Design ที่ Claude พูดเองว่า "Design Process ตายแล้ว"
+
+![AI ฆ่า Design Process — จาก Figma สู่ MCP](/images/blog/design-dead.jpg)
+
+ไม่ใช่คนนอกพูด ไม่ใช่ YouTuber ปั่น ไม่ใช่ Twitter hot take
+
+**Jenny Wen** — Head of Design ที่ Anthropic (บริษัทที่สร้าง Claude) อดีตทีม Figma โดยตรง — พูดเปิดเผยว่า **"The design process is dead"**
+
+คนที่เคยสร้าง Figma เอง มาบอกว่า design process แบบเดิมไม่ work อีกแล้ว
+
+สัญญาณนี้หนักกว่าที่หลายคนคิด
+
+## Figma + Anthropic ปล่อย MCP Integration — Bidirectional
+
+วันที่ 17 กุมภาพันธ์ 2026 Figma กับ Anthropic ประกาศ MCP (Model Context Protocol) integration แบบ **bidirectional** — ไม่ใช่แค่ AI อ่าน Figma ได้ แต่ **AI เขียนกลับเข้า Figma ได้ด้วย**
+
+ก่อนหน้านี้ AI กับ design tools มันแยกขาดจากกัน Designer ออกแบบใน Figma → ส่ง spec ให้ developer → developer ไปเขียน code ใหม่ทั้งหมด
+
+ตอนนี้ Claude Code สามารถ:
+
+- **อ่าน Figma file** — ดู component, layout, spacing, typography ทั้งหมด
+- **แปลงเป็น code** — สร้าง HTML/CSS/React ตรงจาก design ที่อยู่ใน Figma
+- **เขียนกลับ** — สร้าง component ใหม่ แก้ไข design ใน Figma จากคำสั่ง text
+
+พูดง่ายๆ คือ ขั้นตอน design → handoff → code ที่เคยใช้เวลาเป็นวัน ตอนนี้ **ยุบเหลือไม่กี่นาที**
+
+
+
+## Community เริ่มตั้งคำถามจริงจัง
+
+สัญญาณไม่ได้มาจากบริษัทใหญ่อย่างเดียว community ก็เริ่มพูดเรื่องนี้หนักขึ้นเรื่อยๆ
+
+### Reddit r/vibecoding
+
+> *"Figma is becoming irrelevant and designers are in denial"*
+
+โพสต์นี้ได้ engagement สูงมาก เพราะมันสะท้อนสิ่งที่หลายคนรู้สึกแต่ไม่กล้าพูด — ว่าเครื่องมือที่เคยเป็นหัวใจของ design workflow กำลังถูก bypass ไปเลย
+
+### Reddit r/ClaudeAI
+
+> *"Claude is making me question whether web designers will exist in 5 years"*
+
+คนที่โพสต์นี้ไม่ใช่ developer ที่ดูถูก designer แต่เป็นคนที่ใช้ Claude Code สร้าง UI จริงแล้วพบว่า — ผลลัพธ์มันดีเกินคาด
+
+### YouTube
+
+**Riley Brown** ปล่อยคลิป *"Claude Code can Design Now (Figma is officially in trouble)"* ได้ **24,000 views** ใน channel ที่ focus เรื่อง AI tools โดยเฉพาะ
+
+เขาโชว์ว่า Claude Code สร้าง UI ที่ production-ready ได้ตรงๆ โดยไม่ต้องผ่าน Figma เลย — ตั้งแต่ layout, responsive, animation, จนถึง deploy
+
+## มีคนสร้าง "Design Studio" Plugin สำหรับ Claude Code แล้ว
+
+สิ่งที่น่าสนใจที่สุดคือไม่ใช่แค่คนพูดเรื่องนี้ — มีคนลงมือสร้างระบบจริง
+
+มี developer สร้าง **"Design Studio" plugin** สำหรับ Claude Code ที่มี:
+
+- **9 Design Roles** — UX Researcher, UI Designer, Interaction Designer, Visual Designer, Design System Lead ฯลฯ
+- **16 Commands** — ตั้งแต่ generate wireframe, create component, audit accessibility ไปจนถึง export production assets
+- **5 AI Agents** — ทำงานประสานกัน เหมือนมี design team ย่อส่วน
+
+แต่ละ role มี expertise เฉพาะทาง — เวลาสั่งงาน ระบบจะ route ไปหา agent ที่เหมาะสมเอง
+
+ฟังดูเหมือน sci-fi แต่มันทำงานจริง และ code เป็น open source ให้ลองใช้ได้
+
+
+
+## แล้ว Designer ต้องปรับตัวยังไง?
+
+ผมต้องพูดตรงๆ ก่อนว่า — **ผมไม่ใช่ designer** ผมเป็นคนทำ agency ที่ใช้ AI tools ทำงานทุกวัน และสิ่งที่ผมเห็นจากฝั่ง production คือ
+
+### สิ่งที่ AI ทำได้ดีแล้ววันนี้
+
+- **Layout และ component** — Claude Code สร้าง responsive UI ที่ใช้งานได้จริง ไม่ใช่แค่ mockup
+- **Design system** — สร้าง color palette, typography scale, spacing system ที่ consistent
+- **Iteration** — เปลี่ยน design ทั้งหมดได้ใน 30 วินาที ไม่ต้องลาก pixel ใหม่
+
+### สิ่งที่ AI ยังทำไม่ได้ (ตอนนี้)
+
+- **เข้าใจ brand essence** — AI ทำ pattern ได้ แต่ยังไม่เข้าใจว่าทำไม brand นี้ต้อง "รู้สึก" แบบนี้
+- **ตัดสินใจเรื่อง trade-off** — เลือกระหว่าง "สวยกว่า" vs "ใช้ง่ายกว่า" ยังต้องใช้คน
+- **วิจัย user จริง** — AI สร้าง persona ได้ แต่นั่งฟัง user บ่นไม่ได้
+
+ผมคิดว่า designer ที่จะอยู่รอดคือคนที่เปลี่ยนจาก **"คนลาก pixel"** มาเป็น **"คนตัดสินใจว่า pixel ไหนควรอยู่ตรงไหน แล้วสั่ง AI ทำ"**
+
+## ที่ DopeLab เราใช้ Claude Code ออกแบบจริง
+
+ผมไม่ได้แค่ report ข่าว — เรา **ใช้ Claude Code ทำ design จริงทุกวัน** ที่ DopeLab
+
+ตัวอย่างที่ทำได้จริง:
+
+- **สร้าง client dashboard** ตั้งแต่ wireframe ถึง deploy ใน 1 ชั่วโมง ไม่เปิด Figma เลย
+- **ออกแบบ carousel artwork** สำหรับ social media — สั่ง Claude Code สร้าง HTML template → screenshot เป็นรูป
+- **สร้าง presentation** ส่งลูกค้า — HTML + CSS + animation พร้อมใช้งาน
+- **ทำ SVG diagram** อธิบาย process ให้ลูกค้าเข้าใจ
+
+ไม่มีขั้นตอนไหนเลยที่เราเปิด Figma
+
+ผมก็กำลังเรียนรู้อยู่เหมือนกัน — ทุกสัปดาห์มี feature ใหม่ มี workflow ใหม่ ที่ทำให้สิ่งที่เมื่อวานต้องใช้ designer ทำ วันนี้ AI ทำได้แล้ว
+
+## Workflow ที่เปลี่ยนไป (แต่ผมจะไม่โชว์ทั้งหมด)
+
+ขั้นตอนคร่าวๆ ที่เราใช้:
+
+1. **Brief** — เขียน prompt อธิบายสิ่งที่ต้องการ (ภาษาคน ไม่ใช่ design spec)
+2. **Generate** — Claude Code สร้าง HTML/CSS ตรง ไม่ผ่าน wireframe
+3. **Review** — ดู output, ปรับ prompt ถ้าไม่ตรง
+4. **Iterate** — สั่ง "เปลี่ยนสีเป็น...", "ย้าย section นี้ขึ้น...", "เพิ่ม animation..."
+5. **Deploy** — push ขึ้น production ได้เลย
+
+
+
+ขั้นตอนที่ 3-4 คือหัวใจ — **AI ทำงาน draft แรก, คนทำงาน direction** ไม่ใช่คนทำทุกอย่างเอง
+
+แต่รายละเอียดลึกๆ เรื่อง prompt engineering สำหรับ design, วิธี setup MCP, และ workflow เต็มๆ — ไว้ผมเขียนแยกอีกบทความ เพราะมีเนื้อหาเยอะเกินจะยัดลงที่นี่ได้หมด
+
+## สรุป — Design Process ไม่ได้ตาย แต่กำลังกลายพันธุ์
+
+ผมไม่คิดว่า designer จะตกงานหมดพรุ่งนี้ แต่ผมคิดว่า **role ของ designer กำลังเปลี่ยน** อย่างรวดเร็วมาก
+
+สิ่งที่เกิดขึ้น:
+
+- **Jenny Wen** (อดีต Figma, ปัจจุบัน Head of Design ที่ Claude) พูดเองว่า process เดิมตายแล้ว
+- **Figma + Anthropic** ปล่อย MCP integration ที่ AI อ่าน-เขียน Figma ได้ bidirectional
+- **Community** เริ่มตั้งคำถามว่า Figma ยังจำเป็นมั้ย
+- **มีคนสร้าง Design Studio** plugin ที่ทำงานแทน design team ได้จริง
+- **Agency อย่างเรา** ใช้ Claude Code ออกแบบงานจริงทุกวัน โดยไม่เปิด Figma
+
+สัญญาณชัดเจนมากว่า designer ที่ยังทำงานแบบเดิม 100% จะถูก disrupt ภายใน 1-2 ปี
+
+แต่ designer ที่เรียนรู้วิธีใช้ AI เป็นเครื่องมือ — ใช้ Claude Code สร้าง prototype, ใช้ MCP เชื่อม Figma, ใช้ AI iterate เร็วขึ้น 10 เท่า — คนเหล่านั้นจะมี value สูงขึ้นกว่าเดิมมาก
+
+**เครื่องมือเปลี่ยน แต่คนที่ตัดสินใจเรื่อง design ยังจำเป็น** — แค่ต้องเปลี่ยนวิธีทำงาน
+
+<Callout variant="info" title="ติดตาม AI tools + workflow จริงที่ DopeLab">
+ผมเขียนเรื่อง AI tools ที่ใช้งานจริงในธุรกิจทุกสัปดาห์ -- ไม่ใช่แค่ข่าว แต่สิ่งที่ลองแล้ว ใช้แล้ว ได้ผลจริง ถ้าสนใจเรื่อง Claude Code, MCP, AI workflow อ่านต่อที่ blog เรามีอีกเยอะครับ
+</Callout>

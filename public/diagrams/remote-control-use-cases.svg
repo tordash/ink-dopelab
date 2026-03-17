@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"
+     role="img" aria-labelledby="title desc">
+  <title id="title">3 Use Cases ที่เปลี่ยนเกม — Remote Control</title>
+  <desc id="desc">เปรียบเทียบ 3 use cases: Marketing Reports, Lead Response, Meeting Intelligence — แสดง before/after และผลลัพธ์</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4FC3F7"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="grad-red" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E74C3C" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#E74C3C" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#66BB6A" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#66BB6A" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .bg { fill: #0F0F1A; }
+    .title { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 26px; font-weight: 700; fill: #EEEEEE; text-anchor: middle; }
+    .card { fill: #1A1A2E; stroke: #2A2A44; stroke-width: 1.5; rx: 16; }
+    .card-title { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 18px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; }
+    .card-num { font-family: 'Inter', sans-serif; font-size: 48px; font-weight: 800; fill-opacity: 0.1; text-anchor: middle; }
+    .label-before { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 12px; font-weight: 700; fill: #E74C3C; text-anchor: start; }
+    .label-after { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 12px; font-weight: 700; fill: #66BB6A; text-anchor: start; }
+    .body-text { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 13px; fill: #CCCCCC; text-anchor: start; }
+    .metric { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 800; text-anchor: middle; }
+    .metric-label { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 11px; fill: #888888; text-anchor: middle; }
+    .icon-big { font-size: 32px; text-anchor: middle; dominant-baseline: central; }
+    .arrow-down { fill: none; stroke: #FFD54F; stroke-width: 2; marker-end: url(#arrow-yellow); }
+    .divider { stroke: #333355; stroke-width: 1; stroke-dasharray: 4 4; }
+    .badge { rx: 12; }
+  </style>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Title -->
+  <text class="title" x="600" y="50">3 Use Cases ที่เปลี่ยนเกม</text>
+
+  <!-- ===== CARD 1: Marketing Reports ===== -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="80" width="360" height="680" class="card"/>
+  </g>
+  <!-- Card header accent -->
+  <rect x="40" y="80" width="360" height="6" rx="3" fill="#4FC3F7"/>
+  <!-- Number watermark -->
+  <text class="card-num" x="220" y="160" fill="#4FC3F7">01</text>
+  <!-- Icon -->
+  <text class="icon-big" x="220" y="140">📊</text>
+  <text class="card-title" x="220" y="180">Marketing Reports</text>
+
+  <!-- Before section -->
+  <rect x="60" y="200" width="320" height="100" rx="8" fill="url(#grad-red)"/>
+  <text class="label-before" x="80" y="222">❌ ก่อนใช้</text>
+  <text class="body-text" x="80" y="245">• เปิด ad account ทีละตัว</text>
+  <text class="body-text" x="80" y="265">• ก๊อปตัวเลขลง spreadsheet</text>
+  <text class="body-text" x="80" y="285">• 3-4 ชม./สัปดาห์</text>
+
+  <!-- Arrow -->
+  <line x1="220" y1="310" x2="220" y2="330" stroke="#FFD54F" stroke-width="2"/>
+  <polygon points="210,330 230,330 220,345" fill="#FFD54F"/>
+
+  <!-- After section -->
+  <rect x="60" y="355" width="320" height="130" rx="8" fill="url(#grad-green)"/>
+  <text class="label-after" x="80" y="377">✅ หลังใช้</text>
+  <text class="body-text" x="80" y="400">• พิมพ์จากมือถือ → Claude ดึง metrics</text>
+  <text class="body-text" x="80" y="420">• สรุปเป็น daily brief อัตโนมัติ</text>
+  <text class="body-text" x="80" y="440">• CPL สูง → แจ้งเตือนทันที</text>
+  <text class="body-text" x="80" y="460">• Pause + shift budget จากมือถือ</text>
+
+  <!-- Result metric -->
+  <rect x="100" y="510" width="200" height="90" rx="12" fill="#1E1E30" stroke="#4FC3F7" stroke-width="1.5"/>
+  <text class="metric" x="200" y="548" fill="#4FC3F7">ไม่กี่วิ</text>
+  <text class="metric-label" x="200" y="575">จาก 4 ชม./สัปดาห์</text>
+
+  <!-- Time saved bar -->
+  <rect x="80" y="625" width="260" height="8" rx="4" fill="#E74C3C" fill-opacity="0.3"/>
+  <rect x="80" y="625" width="10" height="8" rx="4" fill="#66BB6A"/>
+  <text x="80" y="655" font-family="'Inter', sans-serif" font-size="10px" fill="#66BB6A" text-anchor="start">~0.01 ชม.</text>
+  <text x="340" y="655" font-family="'Inter', sans-serif" font-size="10px" fill="#E74C3C" text-anchor="end">4 ชม.</text>
+
+  <!-- ===== CARD 2: Lead Response ===== -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="80" width="360" height="680" class="card"/>
+  </g>
+  <rect x="420" y="80" width="360" height="6" rx="3" fill="#FF7043"/>
+  <text class="card-num" x="600" y="160" fill="#FF7043">02</text>
+  <text class="icon-big" x="600" y="140">💬</text>
+  <text class="card-title" x="600" y="180">ตอบ Lead ทันที</text>
+
+  <!-- Before section -->
+  <rect x="440" y="200" width="320" height="100" rx="8" fill="url(#grad-red)"/>
+  <text class="label-before" x="460" y="222">❌ ก่อนใช้</text>
+  <text class="body-text" x="460" y="245">• Lead รอ 3-4 ชม.กว่าจะตอบ</text>
+  <text class="body-text" x="460" y="265">• เสีย 30% ของ leads</text>
+  <text class="body-text" x="460" y="285">• คิดเป็นเงินหลายแสน</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="310" x2="600" y2="330" stroke="#FFD54F" stroke-width="2"/>
+  <polygon points="590,330 610,330 600,345" fill="#FFD54F"/>
+
+  <!-- After section -->
+  <rect x="440" y="355" width="320" height="130" rx="8" fill="url(#grad-green)"/>
+  <text class="label-after" x="460" y="377">✅ หลังใช้</text>
+  <text class="body-text" x="460" y="400">• Claude qualify lead อัตโนมัติ</text>
+  <text class="body-text" x="460" y="420">• Lead ร้อน → ส่งต่อทีมขาย + context</text>
+  <text class="body-text" x="460" y="440">• Log CRM + แจ้ง notification</text>
+  <text class="body-text" x="460" y="460">• นัด call อัตโนมัติ</text>
+
+  <!-- Result metric -->
+  <rect x="480" y="510" width="200" height="90" rx="12" fill="#1E1E30" stroke="#FF7043" stroke-width="1.5"/>
+  <text class="metric" x="580" y="548" fill="#FF7043">ทันที</text>
+  <text class="metric-label" x="580" y="575">จาก 3-4 ชม.</text>
+
+  <!-- Key stat -->
+  <rect x="460" y="625" width="260" height="50" rx="8" fill="#FFD54F" fill-opacity="0.08" stroke="#FFD54F" stroke-width="1"/>
+  <text x="590" y="648" font-family="'Sarabun', 'Inter', sans-serif" font-size="12px" fill="#FFD54F" text-anchor="middle">ตอบใน 5 นาที →</text>
+  <text x="590" y="668" font-family="'Inter', sans-serif" font-size="14px" fill="#FFD54F" text-anchor="middle" font-weight="700">ปิดดีลสูงกว่า 21x</text>
+
+  <!-- ===== CARD 3: Meeting Intelligence ===== -->
+  <g filter="url(#shadow)">
+    <rect x="800" y="80" width="360" height="680" class="card"/>
+  </g>
+  <rect x="800" y="80" width="360" height="6" rx="3" fill="#66BB6A"/>
+  <text class="card-num" x="980" y="160" fill="#66BB6A">03</text>
+  <text class="icon-big" x="980" y="140">🧠</text>
+  <text class="card-title" x="980" y="180">Meeting Intelligence</text>
+
+  <!-- Before section -->
+  <rect x="820" y="200" width="320" height="100" rx="8" fill="url(#grad-red)"/>
+  <text class="label-before" x="840" y="222">❌ ก่อนใช้</text>
+  <text class="body-text" x="840" y="245">• จด notes เอง ลืมครึ่งนึง</text>
+  <text class="body-text" x="840" y="265">• ไม่เห็น pattern ข้ามประชุม</text>
+  <text class="body-text" x="840" y="285">• Action items ตกหล่น</text>
+
+  <!-- Arrow -->
+  <line x1="980" y1="310" x2="980" y2="330" stroke="#FFD54F" stroke-width="2"/>
+  <polygon points="970,330 990,330 980,345" fill="#FFD54F"/>
+
+  <!-- After section -->
+  <rect x="820" y="355" width="320" height="130" rx="8" fill="url(#grad-green)"/>
+  <text class="label-after" x="840" y="377">✅ หลังใช้</text>
+  <text class="body-text" x="840" y="400">• Fireflies transcribe อัตโนมัติ</text>
+  <text class="body-text" x="840" y="420">• ถาม Claude ข้ามประชุม ข้ามทีม</text>
+  <text class="body-text" x="840" y="440">• เชื่อมจุด insight ข้ามทีม</text>
+  <text class="body-text" x="840" y="460">• สรุป action items ทันที</text>
+
+  <!-- Result metric -->
+  <rect x="860" y="510" width="200" height="90" rx="12" fill="#1E1E30" stroke="#66BB6A" stroke-width="1.5"/>
+  <text class="metric" x="960" y="545" fill="#66BB6A" font-size="22px">เชื่อมจุด</text>
+  <text class="metric-label" x="960" y="575">ข้าม meetings ข้ามทีม</text>
+
+  <!-- Example queries -->
+  <rect x="820" y="620" width="320" height="60" rx="8" fill="#66BB6A" fill-opacity="0.08" stroke="#66BB6A" stroke-width="1"/>
+  <text x="840" y="642" font-family="'Courier New', monospace" font-size="10px" fill="#66BB6A">"ลูกค้า object อะไรบ่อยสุด?"</text>
+  <text x="840" y="662" font-family="'Courier New', monospace" font-size="10px" fill="#66BB6A">"ทีม sales vs marketing เห็นต่างตรงไหน?"</text>
+
+  <!-- Bottom summary bar -->
+  <rect x="40" y="770" width="1120" height="4" rx="2" fill="#FFD54F" fill-opacity="0.3"/>
+</svg>

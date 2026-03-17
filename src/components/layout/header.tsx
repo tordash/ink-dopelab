@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { LocaleSwitcher } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
-export function Header() {
+export function Header({ searchSlot }: { searchSlot?: React.ReactNode }) {
   const t = useTranslations("nav");
 
   return (
@@ -58,6 +58,7 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          {searchSlot}
           <LocaleSwitcher />
           <ThemeToggle />
           <MobileNav />

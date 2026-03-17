@@ -96,6 +96,20 @@
     "fb_description": "Follow our work and send us a message",
     "hours_note": "We typically respond within 24 hours on business days (Mon-Fri 9:00-18:00)"
   },
+  "search": {
+    "placeholder": "Search articles...",
+    "no_results": "No matching articles found",
+    "to_close": "close",
+    "to_select": "select"
+  },
+  "newsletter": {
+    "title": "Get new articles by email",
+    "description": "Weekly case studies + AI tips. No spam, ever.",
+    "placeholder": "your@email.com",
+    "button": "Subscribe",
+    "success": "Subscribed! Check your inbox.",
+    "error": "Something went wrong. Please try again."
+  },
   "footer": {
     "copyright": "© {year} DopeLab Studio",
     "built_with": "Built with Next.js + AI",

@@ -1,0 +1,176 @@
+---
+title: "ระบบ CRM ง่ายๆ ที่ AI สร้างให้"
+description: "Salesforce หลักพัน-หมื่นต่อเดือน ไม่ต้องง้อ — AI สร้าง CRM บน Airtable/Google Sheets บันทึกข้อมูลลูกค้า แจ้งเตือน follow-up dashboard ลูกค้าใหม่/เก่า ไม่ต้อง code"
+date: 2026-03-05
+cover: ../covers/ai-simple-crm.jpg
+category: "Business Operations"
+tags: ["crm", "airtable", "google-sheets", "small-business", "customer-management"]
+draft: false
+featured: false
+---
+
+## ร้านจำลูกค้าประจำได้กี่คน?
+
+![AI Simple CRM — ระบบจัดการลูกค้าอัจฉริยะ](/images/blog/simple-crm.jpg)
+
+ลูกค้าประจำของธุรกิจขนาดเล็กมีไม่น้อย — แต่ถ้าถามว่าจำได้ว่าใครชอบอะไร ใครอยู่ช่วง birthday เดือนไหน ใครยังไม่ได้กลับมาตั้งนานแล้ว — ตอบไม่ได้
+
+ข้อมูลเหล่านี้อยู่ในหัวพนักงาน ซึ่งแปลว่าวันที่พนักงานลาออก ข้อมูลก็หายไปด้วย
+
+ธุรกิจใหญ่แก้ปัญหานี้ด้วย CRM — Salesforce, HubSpot, Zoho หลักพันถึงหลักหมื่นบาทต่อเดือน ไม่ใช่ option สำหรับธุรกิจเล็ก
+
+แต่ผมลองให้ AI ออกแบบ CRM ง่ายๆ บน Airtable — **ใช้เวลา 2 ชั่วโมง ค่าใช้จ่าย 0 บาท**
+
+---
+
+## เครื่องมือที่ใช้จริง
+
+**ตัวเลือก A — Airtable (แนะนำ):**
+- **Airtable Free** (airtable.com) — รองรับ 1,000 records, สร้าง view + filter ได้, มี mobile app
+- ใช้ **Claude Code** หรือ **ChatGPT** ช่วยออกแบบ structure และเขียน automation script
+
+**ตัวเลือก B — Google Sheets (ฟรี 100%):**
+- **Google Sheets** — ไม่มีค่าใช้จ่าย ทุกคนมีอยู่แล้ว
+- ใช้ **Google Apps Script** (ฟรี) สำหรับ automation เช่น แจ้งเตือนวันเกิด
+- **Claude Code** หรือ **ChatGPT** ช่วยเขียน script ให้ — ไม่ต้องรู้ code
+
+**เครื่องมือเสริม:**
+- **Zapier / Make.com** — เชื่อม Airtable กับ LINE / Email สำหรับแจ้งเตือนอัตโนมัติ (มี free tier)
+
+---
+
+## CRM คืออะไร ต้องการอะไรจริงๆ
+
+CRM (Customer Relationship Management) ฟังดูซับซ้อน แต่สิ่งที่ธุรกิจเล็กต้องการจริงๆ คือ:
+
+- **บันทึกข้อมูลลูกค้า** — ชื่อ เบอร์ วันเกิด ความชอบ
+- **ติดตาม interaction** — เคยซื้ออะไร เมื่อไหร่ ครั้งล่าสุดเมื่อไหร่
+- **แจ้งเตือน** — วันเกิดลูกค้า ลูกค้าที่ยังไม่ได้ follow-up
+- **ดู dashboard** — ใครคือ top customer ใครหายไปนาน
+
+แค่นี้พอ — ไม่ต้องการ automation ซับซ้อนหรือ AI scoring
+
+---
+
+## วิธีที่ AI ช่วยสร้าง CRM
+
+### ขั้นที่ 1: ออกแบบ Structure (20 นาที)
+
+เปิด Claude หรือ ChatGPT แล้วใช้ prompt นี้:
+
+```
+ช่วยออกแบบ CRM สำหรับ [ประเภทธุรกิจ เช่น ร้านนวด / คลินิก / ร้านขายของ]:
+- สิ่งที่ต้องเก็บ: ข้อมูลลูกค้า, ประวัติการซื้อ, วันเกิด, หมายเหตุพิเศษ, follow-up tasks
+- platform: Airtable (หรือ Google Sheets)
+- ไม่ต้อง code — ใช้ built-in features ของ tool
+
+ตอบในรูปแบบ:
+Table ชื่ออะไร → fields อะไรบ้าง → field type (Text/Number/Date/Link/Select)
+```
+
+AI จะเสนอ structure เช่น:
+
+**Table 1: Customers**
+- ชื่อ-นามสกุล (Text), เบอร์โทร (Phone), LINE ID (Text)
+- วันเกิด (Date), ระดับลูกค้า (Single Select: VIP/ประจำ/ใหม่)
+- หมายเหตุ (Long Text — ใส่ความชอบ/ข้อควรระวัง)
+
+**Table 2: Visits / Purchases**
+- Link to Customer (Link to Customers table)
+- วันที่มา (Date), ยอดใช้จ่าย (Currency), สิ่งที่สั่ง (Text)
+- Rating (Number 1-5), หมายเหตุ (Text)
+
+**Table 3: Follow-up Tasks**
+- Link to Customer (Link to Customers table)
+- วันที่ต้อง follow-up (Date), เรื่องที่ต้อง follow-up (Text)
+- Status (Single Select: pending/done)
+
+### ขั้นที่ 2: สร้าง Airtable Base และ View (30 นาที)
+
+เปิด airtable.com → Create a Base → เพิ่ม table และ field ตาม structure ที่ AI แนะนำ
+
+จากนั้นถาม AI ต่อ:
+
+```
+ช่วยแนะนำ view ที่ควรสร้างใน Airtable สำหรับ CRM นี้
+และบอกวิธีตั้ง filter step-by-step สำหรับแต่ละ view:
+1. ลูกค้าวันเกิดเดือนนี้
+2. ลูกค้าที่ไม่ได้กลับมา 30 วัน
+3. Follow-up ที่ยังค้างอยู่
+4. Top customers (เรียงตามยอดใช้จ่าย)
+```
+
+AI จะบอก filter ที่ต้องตั้ง เช่น:
+- Birthday This Month: `IS({วันเกิด}, SAME_MONTH, TODAY())`
+- ไม่กลับมา 30 วัน: filter last visit date → `is before` → `30 days ago`
+- Follow-up pending: filter Status = "pending" AND due date `is before or on` today
+
+### ขั้นที่ 3: เพิ่ม Automation แจ้งเตือน
+
+**ถ้าใช้ Airtable — ไม่ต้อง code:**
+ใน Airtable → Automations → เลือก trigger "Record matches condition" → When birthday = this month → Send email / LINE notification
+
+**ถ้าใช้ Google Sheets — ใช้ Apps Script:**
+
+```
+เขียน Google Apps Script สำหรับ Google Sheets CRM:
+- sheet ชื่อ "Customers" มี column: ชื่อ (A), เบอร์ (B), LINE (C), วันเกิด (D)
+- ทุกวันเช้า 9 โมง: เช็คว่าลูกค้าคนไหนวันเกิดในเดือนนี้
+- ส่ง email แจ้งเตือนมาที่ [อีเมลของฉัน] บอกรายชื่อลูกค้าที่วันเกิดเดือนนี้
+- script ต้องรันด้วย Time-driven trigger ทุกวัน
+```
+
+Copy script ที่ได้จาก AI → เปิด Google Sheets → Extensions → Apps Script → วาง code → Save → ตั้ง Trigger
+
+### ขั้นที่ 4: เขียน SOP การใช้งาน (20 นาที)
+
+ระบบดีแค่ไหนก็ไม่มีประโยชน์ถ้าทีมไม่ใช้ ใช้ prompt นี้:
+
+```
+เขียน SOP การใช้ CRM นี้สำหรับพนักงาน:
+- ภาษาไทย ง่าย ไม่ใช้คำเทคนิค
+- ระบุว่าต้องกรอกอะไรเมื่อลูกค้ามาซื้อ (step-by-step)
+- ระบุว่าต้องเช็ค view ไหนทุกวันและทุกสัปดาห์
+- ยาวไม่เกิน 1 หน้า A4
+```
+
+ได้เอกสาร 1 หน้า พนักงานอ่านเข้าใจได้ภายใน 5 นาที
+
+---
+
+## สิ่งที่ได้ (ไม่ต้อง code แม้แต่บรรทัดเดียว)
+
+หลังจากทำตามขั้นตอนนี้ผลที่ได้:
+
+| ความสามารถ | วิธีทำ |
+|---|---|
+| บันทึกข้อมูลลูกค้า | Airtable form บนมือถือ |
+| เช็ควันเกิดเดือนนี้ | View "Birthday This Month" |
+| ลูกค้าหายไปนาน | View "ไม่กลับมา 30+ วัน" |
+| Follow-up รายการ | Table follow-up tasks |
+| Dashboard ภาพรวม | Airtable dashboard block |
+| แจ้งเตือนอัตโนมัติ | Airtable Automation หรือ Apps Script |
+
+**ค่าใช้จ่าย:** Airtable Free tier รองรับได้ 1,000 records — พอสำหรับธุรกิจเล็กที่เพิ่งเริ่ม
+
+---
+
+## ข้อจำกัดที่ต้องรู้
+
+CRM แบบนี้ไม่ได้ทำทุกอย่างได้:
+
+- **Airtable Free มีขีดจำกัด** — เกิน 1,000 records ต้องอัปเกรด ($20/เดือน) หรือย้ายไป Google Sheets
+- **Automation ขั้นสูง** — ถ้าต้องการ auto-send LINE message ต้องต่อกับ Zapier/Make (มี free tier จำกัด)
+- **ต้องมีวินัยกรอกข้อมูล** — ระบบดีแค่ไหนก็ไม่มีค่าถ้าไม่กรอก
+
+แต่สำหรับธุรกิจที่ยังไม่มีอะไรเลย — มีระบบนี้ดีกว่าพึ่งความจำของพนักงานแน่นอน
+
+---
+
+## สรุป: เริ่มจากของง่ายๆ ก่อน
+
+Salesforce เหมาะกับธุรกิจที่มี sales team ซับซ้อน — แต่ถ้าคุณมีลูกค้าไม่กี่ร้อยคนและต้องการแค่ "จำข้อมูลลูกค้า + ติดตาม follow-up" ไม่จำเป็นต้องจ่ายแพง
+
+AI ช่วยออกแบบ structure ที่เหมาะกับธุรกิจคุณ เขียน script automation ให้ และสร้าง SOP สำหรับทีม — ทั้งหมดนี้ทำได้ใน 2 ชั่วโมง ด้วย tool ที่คุณมีอยู่แล้ว
+
+เริ่มจากระบบง่ายๆ ที่ใช้จริง ดีกว่าระบบซับซ้อนที่ไม่มีใครแตะ

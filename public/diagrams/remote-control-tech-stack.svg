@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Tech Stack Architecture — Remote Control AI Operating System</title>
+  <desc id="desc">แผนภาพสถาปัตยกรรม Tech Stack ที่ใช้: Claude Code + Remote Control เป็นศูนย์กลาง เชื่อมต่อ Fireflies, Notion, CRM, Ad Platforms</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4FC3F7"/>
+    </marker>
+    <marker id="arrow-out" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#66BB6A"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glow-center">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4FC3F7" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    .bg { fill: #0F0F1A; }
+    .title-text { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 24px; font-weight: 700; fill: #EEEEEE; text-anchor: middle; }
+    .center-ring { fill: none; stroke: #4FC3F7; stroke-width: 2; }
+    .center-fill { fill: #1A1A2E; }
+    .center-label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700; fill: #4FC3F7; text-anchor: middle; }
+    .center-sublabel { font-family: 'Sarabun', 'Inter', sans-serif; font-size: 11px; fill: #888888; text-anchor: middle; }
+    .node-box { rx: 12; fill: #1A1A2E; }
+    .node-icon { font-size: 24px; text-anchor: middle; dominant-baseline: central; }
+    .node-label { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; }
+    .node-desc { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 10px; fill: #999999; text-anchor: middle; }
+    .conn-in { fill: none; stroke: #4FC3F7; stroke-width: 1.5; stroke-dasharray: 6 3; marker-end: url(#arrow); }
+    .conn-out { fill: none; stroke: #66BB6A; stroke-width: 1.5; marker-end: url(#arrow-out); }
+    .conn-bi { fill: none; stroke: #FFD54F; stroke-width: 1.5; }
+    .layer-label { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 11px; fill: #555555; text-anchor: start; font-weight: 600; letter-spacing: 2px; }
+    .mcp-badge { font-family: 'Inter', sans-serif; font-size: 8px; fill: #FFD54F; text-anchor: middle; font-weight: 700; letter-spacing: 1px; }
+  </style>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Title -->
+  <text class="title-text" x="600" y="40">Tech Stack Architecture</text>
+
+  <!-- Center glow effect -->
+  <circle cx="600" cy="300" r="200" fill="url(#center-glow)"/>
+
+  <!-- Center: Claude Code + Remote Control -->
+  <g filter="url(#glow-center)">
+    <circle cx="600" cy="300" r="80" class="center-fill"/>
+    <circle cx="600" cy="300" r="80" class="center-ring"/>
+    <circle cx="600" cy="300" r="85" fill="none" stroke="#4FC3F7" stroke-width="0.5" stroke-dasharray="4 4"/>
+  </g>
+  <text x="600" y="275" font-size="32px" text-anchor="middle">🤖</text>
+  <text class="center-label" x="600" y="305">Claude Code</text>
+  <text class="center-sublabel" x="600" y="325">+ Remote Control</text>
+
+  <!-- Layer labels -->
+  <text class="layer-label" x="40" y="80">INPUT LAYER</text>
+  <text class="layer-label" x="940" y="80">OUTPUT LAYER</text>
+  <text class="layer-label" x="40" y="520">DATA SOURCES</text>
+  <text class="layer-label" x="940" y="520">ACTIONS</text>
+
+  <!-- ===== INPUT NODES (Left side) ===== -->
+
+  <!-- Phone (top-left) -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="120" width="160" height="90" class="node-box" stroke="#4FC3F7" stroke-width="1.5"/>
+  </g>
+  <text class="node-icon" x="140" y="155">📱</text>
+  <text class="node-label" x="140" y="180">มือถือ</text>
+  <text class="node-desc" x="140" y="196">สแกน QR → สั่งงาน</text>
+  <path class="conn-in" d="M 224,165 C 350,165 400,260 516,270"/>
+
+  <!-- Fireflies (left) -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="255" width="160" height="90" class="node-box" stroke="#FF7043" stroke-width="1.5"/>
+  </g>
+  <text class="node-icon" x="140" y="290">🎙️</text>
+  <text class="node-label" x="140" y="315">Fireflies</text>
+  <text class="node-desc" x="140" y="331">Meeting transcripts</text>
+  <rect x="110" y="237" width="60" height="16" rx="8" fill="#FF7043" fill-opacity="0.2"/>
+  <text class="mcp-badge" x="140" y="248">MCP</text>
+  <path class="conn-in" d="M 224,300 H 516"/>
+
+  <!-- CRM (bottom-left) -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="390" width="160" height="90" class="node-box" stroke="#AB47BC" stroke-width="1.5"/>
+  </g>
+  <text class="node-icon" x="140" y="425">👥</text>
+  <text class="node-label" x="140" y="450">CRM</text>
+  <text class="node-desc" x="140" y="466">Leads + contacts</text>
+  <path class="conn-in" d="M 224,435 C 350,435 400,340 516,330"/>
+
+  <!-- ===== OUTPUT NODES (Right side) ===== -->
+
+  <!-- Notion (top-right) -->
+  <g filter="url(#shadow)">
+    <rect x="980" y="120" width="160" height="90" class="node-box" stroke="#66BB6A" stroke-width="1.5"/>
+  </g>
+  <text class="node-icon" x="1060" y="155">📓</text>
+  <text class="node-label" x="1060" y="180">Notion</text>
+  <text class="node-desc" x="1060" y="196">Proposals + workspace</text>
+  <rect x="1030" y="237" width="60" height="16" rx="8" fill="#66BB6A" fill-opacity="0.2"/>
+  <text class="mcp-badge" x="1060" y="248" fill="#66BB6A">MCP</text>
+  <path class="conn-out" d="M 684,270 C 800,260 850,165 976,165"/>
+
+  <!-- Reports (right) -->
+  <g filter="url(#shadow)">
+    <rect x="980" y="255" width="160" height="90" class="node-box" stroke="#FFD54F" stroke-width="1.5"/>
+  </g>
+  <text class="node-icon" x="1060" y="290">📊</text>
+  <text class="node-label" x="1060" y="315">Reports</text>
+  <text class="node-desc" x="1060" y="331">Daily briefs + alerts</text>
+  <path class="conn-out" d="M 684,300 H 976"/>
+
+  <!-- Email (bottom-right) -->
+  <g filter="url(#shadow)">
+    <rect x="980" y="390" width="160" height="90" class="node-box" stroke="#AB47BC" stroke-width="1.5"/>
+  </g>
+  <text class="node-icon" x="1060" y="425">✉️</text>
+  <text class="node-label" x="1060" y="450">Email</text>
+  <text class="node-desc" x="1060" y="466">Follow-up drafts</text>
+  <path class="conn-out" d="M 684,330 C 800,340 850,435 976,435"/>
+
+  <!-- ===== BOTTOM NODES (Data sources) ===== -->
+
+  <!-- Ad Platforms (bottom-center-left) -->
+  <g filter="url(#shadow)">
+    <rect x="320" y="460" width="160" height="80" class="node-box" stroke="#4FC3F7" stroke-width="1"/>
+  </g>
+  <text class="node-icon" x="400" y="492">📢</text>
+  <text class="node-label" x="400" y="515">Ad Platforms</text>
+  <text class="node-desc" x="400" y="531">Meta, Google, etc.</text>
+  <path class="conn-in" d="M 400,456 C 400,400 550,380 580,384"/>
+
+  <!-- Calendar (bottom-center-right) -->
+  <g filter="url(#shadow)">
+    <rect x="720" y="460" width="160" height="80" class="node-box" stroke="#66BB6A" stroke-width="1"/>
+  </g>
+  <text class="node-icon" x="800" y="492">📅</text>
+  <text class="node-label" x="800" y="515">Calendar</text>
+  <text class="node-desc" x="800" y="531">นัด call อัตโนมัติ</text>
+  <path class="conn-out" d="M 620,384 C 650,380 800,400 800,456"/>
+
+  <!-- Orbiting dots around center -->
+  <circle cx="600" cy="210" r="3" fill="#4FC3F7" fill-opacity="0.6"/>
+  <circle cx="690" cy="250" r="3" fill="#66BB6A" fill-opacity="0.6"/>
+  <circle cx="690" cy="350" r="3" fill="#FFD54F" fill-opacity="0.6"/>
+  <circle cx="600" cy="390" r="3" fill="#FF7043" fill-opacity="0.6"/>
+  <circle cx="510" cy="350" r="3" fill="#AB47BC" fill-opacity="0.6"/>
+  <circle cx="510" cy="250" r="3" fill="#4FC3F7" fill-opacity="0.6"/>
+
+  <!-- Legend -->
+  <g transform="translate(40, 555)">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#4FC3F7" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="38" y="4" font-family="'Inter', sans-serif" font-size="10px" fill="#888888">Input</text>
+    <line x1="100" y1="0" x2="130" y2="0" stroke="#66BB6A" stroke-width="1.5"/>
+    <text x="138" y="4" font-family="'Inter', sans-serif" font-size="10px" fill="#888888">Output</text>
+    <rect x="200" y="-8" width="40" height="16" rx="8" fill="#FFD54F" fill-opacity="0.15"/>
+    <text x="220" y="4" font-family="'Inter', sans-serif" font-size="8px" fill="#FFD54F" text-anchor="middle" font-weight="700">MCP</text>
+    <text x="248" y="4" font-family="'Inter', sans-serif" font-size="10px" fill="#888888">= Model Context Protocol</text>
+  </g>
+</svg>

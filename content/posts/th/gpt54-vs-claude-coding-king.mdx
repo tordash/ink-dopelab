@@ -1,0 +1,162 @@
+---
+title: "GPT-5.4 vs Claude Opus 4.6 — ศึกชิงบัลลังก์ AI Coding มีนาคม 2026"
+description: "เปรียบเทียบ GPT-5.4 กับ Claude Opus 4.6 แบบตัวต่อตัว — benchmark, pricing, coding, real-world use cases จากคนที่ใช้ AI ทำงานทุกวัน ไม่ fanboy แต่มี data ให้ดูเอง"
+date: "2026-03-11"
+category: "AI News"
+tags: ["gpt-5.4", "claude", "benchmark", "ai-comparison"]
+cover: "../covers/gpt54-vs-claude-coding-king.jpg"
+draft: false
+featured: false
+---
+
+## GPT-5.4 ออกมาแล้ว — แต่ใครชนะจริง?
+
+![GPT-5.4 vs Claude — ศึกชิงบัลลังก์ AI Coding](/images/blog/gpt54-vs-claude.jpg)
+
+5 มีนาคม 2026 OpenAI ปล่อย GPT-5.4 ออกมาพร้อมตัวเลขที่ headline ทุกสำนักข่าว AI ลงพาดหัว — native computer use ตัวแรกของโลก, benchmark OSWorld ที่เอาชนะ human baseline, และราคาที่ถูกกว่า Claude เกือบครึ่ง
+
+สัปดาห์ที่ผ่านมา Reddit, Twitter, และ community AI ทั่วโลกถกกันหนักว่า GPT-5.4 จะล้ม Claude ได้หรือเปล่า
+
+ผมใช้ Claude Code ทำงานจริงทุกวัน — เขียน code, วิเคราะห์ข้อมูล, สร้าง content, deploy ระบบ ผมไม่ได้มีหุ้นใน Anthropic และไม่ได้เกลียด OpenAI แต่ผมมี data จากการใช้งานจริงที่อยากเอามาวางให้ดูกัน
+
+## Benchmark — ตัวเลขพูดอะไร?
+
+ก่อนจะเถียงกันเรื่อง "ตัวไหนดีกว่า" มาดูตัวเลข benchmark ที่ community ยอมรับกันก่อน
+
+### SWE-Bench Verified — มาตรฐานงาน Coding
+
+SWE-Bench Verified คือ benchmark ที่ทดสอบว่า AI แก้ bug จริงใน open-source project ได้ดีแค่ไหน ไม่ใช่แค่เขียน code สวย แต่ต้องเข้าใจ context ของ codebase เปิด PR แล้วผ่าน test ได้จริง
+
+| Model | SWE-Bench Verified |
+|-------|-------------------|
+| **Claude Opus 4.6** | **80.8%** |
+| GPT-5.4 | 77.2% |
+
+Claude Opus 4.6 ยังคงนำอยู่ 3.6 จุด ในงาน coding จริง — ไม่ใช่แค่เขียน function เดียว แต่เข้าใจ codebase ทั้งหมด วิเคราะห์ bug แล้วแก้ได้ถูกจุด
+
+### OSWorld — Desktop Task Automation
+
+แต่ GPT-5.4 ก็มีจุดที่ชนะชัดเจน
+
+| Model | OSWorld |
+|-------|---------|
+| GPT-5.4 | **75.0%** |
+| Human Baseline | 72.4% |
+
+GPT-5.4 คือ AI model แรกที่ทำคะแนน OSWorld สูงกว่า human baseline ได้ OSWorld ทดสอบการทำงานบน desktop จริง — เปิดแอป, คลิก, กรอกฟอร์ม, ทำ workflow ข้ามหลายโปรแกรม
+
+นี่ไม่ใช่เรื่องเล็ก เป็นครั้งแรกที่ AI ทำ desktop task ได้ดีกว่าคนจริง
+
+### สรุป Benchmark
+
+| ด้าน | ใครชนะ | ห่างเท่าไหร่ |
+|------|--------|-------------|
+| Coding (SWE-Bench) | Claude Opus 4.6 | +3.6 จุด |
+| Desktop Automation (OSWorld) | GPT-5.4 | ชนะ human baseline |
+| Complex Reasoning | Claude Opus 4.6 | ชนะใน multi-step tasks |
+| Long Context Handling | Claude Opus 4.6 | 200K แต่ใช้ได้ดีกว่า |
+
+ไม่มีใครกวาดชนะทุก category — และนั่นคือภาพจริงที่ headline ส่วนใหญ่ไม่ได้เล่า
+
+## Pricing — GPT-5.4 ถูกกว่าชัดเจน
+
+ถ้าดูแค่ราคา API GPT-5.4 ชนะขาดลอย
+
+| | GPT-5.4 | Claude Opus 4.6 |
+|---|---------|-----------------|
+| **Input** | $2.50 / 1M tokens | $5.00 / 1M tokens |
+| **Output** | $20.00 / 1M tokens | $25.00 / 1M tokens |
+| **ส่วนต่าง** | ถูกกว่า ~40-50% | — |
+
+สำหรับคนที่ใช้ API เยอะ เช่น ทำ chatbot, ทำ automation ที่วิ่งหลายพัน request ต่อวัน ส่วนต่างนี้มีนัยสำคัญมาก ถูกกว่าเกือบครึ่งต่อ request เดียวกัน
+
+แต่ราคาไม่ใช่ทุกอย่าง ถ้า model ถูกกว่าแต่ต้อง retry 3 รอบกว่าจะได้ output ที่ใช้ได้ ต้นทุนจริงอาจแพงกว่า
+
+## Computer Use — จุดแข็งใหม่ของ GPT-5.4
+
+Feature ที่ทำให้ GPT-5.4 โดดเด่นที่สุดคือ native computer use — ความสามารถในการควบคุม desktop โดยตรง เปิดแอป คลิกปุ่ม กรอกฟอร์ม ทำงานข้ามหลายโปรแกรมได้แบบ autonomous
+
+Claude ก็มี computer use เหมือนกัน แต่เป็นแบบ external — ต้อง setup tool แยก ไม่ได้ built-in มากับ model โดยตรง
+
+GPT-5.4 เป็น model แรกที่ทำ computer use แบบ native ไม่ต้อง config อะไรเพิ่ม — สั่งให้ทำงานบน desktop ได้เลย และคะแนน OSWorld ที่ชนะ human baseline ก็ยืนยันว่ามันทำได้จริง ไม่ใช่แค่ demo สวย
+
+แต่เรื่อง reliability ยังเป็นคำถาม — community รายงานกรณี agent ทำ task ผิดใน production environment ซึ่งสำหรับงาน mission-critical เรื่องนี้ต้องระวัง
+
+## งาน Coding — ทำไม Claude ยังนำ
+
+สำหรับคนที่ใช้ AI เขียน code เป็นหลัก ตัวเลข SWE-Bench อาจไม่ได้บอกทุกอย่าง แต่ประสบการณ์ใช้จริงบอกตรงกัน
+
+สิ่งที่ Claude ทำได้ดีกว่าในงาน coding:
+
+**เข้าใจ codebase ทั้งหมด** — ไม่ใช่แค่ดู file เดียวแล้วเขียน code Claude อ่าน project structure, เข้าใจ dependency, รู้ว่าแก้ตรงนี้จะกระทบตรงไหน
+
+**Multi-step reasoning** — task ที่ต้องคิดหลายขั้น เช่น "วิเคราะห์ bug นี้ หาสาเหตุ แก้ไข แล้ว test ว่าไม่พัง feature อื่น" Claude ทำ chain of thought ได้แม่นกว่า
+
+**Consistency** — สั่ง task เดียวกัน 10 ครั้ง ได้ผลลัพธ์ที่สม่ำเสมอ ไม่ใช่ดีบ้างแย่บ้าง ในงานจริง predictability มีค่ามากกว่า peak performance
+
+ล่าสุด Claude Code ยังเพิ่ม feature ใหม่ — **Code Review** ที่ช่วย review code ให้อัตโนมัติ และ **Auto Mode** ที่กำลังจะเปิดตัว 12 มีนาคม 2026 ทำให้ Claude ทำงาน coding ได้ autonomous มากขึ้นโดยไม่ต้องให้ permission ทุกขั้นตอน
+
+## Reddit พูดอะไร?
+
+กระทู้ใน r/AI_Agents เรื่อง "GPT-5.4 has been out for 4 days, honest take vs Claude" มีคนแชร์ประสบการณ์จริงกันเยอะมาก สรุปได้ประมาณนี้
+
+ฝั่งชอบ GPT-5.4:
+- ราคา API ถูกกว่าชัดเจน
+- Computer use ดีกว่า built-in มาเลย
+- 2M context window ใส่เอกสารยาวได้สบาย
+
+ฝั่งชอบ Claude:
+- Coding quality ดีกว่าสม่ำเสมอ
+- Output ไม่ต้อง edit เยอะ ใช้ได้เลย
+- ทำ complex reasoning ได้ดีกว่า
+
+และมีบทความหนึ่งที่สรุปได้ดีมาก — "Nobody Wins the AI Crown in March 2026. Not Even GPT-5.4." ซึ่งชี้ว่าเราอยู่ในยุคที่ไม่มี model ไหนครองแชมป์ทุกด้านอีกต่อไป แต่ละตัวมีจุดแข็งคนละเรื่อง
+
+## ใครควรใช้อะไร — Honest Take จาก DopeLab
+
+ผมใช้ Claude Code ทำงานทุกวัน ทำ agency ทั้งฝั่ง marketing และ operations — เขียน code, query database, สร้าง content, deploy ระบบ, วิเคราะห์ข้อมูลธุรกิจ
+
+เหตุผลที่ผมเลือก Claude ไม่ใช่เพราะ fanboy แต่เพราะงานส่วนใหญ่ของผมคือ coding และ complex reasoning ซึ่งเป็น 2 ด้านที่ Claude ยังนำอยู่ชัดเจน
+
+แต่ถ้าถามผมตรงๆ ว่า GPT-5.4 เหมาะกับใคร:
+
+**เลือก GPT-5.4 ถ้า:**
+- ทำ automation ที่ต้อง control desktop (RPA, form filling, cross-app workflow)
+- ใช้ API เยอะและ budget เป็นปัจจัยหลัก
+- ต้อง process เอกสารขนาดใหญ่มาก (2M context ช่วยได้จริง)
+- อยู่ใน Microsoft ecosystem อยู่แล้ว (Office 365 + OpenAI integration แน่นมาก)
+
+**เลือก Claude ถ้า:**
+- งานหลักคือ coding — เขียน, debug, refactor, review
+- ต้องการ output ที่ consistent ไม่ต้อง retry บ่อย
+- ทำงานที่ต้องคิดหลายขั้น (analysis, strategy, complex problem-solving)
+- ต้องการ AI ที่เข้าใจ context ยาวได้ดี (200K ของ Claude ใช้ได้ดีกว่าที่ตัวเลขบอก)
+
+**ใช้ทั้งคู่ ถ้า:**
+- มี budget พอ และงานหลากหลาย
+- ใช้ Claude สำหรับ coding + reasoning
+- ใช้ GPT-5.4 สำหรับ desktop automation + document processing
+
+## สิ่งที่ Benchmark ไม่ได้บอก
+
+ตัวเลข benchmark สำคัญ แต่มันไม่ได้บอกทุกอย่าง สิ่งที่ผมเรียนรู้จากการใช้ AI ทุกวันมาหลายเดือนคือ
+
+**Retry rate สำคัญกว่า benchmark** — Model ที่ได้คะแนน 80% แต่ output ใช้ได้ทุกครั้ง ดีกว่า model ที่ได้ 85% แต่ต้อง retry 3 รอบ ต้นทุนจริง (เวลา + เงิน) ของ retry สูงกว่าที่คิด
+
+**Workflow fit สำคัญกว่า feature list** — GPT-5.4 มี feature เยอะกว่า แต่ถ้า workflow ของคุณคือเขียน code + deploy feature ที่ดีที่สุดก็ไร้ประโยชน์ถ้าไม่ได้ใช้
+
+**Trust builds over time** — เมื่อคุณใช้ tool ตัวหนึ่งทุกวันจนรู้ว่ามันจะตอบยังไงในสถานการณ์ต่างๆ ค่าของ trust นั้นสูงกว่าที่จะวัดเป็นตัวเลขได้
+
+## สรุป — ศึก AI Coding มีนาคม 2026
+
+GPT-5.4 คือ release ที่ดีที่สุดของ OpenAI ในรอบหลายปี computer use แบบ native, ราคาถูกลง, และ benchmark ที่ชนะ human baseline บน OSWorld ล้วนเป็นเรื่องจริง
+
+แต่สำหรับงาน coding โดยเฉพาะ Claude Opus 4.6 ยังนำอยู่ ทั้ง SWE-Bench และประสบการณ์ใช้จริงจาก community ยืนยันตรงกัน
+
+ไม่มีใครชนะทุกด้าน และนั่นคือสิ่งที่ดีสำหรับเราในฐานะ user เพราะการแข่งขันนี้ทำให้ทั้งสองค่ายพัฒนาเร็วขึ้น ราคาถูกลง และ feature ดีขึ้น
+
+DopeLab ใช้ Claude Code ทำงานจริงทุกวัน ถ้าอยากรู้ว่าเราใช้มันทำอะไรได้บ้าง ตั้งแต่เขียน blog ไปจนถึงสร้างระบบ stock management — อ่านต่อได้ที่ blog ของเรา เรา document ทุกอย่างไว้หมด
+
+---
+
+*ศึก AI Coding ยังไม่จบ — ถ้า OpenAI ปรับ coding performance ขึ้นมาปิดช่องว่าง 3.6 จุดได้ หรือ Anthropic เปิด Auto Mode แล้วเปลี่ยนเกม conversation นี้จะเปลี่ยนไปอีกรอบ ผมจะ update ให้*

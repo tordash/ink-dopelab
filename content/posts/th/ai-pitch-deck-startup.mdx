@@ -1,0 +1,209 @@
+---
+title: "สร้าง Pitch Deck ระดมทุน ด้วย AI"
+description: "Startup อยากระดมทุน? AI ช่วยทำ Pitch Deck ครบ flow — Market Research, Financial Model, Storytelling, Slide Design — Output ได้เป็น PPTX 12-15 slides พร้อมนำเสนอ"
+date: 2026-03-05
+cover: ../covers/ai-pitch-deck-startup.jpg
+category: "Startup & Investment"
+tags: ["pitch-deck", "startup", "fundraising", "presentation", "financial-model"]
+draft: false
+featured: false
+---
+
+## สิ่งแรกที่ Investor ขอดู
+
+![AI Pitch Deck — สร้าง pitch deck สตาร์ทอัพ](/images/blog/pitch-deck.jpg)
+
+ผมเคยคุยกับ founder หลายคนที่มีไอเดียดี มี product ที่ work แต่ติดอยู่ตรงจุดเดิมคือ **ไม่มี Pitch Deck ที่พร้อมนำเสนอ**
+
+บางคนทำเองได้แต่ใช้เวลา 2-3 สัปดาห์ บางคนจ้าง agency ราคา 50,000-100,000 บาท
+
+ปัญหาไม่ใช่แค่เรื่องเวลาหรือเงิน แต่มันอยู่ที่การไม่รู้ว่า **investor ต้องการเห็นอะไร** บางทีมีข้อมูลครบแต่เล่าไม่เป็น บางทีเล่าเก่งแต่ตัวเลขไม่รองรับ
+
+AI ช่วยตรงนี้ได้ทั้งหมด
+
+---
+
+## เครื่องมือที่ใช้จริง
+
+**เครื่องมือหลัก:**
+- **Claude Code** + `/pptx` skill — สร้างไฟล์ .pptx พร้อมใช้ งาน structure, copy, speaker notes ครบ
+- **Claude Code** + `/presentation-builder` skill — สร้าง HTML presentation ดูบน browser แบบ interactive ได้เลย
+
+**ทางเลือกสำหรับคนไม่ใช้ Claude Code:**
+- **Gamma.app** — พิมพ์ prompt เดียว ได้ slide สวยพร้อม content ทันที ฟรีมีจำกัด
+- **Pitch.com** — template สวย เน้น startup deck โดยเฉพาะ ใช้ร่วมกับ AI ได้
+- **Beautiful.ai** — AI จัด layout อัตโนมัติ ขยับ element ก็ปรับ design ให้เอง
+- **ChatGPT + PowerPoint** — ให้ ChatGPT เขียน outline + copy แล้ว paste ใส่ PowerPoint เอง
+
+---
+
+## Pitch Deck ที่ดีต้องมีอะไร
+
+Investor ส่วนใหญ่อยากเห็น 5 สิ่งนี้ก่อนตัดสินใจนัดคุย:
+
+1. **ปัญหาคืออะไร** — มันใหญ่พอไหม? ใครเป็นคนมีปัญหานี้?
+2. **Solution ของคุณต่างจากคนอื่นยังไง** — ทำไมต้องเป็นคุณ?
+3. **ตลาดใหญ่แค่ไหน** — TAM/SAM/SOM ชัดเจนไหม?
+4. **ตัวเลขเชื่อถือได้ไหม** — Revenue model, Unit Economics, Projection
+5. **ทีมเก่งพอไหม** — มีความสามารถตรงกับ problem ที่แก้ไหม?
+
+ถ้าตอบได้ครบและน่าเชื่อถือ โอกาสได้นัดถัดไปสูงมาก
+
+---
+
+## AI ช่วยได้ตลอด Flow
+
+### ขั้นที่ 1: Market Research
+
+AI ค้นหาและสรุปข้อมูล market size, competitive landscape, industry trends ให้อัตโนมัติ
+
+**Prompt สำหรับ Market Research:**
+
+```
+ทำ market research สำหรับ pitch deck ธุรกิจ [ประเภทธุรกิจ] ในประเทศไทย
+
+ต้องการ:
+1. TAM (Total Addressable Market) — ตลาดรวมทั้งหมด พร้อมแหล่งอ้างอิง
+2. SAM (Serviceable Addressable Market) — ส่วนที่เราเข้าถึงได้จริง
+3. SOM (Serviceable Obtainable Market) — เป้าหมาย 3 ปีแรก
+4. Competitor matrix — คู่แข่ง 3-5 ราย เปรียบเทียบ feature / pricing / จุดแข็ง-อ่อน
+5. Industry trends 2-3 ข้อที่สนับสนุน timing ของธุรกิจนี้
+
+จัดผลในรูปแบบที่ใส่ใน slide ได้เลย
+```
+
+สิ่งที่ได้:
+- ตัวเลข TAM พร้อมแหล่งอ้างอิง
+- Competitor matrix เปรียบเทียบ feature และ pricing
+- Trend ที่สนับสนุน timing ของธุรกิจ
+
+### ขั้นที่ 2: Financial Model
+
+ส่วนที่ founder กลัวที่สุดคือตัวเลข แต่ AI ช่วย build model ได้จากข้อมูลที่คุณมี
+
+**Prompt สร้าง Financial Projection:**
+
+```
+สร้าง financial projection 3 ปี สำหรับธุรกิจประเภท [SaaS / marketplace / ร้านค้า / บริการ]
+
+ข้อมูล assumptions:
+- ราคาขาย: [จำนวน] บาทต่อ [unit/เดือน/ปี]
+- ต้นทุนต่อหน่วย (COGS): [จำนวน] บาท
+- จำนวน customer เดือนแรก: [จำนวน]
+- Growth rate ต่อเดือน: [%]
+- ค่าใช้จ่ายคงที่ต่อเดือน: ค่าเช่า [x], เงินเดือน [x], marketing [x]
+- เงินทุนเริ่มต้น: [จำนวน] บาท
+
+Output ที่ต้องการ:
+1. Revenue projection ปี 1-3 (Pessimistic / Base / Optimistic)
+2. Break-even point — เดือนที่ [x]
+3. Unit economics: LTV และ CAC
+4. Monthly cash flow — เงินหมดเดือนไหนถ้าไม่ระดมทุน
+
+จัด format เป็นตารางที่ copy ใส่ slide ได้เลย
+```
+
+Output ที่ได้:
+- **Revenue Projection** 3 ปี (Pessimistic / Base / Optimistic)
+- **Break-even Point** — คุณจะกำไรเดือนไหน?
+- **Unit Economics** — LTV/CAC ratio
+- **Cash Flow** — เงินหมดก่อนไหม?
+
+### ขั้นที่ 3: Storytelling
+
+นี่คือจุดที่ Pitch Deck ส่วนใหญ่พัง — มีข้อมูลครบแต่เล่าไม่เป็น
+
+AI ช่วยจัด flow ของ story ให้น่าฟัง:
+
+> "เริ่มจากปัญหาที่คนทั่วไป relate ได้ → แสดงว่าตลาดใหญ่แค่ไหน → เล่าว่าทำไม solution ที่มีอยู่ถึงแก้ไม่ได้ → นำเสนอ solution ของคุณ → พิสูจน์ด้วยตัวเลข → ขอ funding เพื่อทำสิ่งนี้"
+
+Structure นี้ใช้ได้กับ investor ไทยและต่างประเทศ
+
+**Prompt สร้าง Deck ครบทุก Slide:**
+
+```
+สร้าง pitch deck สำหรับ [ชื่อธุรกิจ / ประเภทธุรกิจ] ที่ต้องการระดมทุน [จำนวน] บาท
+
+ข้อมูลธุรกิจ:
+- ปัญหาที่แก้: [อธิบาย]
+- Solution: [อธิบาย]
+- Target customer: [กลุ่มเป้าหมาย]
+- Revenue model: [วิธีทำเงิน]
+- Traction ที่มี: [ยอดขาย / user / partnership]
+- ทีม: [จำนวนคน + background หลัก]
+
+สร้าง slides ครบ: Problem, Solution, Market Size, Business Model,
+Traction, Competitive Advantage, Go-to-Market, Financial Projection,
+Team, The Ask
+
+แต่ละ slide ให้มี: headline (1 ประโยค) + bullet points 3-4 ข้อ + speaker notes
+```
+
+### ขั้นที่ 4: Slide Design และ Export
+
+AI generate slide structure ให้พร้อม:
+- Layout แต่ละหน้า (chart, table, bullet point, visual)
+- Copy สำหรับแต่ละ slide (ไม่ใช่ wall of text)
+- Speaker notes สำหรับใช้ตอน present
+
+**วิธี Export ด้วย Claude Code:**
+
+สำหรับไฟล์ .pptx (แก้ได้ใน PowerPoint ต่อได้เลย):
+```
+/pptx [วาง outline ที่ AI สร้างให้ด้านบน]
+```
+
+สำหรับ HTML presentation (นำเสนอบน browser ได้เลย ไม่ต้อง install):
+```
+/presentation-builder [วาง outline เดียวกัน]
+```
+
+---
+
+## Output ที่ได้: 12-15 Slides
+
+| # | Slide | เนื้อหา |
+|---|---|---|
+| 1 | Cover | ชื่อบริษัท, tagline, วันที่ |
+| 2 | Problem | ปัญหาที่แก้ + ขนาดของปัญหา |
+| 3 | Solution | Product/Service overview |
+| 4 | Market Size | TAM / SAM / SOM |
+| 5 | Product Demo | Screenshot / Demo หรือ Product Mockup |
+| 6 | Business Model | Revenue streams, pricing |
+| 7 | Traction | Metrics ที่มีอยู่ (ถ้ามี) |
+| 8 | Competitive Advantage | Differentiation |
+| 9 | Go-to-Market | วิธี acquire customer |
+| 10 | Financial Projection | 3 ปี — Revenue, Expense, Profit |
+| 11 | Team | ประวัติและทำไมถึงเหมาะกับ problem นี้ |
+| 12 | The Ask | ขอเงินเท่าไหร่ ใช้ทำอะไร |
+
+Format export ได้ทั้ง **PPTX** (แก้ได้ใน PowerPoint) หรือ **HTML** (นำเสนอบน browser ได้เลย)
+
+---
+
+## เวลาที่ใช้
+
+| งาน | ทำเอง | ใช้ AI |
+|---|---|---|
+| Market Research | 3-5 วัน | 2-3 ชั่วโมง |
+| Financial Model | 2-3 วัน | 1 ชั่วโมง |
+| Slide Writing | 3-5 วัน | 2-3 ชั่วโมง |
+| Design | 3-7 วัน | 1-2 ชั่วโมง |
+| **รวม** | **2-3 สัปดาห์** | **1 วัน** |
+
+---
+
+## สรุป
+
+Pitch Deck ดีไม่ได้มาจาก PowerPoint สวย มาจาก **story ที่ตอบคำถาม investor ได้ครบ** และ **ตัวเลขที่น่าเชื่อถือ**
+
+AI ช่วยทำได้ทั้งสองส่วน — เร็วขึ้น 10 เท่า และถูกกว่าจ้าง agency มาก
+
+ถ้าคุณมีไอเดีย startup อยู่ในหัว แต่ยังไม่มี deck — ลองให้ AI ช่วย draft ก่อน แล้วค่อย refine เองในส่วนที่รู้ดีที่สุด
+
+---
+
+## อ่านต่อ
+
+- [AI ตรวจสอบ SEO เว็บไซต์](/th/blog/ai-seo-audit-website)
+- [AI ช่วยออกแบบเมนูร้านอาหาร](/th/blog/ai-menu-design-restaurant)

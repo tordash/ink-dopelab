@@ -1,0 +1,210 @@
+---
+title: "AI วิเคราะห์ยอดขาย 3 ช่องทาง"
+description: "ร้านอาหารขาย 3 ช่องทาง format ข้อมูลไม่เหมือนกัน AI ดึงข้อมูลอัตโนมัติจาก email ทุกวัน รวมเป็น dashboard เดียว พบว่ากำไรจริงต่างจากที่คิดมาก"
+date: 2026-03-05
+cover: ../covers/ai-sales-analytics-3-channels.jpg
+category: "Data & Analytics"
+tags: ["sales-analytics", "data-driven", "restaurant", "delivery-platform", "dashboard"]
+draft: false
+featured: false
+---
+
+## ปัญหาของร้านที่ขายหลายช่องทาง
+
+![AI Sales Analytics — วิเคราะห์ยอดขาย 3 ช่องทางอัตโนมัติ](/images/blog/sales-analytics.jpg)
+
+ร้านอาหารของผมขายผ่าน 3 ช่องทางหลัก:
+
+1. **หน้าร้าน** — เก็บข้อมูลจาก POS
+2. **Delivery Platform A** — ส่งรายงานเป็น PDF ทาง email
+3. **Delivery Platform B** — ส่งรายงานเป็น CSV ทาง email
+
+ทุกช่องทางส่งข้อมูลมาทุกวัน แต่ **format ไม่เหมือนกันเลย**
+
+POS ส่งเป็น HTML, Platform A ส่งเป็น PDF, Platform B ส่งเป็น CSV สรุปยอดในหน่วยที่ต่างกัน — บางตัวรวม GP แล้ว บางตัวยังไม่หัก บางตัวรวม packaging บางตัวไม่รวม
+
+**ผลคือ ไม่มีตัวเลขรวมที่เชื่อถือได้สักเดือนเดียว**
+
+## ก่อนมี AI: นั่งรวมเองทุกอาทิตย์
+
+workflow เดิมคือ ทุกสัปดาห์ผมต้องมานั่ง:
+- เปิด email หาไฟล์รายงาน
+- Copy ตัวเลขลง Excel ด้วยมือ
+- คำนวณหัก GP เอง
+- รวมทุกช่องทางเป็นยอดรวม
+
+ใช้เวลาประมาณ **1-2 ชั่วโมงต่อสัปดาห์** และผิดพลาดบ่อย
+
+## เครื่องมือที่ใช้จริง
+
+**Stack หลักที่ผมใช้:**
+- **Claude Code** — เขียน Python script สำหรับ parse ข้อมูลแต่ละ format
+- **Gmail IMAP** — ดึง email อัตโนมัติผ่าน Python `imaplib`
+- **SQLite** — เก็บข้อมูลในเครื่อง เบา เร็ว ไม่ต้องมี server
+- **Python pandas** — จัดการตาราง คำนวณ pivot รายเมนู
+
+**ทางเลือกที่ไม่ต้องเขียน code:**
+- **Google Sheets + Apps Script** — ถ้าข้อมูลไม่เยอะ เขียน script ง่ายๆ ใน Google Apps Script ดึง CSV จาก email มาเก็บ Sheets ได้
+- **n8n** — ใช้ node "Gmail", "CSV", "Google Sheets" ลาก-วางเชื่อมกัน ไม่ต้องเขียน code มาก เหมาะถ้าอยากทำ automation แบบ visual
+
+## หลังมี AI: อัตโนมัติทุกวัน
+
+ผมให้ Claude Code สร้างระบบที่:
+
+### ดึงข้อมูลจาก email อัตโนมัติ
+
+ทุกเช้า script จะ:
+1. เชื่อมต่อ Gmail ผ่าน IMAP
+2. หาอีเมลจาก Platform A, Platform B, และ POS system
+3. ดาวน์โหลด attachment (PDF/CSV) หรืออ่าน email body (HTML)
+4. Parse ข้อมูลออกมา — ยอดขาย, จำนวน order, ค่า GP
+
+**Prompt ที่ส่งให้ Claude Code เขียน script ดึง email:**
+
+```
+เขียน Python script ดึงข้อมูลยอดขายจาก Gmail อัตโนมัติ
+
+ข้อมูล:
+- Gmail: ใช้ IMAP (imaplib)
+- Email จาก Platform A: sender "no-reply@platform-a.com"
+  มี PDF attachment ชื่อ "sales-report-*.pdf"
+  ยอดขายสุทธิอยู่ใน PDF บรรทัดที่ขึ้นต้นด้วย "Net Sales:"
+- Email จาก Platform B: sender "report@platform-b.com"
+  มี CSV attachment
+  ยอดขายอยู่ใน column "order_amount", GP อยู่ใน column "commission"
+- Email จาก POS: sender "report@pos-system.com"
+  ข้อมูลอยู่ใน email body เป็น HTML table
+  ต้องการ row ที่มี "Total Sales"
+
+Output: บันทึกลง SQLite ตาราง daily_sales
+columns: date, channel, gross_sales, gp_amount, net_sales
+```
+
+### Parse ต่างกันตาม format
+
+```
+PDF (Platform A) → pdfplumber ดึง text → regex หา "Net Sales: X,XXX.XX"
+CSV (Platform B) → pandas read_csv → sum column ที่ต้องการ
+HTML (POS)       → BeautifulSoup parse table → ดึง Total row
+```
+
+ทั้งหมดนี้ Claude Code เขียน script ให้ ผมแค่อธิบายว่าข้อมูลอยู่ตรงไหนในแต่ละ format และเปิดไฟล์ตัวอย่างให้ AI ดู
+
+### คำนวณกำไรจริงอัตโนมัติ
+
+สิ่งที่ platform บอกคือ "ยอดขาย" แต่ไม่ใช่ "กำไร"
+
+ร้านอาหารที่ขายผ่าน delivery platform ต้องหักค่า GP (Gross Profit sharing) ออก ซึ่งสูงมาก บางแพลตฟอร์มอยู่ที่ **40-50% ของยอดขาย** ยังไม่รวมค่า packaging, ค่าถุง, ค่า label
+
+ระบบที่สร้างจะคำนวณ:
+
+```
+กำไรจริง = ยอดขาย - GP - packaging - ค่าวัตถุดิบ
+```
+
+แล้วแสดงเป็น % กำไรต่อ order และต่อเมนู
+
+<Callout variant="info" title="ทำไม GP ต้องคำนวณแยก">
+Platform มักรายงานแค่ "ยอดที่ได้รับ" หลังหัก GP แล้ว แต่ไม่ได้บอก % GP ต่อ SKU แยกกัน ถ้าไม่คำนวณเองจะไม่รู้ว่าเมนูไหนทำกำไรจริง
+</Callout>
+
+## สิ่งที่พบหลังดูข้อมูลจริง
+
+### พบที่ 1: บางเมนูขาดทุนหลังหัก GP
+
+มีเมนูราคาถูกบางตัวที่ขายดีมากบน delivery แต่พอคำนวณจริงพบว่า **กำไรติดลบ** เมื่อรวมค่า GP, packaging, และวัตถุดิบ
+
+ขายเยอะยิ่งขาดทุนเยอะ
+
+ถ้าไม่มีตัวเลขรวมแบบนี้ คงไม่รู้เลย เพราะดูแค่ยอดรวมก็คิดว่าขายดี
+
+### พบที่ 2: ยอดขายรวมสูงกว่าที่คิด แต่กำไรต่ำกว่าที่คิด
+
+ยอดขายรวม 3 ช่องทางสูงกว่าที่ประมาณไว้ แต่เมื่อหัก GP จาก delivery channels ออก **กำไรสุทธิต่ำกว่าที่คิดไว้มาก**
+
+ข้อมูลนี้ทำให้ตัดสินใจได้ว่าควรผลักดันยอดหน้าร้านมากกว่า delivery สำหรับบางเมนู
+
+### พบที่ 3: ช่องทางที่ "ขายดีที่สุด" ไม่ใช่ช่องทางที่ "ทำกำไรสูงสุด"
+
+Platform ที่มี order เยอะสุดไม่ใช่ platform ที่ทำกำไรสุทธิสูงสุด เพราะ GP ต่างกัน
+
+เรื่องนี้เห็นได้ชัดก็ต่อเมื่อมี dashboard รวมข้อมูลทุกช่องทางไว้ในที่เดียว
+
+## Dashboard ที่ได้
+
+Dashboard รวมแสดง:
+
+| ข้อมูล | รายละเอียด |
+|--------|-----------|
+| ยอดขายรวม | แยกตามช่องทาง + รวม |
+| GP หัก | ต่อช่องทาง ต่อวัน |
+| กำไรสุทธิ | หลังหัก GP + packaging |
+| Top เมนู | แยกตามยอดขาย vs กำไร |
+| Trend รายสัปดาห์ | เปรียบเทียบ week-over-week |
+
+อัพเดทอัตโนมัติทุกเช้า ผมแค่เปิดดู ไม่ต้องทำอะไรเพิ่ม
+
+<Callout variant="success" title="Key Takeaway">
+ข้อมูลที่มีอยู่แล้วใน email ทุกวัน มีคุณค่ามหาศาล แค่ยังไม่ถูก parse ออกมา AI ช่วยทำส่วนที่น่าเบื่อและผิดพลาดได้ง่ายนี้แทนเรา ให้เราโฟกัสกับการตัดสินใจจากข้อมูลแทน
+</Callout>
+
+## เริ่มต้นอย่างไรถ้าอยากทำบ้าง
+
+**Step 1: รวบรวม sample รายงาน**
+
+ดาวน์โหลดรายงานจากทุก channel มา 1 เดือน — PDF, CSV, หรืออะไรก็ตาม แล้วดูว่าข้อมูลอยู่ตรงไหน
+
+**Step 2: อธิบายให้ AI ฟังว่าข้อมูลอยู่ตรงไหน**
+
+เปิด Claude Code แล้วส่ง prompt แบบนี้:
+
+```
+ฉันมีรายงานยอดขายจาก 2 delivery platform ในรูปแบบต่างกัน
+อยากรวมข้อมูลเป็นตารางเดียว
+
+Platform A ส่งเป็น CSV มี columns เหล่านี้:
+[วาง header row ของ CSV ที่นี่]
+ยอดขายสุทธิหลังหัก GP แล้วคือ column: "settlement_amount"
+
+Platform B ส่งเป็น PDF
+[แนบไฟล์ PDF ตัวอย่าง หรืออธิบายว่าตัวเลขอยู่บรรทัดไหน]
+
+อยากได้ Python script ที่:
+1. อ่านไฟล์ทั้งสองแบบอัตโนมัติจาก folder
+2. รวมเป็นตาราง: date, channel, gross_sales, gp_deducted, net_sales
+3. export เป็น CSV รายวัน
+```
+
+**Step 3: ตัดสินใจว่าอยากเก็บข้อมูลที่ไหน**
+
+- **Google Sheets** — พอสำหรับเริ่มต้น script Python ส่งข้อมูลผ่าน Google Sheets API ได้เลย
+- **SQLite** — ถ้าข้อมูลเยอะหรืออยากทำ query ซับซ้อน ฟรี ไม่ต้องมี server
+- **Airtable** — ถ้าอยากได้ UI ดูข้อมูลด้วยโดยไม่ต้องสร้าง dashboard เอง
+
+**Step 4: สร้าง report template ที่อยากดู**
+
+```
+ฉันมีข้อมูลยอดขายรายวันใน Google Sheets ชื่อ "Sales Data"
+columns: date, channel, gross_sales, gp_deducted, net_sales
+
+สร้าง Google Apps Script ที่:
+1. รวม net_sales รายวันแยกตาม channel
+2. คำนวณ % กำไรต่อ gross_sales
+3. แสดงเป็น summary ใน Sheet ชื่อ "Weekly Report"
+   รูปแบบ: week, channel_a_net, channel_b_net, total, avg_margin%
+4. รัน trigger ทุกวันจันทร์ 8:00 น. อัตโนมัติ
+```
+
+**Step 5: ตั้ง cron job ให้รันอัตโนมัติ**
+
+ถ้าใช้ Python script บน Mac:
+
+```bash
+# เปิด crontab editor
+crontab -e
+
+# เพิ่มบรรทัดนี้ — รันทุกเช้า 7:00 น.
+0 7 * * * /usr/bin/python3 /path/to/your/fetch-sales.py >> /tmp/sales-log.txt 2>&1
+```
+
+ทำครั้งแรกอาจใช้เวลาสักครึ่งวัน แต่หลังจากนั้นระบบทำงานเองทุกวัน ไม่ต้องแตะอะไรอีก

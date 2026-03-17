@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Demo Pipeline — สร้าง Proposal ใน 2 นาทีจากมือถือ</title>
+  <desc id="desc">แผนภาพ 5 ขั้นตอนการสร้าง proposal จากมือถือ: ดึง transcript, วิเคราะห์, เขียน proposal, push Notion, draft email</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFD54F"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+    <filter id="glow-gold">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .bg { fill: #0F0F1A; }
+    .title-text { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 24px; font-weight: 700; fill: #EEEEEE; text-anchor: middle; }
+    .subtitle-text { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 13px; fill: #888888; text-anchor: middle; }
+    .step-card { fill: #1A1A2E; rx: 12; }
+    .step-num { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; fill: #FFD54F; text-anchor: middle; }
+    .step-icon { font-size: 28px; text-anchor: middle; dominant-baseline: central; }
+    .step-title { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 14px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; }
+    .step-desc { font-family: 'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif; font-size: 11px; fill: #AAAAAA; text-anchor: middle; }
+    .tool-badge { rx: 10; fill-opacity: 0.15; }
+    .tool-text { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; text-anchor: middle; }
+    .connector { fill: none; stroke: #FFD54F; stroke-width: 2; marker-end: url(#arrow); }
+    .connector-dash { fill: none; stroke: #FFD54F; stroke-width: 1.5; stroke-dasharray: 6 3; }
+    .time-badge { fill: #FFD54F; fill-opacity: 0.1; stroke: #FFD54F; stroke-width: 1.5; rx: 16; }
+    .time-text { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800; fill: #FFD54F; text-anchor: middle; }
+    .phone-frame { fill: none; stroke: #4FC3F7; stroke-width: 2; rx: 16; }
+  </style>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Title -->
+  <text class="title-text" x="600" y="40">📱 Demo สด: สร้าง Proposal ใน 2 นาที</text>
+  <text class="subtitle-text" x="600" y="62">ทั้งหมดทำจากมือถือ — 5 ขั้นตอนอัตโนมัติ</text>
+
+  <!-- Phone frame (left side indicator) -->
+  <rect x="20" y="85" width="50" height="360" class="phone-frame"/>
+  <text x="45" y="120" font-size="20px" text-anchor="middle">📱</text>
+  <text x="45" y="265" font-family="'Sarabun', sans-serif" font-size="9px" fill="#4FC3F7" text-anchor="middle" transform="rotate(-90, 45, 265)">สั่งจากมือถือ</text>
+
+  <!-- Dashed line from phone to pipeline -->
+  <path class="connector-dash" d="M 70,265 H 95"/>
+
+  <!-- ===== Step 1: Pull Transcript ===== -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="100" width="180" height="200" class="step-card" stroke="#4FC3F7" stroke-width="1.5"/>
+  </g>
+  <!-- Step number badge -->
+  <circle cx="190" cy="100" r="14" fill="#0F0F1A" stroke="#FFD54F" stroke-width="1.5"/>
+  <text class="step-num" x="190" y="104">1</text>
+  <text class="step-icon" x="190" y="150">📋</text>
+  <text class="step-title" x="190" y="185">ดึง Transcript</text>
+  <text class="step-desc" x="190" y="205">Claude ดึง meeting</text>
+  <text class="step-desc" x="190" y="220">transcript จาก Fireflies</text>
+  <!-- Tool badge -->
+  <rect x="135" y="245" width="110" height="24" class="tool-badge" stroke="#4FC3F7" stroke-width="1"/>
+  <text class="tool-text" x="190" y="261" fill="#4FC3F7">Fireflies MCP</text>
+
+  <!-- Arrow 1→2 -->
+  <path class="connector" d="M 284,200 H 320"/>
+
+  <!-- ===== Step 2: Analyze Pain Points ===== -->
+  <g filter="url(#shadow)">
+    <rect x="320" y="100" width="180" height="200" class="step-card" stroke="#FF7043" stroke-width="1.5"/>
+  </g>
+  <circle cx="410" cy="100" r="14" fill="#0F0F1A" stroke="#FFD54F" stroke-width="1.5"/>
+  <text class="step-num" x="410" y="104">2</text>
+  <text class="step-icon" x="410" y="150">🔍</text>
+  <text class="step-title" x="410" y="185">วิเคราะห์</text>
+  <text class="step-desc" x="410" y="205">หา pain points</text>
+  <text class="step-desc" x="410" y="220">+ bottlenecks ลูกค้า</text>
+  <!-- Tool badge -->
+  <rect x="352" y="245" width="116" height="24" class="tool-badge" stroke="#FF7043" stroke-width="1"/>
+  <text class="tool-text" x="410" y="261" fill="#FF7043">Claude Analysis</text>
+
+  <!-- Arrow 2→3 -->
+  <path class="connector" d="M 504,200 H 540"/>
+
+  <!-- ===== Step 3: Write Proposal ===== -->
+  <g filter="url(#shadow)">
+    <rect x="540" y="100" width="180" height="200" class="step-card" stroke="#FFD54F" stroke-width="1.5"/>
+  </g>
+  <circle cx="630" cy="100" r="14" fill="#0F0F1A" stroke="#FFD54F" stroke-width="1.5"/>
+  <text class="step-num" x="630" y="104">3</text>
+  <text class="step-icon" x="630" y="150">📝</text>
+  <text class="step-title" x="630" y="185">เขียน Proposal</text>
+  <text class="step-desc" x="630" y="205">Proposal เต็มรูปแบบ</text>
+  <text class="step-desc" x="630" y="220">bottlenecks + phases</text>
+  <!-- Tool badge -->
+  <rect x="570" y="245" width="120" height="24" class="tool-badge" stroke="#FFD54F" stroke-width="1"/>
+  <text class="tool-text" x="630" y="261" fill="#FFD54F">Claude Code</text>
+
+  <!-- Arrow 3→4 -->
+  <path class="connector" d="M 724,200 H 760"/>
+
+  <!-- ===== Step 4: Push to Notion ===== -->
+  <g filter="url(#shadow)">
+    <rect x="760" y="100" width="180" height="200" class="step-card" stroke="#66BB6A" stroke-width="1.5"/>
+  </g>
+  <circle cx="850" cy="100" r="14" fill="#0F0F1A" stroke="#FFD54F" stroke-width="1.5"/>
+  <text class="step-num" x="850" y="104">4</text>
+  <text class="step-icon" x="850" y="150">📤</text>
+  <text class="step-title" x="850" y="185">Push Notion</text>
+  <text class="step-desc" x="850" y="205">อัพขึ้น Notion page</text>
+  <text class="step-desc" x="850" y="220">อัตโนมัติ</text>
+  <!-- Tool badge -->
+  <rect x="792" y="245" width="116" height="24" class="tool-badge" stroke="#66BB6A" stroke-width="1"/>
+  <text class="tool-text" x="850" y="261" fill="#66BB6A">Notion MCP</text>
+
+  <!-- Arrow 4→5 -->
+  <path class="connector" d="M 944,200 H 980"/>
+
+  <!-- ===== Step 5: Draft Email ===== -->
+  <g filter="url(#shadow)">
+    <rect x="980" y="100" width="180" height="200" class="step-card" stroke="#AB47BC" stroke-width="1.5"/>
+  </g>
+  <circle cx="1070" cy="100" r="14" fill="#0F0F1A" stroke="#FFD54F" stroke-width="1.5"/>
+  <text class="step-num" x="1070" y="104">5</text>
+  <text class="step-icon" x="1070" y="150">✉️</text>
+  <text class="step-title" x="1070" y="185">Draft Email</text>
+  <text class="step-desc" x="1070" y="205">Follow-up email</text>
+  <text class="step-desc" x="1070" y="220">พร้อมส่ง</text>
+  <!-- Tool badge -->
+  <rect x="1012" y="245" width="116" height="24" class="tool-badge" stroke="#AB47BC" stroke-width="1"/>
+  <text class="tool-text" x="1070" y="261" fill="#AB47BC">Email Draft</text>
+
+  <!-- Time indicator bar -->
+  <rect x="100" y="340" width="1060" height="3" fill="#FFD54F" fill-opacity="0.2"/>
+  <circle cx="100" cy="341" r="4" fill="#FFD54F"/>
+  <circle cx="1160" cy="341" r="4" fill="#FFD54F"/>
+
+  <!-- Time labels -->
+  <text x="100" y="370" font-family="'Inter', sans-serif" font-size="11px" fill="#888888" text-anchor="start">0:00</text>
+  <text x="1160" y="370" font-family="'Inter', sans-serif" font-size="11px" fill="#888888" text-anchor="end">~2:00</text>
+
+  <!-- Total time badge -->
+  <rect x="500" y="385" width="200" height="50" class="time-badge" filter="url(#glow-gold)"/>
+  <text class="time-text" x="600" y="416">⏱️ ไม่ถึง 2 นาที</text>
+
+  <!-- Bottom note -->
+  <text x="600" y="470" font-family="'Sarabun', 'Noto Sans Thai', 'Inter', sans-serif" font-size="12px" fill="#666666" text-anchor="middle">ทำจากมือถือทั้งหมด — คอมรัน Claude Code ไว้เป็น host session</text>
+
+  <!-- Progress dots at bottom -->
+  <circle cx="540" cy="495" r="5" fill="#4FC3F7"/>
+  <circle cx="565" cy="495" r="5" fill="#FF7043"/>
+  <circle cx="590" cy="495" r="5" fill="#FFD54F"/>
+  <circle cx="615" cy="495" r="5" fill="#66BB6A"/>
+  <circle cx="640" cy="495" r="5" fill="#AB47BC"/>
+</svg>

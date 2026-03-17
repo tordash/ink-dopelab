@@ -96,6 +96,20 @@
     "fb_description": "ติดตามผลงานและส่งข้อความหาเรา",
     "hours_note": "ตอบกลับภายใน 24 ชั่วโมงในวันทำการ (จ-ศ 9:00-18:00)"
   },
+  "search": {
+    "placeholder": "ค้นหาบทความ...",
+    "no_results": "ไม่พบบทความที่ตรงกัน",
+    "to_close": "ปิด",
+    "to_select": "เลือก"
+  },
+  "newsletter": {
+    "title": "รับบทความใหม่ทาง Email",
+    "description": "สมัครรับ case study + AI tips สัปดาห์ละ 1 ฉบับ ไม่มีสแปม",
+    "placeholder": "your@email.com",
+    "button": "สมัคร",
+    "success": "สมัครสำเร็จ! เช็ค inbox ได้เลย",
+    "error": "เกิดข้อผิดพลาด ลองใหม่อีกครั้ง"
+  },
   "footer": {
     "copyright": "© {year} DopeLab Studio",
     "built_with": "สร้างด้วย Next.js + AI",

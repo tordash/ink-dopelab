@@ -1,0 +1,180 @@
+---
+title: "AI ตรวจสอบ SEO เว็บไซต์"
+description: "มีเว็บแล้วแต่ลูกค้า search ไม่เจอ? AI ตรวจ meta tags, page speed, mobile responsive, keyword และ broken links — พร้อม fix list ทันที ไม่ต้องจ้าง SEO specialist"
+date: 2026-03-05
+cover: ../covers/ai-seo-audit-website.jpg
+category: "SEO & Web"
+tags: ["seo-audit", "website", "google-search", "page-speed", "meta-tags"]
+draft: false
+featured: false
+---
+
+## มีเว็บ แต่ Google ไม่รู้ว่ามีอยู่
+
+![AI SEO Audit — ตรวจสอบ SEO เว็บไซต์อัตโนมัติ](/images/blog/seo-audit.jpg)
+
+ผมเจอปัญหานี้บ่อยมาก — ลูกค้ารายหนึ่งลงทุนทำเว็บไซต์ไปหลักหมื่น ดีไซน์สวย ข้อมูลครบ แต่พอให้ลูกค้าของเขา search ชื่อร้านบน Google ปรากฏไม่ขึ้นเลย
+
+ปัญหาไม่ได้อยู่ที่ดีไซน์ แต่อยู่ที่ **SEO ที่ไม่ได้ตั้งค่าตั้งแต่แรก**
+
+ก่อนหน้านี้การ audit SEO ต้องอาศัย specialist หรือ tool แบบ Ahrefs/SEMrush ที่ค่าบริการหลักพันต่อเดือน แต่ตอนนี้ผมใช้ AI ทำได้เอง ใน 20-30 นาที
+
+---
+
+## เครื่องมือที่ใช้จริง
+
+**เครื่องมือหลัก:**
+- **Claude Code** — ใช้ crawl URL, อ่าน source code, ตรวจ meta tags และ heading structure
+- **Lighthouse CLI** — วัด Core Web Vitals และ Page Speed (built-in ใน Chrome DevTools)
+- **Google Search Console** — ดู indexing status, coverage errors, Core Web Vitals จริงจาก user
+
+**ทางเลือกสำหรับคนไม่ใช้ Claude Code:**
+- **Screaming Frog SEO Spider** — free สูงสุด 500 URLs, crawl เว็บแล้ว export CSV
+- **PageSpeed Insights** (pagespeed.web.dev) — วัด performance ฟรี ไม่ต้อง install อะไร
+- **Ahrefs Free Tools** (ahrefs.com/free-seo-tools) — ตรวจ broken links, meta tags ฟรี
+
+---
+
+## 5 จุดที่ AI ตรวจให้
+
+### 1. Meta Tags ครบไหม
+
+Meta title และ meta description คือสิ่งแรกที่ Google อ่าน ถ้าไม่มี หรือตั้งค่าผิด — Google จะไม่รู้ว่าหน้านี้พูดถึงอะไร
+
+สิ่งที่ AI ตรวจ:
+- **Title tag** — มีไหม? ยาวเกิน 60 ตัวอักษรไหม? มี keyword หลักไหม?
+- **Meta description** — มีไหม? ยาวเกิน 160 ตัวอักษรไหม? น่าคลิกไหม?
+- **Open Graph tags** — สำหรับ share บน Facebook/LINE ให้ขึ้น preview ถูกต้อง
+- **H1 heading** — มีแค่ 1 อันต่อหน้าไหม? ตรงกับ title ไหม?
+
+**Prompt ที่ใช้จริง:**
+
+```
+ตรวจสอบ SEO เว็บไซต์ [URL] แล้วรายงานผลในหัวข้อต่อไปนี้:
+
+1. Meta tags: title, description, Open Graph — ครบไหม ยาวเกินไหม มี keyword หลักไหม
+2. Heading structure: H1 มีกี่อัน ซ้ำกันไหม H2/H3 จัดลำดับถูกต้องไหม
+3. Mobile responsive: ขนาด font, ปุ่ม touch target, layout บน mobile
+4. Page speed: ปัญหาที่พบ ระบุ element ที่ทำให้ช้า
+5. Keyword density: keyword หลักที่ดูเหมือนจะ target คืออะไร กระจายอยู่ที่ไหนบ้าง
+6. Broken links: ลิงก์ที่พัง 404 หรือ redirect ผิด
+
+จัดผลเป็นตาราง: ปัญหา | ระดับความสำคัญ (สูง/กลาง/ต่ำ) | วิธีแก้
+```
+
+### 2. Mobile Responsive
+
+Google ใช้ **Mobile-First Indexing** หมายความว่า Google ประเมินเว็บจาก mobile version ก่อน ถ้าเว็บแสดงผลพังบนมือถือ — อันดับตก
+
+AI ตรวจ: ขนาด font อ่านได้บนมือถือไหม, ปุ่มกดได้ไหม, layout แตกไหม
+
+### 3. Page Speed
+
+เว็บช้า = คนออก = Google ลดอันดับ Google กำหนดว่า **Core Web Vitals** ต้องผ่าน 3 ตัวชี้วัด:
+
+- **LCP (Largest Contentful Paint)** — ควรต่ำกว่า 2.5 วินาที
+- **CLS (Cumulative Layout Shift)** — layout ไม่ควรขยับระหว่างโหลด
+- **INP (Interaction to Next Paint)** — response ต่อการคลิกควรเร็ว
+
+**วัด Page Speed ด้วย Lighthouse CLI:**
+
+```bash
+# ติดตั้ง (ถ้ายังไม่มี)
+npm install -g lighthouse
+
+# รัน audit แล้ว export เป็น HTML report
+lighthouse https://yourwebsite.com --output html --output-path ./seo-report.html
+
+# ดูเฉพาะ performance score
+lighthouse https://yourwebsite.com --only-categories=performance --output json | jq '.categories.performance.score'
+```
+
+AI บอกได้ว่าตัวไหนพัง และต้นเหตุคืออะไร เช่น รูปที่ไม่ได้ compress, JavaScript ที่โหลดช้า
+
+### 4. Keyword ตรงกับ Target ไหม
+
+เว็บอาจมี content ดี แต่ใช้ keyword ผิด เช่น ลูกค้าค้นหา "ร้านเนื้อย่างลาดพร้าว" แต่เว็บเขียนแค่ "เนื้อคุณภาพดี" โดยไม่มีคำว่า "ลาดพร้าว" เลย
+
+AI วิเคราะห์: keyword density, การกระจาย keyword ใน heading และ body text, internal linking ระหว่างหน้า
+
+### 5. Broken Links
+
+ลิงก์เสีย = ประสบการณ์แย่ + Google ไม่ชอบ ยิ่งถ้าเป็น 404 error บนหน้าสำคัญ เสียอันดับแน่
+
+AI scan ทั้งเว็บแล้วรายงานลิงก์ที่พัง พร้อมบอกว่าอยู่หน้าไหน
+
+---
+
+## Output ที่ได้จาก AI
+
+ผลลัพธ์ที่ AI ให้ไม่ใช่แค่รายการปัญหา แต่เป็น **Fix List** ที่ลงมือทำได้เลย:
+
+| ปัญหา | ระดับความสำคัญ | วิธีแก้ |
+|---|---|---|
+| ไม่มี meta description หน้า Contact | สูง | เพิ่ม 150 ตัวอักษร บอก USP ของธุรกิจ |
+| รูปหน้าแรกขนาด 3.2 MB | สูง | Compress ให้เหลือต่ำกว่า 200 KB |
+| H1 ซ้ำกัน 3 หน้า | กลาง | แก้ให้แต่ละหน้ามี H1 ไม่ซ้ำกัน |
+| ลิงก์ไปหน้า /about-old ที่ลบแล้ว | กลาง | redirect ไปหน้า /about แทน |
+
+---
+
+## ขั้นตอนทำจริง: Tool ไหน > ทำอะไร > ได้อะไร
+
+**ขั้นที่ 1: รัน Lighthouse** วัด performance score และ Core Web Vitals baseline
+- Tool: Lighthouse CLI หรือ PageSpeed Insights
+- Input: URL เว็บที่ต้องการตรวจ
+- Output: คะแนน 0-100 + รายการปัญหาพร้อมคำอธิบาย
+
+**ขั้นที่ 2: ให้ AI ตรวจ meta tags และ structure** ใช้ prompt ด้านบน
+- Tool: Claude Code
+- Input: URL + keyword ที่ต้องการติดอันดับ
+- Output: ตาราง issues + fix list จัดเรียงตาม priority
+
+**ขั้นที่ 3: ให้ AI เรียงลำดับ fix** เพื่อเริ่มจากจุดที่ impact สูงที่สุด
+
+```
+จากผลตรวจ SEO ด้านบน เรียงลำดับ fix list ตาม impact สูง -> ต่ำ
+โดยคำนึงถึง:
+- ผลต่อ Google ranking มากที่สุด
+- แก้ได้เร็วโดยไม่ต้องแตะ code มาก
+- ส่งผลต่อ user experience โดยตรง
+
+สำหรับแต่ละ fix บอก: ใช้เวลาประมาณกี่นาที และแก้ที่ไฟล์ไหน
+```
+
+**ขั้นที่ 4: ให้ AI เขียน meta description ใหม่** สำหรับทุกหน้าที่พัง
+
+```
+เขียน meta description ใหม่สำหรับ [ชื่อหน้า] ของเว็บ [ประเภทธุรกิจ]
+keyword หลัก: [keyword]
+USP ของธุรกิจ: [จุดเด่น]
+ความยาว: ไม่เกิน 155 ตัวอักษร
+ต้องน่าคลิก + มี keyword หลักในประโยคแรก
+```
+
+---
+
+## ใช้เวลาแค่ 20 นาที
+
+สิ่งที่ต้องเตรียม: URL เว็บไซต์ + keyword ที่อยากติดอันดับ
+
+AI จะ:
+1. Crawl เว็บอัตโนมัติ
+2. ตรวจทุกจุดที่กล่าวมา
+3. ออก report พร้อม priority และ fix list
+4. ถ้า brief ดี จะเขียน meta description ใหม่ให้เลยก็ได้
+
+---
+
+## สรุป
+
+SEO audit ไม่ใช่งานที่ต้องรอ specialist อีกต่อไป AI ทำได้ครบทั้ง 5 จุด — ตรวจเร็ว, ได้ fix list ชัด, ลงมือแก้ได้ทันที
+
+ถ้าคุณมีเว็บอยู่แล้วแต่ traffic น้อย — เริ่มจาก audit ก่อน ไม่ต้องเดาว่าปัญหาอยู่ที่ไหน
+
+---
+
+## อ่านต่อ
+
+- [AI ตรวจสอบต้นทุนเมนู — ก่อนขายต้องรู้กำไรจริง](/th/blog/ai-menu-design-restaurant)
+- [สร้าง Pitch Deck ระดมทุน ด้วย AI](/th/blog/ai-pitch-deck-startup)
