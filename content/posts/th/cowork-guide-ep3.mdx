@@ -1,0 +1,234 @@
+---
+title: "สร้าง Report สวยๆ จาก Data กระจัด — Claude Cowork EP.3"
+description: "Agency ผมทำ report ให้ลูกค้า 5 ราย/เดือน ข้อมูลกระจายอยู่ใน CSV, Google Sheet, Airtable — เคยใช้เวลา 3 ชั่วโมง/ราย ตอนนี้เหลือ 30 นาที ด้วย Claude Cowork"
+date: 2026-03-18
+cover: ../covers/cowork-guide-ep3.jpg
+category: "AI Guide"
+tags: ["claude-cowork", "report", "data-analysis", "beginner-guide", "productivity"]
+draft: false
+---
+
+## รายงานลูกค้า — งานที่ทุกคนเลื่อนไปก่อน
+
+![Cowork EP3 — สร้าง Report จาก Data กระจัด](/images/blog/cowork-ep3.jpg)
+
+ถ้าคุณทำ agency หรือมีลูกค้าที่ต้องส่ง report รายเดือน คุณน่าจะรู้ความรู้สึกนี้ดี:
+
+- ข้อมูล Meta Ads อยู่ใน Ads Manager
+- ยอดขายอยู่ใน Google Sheet ที่ลูกค้าส่งมา
+- Data LINE OA อยู่ใน Airtable
+- ยอด Grab/LINE MAN อยู่ใน CSV หลายไฟล์
+
+ต้องเปิด 4 หน้าจอ copy ตัวเลข แปะลง Excel หรือ Slides จัดรูปแบบ ใส่สี ทำกราฟ แล้วส่ง
+
+ทำอย่างนี้ทุกเดือน 5 ลูกค้า — **รวมกันไปกี่ชั่วโมงต่อเดือน?**
+
+ผมเคยนับ: **15 ชั่วโมง** — แค่ compile และ format ข้อมูล ยังไม่นับเวลาที่ต้องวิเคราะห์จริง
+
+---
+
+## ปัญหาของ Report แบบเดิม
+
+ก่อนจะเล่าว่าแก้ยังไง ขอ break down ปัญหาก่อน:
+
+### 1. Data อยู่หลาย Source
+
+ลูกค้า food hall รายนึง ข้อมูลกระจายดังนี้:
+
+| Source | ข้อมูล | Format |
+|--------|--------|--------|
+| Meta Ads Manager | Impressions, Reach, CTR, Cost | CSV export |
+| Google Sheet | ยอดขายหน้าร้าน | Shared Sheet |
+| LINE OA Dashboard | Members, Open Rate, Block Rate | Manual screenshot |
+| Airtable | รายการ content ที่ post | Table view |
+
+ไม่มีที่ไหนที่ข้อมูลอยู่รวมกัน ต้องไปดึงมาเองทุกอย่าง
+
+### 2. Format ทุก Source ต่างกัน
+
+CSV จาก Meta มีคอลัมน์ 47 คอลัมน์ ต้องเลือกเอาแค่ที่ต้องการ
+Google Sheet ของลูกค้าแต่ละรายมีรูปแบบตาราง ต่างกันทั้งหมด
+LINE OA ไม่มี export — ต้อง screenshot แล้วอ่านตัวเลขมือ
+
+### 3. เสียเวลาทำซ้ำทุกเดือน
+
+งานเดิม วิธีเดิม ข้อมูลเดิม แต่ต้องทำใหม่ทั้งหมดทุกเดือน
+
+---
+
+## Solution: Claude Cowork อ่าน Data ให้
+
+วิธีที่ผมทำตอนนี้ใช้เวลา **30 นาที/ลูกค้า** แทน 3 ชั่วโมง
+
+Pipeline:
+
+```
+เตรียม Files → Cowork อ่าน + Compile → สร้าง HTML Report → Review → ส่งลูกค้า
+```
+
+### Step 1: เตรียมไฟล์ใน folder เดียว
+
+สร้าง folder `[client]-report-[month]` แล้วเอาทุกอย่างมาไว้ที่นี่:
+
+```
+foodstock-report-mar2026/
+├── meta-ads-mar2026.csv        ← export จาก Meta
+├── sales-sheet.xlsx            ← download จาก Google Sheet
+├── line-oa-stats.png           ← screenshot จาก LINE OA
+└── content-calendar.csv        ← export จาก Airtable
+```
+
+ใช้เวลา: **5 นาที** แค่ download แล้วย้ายไฟล์เข้า folder
+
+### Step 2: สั่ง Cowork อ่านและ Compile
+
+เปิด Cowork → ชี้ไปที่ folder → พิมพ์:
+
+```
+อ่านไฟล์ทั้งหมดในโฟลเดอร์นี้
+
+จากนั้นสรุปตัวเลขสำคัญดังนี้:
+- Meta Ads: Impressions, Reach, CTR, Cost per Result, จำนวน campaign ที่รัน
+- Sales: ยอดขายรวม, เปรียบเทียบกับเดือนที่แล้ว (ถ้ามีในไฟล์)
+- LINE OA: จำนวน member, open rate ถ้ามีใน screenshot
+- Content: จำนวน post ที่ publish แยก platform
+
+ถ้าไฟล์ไหนอ่านไม่ได้หรือข้อมูลไม่ครบ บอกผมด้วย
+```
+
+Claude จะอ่านทุกไฟล์ แล้วสรุปข้อมูลออกมาให้ผมดู ใช้เวลา: **3 นาที**
+
+### Step 3: สร้าง HTML Report
+
+พอมีข้อมูลครบแล้ว สั่งต่อ:
+
+```
+สร้าง HTML report สวยๆ จากข้อมูลนี้
+- ใช้สี navy (#1e3a5f) กับ gold (#f4a629) เป็น brand color
+- มี header: "รายงาน Marketing Monthly — มีนาคม 2026 — Food Stock"
+- แบ่งเป็น section: Executive Summary, Meta Ads, Sales, LINE OA, Content, Next Steps
+- ใส่ตัวเลขหลักเป็นตัวใหญ่ โดดเด่น
+- Responsive (เปิดมือถือได้)
+- บันทึกเป็นไฟล์ foodstock-report-mar2026.html
+```
+
+ใช้เวลา: **5 นาที** ได้ HTML report ที่เปิดใน browser ได้เลย
+
+---
+
+## ผลลัพธ์ที่ได้จริง
+
+| Metric | ก่อน | หลัง |
+|--------|------|------|
+| **เวลา compile report** | 3 ชั่วโมง/ราย | **30 นาที/ราย** |
+| **ลูกค้าที่ทำได้/เดือน** | 5 ราย = 15 ชั่วโมง | 5 ราย = **2.5 ชั่วโมง** |
+| **เวลาที่ประหยัดได้/เดือน** | — | **12.5 ชั่วโมง** |
+| **Error ตัวเลขผิด** | เกิดบ้าง (copy-paste ผิด) | แทบไม่มี (Claude อ่านโดยตรง) |
+| **Format สม่ำเสมอ** | ขึ้นกับอารมณ์วันนั้น | สม่ำเสมอทุกเดือน |
+
+12.5 ชั่วโมงที่ประหยัดได้ต่อเดือน — ผมเอาเวลานั้นไปทำ strategy ที่ช่วยลูกค้าได้จริง แทนที่จะนั่ง format ตาราง
+
+---
+
+## ตัวอย่าง Report จริงที่ได้
+
+นี่คือ section ที่ Claude สร้างให้จาก Meta Ads CSV:
+
+```html
+<!-- Claude สร้างส่วนนี้อัตโนมัติจาก CSV 47 คอลัมน์ -->
+<div class="metric-card">
+  <h3>Meta Ads — มีนาคม 2026</h3>
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="number">284,302</span>
+      <span class="label">Impressions</span>
+    </div>
+    <div class="stat">
+      <span class="number">92,104</span>
+      <span class="label">Reach</span>
+    </div>
+    <div class="stat highlight">
+      <span class="number">1.8%</span>
+      <span class="label">CTR (↑ จาก 1.4% เดือนก่อน)</span>
+    </div>
+  </div>
+</div>
+```
+
+Cowork อ่าน CSV 47 คอลัมน์ เลือกตัวเลขที่สำคัญ format ให้สวย และเปรียบเทียบกับเดือนก่อนให้อัตโนมัติ (ถ้ามีข้อมูลให้เทียบ)
+
+---
+
+## Tips ที่ทำให้ Report ดีขึ้น
+
+### Tip 1: บอก Claude ว่าลูกค้าสนใจอะไร
+
+```
+ลูกค้าคนนี้สนใจ 3 อย่างหลัก:
+1. ยอดขาย กับ เดือนก่อน
+2. Cost per lead จาก Meta
+3. Growth ของ LINE Members
+
+ให้ highlight 3 อย่างนี้ไว้บนสุดของ report
+```
+
+ยิ่งบอก context ว่าลูกค้า care อะไร → Report ออกมาตรงกับที่ลูกค้าอยากเห็น ไม่ใช่แค่ตัวเลขทุกอย่าง
+
+### Tip 2: ให้ Claude สรุป Key Takeaways ด้วย
+
+```
+ท้าย report เพิ่ม section "สรุป 3 สิ่งที่เกิดขึ้น + 2 สิ่งที่ควรทำเดือนหน้า"
+เขียนแบบเข้าใจง่าย ไม่ใช้ jargon
+```
+
+Claude จะอ่าน data ทั้งหมดแล้วสรุป insights ให้ — บางครั้งเจอ pattern ที่ผมไม่ได้สังเกตเอง
+
+### Tip 3: ใช้ Template ที่ชอบแล้วบอก Claude ให้ทำตาม
+
+```
+ผมมี template report อยู่แล้วที่ reports/template.html
+สร้าง report โดยใช้ style เดิม แต่เปลี่ยนข้อมูลเป็นของเดือนนี้
+```
+
+Cowork จะอ่าน template เดิม แล้วสร้างไฟล์ใหม่ที่ style เดียวกัน — ได้ consistency ทุกเดือนโดยไม่ต้องตั้งค่าซ้ำ
+
+### Tip 4: Export Google Sheet ก่อนส่งให้ Claude
+
+LINE OA dashboard ที่เป็น screenshot ยังต้องอ่านมือ — แต่ถ้า source เป็น Google Sheet, Airtable, Excel ให้ export เป็น CSV หรือ XLSX ก่อน Claude อ่านได้แม่นกว่า screenshot มาก
+
+---
+
+## กรณีที่ข้อมูลไม่ครบ
+
+บางเดือนข้อมูลจากบาง source อาจขาดหาย Claude จะบอกตรงๆ ว่า:
+
+> "ไฟล์ line-oa-stats.png อ่านตัวเลขได้ไม่ชัดเจน ขอให้คุณกรอกข้อมูล LINE OA เพิ่มเองในส่วนนี้"
+
+แล้วจะสร้าง placeholder ไว้ให้ใส่ข้อมูล แทนที่จะใส่ตัวเลขผิดเข้าไปโดยไม่บอก
+
+<Callout variant="warning" title="เช็คตัวเลขก่อนส่งลูกค้า">
+แม้ Claude จะอ่าน data ถูกต้องส่วนใหญ่ แต่ review ตัวเลขหลักก่อนส่งลูกค้าเสมอ โดยเฉพาะตัวเลขที่มาจาก screenshot หรือ PDF — Claude ไม่ได้ผิดบ่อย แต่ตรวจ 2 นาทีป้องกันปัญหาได้เยอะ
+</Callout>
+
+---
+
+## สรุป
+
+Report ลูกค้าไม่ควรกินเวลา 3 ชั่วโมง/ราย
+
+Claude Cowork ทำให้กระบวนการนี้เหลือ 30 นาที:
+
+1. **เตรียม files** ใน folder เดียว — 5 นาที
+2. **Cowork อ่านและ compile** ข้อมูลจากทุก source — 3 นาที
+3. **สร้าง HTML report** ด้วย brand color และ structure ที่ต้องการ — 5 นาที
+4. **Review + ส่ง** — 17 นาที (ส่วนใหญ่เป็นเวลา review คุณภาพ)
+
+12.5 ชั่วโมงที่ประหยัดได้ต่อเดือน คุณเอาไปทำอะไรได้บ้าง?
+
+---
+
+## อ่านต่อ
+
+- **EP.1:** [Claude Cowork คืออะไร? — AI ที่ "ทำงานแทน"](/th/blog/cowork-guide-ep1)
+- **EP.2:** [จัดระเบียบไฟล์ 500 ไฟล์ ใน 5 นาที](/th/blog/cowork-guide-ep2)
+- **Plan Mode:** [สั่งให้ AI วางแผนก่อนลงมือ — ประหยัดเวลา 40%](/th/blog/plan-mode-ai-planning)

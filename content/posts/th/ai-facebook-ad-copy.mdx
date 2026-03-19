@@ -1,0 +1,163 @@
+---
+title: "AI เขียนโฆษณา Facebook — จาก 2 ชั่วโมงเหลือ 15 นาที CTR เพิ่ม 20%"
+description: "ทำ Facebook ad copy ให้ 5-6 แบรนด์พร้อมกัน — วิธีใช้ Claude Code เขียน 3 variations ใน 15 นาที พร้อม prompt จริงและวิธี A/B test ที่ได้ผล"
+date: 2026-03-18
+cover: ../covers/ai-facebook-ad-copy.jpg
+category: "AI Workflow"
+tags: ["facebook-ads", "ad-copy", "claude-code", "copywriting", "A/B-test", "ai-workflow", "agency"]
+draft: false
+---
+
+## ปัญหาที่ทุกคนทำ Facebook Ads เจอเหมือนกัน
+
+![AI เขียนโฆษณา Facebook — วิธีที่ได้ผลจริง](/images/blog/ai-facebook-ad-copy.jpg)
+
+ผมทำ Facebook ad copy ให้ลูกค้า 5-6 แบรนด์พร้อมกัน
+
+แต่ละแบรนด์ต้องการ ad ต่างกัน — ร้านอาหาร, ร้าน vape, โรงแรม, สินค้า FMCG โทนเสียง audience วัตถุประสงค์ คนละเรื่องกันหมด
+
+ปัญหาที่เจอทุกสัปดาห์:
+
+**Writer's block** — เขียน headline ตัวแรกออกมา ดูเฉยๆ เขียนอีก ก็ยังเฉยๆ นั่งจ้องหน้าจอ 30 นาที ได้ draft แย่ๆ 1 ชิ้น
+
+**ต้องทดสอบหลาย angle** — รู้ว่า A/B test สำคัญ แต่จะเขียน 3-5 variations ให้ครบ angle (fear, curiosity, social proof, urgency) ใช้เวลาเต็มๆ 2 ชั่วโมง
+
+**ลืม brand voice** — พอรีบ ก็เขียนออกมาเสียง "กูเกิล" ไม่ใช่เสียงแบรนด์
+
+หลังจากเปลี่ยนมาใช้ Claude Code ช่วย ตัวเลขเปลี่ยนไปชัดเจน: **3 variations ใน 15 นาที** และ **CTR เฉลี่ยเพิ่ม 20%** เพราะทดสอบ angle ได้มากขึ้นในเวลาน้อยลง
+
+---
+
+## วิธีที่ผมทำจริง: Feed Brand Profile ก่อนทุกครั้ง
+
+สิ่งสำคัญที่สุดที่ทำให้ผลลัพธ์ดี: **ไม่ได้แค่บอกว่าอยากได้ ad เกี่ยวกับอะไร**
+
+ก่อนเขียน ad ทุกชิ้น ผม feed ข้อมูล 3 ชุดนี้เข้าไปก่อน:
+
+### 1. Brand Profile
+```
+แบรนด์: [ชื่อ]
+ธุรกิจ: [ประเภท]
+Target audience: [อายุ เพศ ไลฟ์สไตล์]
+Brand voice: [เช่น fun/casual, premium/authoritative, friendly/warm]
+สิ่งที่ห้ามพูด: [เช่น ห้ามพูดเรื่องราคาถูก, ห้ามใช้คำว่า "ดีที่สุด"]
+```
+
+### 2. Product/Offer ที่จะ promote
+
+```
+สินค้า/บริการ: [ชื่อ]
+Benefit หลัก: [สิ่งที่ลูกค้าได้]
+Pain point ที่แก้: [ปัญหาที่ลูกค้ามี]
+Offer/CTA: [ส่วนลด, ของแถม, deadline]
+```
+
+### 3. Past Performance (ถ้ามี)
+
+```
+Ad ที่เคยทำได้ผลดีสุด: [copy ที่ผ่านมา]
+CTR เฉลี่ย: [ตัวเลข]
+Audience ที่ response ดีสุด: [segment]
+```
+
+พอ Claude มีข้อมูลครบ output ที่ได้จะ on-brand จริงๆ ไม่ต้องแก้ tone ทีหลัง
+
+---
+
+## Prompt จริงที่ผมใช้
+
+```
+ผมต้องการ Facebook ad copy 3 variations สำหรับ [แบรนด์]
+
+Brand info:
+[วาง brand profile ที่เตรียมไว้]
+
+Product:
+[วาง product info]
+
+ให้เขียน 3 variations โดยใช้ angle ต่างกัน:
+- Variation A: Pain + Solution (เน้นปัญหาที่ลูกค้าเจออยู่)
+- Variation B: Social Proof (เน้นว่าคนอื่นใช้แล้วได้ผลอะไร)
+- Variation C: Urgency/Scarcity (เน้น deadline หรือจำนวนจำกัด)
+
+แต่ละ variation ต้องมี:
+- Headline (ไม่เกิน 40 ตัวอักษร)
+- Primary text (ไม่เกิน 125 ตัวอักษร)
+- Description (ไม่เกิน 30 ตัวอักษร)
+- CTA button: [ตัวเลือก เช่น Shop Now, Learn More, Contact Us]
+
+เขียนเสียง [brand voice] ไม่เป็นทางการมาก ใช้ภาษาที่ [audience] เข้าใจได้เลย
+```
+
+---
+
+## ตัวอย่าง Output จริง
+
+ผมทำ ad ให้ร้านอาหารลูกค้าคนหนึ่ง ได้ 3 variations แบบนี้:
+
+### Variation A — Pain + Solution
+**Headline:** "หิวดึกแต่ไม่อยากทำกับข้าว?"
+**Primary text:** เนื้อย่างหอม ซอสพิเศษ สั่งได้ถึงทุ่มครึ่ง Delivery ถึงบ้านใน 30 นาที
+**CTA:** Order Now
+
+### Variation B — Social Proof
+**Headline:** "4,200 รีวิว ⭐ 4.9 — กินแล้วต้องกลับมา"
+**Primary text:** ลูกค้าบอกว่าเนื้อนุ่มที่สุดที่เคยกิน ลองดูว่าทำไมถึงว่า
+**CTA:** See Reviews
+
+### Variation C — Urgency
+**Headline:** "วันนี้วันสุดท้าย — ฟรีข้าวสวย 1 ถ้วย"
+**Primary text:** สั่ง Delivery ตอนนี้รับข้าวสวยฟรี ไม่ต้องใช้โค้ด ออเดอร์วันนี้เท่านั้น
+**CTA:** Order Now
+
+ใช้เวลาทั้งหมด: **15 นาที** รวมเวลาเตรียม brief และอ่าน output
+
+---
+
+## เทคนิค A/B Test ที่ทำให้ CTR เพิ่ม
+
+การมี 3 variations ทำให้ A/B test ได้จริง ซึ่งคือเหตุผลหลักที่ CTR เพิ่ม 20%
+
+วิธีที่ผมใช้กับลูกค้า:
+
+**Week 1:** ยิง 3 variations พร้อมกัน budget เท่ากัน วัด CTR + CPC ทุก 3 วัน
+
+**Week 2:** หยุด variation ที่แย่สุด เพิ่ม budget ให้ตัวที่ดีสุด
+
+**Week 3:** เอา headline จาก winner + body จาก runner-up มาผสมกัน → เขียน variation ใหม่ด้วย Claude
+
+วนซ้ำ ทุก 2 สัปดาห์มี variations ใหม่จาก insight ที่ได้จากตัวเลขจริง
+
+**ก่อนหน้านี้:** เขียน 1 version → ยิงไป → ผลออกมาดีบ้างแย่บ้าง ไม่รู้ว่าจะแก้ตรงไหน
+
+**หลังใช้วิธีนี้:** มีข้อมูลชัดเจนว่า angle ไหนได้ผลกับ audience นี้
+
+---
+
+## ข้อควรระวัง — สิ่งที่ AI ทำให้ไม่ได้
+
+ต้องพูดตรงๆ ว่า Claude ไม่ใช่ silver bullet:
+
+**1. ไม่รู้ trend ปัจจุบัน** — ถ้า meme หรือกระแสไหนกำลังฮิตอยู่ AI อาจไม่รู้ ต้องบอกเอง
+
+**2. ไม่รู้ audience intimately เท่าคุณ** — คุณคุยกับลูกค้าจริง รู้ว่าเขาพูดอะไร ใช้ภาษาแบบไหน feed ข้อมูลนี้ให้ AI ด้วย
+
+**3. ต้อง cross-check ก่อนยิงจริง** — ผมบังคับตัวเองว่าทุก ad ที่ผ่าน AI ต้องให้ลูกค้า approve ก่อน ไม่ใช่เอาไป boost เลย ความผิดพลาดเล็กน้อยในภาษาอาจส่งผลใหญ่กับ brand perception
+
+**4. Claim ที่ต้องระวัง** — ถ้าแบรนด์มีข้อจำกัดเรื่อง claim (เช่น ธุรกิจสุขภาพ ยา หรือ financial) ต้องเช็คกฎ Facebook และกฎหมายของประเภทธุรกิจนั้นเอง AI ไม่รู้กฎเฉพาะทาง
+
+---
+
+## สรุป: 15 นาทีแทน 2 ชั่วโมง
+
+สิ่งที่เปลี่ยนคือ **volume** ของการทดสอบ
+
+เมื่อก่อนผมมีเวลาเขียน 1-2 versions/แบรนด์/สัปดาห์ ตอนนี้ทำได้ 3+ versions ในเวลาน้อยกว่าเดิม 8 เท่า
+
+ผลคือ ข้อมูล A/B test เพิ่มขึ้น → รู้ว่า angle ไหนได้ผล → CTR ดีขึ้น → ลูกค้าเห็นผล → ต่อสัญญา
+
+ไม่ใช่ "AI เขียนดีกว่าคน" แต่ "AI ช่วยให้ทดสอบได้มากกว่า" — และใน Facebook Ads ยิ่งทดสอบมาก ยิ่งเก่งขึ้น
+
+---
+
+*ติดตาม DopeLab — เอา AI มาใช้กับงาน agency จริงๆ ไม่ใช่แค่ demo*
