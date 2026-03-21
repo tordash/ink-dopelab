@@ -1,0 +1,191 @@
+---
+title: "Claude Channels + Telegram — Control Claude Code From Your Phone, No SSH Required"
+description: "Anthropic released Claude Channels — an MCP plugin that connects Telegram to your Claude Code session. Deploy, fix code, transcribe voice messages, view images — all from your phone. No Tailscale, no tmux."
+date: 2026-03-21
+category: "AI Workflow"
+tags: ["claude-code", "telegram", "channels", "remote-work", "tutorial"]
+cover: ../covers/claude-channels-telegram-remote-agent.jpg
+draft: false
+featured: false
+---
+
+## Why I'm So Excited About This Feature
+
+If you've read my earlier post on [Remote Dev Setup](/en/blog/remote-dev-setup), you know I've been using Tailscale + Termius + tmux to control Claude Code from my phone for a while now.
+
+It works well, but the setup is a pain — you need a VPN on both machines, SSH keys configured, and you have to learn tmux. For most people, that's way too much friction.
+
+**March 20, 2026 — Anthropic released Claude Channels.**
+
+It's an MCP-based plugin that connects messaging apps (Telegram, Discord) directly to a Claude Code session. No VPN. No SSH. No tmux.
+
+All you need is Telegram and Claude Code.
+
+---
+
+## What Is Claude Channels?
+
+In simple terms — it lets you **DM a Telegram bot and have Claude Code execute real work on your machine**.
+
+This isn't a chatbot that just answers questions. It's **full terminal access** that works with real files on your computer.
+
+Here's the architecture:
+
+```
+Phone (Telegram) → Telegram Bot API → Claude Code (Mac at home)
+                                        ↓
+                                   Works with real files
+                                   Reads DB, deploys, edits code
+                                        ↓
+                                   Replies back in Telegram
+```
+
+The clever part is that Telegram uses **long-polling** — your machine polls outbound to Telegram's API. No inbound connections. No exposed ports. No ngrok. No Cloudflare Tunnel. **Very secure** — your machine is just pulling data from the Telegram API, nobody can reach in.
+
+Messages appear as `<channel source="telegram">` events in the Claude Code session, and Claude responds via MCP tools — `reply`, `react`, `edit_message`.
+
+---
+
+## What You Can Actually Do (Tested)
+
+Here's what I've tested and confirmed works:
+
+| Send via Telegram | What Claude Does |
+|-------------------|-----------------|
+| "deploy the dopelab site to production" | Runs build + deploy |
+| Voice message | Downloads → ffmpeg → whisper transcribe → replies with text |
+| Photo | Reads the image directly (Claude is multimodal) |
+| "Add a meeting at 2pm today with client" | Creates a Google Calendar event |
+| "What's the status on NNTN tasks?" | Queries Supabase and replies |
+| "Fix the bug in file X, line Y" | Edits the actual code on the machine |
+| File attachment | Downloads and saves to workspace |
+
+<Callout variant="success" title="My Real Use Case">
+I run a restaurant (Nuea Nai Tamnan) and a marketing agency at the same time. Some days I'm at the restaurant all day and never sit down at my Mac.
+
+Now I just open Telegram on my phone — deploy deliverables for clients, check project status, query sales from the database — all without going home.
+</Callout>
+
+---
+
+## Setup — 4 Steps (Easier Than You'd Think)
+
+### Step 1: Create a Bot With BotFather
+
+Open Telegram → search for `@BotFather` → send `/newbot`
+
+```
+1. Set a name (e.g., "My Claude Bot")
+2. Set a username (e.g., "my_claude_bot")
+3. BotFather gives you a token — save it somewhere safe
+```
+
+Store the token:
+
+```bash
+mkdir -p ~/.claude/channels/telegram
+echo "TELEGRAM_BOT_TOKEN=your_token_here" > ~/.claude/channels/telegram/.env
+chmod 600 ~/.claude/channels/telegram/.env
+```
+
+### Step 2: Install the Plugin
+
+```bash
+claude plugin install telegram@claude-plugins-official
+```
+
+If you don't have Bun installed yet:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Step 3: Start Claude Code With the --channels Flag
+
+```bash
+claude --channels plugin:telegram@claude-plugins-official
+```
+
+### Step 4: Pair With Your Bot
+
+Open Telegram → DM the bot you created → type anything.
+
+Claude Code will display a 6-digit pairing code → type that code in Telegram → **Done!**
+
+After the first pairing, you won't need to pair again — the credentials are stored in `~/.claude/channels/telegram/access.json`.
+
+---
+
+## Group Chat Support
+
+It's not just DM — it works in group chats too. Claude only responds when @mentioned.
+
+Create a Telegram group → add the bot → type `@your_bot_name summarize today's tasks` → Claude replies in the group.
+
+You can even run multiple bots on the same machine by setting separate `TELEGRAM_STATE_DIR` paths.
+
+---
+
+## Limitations You Should Know
+
+Before you get too excited, there are some real limitations:
+
+| Limitation | Details |
+|-----------|---------|
+| **Session must be running** | No queue or offline mode — if Claude Code is closed, the bot won't respond |
+| **Research preview** | Not GA yet — syntax may change |
+| **Telegram/Discord only** | No Slack, WhatsApp, or LINE support yet (though people are requesting it heavily) |
+| **Permission prompts** | You still need to approve actions at the terminal (unless you use `--dangerously-skip-permissions`) |
+| **Requires claude.ai login** | API keys not supported yet |
+
+<Callout variant="info" title="How It Compares to My Old Remote Dev Setup">
+Tailscale + tmux still has advantages — it's persistent, so you can close Claude Code and come back to the same session. But Channels is dramatically easier to set up for people who don't want to deal with SSH/VPN.
+
+I use both — Channels for quick commands from my phone, Tailscale for long sessions that need monitoring.
+</Callout>
+
+---
+
+## Architecture — Why It's Secure
+
+A lot of people worry about security — "You're letting random Telegram messages control your machine?"
+
+The answer is **no**.
+
+1. **Long-polling** — Your machine polls outbound to Telegram's API. No inbound connections, no open ports, no exposed URLs.
+2. **Pairing system** — You must pair with a 6-digit code first. Messages from unpaired users are ignored.
+3. **Allowlist** — After pairing, only your specific Telegram ID can issue commands.
+4. **Permission prompts** — Claude Code still asks for approval before sensitive actions (unless you've explicitly disabled this).
+
+It's arguably more secure than opening an SSH port on your home network.
+
+---
+
+## Community Reaction
+
+The response has been massive:
+
+- **Hacker News:** 391 points, 240+ comments
+- **Reddit r/ClaudeCode:** 921 upvotes
+- People are calling it a "messaging-native coding agent"
+- Direct comparisons to OpenClaw — Anthropic's official counter-move
+- WhatsApp + Slack support is the most requested feature (Telegram was chosen first because the Bot API is the simplest to implement)
+
+Boris Cherny from Anthropic even posted a video demo on Threads.
+
+---
+
+## Who Should Try This?
+
+- **Already using Claude Code?** → Install it now, takes 10 minutes
+- **Want to control AI from your phone** but don't want to set up SSH/VPN? → This is your answer
+- **Developer who works from multiple locations?** → Deploy, fix bugs, check status from anywhere
+- **Business owner who's not at a desk all day?** → Like me, run commands from your restaurant, your car, wherever
+
+This is still a research preview, so things may change. But the direction is clear — **the future of coding agents is being able to command them from anywhere, not just sitting in front of a screen.**
+
+<Callout variant="info" title="Resources">
+- Official Docs: https://docs.anthropic.com/en/docs/claude-code/channels
+- Plugin Repo: https://github.com/anthropics/claude-plugins-official
+- HN Discussion: https://news.ycombinator.com/item?id=47448524
+</Callout>
