@@ -17,12 +17,22 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--color-border)] bg-[#0a0a0a]">
-        {/* Layer 1: Background image */}
+        {/* Layer 1: Kling 3.0 video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50"
+        >
+          <source src="https://lab.dopelab.studio/dopelab/portfolio/hero-bg.mp4" type="video/mp4" />
+        </video>
+        {/* Layer 1b: Static fallback */}
         <img
           src="/hero-bg.jpg"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
         />
         {/* Layer 2: Particle animation */}
         <HeroBackground />
