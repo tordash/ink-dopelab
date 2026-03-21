@@ -1,0 +1,224 @@
+---
+title: "Karpathy Proved It — AI Agents Without a Validation Harness Will Fail Every Time"
+description: "Karpathy's March of Nines math is brutal: 90% accuracy sounds great until you chain 10 steps and get 35% success. Here's how we built a 32-check Validation Harness to fix it."
+date: 2026-03-22
+cover: ../covers/karpathy-harness-validation.jpg
+category: "AI Workflow"
+tags: ["karpathy", "validation", "harness", "reliability", "claude-code"]
+draft: false
+featured: false
+---
+
+## The Problem Nobody Talks About: AI Agents That Work "Almost Every Time"
+
+Our AI agent kept failing at the same things, over and over:
+
+- Forgot to create a blog cover image
+- Forgot to create the English version of the blog post
+- Used the wrong voice-over model (v2 instead of eleven_v3)
+- Manga images placed outside the safe zone
+- Never verified whether deployed URLs actually worked
+
+Every time it failed, I patched it — added instructions to the prompt, added rules to the memory file, added sections to CLAUDE.md.
+
+**It still failed. Every single time.**
+
+Then I watched Andrej Karpathy explain the "March of Nines" and everything clicked.
+
+## March of Nines — The Math That Explains Why Agents Break
+
+Karpathy's explanation is simple: suppose your AI agent has 90% accuracy per step. Sounds good, right?
+
+But if your workflow has 10 steps:
+
+```
+90% × 90% × 90% × ... (10 times) = 0.9^10 = 34.9%
+```
+
+**Overall success rate = just 35%!**
+
+Run it 10 times a day, and more than 6 runs will fail. This is the "March of Nines":
+
+| Accuracy per step | 10-step result | What that means |
+|:---:|:---:|:---|
+| 90% | 0.9^10 = 35% | 6-7 failures per day |
+| 99% | 0.99^10 = 90% | ~1 failure per day |
+| 99.9% | 0.999^10 = 99% | 1 failure every 10 days |
+| 99.99% | 0.9999^10 = 99.99% | 1 failure every 100 days |
+
+Each additional "nine" requires as much engineering effort as everything before it combined.
+
+## Why Prompts, Memory Files, and CLAUDE.md Aren't Enough
+
+Agent skills — whether Anthropic's plugins or markdown instruction files — are fundamentally just prompts.
+
+You're:
+- **Hoping** it reads the instructions
+- **Hoping** it doesn't skip steps
+- **Hoping** it doesn't hallucinate that it already did the work
+
+SkillsBench evaluated 84 popular skills across all models and found that while skills do improve pass rates, the overall success rates are nowhere near what a business would need to reliably operate at scale without human oversight.
+
+<Callout variant="info" title="Karpathy's exact point">
+Agent skills are essentially just prompts. You're baking your process into a message to the AI and you're hoping that it adheres to the instructions, hoping it doesn't hallucinate, quit early, skip steps.
+</Callout>
+
+## The Solution: Validation Harness — Put AI on Rails
+
+Instead of hoping the AI does the right thing — **force it**.
+
+A harness is a software layer that wraps around the AI and:
+1. **Gates** — must pass validation before moving to the next step
+2. **Verifies** — doesn't ask the AI "did you do it?" — checks whether the file exists, the URL returns 200
+3. **Blocks** — if it fails, stop. Don't proceed until fixed.
+
+## Real Example: DopeLab's content-harness.py
+
+We built `content-harness.py` with **32 validation checks across 7 phases**:
+
+### Phase 1: Source Files
+Check that caption files and carousel HTML actually exist. Don't ask the AI "did you create them?" — look at the filesystem.
+
+### Phase 2: Images
+- Does the single image exist?
+- Does the carousel background exist?
+- Are carousel PNGs exported (5+ slides)?
+- Does the video cover exist (within safe zone)?
+- Are manga scenes complete (5+ frames)?
+
+### Phase 3: Audio
+- Does the voice-over audio file exist?
+- Does the Whisper timestamp JSON exist?
+
+### Phase 4: Video
+- Has the final video been concatenated with the outro?
+
+### Phase 5: Blog (Prove It)
+This is the most critical phase — not just "did you create the file" but "prove it's actually deployed and accessible":
+- Does the TH blog MDX file exist?
+- Does it have a `cover:` in frontmatter?
+- Does the cover image file exist at the referenced path?
+- Does the EN blog MDX file exist?
+- **Does the TH URL return HTTP 200?** (not 404)
+- **Does the EN URL return HTTP 200?**
+
+### Phase 6: Publish Status
+- Video published to Facebook and Instagram?
+- Single image published to Facebook and Instagram?
+- Does the Facebook caption include the full blog URL?
+- Supabase content_items updated?
+- Brain session note logged?
+- Slack alert sent?
+- Google Drive uploaded?
+
+### Phase 7: Quality Gates
+- Vision eval: single image score >= 50/80
+- Cover passes safe zone analysis
+- Manga scene average score >= 25/30
+- VO model is eleven_v3 (not v2!)
+- No background overlay on manga frames
+- Outro is 6 seconds and concatenated at the end
+
+## The Result: From "Failing Every Time" to 32/32 (100%)
+
+Before the harness:
+- Forgot cover images on every post
+- Forgot EN versions 5 posts in a row
+- Deployed without ever verifying URLs
+- Used the wrong VO model 3 times
+
+After the harness:
+```
+═══ Content Harness: DL-110 ═══
+  Blog slug: karpathy-harness-validation
+
+Phase 1: Source Files
+  ✅ Caption file exists
+  ✅ Carousel HTML exists
+
+Phase 2: Images
+  ✅ Single image exists
+  ✅ Carousel BG exists
+  ✅ Carousel PNGs exported (7 slides)
+  ✅ Video cover exists
+  ✅ Manga scenes (8)
+
+Phase 3: Audio
+  ✅ VO audio exists
+  ✅ Fixed timestamp JSON
+
+...
+
+═══ Summary ═══
+  32/32 passed (100%) — 0 failed
+  🎉 ALL CHECKS PASSED — content PROVEN ready!
+```
+
+No more hoping. It's **enforced**.
+
+## Stripe Does the Same Thing — Just at Massive Scale
+
+Stripe uses Claude Code to merge 1,300 pull requests per week. They built a harness called "Minions":
+
+- Every AI-generated code change must pass a subset of their **3 million test suite** before merge
+- They don't just prompt the AI to write tests — **they guarantee tests actually run**
+- Result: 1,300 PRs/week merged with confidence
+
+<Callout variant="success" title="The Key Principle">
+If you need something to happen **every single time** — codify it. Don't prompt it.
+
+Prompt = hope.
+Harness = guarantee.
+</Callout>
+
+## How to Build Your Own Validation Harness
+
+### Step 1: Log everything the AI has ever forgotten, skipped, or broken
+
+Go through your history. Look at what keeps failing. For us it was:
+- Missing cover images
+- Missing EN translations
+- Wrong VO model
+- Unverified URLs
+
+### Step 2: Turn every failure into a programmatic check
+
+Don't write "check for cover." Write code that **actually checks**:
+
+```python
+cover_path = ink / f"content/posts/covers/{slug}.jpg"
+check("Blog cover file exists", cover_path.exists())
+```
+
+### Step 3: Group checks into phases
+
+Organize by pipeline stages that must happen in order: Source → Images → Audio → Video → Blog → Publish → QA
+
+### Step 4: Block on failure
+
+If any phase fails — stop. Report what failed and how to fix it:
+
+```python
+if not condition:
+    print(f"❌ {name}")
+    print(f"  → fix: {fix_hint}")
+    failed_total += 1
+```
+
+### Step 5: Run the harness every time, not sometimes
+
+A harness that's optional is no harness at all.
+
+Every content piece must pass through the harness before it can be called "done."
+
+## Key Takeaways
+
+Karpathy's March of Nines isn't just an interesting theory — it's the lived reality of anyone running AI agents in production.
+
+Every step the agent must execute, every output it must produce, every file it must create — if you rely on prompts alone, it will fail.
+
+**Remember:**
+- 90% accuracy per step sounds great, but 10 steps = 35% success
+- Prompts / memory / skills = "hoping it works"
+- Validation harness = "guaranteeing it works"
+- If you need it every time → codify it, don't prompt it

@@ -1,0 +1,224 @@
+---
+title: "Karpathy พิสูจน์แล้ว — AI Agent ที่ไม่มี Validation Harness จะพังทุกครั้ง"
+description: "คณิตศาสตร์ March of Nines ของ Karpathy บอกชัดเจน: ความแม่นยำ 90% ฟังดูดี แต่ workflow 10 steps = สำเร็จแค่ 35% เราแก้ปัญหานี้อย่างไรด้วย Validation Harness 32 checks"
+date: 2026-03-22
+cover: ../covers/karpathy-harness-validation.jpg
+category: "AI Workflow"
+tags: ["karpathy", "validation", "harness", "reliability", "claude-code"]
+draft: false
+featured: false
+---
+
+## ปัญหาที่ไม่มีใครพูดถึง: AI Agent ที่ทำงานได้ "เกือบทุกครั้ง"
+
+AI Agent ของเราทำงานผิดพลาดซ้ำแล้วซ้ำเล่า:
+
+- ลืมสร้าง cover image ให้บล็อก
+- ลืมสร้าง EN version
+- ใช้ VO model ผิดตัว (v2 แทนที่จะเป็น eleven_v3)
+- Manga image ไม่ได้อยู่ใน safe zone
+- ไม่เคย verify ว่า URL ที่ deploy ไปเปิดได้จริงหรือเปล่า
+
+ทุกครั้งที่พลาด ผมก็แก้ — เพิ่มคำสั่งใน prompt เพิ่ม rule ใน memory file เพิ่มหัวข้อใน CLAUDE.md
+
+**แต่มันก็พลาดอีก ทุกครั้ง**
+
+จนวันที่ผมเจอคลิปของ Andrej Karpathy อธิบาย "March of Nines" ทุกอย่างก็ชัดขึ้น
+
+## March of Nines — คณิตศาสตร์ที่อธิบายว่าทำไม Agent ถึงพัง
+
+Karpathy อธิบายง่ายมาก: สมมติว่า AI agent ของเราแม่นยำ 90% ในแต่ละ step ฟังดูดีใช่ไหม?
+
+แต่ถ้า workflow มี 10 steps:
+
+```
+90% × 90% × 90% × ... (10 ครั้ง) = 0.9^10 = 34.9%
+```
+
+**ความสำเร็จรวม = แค่ 35%!**
+
+คือทำ 10 รอบ จะพังเกินครึ่ง นี่คือ "March of Nines":
+
+| ความแม่นยำ/step | 10 steps | ผลลัพธ์ |
+|:---:|:---:|:---|
+| 90% | 0.9^10 = 35% | พัง 6-7 ครั้ง ต่อวัน |
+| 99% | 0.99^10 = 90% | พังวันละ 1 ครั้ง |
+| 99.9% | 0.999^10 = 99% | พัง 1 ครั้ง ทุก 10 วัน |
+| 99.99% | 0.9999^10 = 99.99% | พัง 1 ครั้ง ทุก 100 วัน |
+
+แต่ละ "nine" ที่เพิ่มขึ้น ต้องใช้ effort ในการ engineer เท่ากับที่ทำมาทั้งหมดก่อนหน้า
+
+## ทำไม Prompt / Memory / CLAUDE.md ถึงไม่พอ?
+
+Agent skills — ไม่ว่าจะเป็น Anthropic's plugins หรือ markdown instruction files — สุดท้ายมันก็แค่ prompt
+
+คุณกำลัง:
+- **หวังว่า** มันจะอ่าน instructions
+- **หวังว่า** มันจะไม่ข้าม steps
+- **หวังว่า** มันจะไม่ hallucinate ว่าทำแล้ว
+
+SkillsBench ประเมิน 84 skills ยอดนิยมกับทุก model พบว่า: skills ช่วยเพิ่ม pass rate จริง แต่ overall success rate ยังห่างไกลจากระดับที่ธุรกิจจะใช้งานจริงโดยไม่ต้องมีคนคอยตรวจ
+
+<Callout variant="info" title="สิ่งที่ Karpathy พูดตรงๆ">
+Agent skills are essentially just prompts. You're baking your process into a message to the AI and you're hoping that it adheres to the instructions, hoping it doesn't hallucinate, quit early, skip steps.
+</Callout>
+
+## ทางออก: Validation Harness — วาง AI บนราง
+
+แทนที่จะ "หวัง" ว่า AI จะทำถูก — **บังคับมัน**
+
+Harness คือ software layer ที่ครอบ AI อยู่ ทำหน้าที่:
+1. **Gate** — ต้องผ่าน validation ก่อนไป step ถัดไป
+2. **Verify** — ไม่ใช่ถาม AI ว่าทำยัง ต้องเช็คจริงว่าไฟล์มีอยู่ URL เปิดได้
+3. **Block** — ถ้า fail ก็หยุดเลย ไม่ให้ไปต่อ
+
+## ตัวอย่างจริง: content-harness.py ของ DopeLab
+
+เราสร้าง `content-harness.py` ที่มี **32 validation checks ใน 7 phases**:
+
+### Phase 1: Source Files
+ตรวจว่ามี caption file และ carousel HTML จริงมั้ย ไม่ใช่ถาม AI ว่า "สร้างแล้วยัง?" แต่ไปดูจริงๆ ว่าไฟล์มีอยู่
+
+### Phase 2: Images
+- Single image มีมั้ย?
+- Carousel background มีมั้ย?
+- Carousel PNGs export ครบ 5+ slides มั้ย?
+- Video cover มีมั้ย? (ต้องอยู่ใน safe zone!)
+- Manga scenes มีครบ 5+ มั้ย?
+
+### Phase 3: Audio
+- VO audio file มีมั้ย?
+- Timestamp JSON (จาก Whisper) มีมั้ย?
+
+### Phase 4: Video
+- Final video + outro ถูก concat แล้วมั้ย?
+
+### Phase 5: Blog (Prove It)
+นี่คือ phase ที่สำคัญที่สุด — ไม่ใช่แค่ "สร้างไฟล์" แต่ต้อง prove ว่า deploy ไปแล้วเปิดได้จริง:
+- Blog TH file มีอยู่มั้ย?
+- มี `cover:` ใน frontmatter มั้ย?
+- Cover image file อยู่ที่ path ที่อ้างจริงมั้ย?
+- Blog EN file มีอยู่มั้ย?
+- **TH URL เปิดได้จริงมั้ย?** (HTTP 200 ไม่ใช่ 404)
+- **EN URL เปิดได้จริงมั้ย?**
+
+### Phase 6: Publish Status
+- Video published FB/IG?
+- Single published FB/IG?
+- Caption มี blog URL เต็มมั้ย?
+- Supabase content_items updated?
+- Brain session note logged?
+- Slack alert sent?
+- Google Drive uploaded?
+
+### Phase 7: Quality Gates
+- Vision eval: single image score >= 50/80
+- Cover ผ่าน safe zone analysis
+- Manga scenes avg score >= 25/30
+- VO ใช้ model eleven_v3 (ห้ามใช้ v2!)
+- ไม่มี BG overlay บน manga
+- Outro 6 วินาที concat ท้ายคลิป
+
+## ผลลัพธ์: จาก "พังทุกครั้ง" เป็น 32/32 (100%)
+
+ก่อนมี harness:
+- ลืม cover ทุกโพสต์
+- ลืม EN version 5 โพสต์ติด
+- Deploy แล้วไม่เคย verify URL
+- VO ใช้ผิด model 3 ครั้ง
+
+หลังมี harness:
+```
+═══ Content Harness: DL-110 ═══
+  Blog slug: karpathy-harness-validation
+
+Phase 1: Source Files
+  ✅ Caption file exists
+  ✅ Carousel HTML exists
+
+Phase 2: Images
+  ✅ Single image exists
+  ✅ Carousel BG exists
+  ✅ Carousel PNGs exported (7 slides)
+  ✅ Video cover exists
+  ✅ Manga scenes (8)
+
+Phase 3: Audio
+  ✅ VO audio exists
+  ✅ Fixed timestamp JSON
+
+...
+
+═══ Summary ═══
+  32/32 passed (100%) — 0 failed
+  🎉 ALL CHECKS PASSED — content PROVEN ready!
+```
+
+ไม่ต้อง "หวัง" อีกต่อไป มันถูก **บังคับ** ให้ผ่านทุก check
+
+## Stripe ทำแบบเดียวกัน — แค่ scale ใหญ่กว่า
+
+Stripe ใช้ Claude Code เพื่อ merge 1,300 pull requests ต่อสัปดาห์ พวกเขาสร้าง harness ที่เรียกว่า "Minions":
+
+- ทุก code change ที่ AI สร้าง ต้องผ่าน subset ของ **test suite 3 ล้านตัว** ก่อน merge
+- ไม่ใช่แค่ prompt ให้ AI เขียน test — **บังคับให้ test ถูก run จริง**
+- ผลลัพธ์: 1,300 PRs/week merge ได้อย่างมั่นใจ
+
+<Callout variant="success" title="หลักการสำคัญ">
+ถ้าคุณต้องการให้มันเกิดขึ้น **ทุกครั้ง** — codify it อย่า prompt it
+
+Prompt = hope
+Harness = guarantee
+</Callout>
+
+## วิธีสร้าง Validation Harness ของคุณเอง
+
+### Step 1: จดทุกอย่างที่ AI เคยลืม/พลาด/ข้าม
+
+เปิด log ย้อนหลัง ดูว่ามันพลาดอะไรบ่อย ของเราคือ:
+- ลืม cover image
+- ลืม EN version
+- VO ผิด model
+- ไม่ verify URL
+
+### Step 2: เปลี่ยนทุกข้อเป็น programmatic check
+
+อย่าเขียนว่า "ตรวจว่ามี cover" แต่เขียน code ที่ **ตรวจจริง**:
+
+```python
+cover_path = ink / f"content/posts/covers/{slug}.jpg"
+check("Blog cover file exists", cover_path.exists())
+```
+
+### Step 3: จัดกลุ่มเป็น phases
+
+แบ่ง checks ตาม pipeline stages ที่ต้องเกิดตามลำดับ เช่น Source → Images → Audio → Video → Blog → Publish → QA
+
+### Step 4: Block on failure
+
+ถ้า phase ไหน fail — หยุด บอกว่าอะไร fail และจะ fix ยังไง:
+
+```python
+if not condition:
+    print(f"❌ {name}")
+    print(f"  → fix: {fix_hint}")
+    failed_total += 1
+```
+
+### Step 5: รัน harness ทุกครั้ง ไม่ใช่บางครั้ง
+
+Harness ที่ optional = ไม่มี harness
+
+ต้องบังคับให้ทุก content piece ผ่าน harness ก่อนถือว่าเสร็จ
+
+## สรุป
+
+March of Nines ของ Karpathy ไม่ใช่แค่ทฤษฎีที่น่าสนใจ — มันคือความจริงของทุกคนที่ใช้ AI agents ในงาน production
+
+ทุก step ที่ agent ต้องทำ ทุก output ที่ต้องผลิต ทุกไฟล์ที่ต้องสร้าง — ถ้าคุณพึ่ง prompt อย่างเดียว มันจะพลาด
+
+**สิ่งที่ต้องจำ:**
+- 90% accuracy ต่อ step ฟังดูดี แต่ 10 steps = 35% success
+- Prompt/memory/skills = "หวังว่าจะทำถูก"
+- Validation harness = "บังคับให้ทำถูก"
+- ถ้าต้องการทุกครั้ง → codify it อย่า prompt it
