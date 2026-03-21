@@ -1,0 +1,190 @@
+---
+title: "Claude Channels + Telegram — สั่งงาน Claude Code จากมือถือ ไม่ต้อง SSH"
+description: "Anthropic ปล่อย Claude Channels — MCP plugin ที่เชื่อม Telegram เข้า Claude Code session สั่ง deploy, แก้โค้ด, transcribe เสียง, ดูรูป ได้จากมือถือ ไม่ต้อง Tailscale ไม่ต้อง tmux"
+date: 2026-03-21
+category: "AI Workflow"
+tags: ["claude-code", "telegram", "channels", "remote-work", "tutorial"]
+draft: false
+featured: false
+---
+
+## ทำไมผมตื่นเต้นกับ feature นี้มาก
+
+ถ้าใครอ่านบทความเก่าผมเรื่อง [Remote Dev Setup](/th/remote-dev-setup) จะรู้ว่าผมใช้ Tailscale + Termius + tmux สั่งงาน Claude Code จากมือถือมาตลอด
+
+มันใช้งานได้ดี แต่ setup ค่อนข้างยุ่ง — ต้องลง VPN ทั้ง 2 เครื่อง ต้องตั้ง SSH key ต้องเรียนรู้ tmux ซึ่งสำหรับคนทั่วไปมันเยอะเกินไป
+
+**20 มี.ค. 2026 — Anthropic ปล่อย Claude Channels**
+
+มันเป็น MCP-based plugin ที่เชื่อม messaging app (Telegram, Discord) เข้ากับ Claude Code session โดยตรง ไม่ต้อง VPN ไม่ต้อง SSH ไม่ต้อง tmux
+
+แค่มี Telegram กับ Claude Code ก็พอ
+
+---
+
+## Claude Channels คืออะไร?
+
+พูดง่ายๆ — มันทำให้คุณ **DM bot ใน Telegram แล้ว Claude Code ทำงานให้ได้เลย**
+
+ไม่ใช่ chatbot ธรรมดาที่ตอบคำถามอย่างเดียว แต่มันเป็น **full terminal access** ที่ทำงานกับไฟล์จริงบนเครื่องคุณ
+
+Architecture คือแบบนี้:
+
+```
+iPhone (Telegram) → Telegram Bot API → Claude Code (Mac ที่บ้าน)
+                                         ↓
+                                    ทำงานกับไฟล์จริง
+                                    อ่าน DB, deploy, แก้โค้ด
+                                         ↓
+                                    ตอบกลับใน Telegram
+```
+
+สิ่งที่เจ๋งคือ Telegram ใช้ **long-polling** — ไม่ต้อง expose URL ไม่ต้องเปิด port ไม่ต้อง ngrok ไม่ต้อง Cloudflare Tunnel **ปลอดภัยมาก** เพราะเครื่องเราเป็นแค่คน poll ข้อมูลจาก Telegram API ไม่มีใครเข้ามาหาเราได้
+
+ข้อความที่ส่งเข้ามาจะปรากฏในรูปแบบ `<channel source="telegram">` event ใน Claude Code session และ Claude จะตอบกลับผ่าน MCP tools — `reply`, `react`, `edit_message`
+
+---
+
+## สิ่งที่ทำได้จริง (ทดสอบแล้ว)
+
+นี่คือสิ่งที่ผมทดสอบแล้วว่าทำงานจริง:
+
+| สั่งจาก Telegram | Claude ทำอะไร |
+|-----------------|--------------|
+| "deploy เว็บ dopelab ขึ้น production" | รัน build + deploy ให้ |
+| ส่ง voice message | download → ffmpeg → whisper transcribe → ตอบกลับเป็นข้อความ |
+| ส่งรูปภาพ | Read tool ดูรูปได้เลย (Claude เป็น multimodal) |
+| "ใส่ปฏิทินวันนี้ ประชุมลูกค้า 14:00" | สร้าง Google Calendar event ให้ |
+| "สถานะงาน NNTN เป็นไง" | query Supabase แล้วตอบกลับ |
+| "แก้ bug ในไฟล์ X บรรทัด Y" | แก้โค้ดจริงบนเครื่อง |
+| ส่งไฟล์ | download_attachment → save ลง workspace |
+
+<Callout variant="success" title="Use Case จริงของผม">
+ผมเป็นเจ้าของร้านอาหาร (เนื้อในตำนาน) + รัน marketing agency พร้อมกัน บางวันอยู่ร้านทั้งวัน ไม่ได้นั่งหน้า Mac เลย
+
+ตอนนี้ผมแค่เปิด Telegram บนมือถือ สั่ง Claude deploy deliverable ให้ลูกค้า เช็คสถานะ project query ยอดขายจาก DB — ทำได้หมดโดยไม่ต้องกลับบ้าน
+</Callout>
+
+---
+
+## Setup — 4 ขั้นตอน (ง่ายกว่าที่คิด)
+
+### Step 1: สร้าง Bot ด้วย BotFather
+
+เปิด Telegram → ค้นหา `@BotFather` → สั่ง `/newbot`
+
+```
+1. ตั้งชื่อ bot (เช่น "My Claude Bot")
+2. ตั้ง username (เช่น "my_claude_bot")
+3. BotFather ให้ token มา — เก็บไว้ให้ดี
+```
+
+เอา token ไปใส่ไฟล์:
+
+```bash
+mkdir -p ~/.claude/channels/telegram
+echo "TELEGRAM_BOT_TOKEN=your_token_here" > ~/.claude/channels/telegram/.env
+chmod 600 ~/.claude/channels/telegram/.env
+```
+
+### Step 2: ลง Plugin
+
+```bash
+claude plugin install telegram@claude-plugins-official
+```
+
+ถ้ายังไม่มี Bun ต้องลงก่อน:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Step 3: เปิด Claude Code ด้วย --channels flag
+
+```bash
+claude --channels plugin:telegram@claude-plugins-official
+```
+
+### Step 4: Pair กับ Bot
+
+เปิด Telegram → DM bot ที่สร้าง → พิมพ์อะไรก็ได้
+
+Claude Code จะแสดง pairing code 6 หลัก → พิมพ์ code นั้นใน Telegram → **Done!**
+
+หลังจาก pair ครั้งแรก ครั้งต่อไปไม่ต้อง pair ใหม่ เพราะข้อมูลถูกเก็บใน `~/.claude/channels/telegram/access.json`
+
+---
+
+## Group Chat Support
+
+ไม่ใช่แค่ DM — ใช้ใน group chat ได้ด้วย โดย Claude จะตอบเฉพาะเมื่อถูก @mention
+
+สร้าง group ใน Telegram → เพิ่ม bot เข้าไป → พิมพ์ `@your_bot_name ช่วยสรุปงานวันนี้` → Claude ตอบในกลุ่ม
+
+ใช้ได้หลาย bot บนเครื่องเดียวด้วย โดยตั้ง `TELEGRAM_STATE_DIR` แยกกัน
+
+---
+
+## ข้อจำกัดที่ต้องรู้
+
+ก่อนจะตื่นเต้นเกินไป มีข้อจำกัดที่ต้องรู้:
+
+| ข้อจำกัด | รายละเอียด |
+|----------|-----------|
+| **ต้องเปิด session อยู่** | ไม่มี queue/offline — ปิด Claude Code แล้ว bot ไม่ตอบ |
+| **Research preview** | ยังไม่ GA — syntax อาจเปลี่ยนในอนาคต |
+| **Telegram/Discord เท่านั้น** | ยังไม่มี Slack, WhatsApp, LINE (แต่คนขอกันเยอะมาก) |
+| **Permission prompts** | ยังต้องกด approve ที่ terminal (ยกเว้นใช้ `--dangerously-skip-permissions`) |
+| **ต้อง claude.ai login** | API key ยังไม่รองรับ |
+
+<Callout variant="info" title="เปรียบเทียบกับ Remote Dev Setup เดิม">
+Tailscale + tmux ยังมีข้อดีอยู่ — มัน persistent ปิด Claude Code ไปก็ยังกลับมาต่อได้ แต่ Channels setup ง่ายกว่ามากสำหรับคนที่ไม่อยากยุ่งกับ SSH/VPN
+
+ผมใช้คู่กัน — Channels สำหรับสั่งงานเร็วๆ จากมือถือ Tailscale สำหรับ session ยาวที่ต้อง monitor
+</Callout>
+
+---
+
+## Architecture — ทำไมมันปลอดภัย
+
+หลายคนอาจกังวลเรื่อง security — "เปิดให้คนส่ง Telegram มาสั่งเครื่องเราได้เลยเหรอ?"
+
+คำตอบคือ **ไม่**
+
+1. **Long-polling** — เครื่องเรา poll ออกไปหา Telegram API ไม่มี inbound connection ไม่ต้องเปิด port ไม่ต้อง expose URL
+2. **Pairing system** — ต้อง pair ด้วย 6-digit code ก่อน คนอื่นส่งมา bot ไม่ตอบ
+3. **Allowlist** — หลัง pair แล้ว เฉพาะ Telegram ID ที่อยู่ใน allowlist เท่านั้นที่สั่งได้
+4. **Permission prompts** — Claude Code ยังถาม approve ก่อนทำ action ที่ sensitive (ยกเว้นตั้ง skip permissions)
+
+ปลอดภัยกว่าการเปิด SSH port เข้าบ้านอีก
+
+---
+
+## Community Reaction
+
+ต้องบอกว่า community ตอบรับดีมาก:
+
+- **Hacker News:** 391 points, 240+ comments
+- **Reddit r/ClaudeCode:** 921 upvotes
+- คนเรียก feature นี้ว่า "messaging-native coding agent"
+- เปรียบเทียบกับ OpenClaw โดยตรง — Anthropic ตอบโต้อย่างเป็นทางการ
+- ขอ WhatsApp + Slack กันเยอะมาก (Telegram ถูกเลือกก่อนเพราะ Bot API ง่ายที่สุด)
+
+Boris Cherny จาก Anthropic ถึงกับ demo วิดีโอบน Threads เลย
+
+---
+
+## สรุป: ใครควรลอง?
+
+- **คนที่ใช้ Claude Code อยู่แล้ว** → ลงได้เลย 10 นาทีจบ
+- **คนที่อยากสั่งงาน AI จากมือถือ** แต่ไม่อยาก setup SSH/VPN → นี่คือคำตอบ
+- **Developer ที่ทำงานหลายที่** → สั่ง deploy, แก้ bug, เช็ค status จากไหนก็ได้
+- **เจ้าของธุรกิจที่ไม่ได้นั่งหน้าคอมทั้งวัน** → เหมือนผม สั่งงานจากร้านอาหารได้เลย
+
+Feature นี้เป็น research preview อยู่ อาจมีเปลี่ยนแปลง แต่ direction ชัดเจน — **อนาคตของ coding agent คือสั่งจากไหนก็ได้ ไม่ต้องนั่งหน้าจอ**
+
+<Callout variant="info" title="Resources">
+- Official Docs: https://docs.anthropic.com/en/docs/claude-code/channels
+- Plugin Repo: https://github.com/anthropics/claude-plugins-official
+- HN Discussion: https://news.ycombinator.com/item?id=47448524
+</Callout>
