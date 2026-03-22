@@ -1,0 +1,227 @@
+---
+title: "Vision Eval — AI ตรวจ AI (ใช้ Gemini Vision ตรวจสอบคุณภาพรูป AI)"
+description: "gen รูป AI วันละ 20-30 ไม่เคยตรวจ → cover safe zone ผิด ภาพมืด text ถูกบัง สร้าง vision-eval.py ใช้ Gemini Vision วิเคราะห์ 8 เกณฑ์ ให้คะแนน /80 พร้อม 3 presets + compare mode"
+date: 2026-03-22
+cover: ../covers/vision-eval-ai-checks-ai.jpg
+category: "AI Workflow"
+tags: ["vision-eval", "gemini", "image-quality", "validation", "ai-tools"]
+draft: false
+featured: false
+---
+
+## ปัญหา: gen รูปวันละ 20-30 ไม่เคยตรวจสักรูป
+
+pipeline content ของเราตอนนี้ gen รูป AI เยอะมาก — single image, carousel background, manga scenes, video cover — วันนึง 20-30 รูปสบายๆ
+
+แต่ตลอด 2 เดือนที่ผ่านมา ไม่เคยมีใคร "ตรวจ" สักรูป
+
+ผลคือ:
+- Cover image ข้อความอยู่นอก safe zone → ตัดหัวตัดท้ายบน feed
+- ภาพมืดเกินไป → text overlay อ่านไม่ออก
+- Text บนรูปถูก element อื่นบังครึ่งหนึ่ง
+- Manga scene วาดสวยแต่ composition ไม่เหมาะกับ vertical scroll
+- สีไม่ match กับ brand identity ของ DopeLab
+
+ทุกอย่างมันดูโอเคตอน gen เสร็จ แต่พอโพสต์จริงแล้วเปิดบนมือถือ — **เห็นปัญหาทันที**
+
+ปัญหาคือ "ตาคน" ต้องมานั่งดูทีละรูป ไม่ scale ได้เลย
+
+## Solution: ให้ AI ตรวจ AI ด้วย Gemini Vision
+
+แนวคิดง่ายมาก: ถ้า AI gen รูปได้ AI ก็ต้อง **ตรวจรูปได้**
+
+เราสร้าง `vision-eval.py` — Python script ที่ส่งรูปไปให้ Gemini Vision API วิเคราะห์คุณภาพตามเกณฑ์ที่กำหนด แล้วให้คะแนนกลับมา
+
+ทำไมเลือก Gemini?
+- **Vision API ดีมาก** — Gemini 2.0 Flash เข้าใจ composition, text readability, visual hierarchy ได้แม่นกว่า GPT-4V ในงาน social media eval
+- **ถูก** — Flash model ราคาต่ำมาก ส่งรูป 30 รูปต่อวันไม่กี่บาท
+- **เร็ว** — ตอบกลับภายใน 2-3 วินาทีต่อรูป
+
+## 8 เกณฑ์การให้คะแนน (Social Preset)
+
+เราออกแบบ 8 criteria สำหรับ social media content โดยเฉพาะ แต่ละข้อ 10 คะแนน รวม 80:
+
+| # | Criteria | วัดอะไร | น้ำหนัก |
+|:---:|:---|:---|:---:|
+| 1 | **Scroll-Stopping** | หยุด thumb scroll ได้มั้ย? สีเด่น? composition ดึงดูด? | /10 |
+| 2 | **Visual Hierarchy** | มีจุดโฟกัสชัดเจนมั้ย? ตาไปที่ไหนก่อน? | /10 |
+| 3 | **Text Readability** | อ่าน text บนรูปออกมั้ย? contrast เพียงพอ? font size โอเค? | /10 |
+| 4 | **Mobile-Friendly** | ดูดีบนจอเล็กมั้ย? element ไม่เล็กเกินไป? | /10 |
+| 5 | **Brand Consistency** | สี font style ตรงกับ brand identity มั้ย? | /10 |
+| 6 | **Emotional Impact** | รูปนี้กระตุ้นอารมณ์อะไร? แรงพอมั้ย? | /10 |
+| 7 | **CTA Clarity** | CTA ชัดเจนมั้ย? มองเห็นง่ายมั้ย? | /10 |
+| 8 | **Composition** | Rule of thirds? White space? Balance? | /10 |
+
+คะแนนรวม 80 — ผ่านต้องได้อย่างน้อย 50/80
+
+## 3 Presets สำหรับงานต่างกัน
+
+ไม่ใช่ทุกรูปจะใช้เกณฑ์เดียวกัน เราสร้าง 3 presets:
+
+### Preset 1: `--eval social` (Default)
+
+8 criteria ตามข้างบน ให้คะแนน /80 เหมาะกับ single image, carousel, ads
+
+```bash
+python vision-eval.py image.png --eval social
+```
+
+### Preset 2: `--eval thumbnail`
+
+12 เกณฑ์แบบ Yes/No ตาม Karpathy Pattern — ไม่ให้คะแนน ให้แค่ PASS/FAIL เหมาะกับ video thumbnail ที่ต้องดึงดูดคลิก
+
+```bash
+python vision-eval.py thumbnail.png --eval thumbnail
+```
+
+12 criteria แบบ Yes/No:
+- มี face/person มั้ย?
+- Text อ่านออกมั้ยที่ขนาดเล็ก?
+- มี contrast สูงมั้ย?
+- ไม่มี clutter เกินไปมั้ย?
+- ... อีก 8 ข้อ
+
+### Preset 3: `--eval artwork`
+
+8 criteria /80 เหมือน social แต่ปรับเกณฑ์สำหรับ manga/illustration — เน้น artistic quality, character design, scene composition มากกว่า marketing effectiveness
+
+```bash
+python vision-eval.py manga-scene.png --eval artwork
+```
+
+## --compare: เทียบ 2 รูป เลือกตัวชนะ
+
+บางทีเรา gen 2-3 versions ของรูปเดียวกัน แล้วไม่รู้ว่าตัวไหนดีกว่า
+
+```bash
+python vision-eval.py imageA.png --compare imageB.png
+```
+
+Gemini จะวิเคราะห์ทั้ง 2 รูป ให้คะแนนแยกกัน แล้วเลือก winner พร้อมอธิบายว่า **ทำไม**:
+
+```
+═══ Vision Eval: Compare Mode ═══
+
+Image A: cover-v1.png
+  Score: 62/80
+  Weaknesses: text readability (6/10), brand consistency (5/10)
+
+Image B: cover-v2.png
+  Score: 71/80
+  Strengths: scroll-stopping (9/10), composition (9/10)
+
+🏆 Winner: Image B (+9 points)
+  Reason: Higher contrast text, better visual hierarchy,
+  stronger brand color usage
+```
+
+ไม่ต้องถามคนอีกแล้ว — AI ตัดสินได้เลย (แต่ถ้า score ใกล้กันมาก เราก็ยังดูเองอยู่)
+
+## ผลจริง: Cover DL-109 FAIL → re-gen 3 ครั้ง → PASS
+
+Case จริงที่เพิ่งเกิดเมื่อวาน:
+
+**Round 1:** gen cover สำหรับ DL-109 → vision-eval ให้ 43/80 (FAIL)
+- Text readability: 4/10 — ตัวหนังสือกลืนกับ background
+- Mobile-friendly: 5/10 — element เล็กเกินไป
+
+**Round 2:** re-gen แก้ contrast + ขยาย text → 51/80 (PASS... แต่ borderline)
+- Scroll-stopping: 5/10 — ยังไม่ดึงดูดพอ
+
+**Round 3:** re-gen ใหม่ทั้งรูป เปลี่ยน composition → 69/80 (PASS!)
+- ทุก criteria >= 7/10
+
+ถ้าไม่มี vision-eval เราจะโพสต์รูป round 1 ไปเลย แล้วก็สงสัยว่าทำไม engagement ต่ำ
+
+### ผลรวมทั้ง pipeline:
+
+| ประเภท | จำนวนรูป | คะแนนเฉลี่ย | สถานะ |
+|:---|:---:|:---:|:---|
+| Single images | 12 | 67/80 | ผ่านทุกรูป |
+| Manga scenes | 48 | 28/30 | ผ่านทุก scene |
+| Covers | 8 | 63/80 | 3 รูป re-gen |
+| Thumbnails | 8 | 11/12 PASS | 1 รูป re-gen |
+
+## Validation Loop: gen → eval → fail → re-gen → pass
+
+กุญแจสำคัญคือไม่ใช่แค่ "ตรวจ" แต่ต้อง **loop กลับไปแก้**:
+
+```
+gen รูป
+    ↓
+vision-eval (ให้คะแนน)
+    ↓
+score >= 50/80? ──── YES → ใช้ได้ → ไปต่อ
+    ↓ NO
+วิเคราะห์ weakness
+    ↓
+re-gen (แก้จุดอ่อน)
+    ↓
+vision-eval อีกครั้ง
+    ↓
+(วนจนผ่าน — max 3 ครั้ง)
+```
+
+ถ้า 3 ครั้งแล้วยังไม่ผ่าน → flag ให้คนดู เพราะอาจเป็นปัญหาที่ prompt/model แก้ไม่ได้
+
+## เบื้องหลัง: Prompt ที่ส่งให้ Gemini
+
+ไม่ได้ซับซ้อนอะไร — แค่ structured prompt ที่บอกให้ Gemini วิเคราะห์ตามเกณฑ์:
+
+```python
+prompt = f"""
+Analyze this social media image for quality.
+Score each criterion 1-10:
+
+1. Scroll-Stopping Power
+2. Visual Hierarchy
+3. Text Readability
+4. Mobile-Friendly
+5. Brand Consistency
+6. Emotional Impact
+7. CTA Clarity
+8. Composition
+
+Return JSON: {{"scores": [...], "total": N, "weaknesses": [...], "suggestion": "..."}}
+"""
+
+response = model.generate_content([prompt, image])
+```
+
+ส่ง image เป็น bytes ไปพร้อม prompt → Gemini ตอบกลับเป็น JSON → parse แล้วแสดงผล
+
+เรื่องที่ต้องระวัง:
+- **ต้อง structured output** — ถ้าไม่ระบุ format Gemini จะตอบเป็น prose ยาวเหยียด parse ไม่ได้
+- **ต้อง calibrate** — ครั้งแรกที่ใช้ Gemini ให้คะแนนหลวมมาก (ทุกรูป 70+) ต้องเพิ่ม "be strict, 8+ means exceptional" ใน prompt
+- **ต้อง cache prompt** — ถ้าส่ง 30 รูป prompt เดิมๆ ทุกครั้ง token เสียเปล่า
+
+## ใช้ vision-eval กับ Validation Harness
+
+vision-eval ไม่ได้ทำงานอยู่คนเดียว — มันเป็น **1 ใน 32 checks** ของ content-harness.py:
+
+```
+Phase 7: Quality Gates
+  ✅ Vision eval: single image 67/80 (>= 50)
+  ✅ Cover passes safe zone analysis
+  ✅ Manga scenes avg 28/30 (>= 25)
+```
+
+ถ้า vision-eval FAIL → harness FAIL → content ไม่สามารถถือว่า "เสร็จ" ได้
+
+นี่คือ **AI ตรวจ AI** ในรูปแบบที่ทำงานจริง — ไม่ใช่แค่ concept
+
+## สรุป
+
+| ก่อน | หลัง |
+|:---|:---|
+| gen รูปแล้วโพสต์เลย | gen → eval → pass แล้วค่อยโพสต์ |
+| ไม่รู้ว่ารูปมีปัญหาจนเห็น engagement ต่ำ | รู้ปัญหาทันทีก่อนโพสต์ |
+| เลือกรูปด้วยตา (bias + เหนื่อย) | เทียบด้วย --compare (objective) |
+| 1 version ต่อรูป | 1-3 versions → เลือก best |
+
+**สิ่งที่ต้องจำ:**
+- gen รูปง่าย แต่ **ตรวจรูปสำคัญกว่า**
+- Gemini Vision ถูกและเร็วพอที่จะตรวจทุกรูป ทุกวัน
+- 8 criteria /80 — ผ่าน 50 คือ minimum, เราเล็ง 65+
+- Validation loop (gen → eval → re-gen) คือ pattern ที่ทำให้คุณภาพดีขึ้นจริง
+- ถ้า AI gen ได้ AI ก็ต้อง **ตรวจได้** — อย่าใช้แต่ "ตาคน"
