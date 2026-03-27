@@ -1,0 +1,132 @@
+---
+title: "Claude Computer Use — AI ที่ควบคุมคอมพิวเตอร์ได้จริง (มันคืออะไร ทำอะไรได้ ข้อจำกัดคืออะไร)"
+description: "Anthropic อัปเดต Claude Code + Cowork ให้ควบคุมคอมพิวเตอร์ได้ เปิดแอป เขียนไฟล์ browse เว็บ สั่งจากมือถือผ่าน Dispatch ยังเป็น research preview บน macOS เท่านั้น สรุปทุกอย่างที่ต้องรู้"
+date: 2026-03-27
+cover: ../covers/claude-computer-use-ai-controls-pc.jpg
+category: "AI Update"
+tags: ["claude", "computer-use", "ai-agent", "anthropic", "automation", "cowork", "dispatch"]
+draft: false
+featured: false
+---
+
+## มันคืออะไรกันแน่
+
+24 มีนาคม 2026 — Anthropic ประกาศอัปเดต **Claude Code** และ **Claude Cowork** ให้สามารถ "ใช้คอมพิวเตอร์" ได้
+
+ชื่อฟีเจอร์: **Computer Use**
+
+**สิ่งที่ต้องเข้าใจให้ถูก:** Computer Use ไม่ใช่ product ใหม่แยกต่างหาก แต่เป็นความสามารถใหม่ที่เพิ่มเข้าไปใน Claude Code (สำหรับ developer) และ Claude Cowork (สำหรับคนทั่วไป) ที่มีอยู่แล้ว
+
+ก่อนหน้านี้ Claude Code ทำงานได้แค่ใน terminal — เขียน code, แก้ไฟล์, run command
+
+ตอนนี้ Claude Code + Cowork ทำได้มากกว่านั้น:
+- เปิดแอปบนเครื่องคุณ
+- ใช้ browser
+- เขียนไฟล์นอก terminal
+- run dev tools
+
+ที่มา: CNBC, CNET, Engadget รายงานตรงกัน (24 มี.ค. 2026)
+
+## มันทำอะไรได้จริงๆ
+
+จากข้อมูลที่ Anthropic เปิดเผยและสื่อรายงาน:
+
+**ทำได้:**
+- **เปิดไฟล์ + แอป** บน Mac ของคุณ
+- **ใช้ browser** เปิดเว็บ หาข้อมูล กรอกฟอร์ม
+- **Run dev tools** สำหรับ developer
+- **เชื่อม Google Workspace + Slack** ผ่าน connectors (ถ้ามี)
+- **ทำงานข้ามแอป** ถ้าไม่มี connector ก็ยังทำได้โดยควบคุมหน้าจอ
+
+**วิธีสั่ง:**
+- สั่งตรงจาก Claude Code / Cowork บน Mac
+- หรือสั่งจากมือถือผ่าน **Dispatch** — ฟีเจอร์ที่ให้คุณคุยกับ Claude จากโทรศัพท์ต่อเนื่อง แล้ว Claude ไปทำงานบน Mac ที่บ้าน
+
+## สถานะปัจจุบัน — ยังเป็น Research Preview
+
+**ข้อจำกัดที่ Anthropic บอกเอง (สำคัญมาก):**
+
+### 1. ยังเป็น Research Preview
+Anthropic ใช้คำว่า "research preview" ไม่ใช่ GA (General Availability) หมายความว่ายังอยู่ระหว่างพัฒนา จะปรับเปลี่ยนตาม feedback
+
+### 2. macOS เท่านั้น (ตอนนี้)
+ใช้ได้บน Mac เท่านั้น ยังไม่รองรับ Windows หรือ Linux
+
+### 3. Claude Pro + Claude Max เท่านั้น
+ต้องเป็นสมาชิก Claude Pro ($20/เดือน) หรือ Claude Max ขึ้นไป ไม่มีใน free tier
+
+### 4. ถาม Permission ก่อนทุกครั้ง
+Anthropic เน้นว่า Claude จะถามอนุญาตก่อนเข้าแอปใหม่ทุกครั้ง ไม่ทำเองโดยพลการ ซึ่งดีในแง่ security แต่หมายความว่ายังไม่ใช่ "ปล่อยมือ 100%"
+
+### 5. ไม่แนะนำให้ใช้กับข้อมูลสำคัญ
+Anthropic เตือนว่าอย่าใช้ Computer Use กับข้อมูล sensitive เช่น password, ข้อมูลการเงิน, ข้อมูลส่วนตัวสำคัญ
+
+### 6. ยังทำผิดได้
+Anthropic บอกตรงๆ ว่า "Claude can make mistakes" — อาจคลิกผิดปุ่ม เปิดผิดแอป พิมพ์ผิดช่อง ต้องตรวจทุกครั้ง
+
+## Claude Code vs Cowork — ต่างกันยังไง
+
+| | Claude Code | Claude Cowork |
+|--|-----------|-------------|
+| สำหรับ | Developer / คนเทคนิค | คนทั่วไป / เจ้าของธุรกิจ |
+| Interface | Terminal (command line) | Desktop app |
+| เปิดตัว | 2025 | มกราคม 2026 |
+| Computer Use | ได้ (24 มี.ค. 2026) | ได้ (24 มี.ค. 2026) |
+| จุดเด่น | เขียน code, run commands | ทำงานทั่วไป ไม่ต้อง code |
+
+ถ้าคุณไม่ใช่ developer → ใช้ **Cowork** ง่ายกว่า
+ถ้าคุณเป็น developer → ใช้ **Claude Code** ทรงพลังกว่า
+
+ทั้งคู่ได้ Computer Use เหมือนกัน
+
+## Dispatch คืออะไร
+
+Dispatch คือฟีเจอร์ที่เพิ่งเปิดตัวสัปดาห์ก่อน (ก่อน Computer Use)
+
+มันให้คุณ:
+- คุยกับ Claude จากมือถือ (iPhone/Android)
+- สั่งงานให้ Claude ไปทำบน Mac ที่บ้าน/ออฟฟิศ
+- คุยต่อเนื่อง ไม่ต้องเริ่มใหม่
+
+พอ Computer Use มาเพิ่ม → Dispatch + Computer Use = สั่งจากมือถือให้ AI ไปทำงานบน Mac ได้จริง
+
+นี่คือ combo ที่ทำให้ Computer Use มีประโยชน์จริงในชีวิตประจำวัน ไม่ใช่แค่ demo
+
+## เราใช้จริงมั้ย — ตอบตรงๆ
+
+เราใช้ Claude Code ทุกวันมา 2 เดือน — Computer Use เป็นฟีเจอร์ใหม่ที่เพิ่งออก 3 วัน
+
+สิ่งที่เราทำได้จริงตอนนี้ผ่าน Claude Code (ไม่ใช่ Computer Use):
+- สร้าง website, dashboard, report อัตโนมัติ
+- วิเคราะห์ข้อมูล 30,000 rows
+- ผลิต content 6 ชิ้นต่อวัน
+- deploy ขึ้น server
+
+Computer Use เพิ่มให้ Claude ทำงานนอก terminal ได้ เช่น เปิด Chrome, เปิด Excel, จัดการไฟล์ ซึ่งขยายขอบเขตสิ่งที่ทำได้อีกมาก
+
+แต่เรายังไม่ได้ใช้ Computer Use เป็นหลัก เพราะยังเป็น research preview — เราใช้ Claude Code ใน terminal เป็นหลัก ซึ่งเสถียรกว่า
+
+## ภาพใหญ่: ทำไมเรื่องนี้สำคัญ
+
+นี่คือสัญญาณที่ชัดว่า AI กำลังเปลี่ยนจาก "ผู้ช่วย" เป็น "ผู้ลงมือ"
+
+ก่อน 2026: AI = ถาม-ตอบ (คุณต้องลงมือทำเอง)
+2026: AI = ถาม-ทำ (คุณสั่ง AI ลงมือให้)
+
+Computer Use ยังอยู่ในช่วงต้น แต่ทิศทางชัดมาก:
+- Claude ทำได้ → Gemini, ChatGPT จะตามมา
+- ตอนนี้ Mac เท่านั้น → จะขยายไป Windows, mobile
+- ตอนนี้ research preview → จะเป็น GA ภายในปีนี้
+
+## เริ่มยังไง (ตามจริง)
+
+ถ้าคุณสนใจ Computer Use:
+
+1. **สมัคร Claude Pro** ($20/เดือน) — ต้องใช้ Mac
+2. **ดาวน์โหลด Claude Desktop** จาก claude.ai
+3. **เปิด Cowork** แล้วลองสั่งงานง่ายๆ เช่น "เปิด Chrome แล้วหาข่าว AI วันนี้"
+4. **ตรวจงานทุกครั้ง** — ยังเป็น preview อย่าปล่อยมือ
+
+ถ้าคุณยังไม่พร้อม → เริ่มจาก Claude ธรรมดา (chat) ก่อนก็ได้ Computer Use คือขั้นถัดไป ไม่ต้องรีบ
+
+สิ่งที่สำคัญกว่า feature คือ mindset: เริ่มคิดว่า "อะไรที่ AI ทำแทนได้" แล้วค่อยๆ delegate ทีละอย่าง
