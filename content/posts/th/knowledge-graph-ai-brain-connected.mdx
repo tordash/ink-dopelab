@@ -17,6 +17,8 @@ draft: false
 
 เลยสร้าง Knowledge Graph ขึ้นมา และนี่คือวิธีที่ทำ
 
+<img src="/diagrams/knowledge-graph/kg-before-after.svg" alt="Before vs After — จาก 450 ไฟล์กระจัดกระจาย สู่ Knowledge Graph ที่เชื่อมโยงทุกอย่าง" width="800" />
+
 ---
 
 ## ข้อมูลเชื่อมกันข้าม folder ตลอด
@@ -27,9 +29,13 @@ draft: false
 
 ถ้าค้นหาแบบ keyword ได้แค่ไฟล์ที่มีคำนั้น แต่ไม่เห็น connection ข้ามไฟล์
 
+<img src="/diagrams/knowledge-graph/kg-overview.svg" alt="Knowledge Graph Overview — 332 nodes, 1,602 edges เชื่อมโยง Clients, Technical, Sessions" width="800" />
+
 ---
 
 ## วิธีสร้าง Knowledge Graph — 3 ขั้นตอน
+
+<img src="/diagrams/knowledge-graph/kg-3-steps.svg" alt="3 ขั้นตอนสร้าง Knowledge Graph — Extract wikilinks, Embed to ChromaDB, Graph-enhanced Search" width="800" />
 
 ### 1. Extract nodes จาก wikilinks
 
@@ -71,6 +77,8 @@ draft: false
 
 ---
 
+<img src="/diagrams/knowledge-graph/kg-architecture.svg" alt="Architecture — Data flow จาก Obsidian brain/ ผ่าน Processing สู่ ChromaDB และ rag CLI" width="800" />
+
 ## เครื่องมือที่สร้าง
 
 | เครื่องมือ | หน้าที่ |
@@ -84,6 +92,8 @@ draft: false
 ทุกเครื่องมือเรียกใช้ผ่าน `rag` CLI ตัวเดียว ไม่ต้องจำคำสั่งหลายตัว
 
 ---
+
+<img src="/diagrams/knowledge-graph/kg-search-comparison.svg" alt="Search Comparison — grep (2 results) vs Vector (3 results) vs Graph-enhanced (5 results)" width="800" />
 
 ## ผลลัพธ์จริง
 

@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&amp;display=swap');
+      text { font-family: 'Kanit', sans-serif; }
+    </style>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="#0a0a0a" rx="12"/>
+
+  <!-- Divider line -->
+  <line x1="400" y1="70" x2="400" y2="420" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Title -->
+  <text x="400" y="42" fill="#e0e0e0" font-size="20" text-anchor="middle" font-weight="700">Before vs After</text>
+
+  <!-- LEFT: Before -->
+  <text x="200" y="80" fill="#FF6B6B" font-size="18" text-anchor="middle" font-weight="600">Before</text>
+
+  <!-- Scattered files -->
+  <g transform="translate(60, 110)">
+    <!-- Scattered document icons -->
+    <g opacity="0.4">
+      <rect x="10" y="10" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="70" y="30" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="140" y="5" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="200" y="35" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="240" y="0" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="30" y="70" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="100" y="65" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="170" y="80" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="240" y="60" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="50" y="130" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="120" y="140" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+      <rect x="200" y="125" width="32" height="40" rx="3" fill="none" stroke="#666" stroke-width="1"/>
+    </g>
+
+    <!-- Search icon with X -->
+    <g transform="translate(110, 70)">
+      <circle cx="20" cy="20" r="16" fill="none" stroke="#FF6B6B" stroke-width="2" opacity="0.6"/>
+      <line x1="32" y1="32" x2="42" y2="42" stroke="#FF6B6B" stroke-width="2" opacity="0.6"/>
+      <text x="20" y="25" fill="#FF6B6B" font-size="14" text-anchor="middle" font-weight="700">?</text>
+    </g>
+  </g>
+
+  <!-- Before stats -->
+  <g transform="translate(60, 310)">
+    <rect x="0" y="0" width="280" height="100" rx="8" fill="#FF6B6B10" stroke="#FF6B6B30" stroke-width="1"/>
+    <text x="20" y="28" fill="#FF6B6B" font-size="13" font-weight="600">450 files</text>
+    <text x="160" y="28" fill="#666" font-size="12">กระจัดกระจาย</text>
+    <text x="20" y="52" fill="#FF6B6B" font-size="13" font-weight="600">5+ นาที</text>
+    <text x="160" y="52" fill="#666" font-size="12">ค้นหาแต่ละครั้ง</text>
+    <text x="20" y="76" fill="#FF6B6B" font-size="13" font-weight="600">grep / manual</text>
+    <text x="160" y="76" fill="#666" font-size="12">keyword เท่านั้น</text>
+  </g>
+
+  <!-- RIGHT: After -->
+  <text x="600" y="80" fill="#4ECDC4" font-size="18" text-anchor="middle" font-weight="600">After</text>
+
+  <!-- Connected graph -->
+  <g transform="translate(440, 110)">
+    <!-- Edges -->
+    <g stroke="#FFCC0030" stroke-width="1.2" fill="none">
+      <line x1="140" y1="50" x2="80" y2="100"/>
+      <line x1="140" y1="50" x2="200" y2="100"/>
+      <line x1="140" y1="50" x2="140" y2="130"/>
+      <line x1="80" y1="100" x2="40" y2="160"/>
+      <line x1="80" y1="100" x2="140" y2="130"/>
+      <line x1="200" y1="100" x2="260" y2="160"/>
+      <line x1="200" y1="100" x2="140" y2="130"/>
+      <line x1="40" y1="160" x2="140" y2="130"/>
+      <line x1="260" y1="160" x2="140" y2="130"/>
+      <line x1="40" y1="160" x2="100" y2="190"/>
+      <line x1="260" y1="160" x2="200" y2="190"/>
+      <line x1="100" y1="190" x2="200" y2="190"/>
+    </g>
+
+    <!-- Nodes -->
+    <g filter="url(#glow2)">
+      <circle cx="140" cy="50" r="14" fill="#0a0a0a" stroke="#FFCC00" stroke-width="2"/>
+      <circle cx="80" cy="100" r="11" fill="#0a0a0a" stroke="#4ECDC4" stroke-width="1.5"/>
+      <circle cx="200" cy="100" r="11" fill="#0a0a0a" stroke="#4ECDC4" stroke-width="1.5"/>
+      <circle cx="140" cy="130" r="16" fill="#0a0a0a" stroke="#FFCC00" stroke-width="2.5"/>
+      <circle cx="40" cy="160" r="9" fill="#0a0a0a" stroke="#FF6B9D" stroke-width="1.5"/>
+      <circle cx="260" cy="160" r="9" fill="#0a0a0a" stroke="#FF6B9D" stroke-width="1.5"/>
+      <circle cx="100" cy="190" r="8" fill="#0a0a0a" stroke="#4ECDC4" stroke-width="1"/>
+      <circle cx="200" cy="190" r="8" fill="#0a0a0a" stroke="#4ECDC4" stroke-width="1"/>
+    </g>
+
+    <!-- Pulse animation hint on center node -->
+    <circle cx="140" cy="130" r="22" fill="none" stroke="#FFCC00" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="140" cy="130" r="28" fill="none" stroke="#FFCC00" stroke-width="0.3" opacity="0.15"/>
+  </g>
+
+  <!-- After stats -->
+  <g transform="translate(460, 310)">
+    <rect x="0" y="0" width="280" height="100" rx="8" fill="#4ECDC410" stroke="#4ECDC430" stroke-width="1"/>
+    <text x="20" y="28" fill="#4ECDC4" font-size="13" font-weight="600">Knowledge Graph</text>
+    <text x="190" y="28" fill="#666" font-size="12">เชื่อมโยงทุกไฟล์</text>
+    <text x="20" y="52" fill="#4ECDC4" font-size="13" font-weight="600">30 วินาที</text>
+    <text x="190" y="52" fill="#666" font-size="12">เร็วขึ้น 10x</text>
+    <text x="20" y="76" fill="#4ECDC4" font-size="13" font-weight="600">AI-powered</text>
+    <text x="190" y="76" fill="#666" font-size="12">Vector + Graph</text>
+  </g>
+
+  <!-- Arrow -->
+  <g transform="translate(376, 220)">
+    <polygon points="0,0 20,12 0,24" fill="#FFCC00" opacity="0.6"/>
+  </g>
+</svg>
