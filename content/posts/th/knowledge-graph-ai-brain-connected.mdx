@@ -1,0 +1,106 @@
+---
+title: "Knowledge Graph — สร้างสมองที่เชื่อมโยงทุกอย่างให้ AI หาข้อมูลเจอทุกเรื่อง"
+description: "สร้าง Knowledge Graph จาก wikilinks ใน Obsidian — 332 nodes, 1,602 edges ค้นหาข้อมูล 450+ ไฟล์ ใน 30 วินาที เร็วขึ้น 10x ด้วย Vector Search + Graph Expansion + Hybrid Search"
+date: 2026-03-29
+cover: ../covers/knowledge-graph-ai-brain-connected.jpg
+category: "AI News"
+tags: ["knowledge graph", "RAG", "vector search", "Obsidian", "ChromaDB", "hybrid search"]
+featured: true
+draft: false
+---
+
+## ปัญหา: เอกสาร 450 ไฟล์ หาอะไรสักอย่างใช้เวลา 5 นาที
+
+เคยมีปัญหานี้ไหม: มีเอกสารเป็นร้อยไฟล์ แต่พอจะหาอะไรสักอย่าง ต้องเปิดทีละไฟล์ grep ทีละคำ ใช้เวลา 5 นาทีกว่าจะเจอ แล้วยังไม่แน่ใจว่าเจอครบหรือเปล่า
+
+นี่คือปัญหาที่เจอกับ knowledge base ของ agency ที่มีเอกสารกว่า 450 ไฟล์ ครอบคลุมตั้งแต่ข้อมูลลูกค้า สูตรอาหาร เทคนิค deploy ไปจนถึง session notes ข้ามหลาย project
+
+เลยสร้าง Knowledge Graph ขึ้นมา และนี่คือวิธีที่ทำ
+
+---
+
+## ข้อมูลเชื่อมกันข้าม folder ตลอด
+
+ระบบ knowledge base เก็บข้อมูลใน Markdown files ทั้งหมด จัดเป็น folder ตาม Human Memory Model: Episodic (เหตุการณ์), Semantic (ความรู้), Procedural (วิธีทำ), Meta (สะท้อนตัวเอง)
+
+ปัญหาคือ: ข้อมูลเชื่อมโยงกันข้าม folder ตลอด เช่น session note เรื่อง deploy เว็บ → เกี่ยวกับ infrastructure → เกี่ยวกับ Client A → เกี่ยวกับ pricing strategy
+
+ถ้าค้นหาแบบ keyword ได้แค่ไฟล์ที่มีคำนั้น แต่ไม่เห็น connection ข้ามไฟล์
+
+---
+
+## วิธีสร้าง Knowledge Graph — 3 ขั้นตอน
+
+### 1. Extract nodes จาก wikilinks
+
+ทุกไฟล์ใน brain/ ใช้ `[[wikilinks]]` เชื่อมโยงกัน เช่น ไฟล์เรื่อง deploy เว็บจะมี `[[infrastructure]]`, `[[cloudways]]`, `[[client-dashboard]]` อยู่ข้างใน
+
+เขียน Python script (extract-graph.py) ที่ scan ทุก .md file แล้วดึง wikilinks ออกมาเป็น nodes กับ edges
+
+ผลลัพธ์: **332 nodes, 1,602 edges** จากไฟล์ 450+ ไฟล์
+
+### 2. Embed เข้า Vector Store
+
+ใช้ ChromaDB เป็น vector database + bge-m3 เป็น embedding model ตัด documents เป็น chunks ตาม H2 sections แล้ว embed เข้า vector store
+
+ผลลัพธ์: **2,456 documents** พร้อมค้นหาด้วย semantic meaning
+
+### 3. Graph-enhanced Search
+
+ตอนค้นหา ระบบทำ 2 อย่างพร้อมกัน:
+- **Vector search**: หาเอกสารที่ความหมายใกล้เคียง
+- **Graph expansion**: จาก node ที่เจอ ขยายไปหา neighbors ใน graph
+
+ผลคือได้ข้อมูลที่ "เกี่ยวข้อง" แม้ไม่มีคำ keyword ตรง
+
+เช่น ถ้าค้นหา "ต้นทุนเมนู delivery" ระบบจะเจอ:
+- ไฟล์ต้นทุนเมนูโดยตรง (vector match)
+- ไฟล์เรื่อง Grab/LINE MAN commission (graph neighbor)
+- ไฟล์เรื่อง raw material prices (graph neighbor ของ neighbor)
+
+---
+
+## Hybrid Search: BM25 + Vector + RRF
+
+นอกจาก graph แล้ว ยังใช้ Hybrid Search ที่รวม 2 วิธี:
+
+- **BM25** (keyword matching): เร็ว แม่นกับคำเฉพาะทาง
+- **Vector** (semantic similarity): เข้าใจความหมาย ไม่ต้องใช้คำตรง
+
+รวมผลด้วย Reciprocal Rank Fusion (RRF) ทำให้ได้ผลลัพธ์ที่ดีกว่าใช้วิธีใดวิธีเดียว
+
+---
+
+## เครื่องมือที่สร้าง
+
+| เครื่องมือ | หน้าที่ |
+|-----------|---------|
+| extract-graph.py | ดึง nodes/edges จาก wikilinks |
+| graph-search.py | ค้นหาแบบ graph-enhanced |
+| embed-brain.py | Embed เอกสารเข้า ChromaDB |
+| hybrid-search.py | BM25 + Vector + RRF fusion |
+| rag CLI | Unified interface สำหรับทุก search mode |
+
+ทุกเครื่องมือเรียกใช้ผ่าน `rag` CLI ตัวเดียว ไม่ต้องจำคำสั่งหลายตัว
+
+---
+
+## ผลลัพธ์จริง
+
+| เรื่อง | ก่อน | หลัง |
+|-------|------|------|
+| ค้นหาข้อมูล | 5+ นาที (grep + อ่านทีละไฟล์) | 30 วินาที |
+| เจอข้อมูลข้าม project | แทบไม่เจอ | เจอทุกครั้ง |
+| Knowledge coverage | 34% | 68%+ |
+
+สิ่งที่เปลี่ยนมากที่สุดคือ: ตอนนี้ถามอะไรก็ได้ แล้วระบบจะหาคำตอบให้ ไม่ต้องรู้ว่าข้อมูลอยู่ไฟล์ไหน folder ไหน
+
+---
+
+## Lesson Learned
+
+- **Wikilinks = สมบัติที่ซ่อนอยู่**: ถ้าใช้ Obsidian อยู่แล้ว wikilinks คือ knowledge graph ที่พร้อมใช้ ไม่ต้องสร้างใหม่
+- **Hybrid search ดีกว่า vector อย่างเดียว**: keyword search ยังจำเป็นสำหรับคำเฉพาะ (ชื่อลูกค้า, เลขที่เอกสาร)
+- **Graph expansion = killer feature**: การขยายจาก node ที่เจอไปหา neighbors ทำให้เจอข้อมูลที่ไม่รู้ว่ามี
+
+ถ้ามี knowledge base ที่ใช้ Obsidian หรือ Markdown files อยู่แล้ว การสร้าง Knowledge Graph ไม่ยากอย่างที่คิด เริ่มจากการ extract wikilinks แล้วขยายจากตรงนั้น

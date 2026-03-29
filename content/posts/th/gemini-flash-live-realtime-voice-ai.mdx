@@ -1,0 +1,88 @@
+---
+title: "Gemini Flash Live — AI คุยเสียงแบบ Real-time ได้แล้ว ผลต่อ Call Center ไทย"
+description: "Gemini Flash Live ฟังและตอบพร้อมกัน ไม่ต้องรอ เหมือนโทรหาเพื่อนที่ฉลาดที่สุดในโลก ธุรกิจที่มี Call Center กำลังจะเปลี่ยน AI รับสาย 24 ชั่วโมง ต้นทุนถูกกว่าคนหลายเท่า"
+date: 2026-03-29
+cover: ../covers/gemini-flash-live-realtime-voice-ai.jpg
+category: "AI Tools"
+tags: ["gemini", "voice ai", "call center", "real-time ai", "google ai"]
+featured: false
+draft: false
+---
+
+## ความต่างระหว่าง Voice AI รุ่นก่อนกับ Gemini Flash Live
+
+Voice AI รุ่นก่อนทำงานแบบ turn-based: คุณพูด → หยุด → AI ประมวลผล → AI ตอบ
+
+มีความล่าช้า 1-3 วินาทีในแต่ละ turn ซึ่งฟังดูไม่เป็นธรรมชาติ เหมือนคุยผ่าน walkie-talkie
+
+Gemini Flash Live เปลี่ยนแนวทาง — ออกแบบมาเป็น **streaming** ตั้งแต่ต้น
+
+AI ฟังไปพร้อมกับที่คุณพูด เริ่มประมวลผลได้ก่อนที่คุณจะหยุดพูด และตอบกลับได้ทันทีที่มีคำตอบ
+
+ผลคือ latency รวมอยู่ที่ต่ำกว่า 500ms — ใกล้เคียงกับการสนทนาจริงระหว่างคนสองคน
+
+## ทดสอบจริงเป็นอย่างไร
+
+ตาม developer reports ที่แชร์ใน Google AI community:
+
+**จุดเด่น**
+- Interruption handling — ถ้าคุณพูดแทรกขณะ AI กำลังตอบ AI หยุดและฟัง (เหมือนการสนทนาจริง)
+- Context retention — จำเนื้อหาบทสนทนาได้ยาวกว่า 10 นาทีโดยไม่หลุด context
+- Multilingual switching — สลับระหว่างภาษาได้กลางประโยค
+
+**ข้อจำกัด**
+- ยังอยู่ใน preview — stability ยังไม่ 100%
+- ราคา API ยังไม่ประกาศชัดเจนสำหรับ production use
+- ไม่รองรับ noisy environment ได้ดีเท่า voice-specific solutions
+
+## ผลกระทบต่อ Call Center ในไทย
+
+Call Center เป็นอุตสาหกรรมที่มีพนักงานจำนวนมากในไทย และนี่คือสิ่งที่กำลังเปลี่ยน
+
+<Callout variant="warning" title="ตัวเลขที่ต้องคิด">
+ค่าใช้จ่ายพนักงาน Call Center ในไทยโดยเฉลี่ยอยู่ที่ประมาณ 15,000-25,000 บาท/เดือน รวม overhead แล้วอาจสูงถึง 35,000 บาท ต่อ seat ต่อเดือน AI voice ที่รองรับ 1,000 concurrent calls ราคาอาจอยู่ที่หลักหมื่นบาทต่อเดือน — เทียบไม่ได้
+</Callout>
+
+สิ่งที่ AI voice จะทำแทนคนได้ดีในระยะสั้น:
+- FAQ และ tier-1 support — คำถามที่ถามซ้ำทุกวัน
+- Appointment booking — นัดหมาย ยืนยัน เปลี่ยนเวลา
+- Order status — ติดตามสินค้า ตรวจสอบสถานะ
+- Basic troubleshooting — step-by-step guided support
+
+สิ่งที่ยังต้องใช้คนอยู่:
+- Complaint handling ที่ซับซ้อน
+- การเจรจา exception
+- Empathy-critical situations (เช่น การแจ้งข่าวร้าย)
+- การตัดสินใจที่ต้องใช้ judgment
+
+## วิธีที่ธุรกิจควรมองเรื่องนี้
+
+อย่ามองว่า AI voice จะ "แทน" คนทั้งหมด มองว่ามันจะ "เพิ่มพลัง" ทีมได้อย่างไร
+
+**Model ที่น่าสนใจ:**
+
+AI รับสาย 100% → ประมวลผล intent → ถ้าเป็น simple query: handle อัตโนมัติ → ถ้าซับซ้อน: handoff ไปคนพร้อม context สรุป
+
+พนักงานที่เหลือจะรับแต่ cases ที่ต้องการ human judgment — ซึ่งมักเป็น cases ที่มีมูลค่าสูงกว่า
+
+## เริ่มต้นทดสอบ Gemini Flash Live
+
+สำหรับ developer: Gemini Flash Live มีใน Google AI Studio และเข้าถึงได้ผ่าน Gemini API
+
+```
+model: "gemini-2.0-flash-live-001"
+```
+
+สำหรับ non-developer: Google กำลังทำ demo ใน Google Meet และ Google Workspace ซึ่งน่าจะเห็นฟีเจอร์นี้ใน consumer product ปลายปี 2026
+
+## สรุป
+
+Gemini Flash Live ไม่ใช่แค่ Voice AI อีกตัว มันคือ signal ว่า real-time conversational AI กำลังกลายเป็น commodity
+
+เร็วๆ นี้ ทุกธุรกิจที่มีลูกค้าโทรมาจะถามตัวเองว่า "เราต้องการ human operator กี่คน และ AI จะจัดการส่วนไหนได้บ้าง"
+
+คำตอบจะแตกต่างกันในแต่ละธุรกิจ แต่คำถามนั้นจะมาถึงทุกคน
+
+---
+
+*ติดตาม DopeLab สำหรับข่าว AI ที่มีผลต่อธุรกิจไทย ที่ [ink.dopelab.studio](https://ink.dopelab.studio)*

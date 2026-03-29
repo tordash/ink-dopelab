@@ -1,0 +1,212 @@
+---
+title: "Claude Code + NotebookLM — วิจัย 20 sources เขียน blog ใน 30 นาที"
+description: "Pipeline ที่ทำซ้ำได้ทุกสัปดาห์ — ใช้ NotebookLM ย่อย 20+ sources แล้วให้ Claude Code เขียน blog จาก research notes ลดเวลา 80% จาก 3 ชั่วโมงเหลือ 30 นาที"
+date: 2026-03-29
+cover: ../covers/claude-code-notebooklm-research-30min.jpg
+category: "Tutorial"
+tags: ["claude code", "notebooklm", "tutorial", "ai writing", "content creation", "productivity"]
+featured: true
+draft: false
+---
+
+## จาก 3 ชั่วโมง เหลือ 30 นาที
+
+ก่อนหน้านี้ผมใช้เวลา 3 ชั่วโมงกว่าจะได้บทความสักชิ้น
+
+เปิดแท็บ 15 อัน อ่านบทความภาษาอังกฤษ จด notes แล้วก็ลืมว่าจดไว้ไหน สุดท้ายนั่งเขียนใหม่จากศูนย์ ทั้งที่ research มาตั้งนาน
+
+จนผมเจอ workflow ที่เปลี่ยนเกมไปเลย: ใช้ NotebookLM ย่อย sources ทั้งหมดให้ แล้วให้ Claude Code เขียน blog จาก research ที่สกัดแล้ว
+
+ตอนนี้ใช้เวลาไม่ถึง 30 นาที ได้บทความพร้อม publish ทุกสัปดาห์
+
+**ไม่ใช่เวทมนตร์ แต่เป็น pipeline ที่ทำซ้ำได้ทุกครั้ง**
+
+---
+
+## สิ่งที่ต้องมีก่อนเริ่ม
+
+| Tool | ทำไมต้องมี | ฟรี? |
+|------|-----------|------|
+| **NotebookLM** | AI research assistant จาก Google ที่อ่าน sources ให้แล้วตอบคำถามได้ | ฟรี |
+| **Claude Code** | AI coding agent ที่เขียน blog จาก research notes ได้โดยตรง | Pro plan หรือ API |
+| **Obsidian** (optional) | เก็บ research notes ถาวร ใช้ซ้ำได้ | ฟรี |
+
+ถ้ายังไม่มี Claude Code ใช้ ChatGPT หรือ Claude web ก็ได้ แต่ Claude Code ทำงานกับไฟล์ในเครื่องได้โดยตรง เร็วกว่ามาก
+
+---
+
+## Step 1: หา Sources ที่มีคุณภาพ (5 นาที)
+
+นี่คือขั้นตอนสำคัญที่สุด เพราะ garbage in = garbage out
+
+**แหล่งที่ควรหา:**
+- YouTube tutorials จากคนที่ทำจริง (ไม่ใช่คลิป "อธิบาย" ที่ไม่เคยทำ)
+- Official documentation ของ tool/feature ที่จะเขียน
+- Blog posts จาก practitioners ที่ลง production จริง
+- GitHub repos ที่มี code examples + issues ที่คนถามบ่อย
+- Reddit/HN threads ที่มีคน discuss ข้อดีข้อเสียจริงจัง
+
+**วิธีหาเร็ว:**
+
+```bash
+# ใช้ YouTube search หา tutorials
+yt-dlp --flat-playlist "ytsearch10:Claude Code tutorial 2026" --print title --print url
+
+# ใช้ Tavily หรือ DuckDuckGo หา blog posts
+# (ผ่าน MCP หรือ CLI)
+```
+
+**กฎสำคัญ:** เลือก 15-25 sources ที่มีคุณภาพ ดีกว่ายัด 50 sources ที่ไม่ได้อ่าน
+
+---
+
+## Step 2: Feed เข้า NotebookLM (3 นาที)
+
+เปิด NotebookLM แล้วสร้าง notebook ใหม่สำหรับ topic นี้โดยเฉพาะ
+
+**วิธี feed sources:**
+- วาง URL ของบทความ/YouTube ได้เลย NLM จะอ่านให้
+- Upload PDF ถ้ามี research paper
+- Copy-paste text ถ้า source ไม่รองรับ URL
+
+**Gotcha #1:** NLM มี limit 50 sources ต่อ notebook ไม่ต้องยัดจนเต็ม 20-25 อันกำลังดี
+
+**Gotcha #2:** YouTube ที่ยาวเกิน 2 ชั่วโมง NLM อาจตัดท้ายหาย ถ้ามีคลิปยาว ตัดเป็นช่วงที่เกี่ยวข้องก่อน
+
+---
+
+## Step 3: ถามคำถามเจาะ (10 นาที)
+
+ขั้นตอนนี้คือหัวใจของ pipeline ถามให้ถูก ได้คำตอบที่ดี
+
+### 6 คำถามที่ต้องถามทุกครั้ง
+
+```
+1. "Best practices สำหรับเรื่องนี้คืออะไร? สรุปเป็น bullet points"
+2. "Common mistakes ที่คนมักทำ? พร้อมวิธีแก้"
+3. "Step-by-step ที่ง่ายที่สุดสำหรับคนเพิ่งเริ่ม?"
+4. "Advanced tips สำหรับคนที่ทำเป็นแล้ว?"
+5. "ข้อจำกัดหรือ caveats ที่ docs ไม่ค่อยบอก?"
+6. "เปรียบเทียบ alternatives มีอะไรบ้าง? ข้อดีข้อเสีย?"
+```
+
+**Pro tip:** ถามแบบเจาะจง ไม่ใช่ถามกว้างๆ
+
+```
+# แบบนี้ได้คำตอบกว้างเกินไป:
+"บอกเรื่อง Claude Code หน่อย"
+
+# แบบนี้ได้คำตอบที่ใช้ได้:
+"Claude Code ใช้ร่วมกับ NotebookLM ยังไงให้เขียน blog ได้เร็ว?
+ตอบจาก sources ที่มี พร้อม cite source"
+```
+
+NLM จะ cite sources ให้ คลิกดูได้ว่าข้อมูลมาจากไหน ช่วยให้เช็คความถูกต้องได้
+
+---
+
+## Step 4: สกัดลง brain/ หรือ Obsidian (5 นาที)
+
+**ขั้นตอนนี้ห้ามข้าม** ถ้าไม่สกัดก่อนเขียน Claude จะ hallucinate เพราะไม่มี ground truth
+
+```markdown
+## Research: [Topic Name]
+### Key Findings
+- [bullet points สรุปจาก NLM]
+
+### Step-by-Step (Verified)
+1. [ขั้นตอนที่ลองแล้ว]
+2. ...
+
+### Gotchas
+- [ปัญหาที่เจอจริง + วิธีแก้]
+
+### Tools Comparison
+| Tool | Pros | Cons |
+|------|------|------|
+
+### Sources
+- [list ของ sources ทั้งหมด]
+```
+
+**ทำไมต้องสกัด?**
+1. Claude Code อ่านไฟล์ใน brain/ ได้โดยตรง ไม่ต้อง copy-paste
+2. ใช้ซ้ำได้ในอนาคต ไม่ต้อง research ใหม่
+3. มี ground truth ป้องกัน hallucination
+4. Obsidian สร้าง connections ระหว่าง notes อัตโนมัติ
+
+---
+
+## Step 5: Claude Code เขียน blog จาก Research (7 นาที)
+
+ถึงตอนนี้คุณมี research notes ที่สกัดแล้ว ให้ Claude Code เขียน blog ได้เลย
+
+```bash
+# Prompt ที่ใช้จริง:
+"อ่าน brain/Semantic/tutorial-{slug}.md
+แล้วเขียน blog ภาษาไทย 1,500 คำ
+
+โครงสร้าง:
+1. Hook: เปิดด้วยปัญหาที่คนเจอ
+2. Prerequisites: สิ่งที่ต้องมี
+3. Step-by-step: ทุกขั้นตอน พร้อม code snippets
+4. Gotchas: ปัญหาที่มักเจอ + วิธีแก้
+5. Result: ผลที่ได้
+6. CTA: อ่านบทความอื่น
+
+Tone: พี่สอนน้อง สบายๆ ชัดเจน
+ห้ามใช้คำว่า 'ในบทความนี้' หรือ 'สวัสดีครับ'
+เปิดด้วย vulnerability (ก่อนหน้านี้ผมเคย...)
+Code snippets ต้อง copy-paste ได้จริง"
+```
+
+Claude Code จะอ่าน research notes จากไฟล์ เขียน blog ตาม structure ที่กำหนด ใส่ code snippets จาก research สร้าง MDX file ที่ deploy ได้เลย
+
+**Gotcha #3:** ต้องบอก Claude ว่า "เขียนจาก research notes เท่านั้น ห้าม hallucinate" ไม่งั้นจะแต่งเอง
+
+**Gotcha #4:** Review ทุกครั้ง โดยเฉพาะ code snippets ต้องรันได้จริง อย่าเชื่อ AI 100%
+
+---
+
+## ปัญหาที่มักเจอ + วิธีแก้
+
+| ปัญหา | สาเหตุ | วิธีแก้ |
+|-------|--------|--------|
+| NLM ตอบไม่ตรง | ถามกว้างเกินไป | ถามเจาะจง + ให้ cite source |
+| Claude เขียนเรื่อง AI ทั่วไป | ไม่ได้ชี้ไปที่ research notes | ระบุ path ไฟล์ให้ชัด + บอก "จาก notes เท่านั้น" |
+| Blog ยาวเกินไป | ไม่ได้กำหนด word count | ใส่ word count ใน prompt ทุกครั้ง |
+| Code snippets รันไม่ได้ | Claude แต่งเอง | Cross-check ทุก snippet กับ docs จริง |
+| NLM ตัด YouTube ท้ายหาย | คลิปยาวเกิน 2 ชม. | ตัดเป็นช่วง หรือใช้ transcript แทน |
+
+---
+
+## ผลลัพธ์: 30 นาทีได้ blog พร้อม publish
+
+| ขั้นตอน | เวลา |
+|---------|------|
+| หา sources | 5 นาที |
+| Feed NLM + ถามคำถาม | 13 นาที |
+| สกัดลง notes | 5 นาที |
+| Claude Code เขียน blog | 7 นาที |
+| **รวม** | **30 นาที** |
+
+เทียบกับวิธีเดิม:
+- เปิด 15 แท็บ อ่านเอง: 1.5 ชม.
+- จด notes: 30 นาที
+- เขียน blog: 1 ชม.
+- **รวม: 3+ ชั่วโมง**
+
+ลดเวลา **80%** โดยที่คุณภาพดีขึ้นด้วย เพราะมี 20+ sources เป็น backbone ไม่ใช่เขียนจากความจำ
+
+---
+
+## สิ่งที่ต้องระวัง
+
+1. **อย่าข้ามขั้นตอนสกัด** ถ้าให้ Claude เขียนโดยไม่มี research notes มันจะแต่งเอง
+2. **อย่ายัด sources มั่วๆ** 20 sources ดี ดีกว่า 50 sources ไม่ได้อ่าน
+3. **Review ทุกครั้ง** AI เขียนให้ แต่คุณต้อง review ก่อน publish
+4. **เก็บ research notes ไว้** ใช้ซ้ำได้เมื่อ update บทความ
+
+Pipeline นี้ใช้ได้กับทุกหัวข้อ ไม่ว่าจะเป็น tech, marketing, business ขอแค่มี sources ที่ดี NLM + Claude Code จัดการให้หมด
+
+อ่าน tutorial อื่นๆ ของ DopeLab ได้ที่ [ink.dopelab.studio](https://ink.dopelab.studio)
