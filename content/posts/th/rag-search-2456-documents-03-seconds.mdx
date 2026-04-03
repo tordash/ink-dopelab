@@ -1,0 +1,280 @@
+---
+title: "RAG Search ค้น 2,456 เอกสาร ใน 0.3 วินาที — ตัวเลขจริง วิธีทำจริง"
+description: "ถ้า AI ของคุณยังค้นข้อมูลช้า หรือตอบผิดเพราะจำผิด — นี่คือ case study จริงของการสร้าง RAG search ที่ค้น 2,456 เอกสารได้ใน 0.3 วินาที ด้วย BM25 + Vector Hybrid พร้อมตัวเลขจากระบบ production"
+date: 2026-04-03
+cover: ../covers/rag-search-2456-documents-03-seconds.jpg
+category: "AI Workflow"
+tags: ["rag", "search", "vector-database", "ai-workflow", "knowledge-management"]
+featured: false
+draft: false
+---
+
+## AI ของคุณช้าเพราะมันไม่รู้จะหาอะไรจากไหน
+
+ทุกครั้งที่ถาม AI ว่า "ลูกค้า A ต้องการอะไร?" หรือ "ต้นทุนเมนูนี้เท่าไหร่?" — มีสองสิ่งที่เกิดขึ้น
+
+**ถ้าไม่มี RAG:** AI ตอบจากความจำที่ train มา (อาจผิด) หรือต้องอ่านไฟล์ทีละไฟล์ก่อนตอบ (ช้ามาก)
+
+**ถ้ามี RAG:** AI ค้นข้อมูลจริงก่อนตอบ ใน milliseconds
+
+ผมสร้างระบบที่ค้น **2,456 เอกสาร** ได้ใน **0.3 วินาที** ในบทความนี้จะแชร์ตัวเลขจริง, สถาปัตยกรรมจริง และสิ่งที่ทำให้มันเร็วได้ขนาดนี้
+
+![RAG Search Architecture — จากคำถามสู่คำตอบใน 0.3 วินาที](/images/placeholder.jpg)
+
+---
+
+## ทำไม 0.3 วินาที ถึงสำคัญ?
+
+ก่อนจะบอกว่าทำยังไง ขอ frame ว่าทำไมความเร็วถึงสำคัญในบริบทนี้
+
+งานที่ผมทำทุกวันคือ **AI-assisted work** — Claude Code เป็น pair programmer ที่ต้องค้นข้อมูลธุรกิจระหว่างทำงาน ถ้าทุกคำถามใช้เวลา 10-30 วินาทีเพื่อค้นไฟล์ เวลาทำงานจริงหายไปกี่ชั่วโมงต่อวัน?
+
+| การค้น | ก่อนมี RAG | หลังมี RAG |
+|--------|-----------|-----------|
+| หา client info | อ่านไฟล์ 5 ไฟล์ → ~30 วินาที | ค้นแล้วได้เลย → 0.3 วินาที |
+| ดูต้นทุนเมนู | SQL query → 10 วินาที | semantic search → 0.5 วินาที |
+| หา session note | grep brain/ → 20 วินาที | keyword search → 0.2 วินาที |
+| ค้น workflow | เปิดทีละไฟล์ → 2 นาที | hybrid search → 0.3 วินาที |
+
+ที่ **100 คำถามต่อวัน** ประหยัดได้ประมาณ **45 นาทีต่อวัน** แค่จากความเร็วในการค้นข้อมูล
+
+---
+
+## สถาปัตยกรรมของระบบ
+
+```
+คำถาม → [Query Router] → [Hybrid Search] → [Re-rank] → [Response]
+                              ↕           ↕
+                          [BM25]    [Vector DB]
+                              ↕
+                        [2,456 docs]
+```
+
+สามส่วนหลักที่ทำให้ระบบเร็ว:
+
+### 1. BM25 — ค้นแบบ keyword ใน milliseconds
+
+BM25 (Best Match 25) คือ algorithm ค้นคำที่ใช้มานานกว่า 30 ปีใน search engine — มันเร็วมาก ไม่ต้องใช้ GPU ค้น 1 ล้าน document ได้ใน **< 5ms**
+
+หลักการ: นับความถี่ของคำ + ปรับตาม document length → score ว่า document ไหน "match" มากที่สุด
+
+ข้อดีของ BM25:
+- ค้นคำเฉพาะได้แม่น (ชื่อ client, ชื่อเมนู, ตัวเลข)
+- ไม่ต้องใช้ GPU
+- ทำงานได้แม้ข้อมูลใหม่ที่ model ไม่เคยเห็น
+
+ข้อด้อย:
+- ไม่เข้าใจความหมาย — "หมูย่าง" กับ "ไก่ย่าง" ได้ score เท่ากันเพราะมี "ย่าง" เหมือนกัน
+
+### 2. Vector Search — เข้าใจ semantic meaning
+
+ทุก document ถูก convert เป็น **embedding vector** (array ตัวเลขหลายร้อยมิติ) ที่แทนความหมาย
+
+documents ที่มีความหมายคล้ายกันจะมี vector ที่ "ใกล้กัน" ใน vector space
+
+ข้อดี: ถามว่า "ต้นทุนวัตถุดิบ" ก็ค้นเจอเอกสารที่พูดถึง "raw material cost" หรือ "ราคาซื้อของ" ได้
+
+ข้อด้อย:
+- ช้ากว่า BM25 (ต้องคำนวณ cosine similarity)
+- ต้องมี embedding model
+- บางครั้ง "drift" ไปเจอ documents ที่ semantic คล้ายแต่ไม่ใช่สิ่งที่ต้องการ
+
+### 3. Hybrid + RRF Fusion — รวมสองโลก
+
+นี่คือ magic ที่แท้จริง
+
+**Reciprocal Rank Fusion (RRF)** รวมผลจาก BM25 และ Vector search โดยให้ score ตาม rank ไม่ใช่ raw score:
+
+```python
+rrf_score = 1 / (rank_bm25 + 60) + 1 / (rank_vector + 60)
+```
+
+document ที่ติด top ในทั้งสองวิธีจะได้ score สูงสุด
+
+ผล: ความแม่นสูงขึ้น recall สูงขึ้น และยังเร็วพอๆ กับ BM25 อยู่
+
+![Hybrid Search — BM25 + Vector + RRF Fusion ทำงานอย่างไร](/images/placeholder.jpg)
+
+---
+
+## ตัวเลขจริงจากระบบ production
+
+![Production RAG System — metrics จริงจาก 2,456 documents](/images/placeholder.jpg)
+
+ระบบที่ผมสร้างใช้งานมาหลายสัปดาห์ นี่คือตัวเลขจริง:
+
+| Metric | ตัวเลข |
+|--------|--------|
+| Total documents | 2,456 |
+| Collections | 3 (brain, menus, clients) |
+| BM25 query time | ~5ms |
+| Vector search time | ~80ms |
+| Hybrid (BM25 + Vector + RRF) | ~120ms |
+| End-to-end (query → result) | ~300ms |
+| Embedding model | bge-m3 (BAAI) |
+| Vector dimensions | 1,024 |
+| Storage | ~100 MB |
+| Cost | $0 |
+
+ตัวเลขที่น่าสนใจคือ **production RAG benchmark** จาก LlamaIndex (2026) พบว่า traditional RAG ตอบเร็วกว่า agentic file search เฉลี่ย 3.81 วินาที (7.36s vs 11.17s) — ระบบที่สร้างนี้เร็วกว่า traditional RAG อีกหลายเท่า เพราะ index ไว้แล้ว ไม่ต้องอ่านไฟล์ใหม่ทุกครั้ง
+
+---
+
+## เทคนิค 5 อย่างที่ทำให้เร็ว
+
+### 1. Pre-computed embeddings
+
+ไม่ compute embedding ตอน query — compute ล่วงหน้าตอน index และเก็บไว้ใน vector database ตลอด
+
+```python
+# ตอน index (ทำครั้งเดียว)
+def index_document(doc_path):
+    text = read_file(doc_path)
+    embedding = embed_model.encode(text)  # ช้า แต่ทำครั้งเดียว
+    vector_db.add(embedding, metadata={"path": doc_path})
+
+# ตอน query (ทำทุกครั้ง แต่เร็ว)
+def search(query):
+    query_embedding = embed_model.encode(query)  # เร็ว — แค่ 1 document
+    results = vector_db.search(query_embedding, top_k=10)
+```
+
+### 2. Incremental indexing
+
+ไม่ re-index ทั้งหมดทุกครั้ง — เช็ค file hash และ index เฉพาะไฟล์ที่เปลี่ยน
+
+```python
+def should_reindex(filepath):
+    current_hash = hash_file(filepath)
+    stored_hash = get_stored_hash(filepath)
+    return current_hash != stored_hash
+```
+
+ทำให้ auto re-index ทุก 2 ชั่วโมงใช้เวลาแค่ไม่กี่วินาที แทนที่จะ re-embed ทุก document
+
+### 3. Chunking strategy
+
+document ยาวถูก chunk เป็นส่วนเล็กๆ ก่อน index ทำให้ search เจอ "ส่วนที่เกี่ยวข้อง" มากกว่าทั้ง document
+
+```python
+def chunk_document(text, chunk_size=512, overlap=50):
+    chunks = []
+    for i in range(0, len(text), chunk_size - overlap):
+        chunk = text[i:i + chunk_size]
+        chunks.append(chunk)
+    return chunks
+```
+
+<Callout variant="info" title="Chunk size ที่เหมาะสม">
+512 tokens เป็น sweet spot สำหรับ business documents — เล็กพอให้ match แม่น ใหญ่พอให้ context ครบ ถ้าเอกสารสั้นกว่า 512 tokens ก็ไม่ต้อง chunk
+</Callout>
+
+### 4. Lightweight embedding model
+
+bge-m3 จาก BAAI เป็น model ขนาดกลางที่รองรับหลาย 100 ภาษา รวมถึงภาษาไทย
+
+เทียบกับ model ใหญ่: **40% เร็วกว่า** ในการ generate embedding โดย quality ต่างกันน้อยมากสำหรับ business documents ภาษาไทย
+
+### 5. BM25 เป็น first filter
+
+แทนที่จะ vector search ทุก 2,456 documents — ใช้ BM25 เลือก top 50 ก่อน แล้วค่อย vector search ใน 50 documents นั้น
+
+```
+BM25 (2,456 docs) → top 50 → Vector Search (50 docs) → RRF → top 10
+```
+
+ลด compute ของ vector search จาก 2,456 docs เหลือแค่ 50 docs = เร็วขึ้น ~50x
+
+![Incremental indexing — index เฉพาะไฟล์ที่เปลี่ยน ไม่ re-index ทั้งหมด](/images/placeholder.jpg)
+
+---
+
+## สิ่งที่ควรรู้ก่อนสร้าง
+
+![RAG Production Pitfalls — สิ่งที่ต้องระวังก่อน deploy](/images/placeholder.jpg)
+
+### RAG ไม่ใช่ silver bullet
+
+Research จาก AppScale (2026) ชี้ว่า production RAG มี hidden costs ที่คนมักมองข้าม:
+
+- **Embedding pipeline maintenance** — เมื่อ document format เปลี่ยน ต้องอัพเดท chunking logic
+- **Vector DB scaling** — ยิ่ง document เยอะ ยิ่งใช้ storage มาก (แม้จะ local)
+- **Re-ranking overhead** — ถ้าเพิ่ม cross-encoder reranker จะแม่นขึ้น แต่ช้าลง 100-300ms
+
+สำหรับ 2,456 documents ไม่มีปัญหาใดในนี้ แต่ถ้าขยายเป็น 100,000+ documents ต้องวางแผนใหม่
+
+### เมื่อไหร่ RAG ไม่คุ้มค่า
+
+| กรณี | RAG คุ้มไหม |
+|------|------------|
+| เอกสาร < 100 ไฟล์ | ❌ แค่ grep หรือ LLM อ่านตรงเร็วกว่า |
+| ข้อมูล structured (SQL) | ❌ SQL query ตรงแม่นกว่า |
+| เอกสาร > 500 ไฟล์ | ✅ RAG คุ้มค่ามาก |
+| ค้นบ่อย (10+ ครั้ง/วัน) | ✅ ROI ชัดเจน |
+| ข้อมูลผสม TH+EN | ✅ bge-m3 จัดการได้ดี |
+
+---
+
+## เริ่มสร้างได้เลย: Minimal Setup
+
+ถ้าอยากลองสร้าง RAG ง่ายๆ โดยไม่ต้องเขียน code ทั้งหมด:
+
+**Option 1: NotebookLM (ง่ายสุด)**
+- Upload เอกสาร → ถามคำถาม → ได้คำตอบพร้อม source
+- ฟรี ไม่ต้อง code เลย
+- เหมาะสำหรับทดสอบว่า RAG ช่วยงานคุณได้ไหม
+
+**Option 2: ChromaDB + Python (advanced)**
+
+```python
+import chromadb
+from sentence_transformers import SentenceTransformer
+
+client = chromadb.Client()
+collection = client.create_collection("my_docs")
+model = SentenceTransformer('BAAI/bge-m3')
+
+# Index
+def add_document(text, doc_id):
+    embedding = model.encode(text).tolist()
+    collection.add(
+        embeddings=[embedding],
+        documents=[text],
+        ids=[doc_id]
+    )
+
+# Search
+def search(query, n=5):
+    query_embedding = model.encode(query).tolist()
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=n
+    )
+    return results
+```
+
+สร้าง RAG ที่ทำงานได้จริงใน ~50 บรรทัด
+
+<Callout variant="success" title="Key Insight">
+ความเร็ว 0.3 วินาทีไม่ได้มาจากเทคโนโลยีแพง — มาจาก architecture ที่คิดดี: pre-compute embeddings, BM25 เป็น first filter, และ incremental indexing ทำให้ system overhead ต่ำ
+</Callout>
+
+---
+
+## สรุป
+
+RAG search ใน 0.3 วินาทีสำหรับ 2,456 documents ไม่ใช่เรื่องยากหรือแพง — ต้องการแค่:
+
+1. **Embedding model** ที่รองรับภาษาไทย (bge-m3 ฟรี)
+2. **Vector database** (ChromaDB ฟรี run local ได้)
+3. **BM25** เป็น first filter (pure Python ไม่ต้อง GPU)
+4. **Hybrid fusion** ด้วย RRF
+5. **Pre-compute + Incremental index** ไม่ compute ซ้ำ
+
+ถ้าธุรกิจของคุณมีเอกสาร เมนู ข้อมูลลูกค้า หรือ knowledge base ที่ AI ต้องเข้าถึง — RAG คือสิ่งที่ทำให้ "AI ที่รู้ธุรกิจของเรา" เป็นจริงได้ ไม่ใช่แค่ demo
+
+---
+
+*ติดตาม DopeLab ที่ [dopelab.studio](https://dopelab.studio) สำหรับ AI workflows ที่สร้างจากธุรกิจจริง*
+
+*บทความนี้เป็นส่วนหนึ่งของ series: RAG Knowledge System → [ตอนที่ 1](/th/blog/rag-knowledge-system) | [ตอนที่ 2: Oracle Evolution](/th/blog/rag-to-oracle-evolution)*

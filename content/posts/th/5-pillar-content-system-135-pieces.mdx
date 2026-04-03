@@ -1,0 +1,230 @@
+---
+title: "5 สี 5 เสา — ระบบจัดการ Content 135 ชิ้นโดยไม่งง"
+description: "เมื่อ content เกิน 100 ชิ้น จะรู้ได้ยังไงว่าอะไรทำไปแล้ว อะไรยังค้างอยู่ DopeLab ใช้ระบบ 5 Pillar + color-coded tracking ควบคุม 135 content พร้อมกันโดยไม่หลุด"
+date: 2026-04-03
+cover: ../covers/5-pillar-content-system-135-pieces.jpg
+category: "AI Workflow"
+tags: ["content-management", "content-strategy", "productivity", "system-design"]
+featured: false
+draft: false
+---
+
+## จาก 5 ชิ้น เป็น 135 ชิ้น — จุดที่ระบบต้องเปลี่ยน
+
+![Content system overview — 5 pillars, 5 colors, 135 pieces](/images/placeholder.jpg)
+
+ตอนที่ DopeLab มี content ไม่กี่ชิ้น การจัดการมันง่ายมาก ใช้ Google Sheet แถวเดียว คอลัมน์ไม่กี่อัน ก็รู้ว่าแต่ละชิ้นอยู่ไหน
+
+แต่พอ content เพิ่มขึ้นเรื่อยๆ — short video, carousel, blog, news card, caption — ถึงจุดหนึ่งมันเริ่มยุ่ง
+
+ผมนั่ง scroll ใน Sheet แล้วถามตัวเองว่า "DL-089 ทำไปแล้วยัง? DL-101 อยู่ที่ script หรือ render แล้ว?" ไม่มีคำตอบที่ชัด
+
+นั่นคือจุดที่รู้ว่าต้องออกแบบระบบใหม่
+
+ปัจจุบัน DopeLab track content **135 ชิ้น** ครอบคลุม 5 platforms ด้วยระบบ 5 Pillar + color-coded status — รู้สถานะทุกชิ้นใน 3 วินาที
+
+<Callout variant="info" title="ตัวเลขที่น่ารู้">
+135 content ชิ้น = DL-001 ถึง DL-135 — นับตั้งแต่เริ่มทำ DopeLab จนถึงวันนี้ครอบคลุม blog, short video, carousel, news card และ caption
+</Callout>
+
+---
+
+## ปัญหาจริงของคนทำ Content หลายชิ้น
+
+![Content chaos without system](/images/placeholder.jpg)
+
+ก่อนมีระบบ ปัญหาที่เจอทุกอาทิตย์คือ:
+
+**1. ทำซ้ำโดยไม่รู้ตัว** — เขียน blog หัวข้อที่เคยทำไปแล้ว 2 เดือนก่อน แต่จำไม่ได้
+
+**2. หลุด production stage** — script เสร็จแล้วแต่ไม่ได้ render เพราะลืมว่ามีอยู่
+
+**3. Pillar ไม่ balance** — บางสัปดาห์ทำแต่ AI News ไม่มี Workflow เลย ทำให้ feed ดูเฉพาะทางเกินไป
+
+**4. ไม่รู้ว่า content ไหน "ดี"** — ไม่มีระบบวัด performance ของแต่ละ pillar
+
+ปัญหาเหล่านี้ไม่ใช่ปัญหาของ content คุณภาพต่ำ — มันคือปัญหาของระบบที่ไม่รองรับ scale
+
+---
+
+## 5 Pillar — เสาหลักของทุกชิ้นงาน
+
+![5 Content Pillars diagram for DopeLab](/images/placeholder.jpg)
+
+ก่อนจะพูดถึงระบบ ต้องเข้าใจก่อนว่า content pillar คืออะไร และทำไมต้องมี
+
+**Content Pillar** คือหมวดหมู่หลักที่ทุก content ของคุณต้องอยู่ใต้ มันคือตัวกำหนดว่า brand ของคุณ "พูดถึงอะไร" ในสายตาของคนตาม
+
+ถ้าไม่มี pillar — content จะกระจัดกระจาย follower จำแบรนด์ไม่ได้ เพราะวันนี้โพสเรื่องนึง พรุ่งนี้โพสอีกเรื่องที่ไม่เกี่ยวกัน
+
+สำหรับ DopeLab มี 5 pillars ที่ออกแบบมาให้ครอบคลุมทุก dimension ของ AI for business:
+
+### Pillar 1 — AI News (สีแดง 🔴)
+**Purpose:** ข่าว AI ล่าสุดที่กระทบธุรกิจไทย
+**Content Types:** News card, short video สรุปข่าว, caption ข่าว
+**Ratio:** 25%
+
+เลือก pillar นี้เพราะ AI เปลี่ยนเร็วมาก ทุกอาทิตย์มีเรื่องใหม่ที่ SME ไทยควรรู้ ถ้า DopeLab ไม่สรุปให้ก็ต้องไปตามเองจาก TechCrunch/Bloomberg ซึ่งส่วนใหญ่เป็นภาษาอังกฤษ
+
+### Pillar 2 — AI Workflow (สีน้ำเงิน 🔵)
+**Purpose:** สอน workflow จริงที่ใช้ได้กับธุรกิจ
+**Content Types:** Blog step-by-step, short video tutorial, carousel how-to
+**Ratio:** 30%
+
+นี่คือ pillar ที่ทำ content คุณภาพสูงสุดและ engage มากที่สุด เพราะให้ value ทันที คนอ่านจบแล้วเอาไปทำได้เลย
+
+### Pillar 3 — Case Study (สีเขียว 🟢)
+**Purpose:** ผลลัพธ์จริงจากการใช้ AI กับธุรกิจ
+**Content Types:** Blog case study (ปิดบังชื่อลูกค้า), before/after carousel, short video ผลลัพธ์
+**Ratio:** 20%
+
+ข้อดีของ pillar นี้คือ credibility มันไม่ใช่แค่บอกว่า "AI ดีนะ" แต่บอกว่า "ทำแบบนี้แล้วได้ผลลัพธ์เท่าไหร่"
+
+### Pillar 4 — Tools & Tech (สีม่วง 🟣)
+**Purpose:** เครื่องมือ AI ที่น่าสนใจพร้อม honest review
+**Content Types:** Review blog, comparison carousel, short demo video
+**Ratio:** 15%
+
+ไม่ใช่แค่ "tool นี้เจ๋งนะ" แต่บอกด้วยว่า "ใช้กับ use case ไหน ราคาเท่าไหร่ ข้อเสียคืออะไร"
+
+### Pillar 5 — Behind the Scenes (สีส้ม 🟠)
+**Purpose:** เบื้องหลัง DopeLab — กระบวนการจริง ความล้มเหลวจริง
+**Content Types:** Blog reflection, short video BTS, caption แบบ personal
+**Ratio:** 10%
+
+pillar นี้สร้าง authenticity ที่ทำให้คน follow ไม่ใช่แค่ content แต่ follow "คน" ด้วย
+
+---
+
+## Color-Coded System — อ่านสถานะด้วยตาเปล่า
+
+![Color-coded content tracker in Google Sheets](/images/placeholder.jpg)
+
+ตอนนี้มาถึงส่วนที่ทำให้ระบบทำงานได้จริง — color coding
+
+ใน Content Hub Sheet (Google Sheets) แต่ละแถวคือ content 1 ชิ้น มีคอลัมน์สำคัญ:
+
+| คอลัมน์ | ข้อมูล |
+|---------|--------|
+| ID | DL-001 → DL-135 |
+| Title | หัวข้อ |
+| Pillar | ระบุ pillar (1-5) |
+| Platform | IG / FB / Blog / All |
+| Format | Short Video / Carousel / Blog / News Card |
+| Status | ดูด้านล่าง |
+| Published At | วันที่โพส |
+| Reach | ดึงจาก Meta |
+| Notes | Link Drive, URL, หมายเหตุ |
+
+**Status สีต่างๆ มี 6 ระดับ:**
+
+| สี | ความหมาย | ทำอะไรต่อ |
+|----|----------|-----------|
+| ⬜ ขาว | Idea — ยังแค่ concept | เริ่ม research |
+| 🟡 เหลือง | Script / Outline พร้อม | เริ่ม production |
+| 🔵 น้ำเงิน | Production — กำลังทำอยู่ | รอ render / เขียน |
+| 🟠 ส้ม | Review — รอ approve | ตรวจ cross-check |
+| 🟢 เขียว | Published | วัด performance |
+| 🔴 แดง | Paused / Cancelled | Archive |
+
+ด้วย conditional formatting ใน Google Sheets แถวทุกแถวมีสีตาม status ทันที
+
+เปิด Sheet ขึ้นมา ไม่ต้องอ่านข้อความเลย แค่ดูสีก็รู้ทันทีว่า:
+- มีกี่ชิ้นที่กำลัง production อยู่
+- มีกี่ชิ้นที่รอ review
+- pipeline มันแน่นหรือว่าเบา
+
+---
+
+## วิธีตั้งระบบนี้ (Setup ใน 30 นาที)
+
+![Google Sheets content tracker setup](/images/placeholder.jpg)
+
+ไม่ต้องซื้อ tool ราคาแพง Google Sheets ฟรีทำได้ทั้งหมด
+
+### Step 1: กำหนด Pillars ของคุณก่อน (10 นาที)
+
+อย่าเพิ่งทำ Sheet — กำหนด pillar ให้ชัดก่อน ถามตัวเองว่า:
+
+- Brand ของคุณ "พูดถึงอะไร" อยู่แล้ว?
+- Audience ต้องการ value อะไรจากคุณ?
+- อะไรคือสิ่งที่คุณรู้มากกว่าคนอื่น?
+
+ให้มี 3-5 pillars — น้อยกว่า 3 ทำให้ feed ซ้ำซาก มากกว่า 5 จัดการยาก
+
+### Step 2: สร้าง Sheet โครงสร้างนี้
+
+```
+Column A: Content ID (DL-001, DL-002...)
+Column B: Title
+Column C: Pillar (dropdown: 1/2/3/4/5)
+Column D: Platform (dropdown: IG/FB/TikTok/Blog/All)
+Column E: Format (dropdown: Short Video/Carousel/Blog/News Card/Caption)
+Column F: Status (dropdown: Idea/Script/Production/Review/Published/Paused)
+Column G: Due Date
+Column H: Published Date
+Column I: Reach
+Column J: Notes/Links
+```
+
+### Step 3: ตั้ง Conditional Formatting
+
+Format → Conditional formatting → เลือก Column F (Status) แล้วตั้งสีตาม:
+- "Idea" → ขาว
+- "Script" → เหลือง
+- "Production" → น้ำเงิน
+- "Review" → ส้ม
+- "Published" → เขียว
+- "Paused" → แดง
+
+เลือก "Apply to range" ให้เป็นทั้งแถว — แล้วทั้งแถวจะเปลี่ยนสีตาม status
+
+### Step 4: ตั้ง Dashboard Tab
+
+สร้าง tab ที่ 2 ชื่อ "Dashboard" แล้วใช้ COUNTIF ดึงข้อมูลมาสรุป:
+
+```
+=COUNTIF(Sheet1!F:F,"Published")  → จำนวนที่โพสแล้ว
+=COUNTIF(Sheet1!C:C,"1")          → จำนวน content Pillar 1
+=COUNTIFS(Sheet1!C:C,"1",Sheet1!F:F,"Published") → Published จาก Pillar 1
+```
+
+Dashboard นี้ทำให้เห็นทันทีว่า pillar ไหน under-produced หรือ over-produced
+
+---
+
+## สิ่งที่เรียนรู้จาก 135 ชิ้น
+
+![Insights from 135 content pieces](/images/placeholder.jpg)
+
+หลังจาก track มาครบ 135 ชิ้น มีข้อสรุปที่น่าสนใจ:
+
+**1. Pillar balance ไม่เคย perfect** — แต่การรู้ว่า unbalance คือสิ่งสำคัญ ถ้าไม่มีระบบก็ไม่รู้ว่า pillar ไหนขาด
+
+**2. Short video ใช้เวลา production นานที่สุด** แต่ไม่ใช่ชิ้นที่ reach สูงที่สุดเสมอไป blog ยาวๆ บางชิ้น search มาเจอนานกว่า
+
+**3. "Paused" ≠ "Bad idea"** — บาง content ที่ pause ไว้กลับมา relevant อีกครั้งหลัง 2-3 เดือน ถ้า delete ทิ้งไปก็หายไปเลย
+
+**4. Review stage คือ bottleneck หลัก** — งานส่วนใหญ่ติดอยู่ที่ review นานกว่า production เสียอีก ต้องตั้ง deadline ให้ชัด
+
+<Callout variant="warning" title="ข้อผิดพลาดที่เจอบ่อย">
+อย่าออกแบบ column มากเกินไปตั้งแต่แรก เริ่มด้วย 6-7 column พอใช้ได้ แล้วค่อยเพิ่มเมื่อรู้ว่า need อะไรจริงๆ Sheet ที่ซับซ้อนเกินคือ Sheet ที่ไม่มีใครอยากอัปเดต
+</Callout>
+
+---
+
+## เอาไปทำได้เลย
+
+ระบบนี้ไม่ได้ต้องการ tool พิเศษอะไร ต้องการแค่:
+
+1. **ความชัดเจน** — รู้ว่า brand ของคุณมี pillar อะไรบ้าง
+2. **ความสม่ำเสมอ** — อัปเดต status ทุกครั้งที่ content เดินหน้า
+3. **Google Sheets** — ฟรี ใช้ได้ทุกคน
+
+เมื่อมีระบบ การเพิ่ม content จาก 10 ชิ้น เป็น 50 ชิ้น เป็น 135 ชิ้น ไม่ได้ทำให้งานยุ่งขึ้น — มันแค่ทำให้ Sheet ยาวขึ้น แต่ยังอ่านได้ใน 3 วินาทีเหมือนเดิม
+
+---
+
+*ติดตาม DopeLab ที่ [dopelab.studio](https://dopelab.studio) — สำหรับคนที่ใช้ AI ทำธุรกิจจริง*
+
+*ถ้าบทความนี้มีประโยชน์ แชร์ให้เพื่อนที่ทำ content หลายๆ ช่องทาง — เขาต้องการระบบแบบนี้แน่นอน*

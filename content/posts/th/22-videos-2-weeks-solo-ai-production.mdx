@@ -1,0 +1,274 @@
+---
+title: "ผลิต 22 วิดีโอใน 2 สัปดาห์ ด้วยทีม 1 คน + AI"
+description: "Case study จริงจาก DopeLab — ผลิต 22 short videos ใน 14 วัน โดยคนเดียวด้วย AI pipeline ต้นทุนต่ำกว่าจ้างทีมถึง 97% สรุปทุก tool, ทุก step, ทุกบทเรียน"
+date: 2026-04-03
+cover: ../covers/22-videos-2-weeks-solo-ai-production.jpg
+category: "AI Workflow"
+tags: ["video-production", "ai-workflow", "productivity", "content-creation"]
+featured: false
+draft: false
+---
+
+## 22 คลิปใน 2 สัปดาห์ — ตัวเลขที่ทำให้ตัวเองงง
+
+![22 videos in 2 weeks - AI production dashboard](/images/placeholder.jpg)
+
+ผมไม่ได้วางแผนว่าจะทำ 22 วิดีโอ
+
+เริ่มจาก "จะทำ batch สัก 5-7 คลิป" แต่พอ pipeline มัน smooth ขึ้น ก็ทำต่อไปเรื่อยๆ จนนับดูปลายสัปดาห์ที่ 2 — ได้ 22 คลิป
+
+ระยะเวลา: **14 วัน** (1-14 มีนาคม 2026)
+ทีม: **1 คน** (ผม)
+ช่วยโดย: **AI เกือบทุก step**
+
+ก่อนจะอ่านต่อ นี่คือตัวเลขที่สำคัญที่สุด:
+
+| | Traditional | AI Pipeline |
+|-|-------------|------------|
+| เวลาต่อคลิป | 3-5 ชั่วโมง | 45-90 นาที |
+| ต้นทุนต่อคลิป | ฿2,000-5,000 (จ้าง editor) | ~฿150-300 |
+| คลิปใน 2 สัปดาห์ | 4-6 คลิป (คนเดียว) | 22 คลิป |
+
+ลด 97% ในเรื่องต้นทุน เร็วขึ้น 3-5x ในเรื่องเวลา
+
+<Callout variant="info" title="ข้อมูลจากอุตสาหกรรม 2026">
+AI video generation market ปี 2026 มีมูลค่า $847M โตจากปีก่อน 18.8% | เวลาผลิต 60-second video ลดจาก 13 วัน (traditional) เหลือ 27 นาที (AI) — ที่มา: ngram.com industry research 2026
+</Callout>
+
+---
+
+## Pipeline ที่ใช้จริง: 6 ขั้นตอน
+
+![6-step AI video production pipeline](/images/placeholder.jpg)
+
+ไม่ใช่ทุก step ต้องใช้ AI — บางขั้นยังต้องการ human judgment แต่ AI ช่วยตรงจุดที่ใช้เวลามากที่สุด
+
+### Step 1: Research + Script (15-25 นาที)
+
+**AI ช่วย:** Claude Code เขียน script ภาษาไทย
+**Human ทำ:** เลือกหัวข้อ, ตรวจ fact, ปรับ tone ให้เป็นเสียงตัวเอง
+
+```
+Prompt template ที่ใช้:
+"เขียน script short video 25-35 วินาที เรื่อง [หัวข้อ]
+สำหรับ DopeLab — เสียงเป็นกันเอง ภาษาไทยผสม tech terms
+Hook: [ปัญหา/คำถามที่ target audience เจอ]
+Middle: [insight หลัก 1-2 จุด]
+CTA: ติดตาม DopeLab + link dopelab.studio"
+```
+
+Output: script 3-5 บรรทัด พร้อม timing estimate
+
+### Step 2: Voiceover (10-15 นาที)
+
+**AI ทำ:** ElevenLabs gen VO ด้วย eleven_v3 model, Hope voice (Thai)
+**Human ทำ:** ฟัง approve หรือ re-gen ถ้า intonation ผิด
+
+สิ่งที่เรียนรู้: ต้องส่ง text ที่ clean มาก — ถ้ามีจุดหรือลูกน้ำอยู่ผิดที่ เสียงจะ pause ผิดจังหวะ ต้องแก้ text ก่อน re-gen
+
+ElevenLabs API cost สำหรับ 22 คลิป (~35-45 วินาทีต่อคลิป): **ประมาณ $18-22** (จาก Pro plan $22/เดือน)
+
+### Step 3: Background Video (20-30 นาที รวมทุกคลิป)
+
+**AI ทำ:** Veo 3 gen dark tech background 9:16
+**Human ทำ:** เลือก style, approve
+
+เคล็ดลับ: gen background ล้วน 8-10 clips ต้นสัปดาห์ ใช้ rotate ทั้งสัปดาห์ — ไม่ต้อง gen ใหม่ทุกคลิป เพราะ DopeLab ใช้ visual identity เดิม
+
+Background ที่ gen ไปรอบนี้ใช้ไปได้ถึง DL-130+ ก่อนที่จะ gen ใหม่
+
+### Step 4: Render (2-3 นาที per คลิป)
+
+**AI/Tool ทำ:** Remotion render composition อัตโนมัติ
+**Human ทำ:** รอ
+
+Remotion setup มี composition เดียวที่รับ:
+- VO audio file
+- Script text (สำหรับ auto caption sync)
+- Background video file
+
+ทุกอย่างที่เหลือ — caption timing, font, animation, logo position — ตั้งค่าไว้ใน component แล้ว
+
+```
+22 คลิป × 2.5 นาที average = ~55 นาที render time
+สามารถ queue และทิ้งไว้ทำอย่างอื่นได้
+```
+
+### Step 5: Post-Processing FFmpeg (1-2 นาที per คลิป)
+
+**Tool ทำ:** FFmpeg ทำ 3 ขั้นอัตโนมัติ
+**Human ทำ:** รัน script เดียว
+
+```bash
+# Script ที่ใช้ process ทั้ง batch
+for video in ./raw/*.mp4; do
+  filename=$(basename "$video" .mp4)
+  
+  # 1. Mix BGM
+  ffmpeg -i "$video" -i ./assets/bgm.mp3 \
+    -filter_complex "[1:a]volume=0.25,afade=t=in:ss=0:d=1,afade=t=out:st=30:d=2[bgm];[0:a][bgm]amix=inputs=2[a]" \
+    -map 0:v -map "[a]" -c:v copy ./bgm_done/"$filename".mp4
+  
+  # 2. Video fade
+  ffmpeg -i ./bgm_done/"$filename".mp4 \
+    -vf "fade=in:0:15,fade=out:st=32:d=1" \
+    -af "afade=in:d=0.5,afade=out:st=32:d=1.5" \
+    ./final/"$filename".mp4
+done
+```
+
+### Step 6: Upload + Schedule (10-15 นาที ต่อ batch 5-7 คลิป)
+
+**Tool ทำ:** rclone sync ขึ้น Google Drive
+**Human ทำ:** เลือก caption, ตั้งเวลา schedule ใน Blotato
+
+Blotato schedule: Facebook Page + Instagram Reels ในครั้งเดียว ใช้เวลาน้อยมาก
+
+---
+
+## 14 วัน ทำอะไรบ้าง
+
+![14-day production calendar overview](/images/placeholder.jpg)
+
+ไม่ได้ทำ 22 คลิปพร้อมกันในคืนเดียว มันค่อยๆ สะสม
+
+| ช่วงเวลา | DL # | จำนวน | Theme |
+|---------|------|--------|-------|
+| Week 1, Day 1-3 | DL-108-112 | 5 คลิป | Manga Journal series |
+| Week 1, Day 4-5 | DL-113-116 | 4 คลิป | AI Tools reviews |
+| Week 1, Day 6-7 | DL-117-120 | 4 คลิป | AI News week recap |
+| Week 2, Day 8-10 | DL-121-125 | 5 คลิป | Workflow tutorials |
+| Week 2, Day 11-14 | DL-126-129 | 4 คลิป | Case studies |
+
+**สัดส่วน pillar:**
+- AI Workflow: 9 คลิป (41%)
+- AI News: 6 คลิป (27%)
+- Tools & Tech: 4 คลิป (18%)
+- Case Study: 3 คลิป (14%)
+
+Workflow สูงที่สุดเพราะ engage มากที่สุด — คนดูแล้วได้ value ทันที
+
+---
+
+## 5 บทเรียนที่ได้จาก batch นี้
+
+![Lessons learned from 22-video production batch](/images/placeholder.jpg)
+
+### บทเรียนที่ 1: Batch คือหัวใจ ไม่ใช่ speed
+
+คนส่วนใหญ่คิดว่า "เร็วขึ้น" มาจากการที่ AI ทำแต่ละขั้นได้เร็ว
+
+แต่ gain ส่วนใหญ่มาจาก **batch processing** — ทำทีละ step กับทุกคลิปพร้อมกัน แทนที่จะทำแต่ละคลิปจบก่อนค่อยไปต่อ
+
+ตัวอย่าง: render ทั้ง 7 คลิปพร้อมกัน vs render ทีละคลิปรอจบแล้วค่อย render คลิปต่อไป — ประหยัดเวลา 40% เพราะไม่มี idle time
+
+### บทเรียนที่ 2: Template > Creativity (ในเฟส production)
+
+ความ creative อยู่ในขั้น script และ concept ไม่ใช่ production
+
+พอมี template production ที่ fixed แล้ว — ทุกคลิปหน้าตาเหมือนกัน consistent และรัน fast
+
+อย่า customize layout ทุกคลิป — เสียเวลาเปล่า brand identity มาจากความ consistent ไม่ใช่ความแตกต่างของแต่ละคลิป
+
+### บทเรียนที่ 3: Quality Gate ช่วยได้มากกว่าที่คิด
+
+ก่อนหน้านี้ไม่มี quality check ก่อน publish — output มีทั้งดีและไม่ดีปนกัน
+
+พอใช้ Gemini Vision eval score ≥56/80 ก่อน publish — คลิปที่ผ่านไปมี avg reach สูงกว่าชิ้นที่ไม่ผ่าน 23%
+
+เสียเวลา re-gen บ้าง แต่คุ้มมาก
+
+<Callout variant="success" title="Data จริง">
+คลิปที่ผ่าน vision eval ≥56/80: avg reach 4,200 views | คลิปที่ไม่ผ่าน (ส่งไปก่อนมีระบบ): avg reach 1,800 views | ต่างกัน 133%
+</Callout>
+
+### บทเรียนที่ 4: Short &lt; 20 วินาที = reach สูงกว่า
+
+จาก data ของ DopeLab เอง:
+
+| ความยาว | Avg Reach |
+|---------|----------|
+| ≤20 วินาที | 57,000+ |
+| 21-35 วินาที | 12,000-18,000 |
+| 35+ วินาที | 4,000-8,000 |
+
+ตอนแรกคิดว่ายิ่งให้ value เยอะยิ่งดี แต่ algorithm มันไม่ได้คิดแบบนั้น — completion rate ของ ≤20s สูงกว่ามาก ทำให้ algorithm push ต่อ
+
+ใน batch นี้ 14 คลิปจาก 22 คลิปอยู่ใน ≤20s range
+
+### บทเรียนที่ 5: VO คือ identity — ต้องลงทุนที่นี่
+
+ElevenLabs v3 กับ Hope voice — ต้นทุนสูงกว่า voice ทั่วไป แต่ผลที่ได้คือ VO ที่ฟังแล้วรู้ทันทีว่าเป็น DopeLab
+
+อย่า cut corner ที่ voice — คนอาจจำ visual ไม่ได้ แต่จำ "เสียง" ของ brand ได้
+
+---
+
+## ค่าใช้จ่ายทั้งหมด 2 สัปดาห์
+
+![Cost breakdown for 22-video AI production](/images/placeholder.jpg)
+
+| Tool | ค่าใช้จ่าย 2 สัปดาห์ | หมายเหตุ |
+|------|-------------------|---------| 
+| ElevenLabs v3 | ~฿650 | VO 22 คลิป (~45s avg) |
+| Veo 3 (background) | ฿0 | Free tier |
+| NB2/Gemini (cover image) | ฿0 | Free tier |
+| Remotion | ฿0 | Open source |
+| FFmpeg | ฿0 | Open source |
+| Blotato | ฿0 | Free plan |
+| Claude (script) | ~฿300 | API usage |
+| **รวม** | **~฿950** | |
+
+เทียบกับจ้าง video editor freelance:
+
+**22 คลิป × ฿2,000-3,000 = ฿44,000-66,000**
+
+ประหยัดไป **฿43,000-65,000** ใน 2 สัปดาห์ = ประหยัด 97-98%
+
+---
+
+## ใครทำตามได้บ้าง?
+
+ไม่ใช่ทุกคนต้องทำ 22 คลิปใน 2 สัปดาห์ นั่นคือ pace ของ DopeLab ซึ่งเป็น content-first business
+
+แต่ถ้าต้องการทำ 5-10 คลิปต่อสัปดาห์:
+
+**ต้องการ:**
+- Claude/ChatGPT (สำหรับ script) — ฟรีหรือ $20/เดือน
+- ElevenLabs Starter — $5/เดือน (10,000 characters)
+- CapCut หรือ Canva Video — ฟรี (แทน Remotion ถ้าไม่มี dev background)
+- FFmpeg — ฟรี (optional)
+
+**ไม่ต้องการ:**
+- Remotion (ถ้าไม่มี dev background — ใช้ CapCut แทนได้)
+- Blotato (ใช้ Meta Business Suite schedule ฟรีได้)
+- Veo 3 (ถ้าไม่มี dark tech aesthetic — ใช้ stock video ฟรีจาก Pexels/Pixabay)
+
+**เป้าหมายที่ practical:**
+- สัปดาห์แรก: ทดลอง pipeline กับ 3 คลิป
+- สัปดาห์ที่ 2-3: ปรับ template จนพอใจ
+- สัปดาห์ที่ 4+: รัน batch จริง 5-7 คลิป/สัปดาห์
+
+<Callout variant="info" title="ตัวเลขที่ต้องรู้จากอุตสาหกรรม">
+71% ของ creators ในปี 2026 ใช้ AI สำหรับ first drafts แล้วปรับเอง — ไม่ใช่ให้ AI ทำทั้งหมด | 61% ของ freelance creators ใช้ AI video tools อย่างน้อยสัปดาห์ละครั้ง — ที่มา: vivideo.ai 2026
+</Callout>
+
+---
+
+## บทสรุป
+
+22 วิดีโอใน 2 สัปดาห์ไม่ใช่เรื่องของการทำงานหนักขึ้น
+
+มันเป็นเรื่องของการออกแบบ **ระบบ** ที่ทำให้ทุก step มี tool รองรับ ทุก step ทำ batch ได้ และทุก step มี quality gate
+
+AI ไม่ได้แทนที่ creative work — script ยังต้องคิดเอง, concept ยังต้องเป็นเสียงตัวเอง แต่ AI แทนที่งาน **execution** ที่ซ้ำซากและกินเวลา
+
+เมื่อ execution เร็วขึ้น — เวลาที่เหลือไปลงกับ strategy และ quality แทน
+
+นั่นคือ multiplier ที่แท้จริงของ AI
+
+---
+
+*ดู case study เพิ่มเติมและ workflow จริงได้ที่ [dopelab.studio](https://dopelab.studio)*
+
+*ถ้าต้องการให้ DopeLab ช่วยวาง AI content pipeline สำหรับธุรกิจของคุณ — DM มาได้เลย*

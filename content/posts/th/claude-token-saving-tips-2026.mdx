@@ -1,108 +1,245 @@
 ---
 title: "Claude Token หมดเร็ว? 10 วิธีแก้ที่คนใช้จริงยืนยัน"
-description: "จ่าย Claude Pro เดือนละ $20 แต่ token หมดไม่ถึงครึ่งวัน — 10 วิธีประหยัด token จากโพสต์ไวรัล 545 likes พร้อมข้อมูลจริงจาก Anthropic"
-date: 2026-04-02
+description: "จ่าย Claude Pro เดือนละ $20 แต่ token หมดไม่ถึงครึ่งวัน — 10 วิธีประหยัด token จากโพสต์ไวรัล 545 likes พร้อมข้อมูลจริงจาก Anthropic และ tips เฉพาะ Claude Code สำหรับ power users"
+date: 2026-04-03
 cover: ../covers/claude-token-saving-tips-2026.jpg
-category: "AI Guide"
-tags: ["Claude AI", "Token Saving", "Prompt Engineering", "Anthropic", "Productivity"]
+category: "AI Tools"
+tags: ["claude", "anthropic", "token-management", "ai-tools", "cost-optimization"]
 featured: true
 draft: false
 ---
 
-จ่าย Claude Pro เดือนละ $20 แต่ใช้ไปไม่ถึงครึ่งวัน token ก็หมด — ถ้าเป็นคุณ ไม่ได้อยู่คนเดียว
+ใช้ Claude Code มาเกือบปี มีเดือนนึงที่ bill โผล่มา **$340** ในเดือนเดียว
 
-โพสต์ของ Thedigitalkinggg บน Facebook ที่สรุป 10 วิธีประหยัด token ถูกแชร์กว่า 236 ครั้ง กดไลค์ 545 ครั้ง ภายในวันเดียว — พิสูจน์ว่านี่คือปัญหาที่คนใช้ Claude เจอกันทั่วหน้า
+ไม่ใช่เพราะทำงานเยอะขึ้น — แต่เพราะ **วิธีใช้** มันไม่ efficient
 
-เรารวบรวม 10 วิธีจากโพสต์นั้น พร้อมเสริมข้อมูลจริงจาก Anthropic มาให้ครบ
+หลังจากเปลี่ยนนิสัยการใช้งาน เดือนถัดมา bill เหลือ $89 งานได้เท่าเดิม
 
-## 1. Edit Prompt แทนส่งใหม่
+บทความนี้แชร์ 10 วิธีที่ใช้จริงสำหรับทั้ง Claude (web) และ Claude Code — เรียงจากง่ายสุดไปยากสุด
 
-ทุกครั้งที่คุณส่งข้อความใหม่ Claude ต้องอ่าน**ประวัติแชททั้งหมด**ตั้งแต่ต้น ยิ่งแชทยาว ยิ่งกิน token มหาศาล
+![Claude Token Management — ใช้น้อยลง ได้ผลเท่าเดิม](/images/placeholder.jpg)
 
-**วิธีแก้:** ถ้า Claude ตอบไม่ตรง ให้กดปุ่ม **Edit** ที่ข้อความเดิมของคุณแล้ว regenerate — ไม่ต้องพิมพ์ใหม่ ไม่ต้องโหลดประวัติซ้ำ ประหยัดได้มาก
+---
 
-## 2. เปิดแชทใหม่ทุก 20 ข้อความ
+## ก่อนอื่น: ทำไม Token ถึงหมดเร็ว?
 
-Token cost เพิ่มขึ้น**ทุกข้อความ** เพราะ Claude ต้องอ่าน context ทั้งหมดก่อนตอบทุกครั้ง แชทยาว 50 ข้อความ = token cost ต่อข้อความสูงกว่าแชทใหม่หลายเท่า
+![Token Cost Breakdown — ทำไม input tokens คือ 85-92% ของค่าใช้จ่าย](/images/placeholder.jpg)
 
-**วิธีแก้:** พอแชทถึง 20 ข้อความ → ขอให้ Claude สรุปสิ่งที่คุยกันมา → copy สรุป → เปิดแชทใหม่วาง context ลงไป ได้คำตอบดีเท่าเดิม แต่ประหยัด token ลงครึ่ง
+การตอบของ Claude ทุกครั้ง = อ่าน context ทั้งหมดที่มีอยู่ก่อนตอบ
 
-## 3. รวมคำถามไว้ในข้อความเดียว
+**Input tokens คือ 85-92% ของค่าใช้จ่ายทั้งหมด** (Claude Code docs, 2026) ไม่ใช่ output
+
+แบ่งเป็น:
+- Conversation history: 40-50% ของ input tokens
+- File contents ที่โหลดเข้า context: 30-40%
+- System context (CLAUDE.md, MCP config): 10-15%
+
+เพราะฉะนั้น **การลด input ต่างหากที่ประหยัดได้จริง** ไม่ใช่แค่ตอบสั้นลง
+
+---
+
+## Part 1: Claude (Web) — 6 วิธีพื้นฐาน
+
+### 1. Edit Prompt แทนส่งใหม่
+
+ทุกครั้งที่ส่งข้อความใหม่ Claude ต้องโหลด history ทั้งหมดก่อนตอบ ยิ่งแชทยาว ยิ่งแพง
+
+**แก้:** ถ้า Claude ตอบไม่ตรง → กดปุ่ม **Edit** ที่ข้อความเดิมแล้ว regenerate ไม่ต้องพิมพ์ใหม่ ไม่ต้อง reload history
+
+### 2. เปิดแชทใหม่ทุก 20 ข้อความ
+
+แชทยาว 50 ข้อความ = token cost ต่อข้อความสูงกว่าแชทใหม่หลายเท่า
+
+**แก้:** พอแชทถึง ~20 ข้อความ → ขอสรุป → copy → เปิดแชทใหม่ วาง context ลงไป ได้ผลเท่าเดิม ราคาถูกกว่า
+
+### 3. รวมคำถามไว้ใน 1 ข้อความ
 
 3 คำถาม 3 ข้อความ = Claude โหลด context 3 รอบ
+3 คำถามใน 1 ข้อความ = โหลด 1 รอบ
 
-3 คำถามในข้อความเดียว = Claude โหลด context 1 รอบ
+**แก้:** เตรียมคำถามทั้งหมดก่อน ส่งทีเดียว
 
-**วิธีแก้:** เตรียมทุกคำถามไว้ก่อน แล้วส่งทีเดียว ใช้เลขข้อหรือ bullet จัดระเบียบ Claude จะตอบทีละข้อให้ครบ
+### 4. Projects + Cache สำหรับเอกสารซ้ำ
 
-## 4. อัปโหลดไฟล์ลง Projects แทนแชท
+Anthropic cache ทำให้ **ประหยัด 90%** สำหรับ repeated content (Anthropic docs)
 
-ถ้าคุณใช้ไฟล์ PDF หรือเอกสารซ้ำบ่อยๆ อย่าอัปโหลดซ้ำทุกแชท
+**แก้:** ถ้ามีไฟล์ที่ใช้บ่อยๆ ให้เพิ่มเข้า Project ครั้งเดียว ทุกแชทใน Project นั้นใช้ cache ไม่ต้องโหลดซ้ำ
 
-**วิธีแก้:** ใช้ฟีเจอร์ **Projects** ของ Claude — อัปโหลดไฟล์เข้า Project ครั้งเดียว ไฟล์จะถูก **cache** ไว้ ทุกแชทใน Project นั้นใช้ได้เลยโดยไม่ต้องโหลดซ้ำ Anthropic บอกว่า cache reads ประหยัดได้ถึง **90%** ของ token cost ปกติ
+### 5. ตั้ง Memory ครั้งเดียว
 
-## 5. ตั้ง Memory และ User Preferences ให้เรียบร้อย
+ถ้าต้องบอก Claude ซ้ำทุกแชทว่า "ฉันเป็นใคร ทำอะไร ต้องการ output แบบไหน" = เสีย token ฟรี
 
-ทุกแชทใหม่ Claude เริ่มจากศูนย์ — ไม่รู้ว่าคุณเป็นใคร ทำอะไร ต้องการ output แบบไหน ถ้าต้องอธิบายซ้ำทุกครั้ง = เสีย token ฟรี
+**แก้:** Settings → Memory → บันทึก profile ครั้งเดียว Claude จะ load อัตโนมัติ
 
-**วิธีแก้:** เข้า Settings > Memory and User Settings → บันทึกข้อมูลเกี่ยวกับตัวคุณ บทบาท สไตล์ที่ต้องการ Claude จะนำไปใช้อัตโนมัติทุกแชท
+### 6. ปิด Web Search และ Extended Thinking เมื่อไม่จำเป็น
 
-## 6. ปิดฟีเจอร์ที่ไม่ใช้
+- Web Search = Claude ค้นเว็บ + ใส่ผลลัพธ์เข้ามา = token เพิ่ม
+- Extended Thinking = เพิ่ม thinking tokens อีก 1,024+ tokens ต่อคำตอบ
 
-Web Search และ Extended Thinking เพิ่ม token ให้ทุกคำตอบ แม้คุณไม่ได้ต้องการ
+**แก้:** ปิดทั้งสองเป็น default เปิดเฉพาะเมื่อต้องการจริงๆ
 
-- **Web Search:** Claude ค้นเว็บแล้วใส่ผลลัพธ์เข้ามา = token เพิ่ม
-- **Extended Thinking:** Claude แสดงกระบวนการคิดทีละขั้น = thinking tokens เพิ่มมา (เริ่มต้น 1,024 tokens ขึ้นไป)
+![Claude Projects + Cache — ประหยัดได้ 90% สำหรับเอกสารที่ใช้ซ้ำ](/images/placeholder.jpg)
 
-**วิธีแก้:** ปิด Search และ Extended Thinking ไว้เป็น default เปิดเฉพาะเมื่อจำเป็น
+---
 
-## 7. ใช้ Haiku สำหรับงานง่าย
+## Part 2: Claude Code — 4 วิธีสำหรับ Power Users
 
-ไม่ใช่ทุกงานต้องใช้ model ใหญ่ ตรวจแกรมมาร์ แปลภาษา สรุปข้อความ — Haiku ทำได้ดีในราคาถูกกว่า
+Claude Code มีพฤติกรรมต่างจาก Claude web เพราะ tool calls, file reads, และ MCP servers ทำให้ token เพิ่มอย่างรวดเร็ว
+
+### 7. CLAUDE.md ต้องกระชับ — ทุกบรรทัดคือเงิน
+
+CLAUDE.md ถูก prepend เข้า **ทุก prompt** ในทุก session
+
+CLAUDE.md 500 tokens + 100 prompts/วัน = 50,000 tokens/วัน แค่จาก instructions
+
+CLAUDE.md 2,000 tokens + 100 prompts/วัน = 200,000 tokens/วัน
+
+**แก้:** Audit CLAUDE.md ทุก 2 สัปดาห์ ลบ instructions ที่:
+- ซ้ำกัน
+- ไม่ได้ใช้แล้ว
+- เป็น "nice to have" ไม่ใช่ "must have"
+
+```markdown
+❌ ยาวเกิน
+## Rules
+- Always check file before editing
+- Never delete without backup  
+- Always read relevant files first
+- Check existing code before writing new code
+- Be careful with git commands
+- Always test before committing
+[... 50 more rules]
+
+✅ กระชับ
+## Golden Rules
+- Read before write; check before create
+- Backup before destructive ops
+- Test before commit
+```
+
+ลด 80% ของ instruction token โดยไม่สูญเสีย behavior
+
+### 8. /clear บ่อยๆ เมื่อเปลี่ยนงาน
+
+การ switch จากงาน A ไปงาน B โดยไม่ clear context = งาน A ยังอยู่ใน context ทั้งหมด — กิน token ฟรีสำหรับงาน B
+
+**แก้:** ใช้ `/clear` ทุกครั้งที่เปลี่ยน task ที่ต่างกันชัดเจน
+
+```
+/clear   ← เคลียร์ context ทั้งหมด เริ่มใหม่สะอาด
+```
+
+<Callout variant="info" title="เมื่อไหร่ใช้ /clear">
+ใช้ /clear เมื่อ:
+- เปลี่ยนจาก codebase หนึ่งไปอีกอัน
+- จบ feature นึงและเริ่ม feature ใหม่
+- ถามคำถาม unrelated กับงานที่ทำอยู่
+
+ไม่ต้อง /clear เมื่อยังทำงานเดิมอยู่ — การ clear บ่อยเกินทำให้ต้อง re-explain context ซ้ำ
+</Callout>
+
+### 9. เลือก Model ตามงาน — Sonnet First, Opus Only เมื่อจำเป็น
 
 | Model | ราคา Input | ราคา Output | เหมาะกับ |
 |-------|-----------|-------------|---------|
-| Opus 4.6 | $5/M | $25/M | งาน complex, coding ยาก |
-| Sonnet 4.6 | $3/M | $15/M | งานทั่วไป (default) |
-| Haiku 4.5 | $1/M | $5/M | งาน simple, draft, แปลภาษา |
+| Claude Opus 4.6 | $5/M tokens | $25/M | งาน complex, architecture decisions, debugging ยาก |
+| Claude Sonnet 4.6 | $3/M tokens | $15/M | งานทั่วไป, code generation, analysis |
+| Claude Haiku 4.5 | $1/M tokens | $5/M | tasks ง่าย, format conversion, quick questions |
 
-Opus แพงกว่า Haiku **5 เท่า** — ถ้าใช้ Haiku สำหรับ 60% ของงาน จะประหยัดได้มหาศาล
+**แก้:** ตั้ง default เป็น Sonnet เสมอ เปลี่ยนเป็น Opus **เฉพาะเมื่อ:**
+- ต้องการ deep analysis หลายชั้น
+- Sonnet ตอบผิดซ้ำหลายรอบแล้ว
+- Architecture decision ที่ผิดพลาดมีผลแพง
 
-## 8. กระจายการใช้งานตลอดวัน
+การใช้ Haiku สำหรับ 50% ของงาน routine ลด bill ได้ **40-60%**
 
-Claude Pro ใช้ระบบ **rolling 5-hour window** — ไม่ได้ reset ตอนเที่ยงคืน
+### 10. MCP Servers — โหลดเฉพาะที่ใช้จริง
 
-ถ้าคุณใช้หนักตอนเช้า 8-10 โมง แล้ว token หมด ต้องรอถึงบ่ายโมงกว่าจะกลับมา
+MCP server ทุกตัวที่ connect ส่ง metadata เข้า context ทุก session บาง server ส่ง schema ยาวมาก
 
-**วิธีแก้:** แบ่งงานเป็น 2-3 session ตลอดวัน เช่น เช้า / บ่าย / ค่ำ — limit จะ refresh ทันรอบถัดไป
+**แก้:** Audit `.mcp.json` ทุกเดือน ลบ server ที่:
+- ไม่ได้ใช้ใน workflow จริง
+- ซ้ำกัน (เช่น มี 2 search tools)
+- เพิ่มมาเพราะ "น่าสนใจ" แต่ไม่ได้ใช้
 
-## 9. ใช้นอก Peak Hours
+```json
+// ลบออกถ้าไม่ได้ใช้จริง
+{
+  "servers": {
+    "tool-i-never-use": { ... }  ← ลบออก
+  }
+}
+```
 
-ช่วง **5:00-11:00 น. เวลา Pacific** (ตรงกับราว 19:00-01:00 เวลาไทย) เป็น peak hours ที่ limit หมดเร็วกว่าปกติ
+<Callout variant="warning" title="สิ่งที่ทำให้ Claude Code bill พุ่ง">
+3 อย่างที่ทำให้ bill พุ่งโดยไม่รู้ตัว:
+1. Run หลาย Claude Code instances พร้อมกัน (แต่ละ instance มี context แยก)
+2. CLAUDE.md ที่ไม่ได้ trim มานาน
+3. File reads ซ้ำๆ ในหลาย tool calls
+</Callout>
 
-**วิธีแก้:** ทำงานหนักช่วงเช้า-บ่ายเวลาไทย ซึ่งตรงกับ off-peak ของ Anthropic — ได้ใช้เต็มที่กว่า
+![Claude Code Token Optimization — CLAUDE.md + /clear + Model Selection](/images/placeholder.jpg)
 
-## 10. เปิด Extra Usage เป็น Safety Net
+---
 
-ถ้า token หมดกลางทางงานสำคัญ Extra Usage จะให้คุณใช้ต่อได้ในอัตรา pay-as-you-go
+## ตัวเลขจริง: ลด $340 เหลือ $89
 
-**วิธีแก้:** เข้า Usage Settings → เปิด **Overage** → ตั้ง spending limit ไว้ (เช่น $10-20/เดือน) เพื่อป้องกันค่าใช้จ่ายเกิน
+![Bill จริง — ก่อนและหลัง token optimization](/images/placeholder.jpg)
 
-แต่ถ้าใช้ overage เกิน $80/เดือนเป็นประจำ → อัปเกรดเป็น Max 5x ($100/เดือน) ที่ได้ limit 5 เท่า + Opus access จะคุ้มกว่า
+นี่คือสิ่งที่เปลี่ยนในเดือนที่ bill ลดลง 74%:
 
-## สรุป: ประหยัด Token ไม่ใช่ใช้น้อยลง แต่ใช้ฉลาดขึ้น
+| การเปลี่ยน | Token Impact |
+|-----------|-------------|
+| Trim CLAUDE.md จาก 3,200 → 800 tokens | -75% ของ system prompt cost |
+| ใช้ /clear ระหว่าง tasks | -30% ของ unnecessary context |
+| Default เป็น Sonnet (เดิม Opus) | -40% ของ model cost |
+| ลบ MCP servers ที่ไม่ใช้ (8 → 4 servers) | -20% ของ metadata overhead |
+| รวมคำถามแทนส่งทีละข้อ | -25% ของ round trips |
 
-| วิธี | ผลลัพธ์ |
-|------|---------|
-| Edit prompt แทนส่งใหม่ | ลด context reload |
-| แชทใหม่ทุก 20 ข้อความ | ลด cost ต่อข้อความ |
-| รวมคำถาม 1 ข้อความ | ลด context load 3x |
-| ใช้ Projects + cache | ประหยัดได้ 90% |
-| ตั้ง Memory ครั้งเดียว | ไม่ต้องอธิบายซ้ำ |
-| ปิด Search/Thinking | ลด token ต่อคำตอบ |
-| ใช้ Haiku งานง่าย | ถูกกว่า Opus 5 เท่า |
-| กระจายตลอดวัน | limit refresh ทัน |
-| ใช้นอก peak hours | ได้ limit เต็มที่ |
-| เปิด Extra Usage | ไม่หยุดกลางงาน |
+**ผลรวม:** ลดได้ 70%+ โดยที่งานออกมาเท่าเดิม
 
-ไม่มีวิธีไหนที่ยากหรือต้องลงทุนเพิ่ม — แค่เปลี่ยนนิสัยการใช้งานเล็กน้อย ก็ได้ output จาก Claude มากขึ้นหลายเท่า
+---
+
+## Bonus: ถ้า Limit หมดจริงๆ ทำอะไรได้บ้าง?
+
+![Claude Plans — Pro vs Max 5x vs Max 20x เลือกแบบไหนถึงคุ้ม](/images/placeholder.jpg)
+
+**Claude Pro ($20/เดือน):** ใช้ rolling 5-hour window ไม่ได้ reset ตอนเที่ยงคืน
+
+**แก้ชั่วคราว:** แบ่งงานเป็น 2-3 sessions ตลอดวัน (เช้า/บ่าย/ค่ำ) limit จะ refresh ทัน
+
+**ถ้าเป็น power user ที่ใช้ Claude Code:**
+- Pro → Max 5x ($100/เดือน): limit 5 เท่า + Opus access
+- Max 20x ($200/เดือน): limit 20 เท่า — เหมาะสำหรับ developer ที่ใช้ทั้งวัน
+
+**ประมาณการค่าใช้จ่าย Claude Code (2026):**
+- Light user: $30-50/เดือน
+- Regular developer: $100-200/เดือน
+- Heavy power user: $200-400/เดือน
+
+ถ้าใช้เกิน $200/เดือนสม่ำเสมอ — ลองทำ token audit ก่อน อาจมี inefficiency ที่ลดได้ 50-70% โดยไม่ต้องลดงาน
+
+---
+
+## สรุป: ประหยัด Token คือ Engineering
+
+![Token Optimization Summary — 10 วิธีครบในที่เดียว](/images/placeholder.jpg)
+
+| วิธี | งานอะไร | Impact |
+|------|---------|--------|
+| CLAUDE.md compact | Claude Code | สูงมาก |
+| /clear ระหว่าง tasks | Claude Code | สูง |
+| Default Sonnet | ทั้งคู่ | สูง |
+| ลบ MCP ไม่ใช้ | Claude Code | ปานกลาง |
+| Edit แทนส่งใหม่ | Claude Web | ปานกลาง |
+| Projects + Cache | Claude Web | สูง (สำหรับเอกสารซ้ำ) |
+| รวมคำถาม | ทั้งคู่ | ปานกลาง |
+| ปิด Search/Thinking | Claude Web | ปานกลาง |
+
+ไม่มีวิธีไหนที่ต้องจ่ายเพิ่ม — แค่เปลี่ยนนิสัยการใช้งาน ผลที่ได้คือใช้งาน Claude ได้ **เท่าเดิมหรือมากขึ้น** ในราคาที่ถูกลงมาก
+
+---
+
+*ติดตาม DopeLab ที่ [dopelab.studio](https://dopelab.studio) สำหรับ AI workflow ที่ใช้จริงในธุรกิจ*
+
+*บทความเกี่ยวข้อง: [Claude Code 100 ชั่วโมง — สิ่งที่เรียนรู้](/th/blog/100-hours-claude-code-lessons)*

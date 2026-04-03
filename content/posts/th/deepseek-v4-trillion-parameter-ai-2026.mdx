@@ -1,0 +1,158 @@
+---
+title: "DeepSeek V4 — 1 ล้านล้าน Parameters คืออะไร และทำไมมันสำคัญมากกว่าที่คิด"
+description: "DeepSeek V4 MoE architecture 1 trillion parameters, Engram memory 1M-token context, SWE-bench 81% ที่ราคา $0.30/MTok — สรุปทุกอย่างที่รู้เกี่ยวกับ open-source AI ที่อาจเปลี่ยนเกม competition ปี 2026"
+date: 2026-04-03
+cover: ../covers/deepseek-v4-trillion-parameter-ai-2026.jpg
+category: "AI News"
+tags: ["deepseek", "ai-models", "open-source-ai", "parameters", "competition"]
+featured: false
+draft: false
+---
+
+## ทำไมตัวเลข "1 ล้านล้าน" ถึงสำคัญ?
+
+![DeepSeek V4 — 1 Trillion Parameter Open-Source AI](/images/blog/deepseek-v4-trillion.jpg)
+
+ก่อนอื่นต้องบอกก่อนว่า: ตัวเลข "1 ล้านล้าน parameters" ฟังแล้วอาจดูน่าตื่นเต้น แต่ถ้าเข้าใจแค่ตัวเลขโดดๆ โดยไม่รู้ว่ามันทำงานยังไง จะพลาด insight ที่สำคัญกว่า
+
+ขอเล่าตั้งแต่ต้นว่า DeepSeek V4 คืออะไร ทำไมถึง generate งบสูงขนาดนั้น และสิ่งที่เจ๋งจริงๆ ของมันคืออะไร
+
+---
+
+## DeepSeek V4 คืออะไร?
+
+![DeepSeek Architecture Overview — MoE + Engram Memory](/images/placeholder.jpg)
+
+**DeepSeek V4** คือ AI language model ที่ DeepSeek (บริษัทจีนที่สั่งสะเทือนวงการ AI ด้วย DeepSeek R1 ต้นปี 2025) กำลังจะปล่อยออกมาในปี 2026
+
+ข้อมูลที่รู้ ณ ตอนนี้:
+
+| Spec | ค่า |
+|------|-----|
+| Total Parameters | ~1 trillion |
+| Active Parameters per Token | ~37 billion |
+| Context Window | 1 million tokens |
+| Architecture | MoE (Mixture-of-Experts) |
+| License | Apache 2.0 (open source) |
+| SWE-bench (coding) | 80-85% (pre-release claim) |
+| HumanEval | ~90% (pre-release claim) |
+| API Pricing | $0.30 per million tokens |
+
+<Callout variant="warning" title="ข้อสำคัญ">
+ตัวเลข benchmark ยังเป็น pre-release internal claims จาก DeepSeek เอง ยังไม่มีการ verify อิสระ ควรรอผล third-party evaluation ก่อนเชื่อเต็มที่
+</Callout>
+
+---
+
+## MoE คืออะไร และทำไมมันช่วยให้ 1 ล้านล้าน parameters ไม่แพง?
+
+![MoE Architecture — Mixture of Experts ทำงานยังไง](/images/placeholder.jpg)
+
+นี่คือส่วนที่หลายคนเข้าใจผิด: **model ที่มี 1 ล้านล้าน parameters ไม่ได้ใช้ทุก parameter ทุกครั้ง**
+
+**MoE (Mixture-of-Experts)** ทำงานแบบนี้:
+
+1. Model แบ่งเป็น "expert" หลายกลุ่ม แต่ละกลุ่มเชี่ยวชาญงานต่างกัน
+2. เมื่อมี input เข้ามา "router" เลือก expert กลุ่มที่เหมาะสมมาทำงาน
+3. ใช้แค่ **37 billion active parameters** ต่อ token — ไม่ใช่ 1 ล้านล้าน
+
+ผลลัพธ์คือ:
+- **Inference cost ต่ำ** เพราะไม่ต้องประมวลผลทั้งหมด
+- **Specialization สูง** เพราะแต่ละ expert ทำงานที่ถนัด
+- **Total capability สูง** เพราะมี expert หลายประเภทให้เลือก
+
+เปรียบได้กับโรงพยาบาลใหญ่ที่มีหมอเฉพาะทาง 50 สาขา แต่คนไข้แต่ละคนเจอแค่หมอที่เกี่ยวข้อง ไม่ต้องคุยกับหมอทุกคนในโรงพยาบาล
+
+---
+
+## Engram Memory คือนวัตกรรมใหม่ที่แก้ปัญหาเก่ามาก
+
+![Engram Memory Architecture — แก้ปัญหา Long Context Retrieval](/images/placeholder.jpg)
+
+ถ้า MoE เป็นเรื่อง efficiency แล้ว **Engram** เป็นเรื่องของ memory
+
+ปัญหาของ LLM ที่มี long context window คือ: **มี context ยาว แต่ retrieve ข้อมูลจาก context นั้นได้แย่มาก**
+
+เหมือนมีห้องสมุดที่เก็บหนังสือ 1 ล้านเล่มได้ แต่ระบบค้นหามันใช้ไม่ได้
+
+Engram architecture แก้ตรงนี้:
+
+- ออกแบบ conditional memory สำหรับ long-context retrieval โดยเฉพาะ
+- ใช้ deterministic O(1) lookup สำหรับ static patterns (เช่น ชื่อเฉพาะ, ข้อเท็จจริงที่ fixed)
+- Sparsity Allocation Law: 20-25% ของ sparse parameters ควรเป็น memory, ส่วนที่เหลือเป็น computation
+
+**ผลลัพธ์จริง:** 97% Needle-in-a-Haystack accuracy ที่ 1 million token scale
+
+Needle-in-a-Haystack test คือ test ที่ซ่อนข้อมูลไว้ที่ไหนสักที่ใน document ยาว แล้วดูว่า model หาเจอไหม score 97% = model หาเจอ 97 ใน 100 ครั้ง แม้ document ยาวมาก
+
+---
+
+## ราคา $0.30 หมายความว่าอะไรในทางปฏิบัติ?
+
+![DeepSeek Pricing vs Competitors — Cost Comparison](/images/placeholder.jpg)
+
+ถ้า SWE-bench claim ที่ 81% ยืนยันได้จริง เราจะมี open-source model ที่:
+
+- คะแนน coding สูสีกับ Claude Opus ที่ทำได้ 80.9% (ยืนยันแล้ว)
+- ราคา **$0.30 per million tokens** ซึ่งถูกกว่า frontier models ชั้นนำ **20-50 เท่า**
+- Open source ใช้งานได้ฟรีถ้า host เอง
+
+สำหรับบริษัทที่ใช้ AI เพื่อ coding, code review, หรือ technical documentation — ถ้า V4 perform ได้จริง ต้นทุนจะลดลงมหาศาล
+
+ลองคำนวณแบบง่ายๆ:
+- ใช้ Claude Opus สำหรับ coding tasks: $15 per million tokens
+- ใช้ DeepSeek V4 (ถ้า verify แล้ว): $0.30 per million tokens
+- ประหยัดได้: **98%** ที่ quality ใกล้เคียงกัน
+
+---
+
+## Open Source AI กำลังเปลี่ยน Competition ยังไง?
+
+![Open Source vs Closed AI — The New Competition Landscape](/images/placeholder.jpg)
+
+DeepSeek V4 ไม่ใช่แค่ model ใหม่ มันคือสัญญาณของ pattern ที่เกิดขึ้นต่อเนื่อง:
+
+**Pattern นี้คือ:** Open source model ไล่ทัน frontier closed models เร็วขึ้นเรื่อยๆ
+
+ปี 2024: Llama 3 ไล่ทัน GPT-4 ในหลาย benchmark
+ต้นปี 2025: DeepSeek R1 ทำได้เทียบเท่า o1 ที่ cost ต่ำกว่า
+ปี 2026: DeepSeek V4 อาจเทียบเท่า frontier models ที่ราคา 20-50x ถูกกว่า
+
+ผลกระทบสำหรับธุรกิจ:
+- **Cost ของ AI กำลังลดลงอย่างรวดเร็ว** — รอสักปีอาจประหยัดได้มากกว่า deploy ทันที
+- **Open source = more control** — host เองได้ ข้อมูลไม่ออกไปข้างนอก
+- **Competition ดี** — บริษัทใหญ่ต้องปรับ pricing และ push innovation มากขึ้น
+
+<Callout variant="info" title="สิ่งที่ควรทำตอนนี้">
+ยังไม่ต้องรีบ switch ไป DeepSeek V4 เพราะมันยังไม่ออกอย่างเป็นทางการ แต่ควรจับตาดู third-party benchmark เมื่อมันออกมา โดยเฉพาะถ้าคุณใช้ AI สำหรับ coding หรืองานที่ต้องการ long context
+</Callout>
+
+---
+
+## Timeline DeepSeek V4 ที่รู้แน่ๆ ตอนนี้
+
+| ช่วงเวลา | สิ่งที่เกิดขึ้น |
+|---------|----------------|
+| ม.ค. 2026 | Leak ข้อมูล architecture "Engram Monster" บน Medium |
+| ก.พ. 2026 | DeepSeek ประกาศ Apache 2.0 license plan + ปล่อย V4 Lite preview |
+| มี.ค. 2026 | รายงานระบุ "release imminent" แต่ยังไม่มีวันชัดเจน |
+| เม.ย. 2026 | คาดว่า full release ช่วงนี้ แต่ยังรอยืนยัน |
+
+---
+
+## สรุป: ทำไม DeepSeek V4 ถึงสำคัญ
+
+DeepSeek V4 สำคัญไม่ใช่เพราะตัวเลข 1 ล้านล้าน parameters มันสำคัญเพราะสิ่งที่มันเป็นตัวแทน:
+
+1. **Open source model ที่แข่งขันได้กับ frontier** ที่ต้นทุน 50x ต่ำกว่า
+2. **MoE architecture ที่ทำให้ scale ได้โดยไม่ต้อง scale cost**
+3. **Engram memory ที่แก้ปัญหา long-context retrieval จริงๆ**
+4. **หลักฐานว่า China กำลัง push hard บน open-source AI**
+
+สำหรับ AI landscape ในปี 2026 ถ้า V4 deliver ตามที่ claim — มันจะ force OpenAI, Anthropic, Google ต้องแข่งขันในมิติที่พวกเขาไม่เคยต้องแข่งมาก่อน
+
+สำหรับคนทำธุรกิจ: จับตาดู Q2 2026 เมื่อ independent benchmark ออกมา แล้วค่อยตัดสินใจ
+
+---
+
+*ผมเขียนเรื่อง AI ที่ใช้งานได้จริงสำหรับคนทำธุรกิจทุกสัปดาห์ที่ [dopelab.studio](https://dopelab.studio) — ติดตามเพื่อไม่พลาดบทความถัดไป*

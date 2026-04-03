@@ -1,0 +1,144 @@
+---
+title: "Karpathy พูดเรื่อง AI Agent สรุปให้ 60 วิ — 5 ข้อที่เปลี่ยนวิธีคิดเรื่อง AI ทั้งหมด"
+description: "Andrej Karpathy อดีต OpenAI รัน AI agent 700 experiments ใน 2 วัน เจอ 20 optimizations ลด training time 11% — สรุป 5 insight สำคัญที่ทุกคนทำงานกับ AI ต้องรู้ปี 2026"
+date: 2026-04-03
+cover: ../covers/karpathy-ai-agents-summary-60-seconds.jpg
+category: "AI News"
+tags: ["karpathy", "ai-agents", "ai-trends", "expert-insights"]
+featured: false
+draft: false
+---
+
+## ทำไมต้องฟัง Karpathy?
+
+![Andrej Karpathy พูดเรื่อง AI Agents — สรุปสำหรับคนทำธุรกิจ](/images/blog/karpathy-ai-agents-talk.jpg)
+
+ถ้าต้องเลือกคนๆ เดียวในโลก AI ที่พูดแล้วคนทั้งวงการฟัง ผมว่าหนึ่งในนั้นคือ **Andrej Karpathy**
+
+อดีต Director of AI ที่ Tesla อดีต Founding Member ที่ OpenAI คนที่เขียน GPT-2 เองด้วยมือในโปรเจ็ค nanoGPT แล้วทำให้คนทั้งโลกเข้าใจว่า LLM ทำงานยังไง
+
+ในช่วง Q1 2026 เขาพูดถึงเรื่อง AI Agents และ AutoResearch หลายครั้ง ทั้ง post บน X, เปิด repo ใหม่บน GitHub, และ Fortune ไป feature เขาด้วยหัวข้อ "The Karpathy Loop"
+
+สิ่งที่เขาพูด... ผมอ่านแล้วต้องนั่งคิดอยู่นานมาก
+
+นี่คือสรุป 5 ข้อ ที่ถ้าอ่านแล้วยังไม่เปลี่ยนมุมมองเรื่อง AI ก็ไม่รู้จะบอกยังไงแล้ว
+
+---
+
+## 1. เขารัน AI Agent 700 ครั้ง ใน 2 วัน — แล้วเจออะไร?
+
+![AutoResearch Pipeline — AI รัน experiments อัตโนมัติ](/images/placeholder.jpg)
+
+Karpathy เปิด repo ชื่อ **autoresearch** บน GitHub — ไอเดียคือให้ AI agent ทำ ML research แทนมนุษย์โดยไม่ต้องมีคนนั่งดู
+
+ระบบทำงานแบบนี้:
+1. ให้ markdown prompt บอกว่าเป้าหมายคืออะไร
+2. AI แก้โค้ด training → ทดสอบ 5 นาที → เช็คว่าดีขึ้นไหม
+3. ถ้าดีขึ้น: เก็บ | ถ้าแย่ลง: ทิ้ง → วนซ้ำ
+
+ผลลัพธ์จริง: **700 experiments ใน 2 วัน** บน GPU ตัวเดียว
+
+จาก 700 ครั้งนั้น พบ **20 optimizations** ที่เวิร์กจริงและ stack กันได้ ผลสุดท้ายลด "Time to GPT-2" benchmark จาก 2.02 ชั่วโมง → **1.80 ชั่วโมง** = ดีขึ้น **11%**
+
+ฟังดูเป็นตัวเลขเล็กน้อย แต่ขอให้ลองคิดดู: ถ้าคุณทำ 700 experiments ด้วยมือ จะใช้เวลากี่ปี?
+
+<Callout variant="info" title="เปรียบเทียบ">
+นักวิจัย PhD คนหนึ่ง อาจรันได้ 3-5 experiments ต่อวัน เพราะต้องอ่าน, คิด, code, debug, รอผล แล้วเขียนสรุป — AI agent ทำได้ 350+ ครั้งต่อวัน โดยไม่ต้องนอน
+</Callout>
+
+---
+
+## 2. วิศวกรรมซอฟต์แวร์ยุคใหม่คืออะไร?
+
+![Software Engineering 3.0 — จาก coding สู่ orchestration](/images/placeholder.jpg)
+
+Karpathy บอกว่าตอนปลายปี 2025 เกิดจุดเปลี่ยนในตัวเขาเอง:
+
+> "ก่อนหน้านี้ผม code 80% delegate 20% ตอนนี้กลับกัน — ผม delegate 80% code 20%"
+
+แต่เขาไม่ได้พูดว่า "AI แทนที่ programmer แล้ว" เขาพูดว่า **skill ที่สำคัญตอนนี้คือ**:
+
+- **Intent Specification** — บอกให้ชัดว่าต้องการอะไร
+- **Task Decomposition** — แยก task ใหญ่เป็น task เล็กที่ AI ทำได้
+- **Fast Review** — ตรวจงาน AI ได้เร็วและแม่น
+
+มันไม่ใช่การหยุด code — มันคือการ level up จาก "คนที่เขียนโค้ด" เป็น "คนที่กำหนด logic ของระบบ"
+
+ในโลกธุรกิจ เราเรียกสิ่งนี้ว่า **strategic direction** มันคือสิ่งที่ CEO ทำมาตลอด แต่ตอนนี้มันกลายเป็นสิ่งที่ทุกคนในองค์กรต้องทำ
+
+---
+
+## 3. LLM คือ "อัจฉริยะที่มีปัญหาทางจิต"
+
+![LLM Limitations — High IQ, Low Self-Knowledge](/images/placeholder.jpg)
+
+หนึ่งใน framing ที่ Karpathy ใช้ซึ่งผมชอบมากคือ:
+
+> "LLMs are high-IQ individuals with mental issues — incredibly capable, but prone to unpredictable limitations"
+
+ปัญหาหลักคือ **lack of cognitive self-knowledge** — LLM ไม่รู้ว่าตัวเองรู้อะไรหรือไม่รู้อะไร มันจะตอบทั้งๆ ที่ไม่รู้โดยไม่บอกว่า "ฉันไม่แน่ใจ"
+
+สำหรับคนทำธุรกิจกับ AI นี่หมายความว่าอะไร?
+
+1. **อย่าถาม AI ว่า "ใช่ไหม?"** — ถามว่า "มีอะไรผิดพลาดได้บ้าง?"
+2. **Cross-check งานสำคัญ** เสมอ โดยเฉพาะที่เกี่ยวกับตัวเลข กฎหมาย หรือข้อมูลที่ต้องแม่น
+3. **ให้ context ชัด** — AI perform ดีขึ้นมากเมื่อรู้ว่ากำลังทำอะไรในบริบทอะไร
+
+ผมเจอเรื่องนี้โดยตรง: AI บอกว่าทำ task เสร็จแล้ว แต่พอเช็คจริงพบว่า miss ขั้นตอนสำคัญไป เพราะมัน "ไม่รู้ว่าไม่รู้"
+
+---
+
+## 4. SETI@home ของ AI — Vision ที่ใหญ่กว่าที่คิด
+
+![Distributed AI Research Community — SETI@home style](/images/placeholder.jpg)
+
+หลังจาก AutoResearch ออกมา Karpathy มองไปอีกขั้น เขาพูดว่า:
+
+> "เป้าหมายไม่ใช่เลียนแบบนักวิจัย PhD คนเดียว แต่เลียนแบบ research community ทั้งระบบ"
+
+แนวคิดคือทำให้ AI agent ทำงานแบบ **massively asynchronous** — agent หลายพันตัวรันพร้อมกัน แต่ละตัวทดสอบ hypothesis ต่างกัน share ผลลัพธ์กัน ปรับ direction จากของกันและกัน
+
+เหมือน SETI@home ที่ใช้พลัง computing ของคนทั้งโลก search หา signal จากอวกาศ แต่แทนที่จะ search for aliens — search for scientific breakthroughs
+
+นี่คือ trajectory ที่ AI กำลังเดินไป ถ้ามันเกิดขึ้น speed ของวิทยาศาสตร์และ innovation จะเปลี่ยนไปอย่างที่เราไม่เคยเห็นมาก่อน
+
+---
+
+## 5. AI ที่ทรงพลังที่สุดคือ AI ที่ทำงานขณะคุณนอนหลับ
+
+![Autonomous AI Loop — งานไม่หยุดแม้คุณหลับ](/images/placeholder.jpg)
+
+นี่คือ insight สุดท้ายที่ Karpathy พูดซ้ำหลายครั้ง และผมคิดว่ามันสำคัญมากสำหรับคนทำธุรกิจ
+
+AI agent ที่ดีที่สุดไม่ใช่ AI ที่ตอบคำถามได้เร็ว แต่คือ AI ที่ **ทำงานได้โดยไม่ต้องมีคนนั่งดู**
+
+Karpathy เรียกมันว่า "The Loop" — AI รัน, ประเมิน, ปรับ, รัน ต่อเนื่องเป็นวงจร ขณะที่มนุษย์ทำอย่างอื่น
+
+สำหรับธุรกิจ นี่หมายความว่า:
+- งาน research ที่เคยใช้ทีม 3 คนเป็นสัปดาห์ → AI ทำข้ามคืน
+- A/B testing ที่เคยต้องรอผล 2 สัปดาห์ → AI iterate ได้ร้อยรอบใน 1 วัน
+- Content optimization ที่เคยต้องมีคนนั่งวิเคราะห์ → AI วน loop หา pattern ให้
+
+<Callout variant="success" title="Takeaway สำหรับคนทำธุรกิจ">
+คำถามที่ต้องถามตัวเองไม่ใช่ "AI ช่วยงานอะไรได้?" แต่คือ "งานไหนที่ควรรันได้ต่อเนื่องโดยไม่ต้องมีผมนั่งดู?" — นั่นแหละคืองานที่ควร delegate ให้ AI agent ก่อนเลย
+</Callout>
+
+---
+
+## สรุป: 5 ข้อจาก Karpathy ใน 60 วินาที
+
+| # | Insight | What it means for you |
+|---|---------|----------------------|
+| 1 | AI รัน 700 experiments ใน 2 วัน | งาน iteration ให้ AI วน loop แทน |
+| 2 | Engineering = Intent + Decomposition + Review | Skill ใหม่ไม่ใช่ coding แต่คือ directing |
+| 3 | LLM ไม่รู้ว่าตัวเองไม่รู้ | Cross-check งานสำคัญเสมอ |
+| 4 | AI research community แบบ SETI@home กำลังมา | Knowledge work จะเร็วขึ้น 100x |
+| 5 | AI ที่ดีที่สุดทำงานขณะคุณนอนหลับ | ออกแบบ workflow ที่ AI รันได้ autonomous |
+
+Karpathy ไม่ได้พูดว่า "AI จะแทนมนุษย์" เขาพูดว่า "คนที่ใช้ AI เก่งจะแทนคนที่ไม่ใช้"
+
+ช่องว่างนั้นกำลังเปิดกว้างขึ้นทุกวัน
+
+---
+
+*ผมเขียนเรื่อง AI ที่ใช้งานได้จริงสำหรับคนทำธุรกิจทุกสัปดาห์ที่ [dopelab.studio](https://dopelab.studio) — ติดตามเพื่อไม่พลาดบทความถัดไป*
