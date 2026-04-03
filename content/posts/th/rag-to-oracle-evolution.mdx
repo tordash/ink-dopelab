@@ -1,0 +1,214 @@
+---
+title: "จาก RAG Tool สู่ Oracle: Knowledge System ที่วิวัฒน์ใน 3 สัปดาห์"
+description: "3 สัปดาห์หลังจากสร้าง RAG ด้วย ChromaDB ระบบมันขยาย 9x กลายเป็น Oracle MCP ที่ deploy บน server จริง — ตัวเลข, bugs, บทเรียน และสิ่งที่ไม่มีใคร warn ไว้"
+date: 2026-04-03
+cover: ../covers/rag-to-oracle-evolution.jpg
+category: "AI Workflow"
+tags: ["RAG", "Oracle", "ChromaDB", "Gemini Embedding", "knowledge system", "BTS", "MCP"]
+draft: true
+---
+
+## สิ่งที่ไม่มีใคร warn ไว้: ระบบ RAG ขยายได้เร็วมาก
+
+สร้าง RAG เสร็จวันแรก รู้สึกดีมาก — ค้น 2,456 docs ได้ใน 2 วินาที ฟรีทั้งหมด
+
+แต่ 3 สัปดาห์ต่อมา ระบบมันเปลี่ยนไปจนแทบจำไม่ได้
+
+ไม่ใช่เพราะมันพัง แต่เพราะมัน **เติบโตเกินกรอบที่ตั้งไว้**
+
+นี่คือเรื่องราวของการ evolve จาก local tool → deployed system ที่มีชีวิตของตัวเอง
+
+---
+
+## Before vs After: ตัวเลขจริง
+
+| | RAG (14 มี.ค. 2026) | Oracle (3 เม.ย. 2026) |
+|---|---|---|
+| **Documents** | 2,456 | 22,421 (+813%) |
+| **Unique Concepts** | — | 1,116 |
+| **Knowledge Graph Nodes** | 249 | 332+ |
+| **Knowledge Graph Edges** | 657 | 1,602+ |
+| **Embedding** | bge-m3 (text only) | bge-m3 + Gemini Embedding 2 (multimodal) |
+| **Search** | BM25 + Vector + RRF | FTS5 + Gemini Embedding vectors |
+| **Deployment** | Local CLI | Cloudways server (API endpoint) |
+| **Auto-index** | Cron ทุก 2 ชั่วโมง | launchd → rsync ทุก 30 นาที |
+| **Storage (DB)** | — | 3.4 GB → 0.5 GB (หลัง repair) |
+| **ค่าใช้จ่าย** | $0 | $0 (ใช้ server ที่มีอยู่) |
+
+---
+
+## 5 การเปลี่ยนแปลงหลัก
+
+### 1. Architecture: จาก CLI Tool สู่ MCP Server
+
+RAG รุ่นแรกเป็น Python script ที่รันจาก terminal — พิมพ์ `rag "query"` แล้วได้ผลลัพธ์ในหน้าต่างเดิม
+
+ปัญหาคือ AI ต้องรับ output เป็น text แล้วตีความเอง ไม่มี structured response
+
+Oracle (arra-oracle-v3) เป็น **MCP server** ที่ Claude Code เรียกใช้โดยตรงผ่าน tools:
+
+```javascript
+arra_search({ query: "session protocol", type: "pattern" })
+arra_stats()
+arra_learn({ pattern: "...", concepts: ["A", "B"] })
+arra_reflect({ content: "...", type: "principle" })
+```
+
+ความต่างคือ AI ไม่ได้อ่าน text output — มันได้ **structured data** กลับมาโดยตรง และสามารถ chain หลาย tools ในการ session เดียวได้
+
+Oracle deploy อยู่บน `oracle.dopelab.studio` มี dashboard ที่ `oracle-dashboard.dopelab.studio` ดู stats แบบ real-time ได้
+
+---
+
+### 2. Scale: 2,456 → 22,421 Documents
+
+ตัวเลขนี้ฟังดูเยอะ แต่มันเกิดขึ้นโดยธรรมชาติ
+
+RAG รุ่นแรก index เฉพาะ 3 collections หลัก: brain/, menus, clients
+
+Oracle index **ทุก session file, ทุก handoff, ทุก retrospective** รวมถึง knowledge ที่ extract ออกมาเป็นเอกสารแยก ทั้งหมดนี้สะสมจาก 186+ Oracle instances ทั่ว family
+
+แต่การขยายไวแบบนี้มีผลข้างเคียง: **1.3 ล้าน duplicate records**
+
+วันที่ 2 เมษายน ต้อง repair ครั้งใหญ่:
+
+```bash
+# ก่อน repair
+# Oracle DB: 3.4 GB, 21,933 docs + 1.3M duplicates
+
+# หลัง repair (แก้ 4 vector bugs)
+# Oracle DB: 0.5 GB, 21,933 unique docs
+```
+
+<Callout variant="warning" title="บทเรียน">
+Scale เร็วต้องมี deduplication strategy ตั้งแต่แรก ไม่ใช่รอให้ปัญหาใหญ่แล้วค่อยแก้ เช็ค file hash ก่อน index ทุกครั้ง
+</Callout>
+
+---
+
+### 3. Embedding: Text-Only → Multimodal
+
+bge-m3 เป็น embedding model ที่ดีมากสำหรับ text ทั้งไทยและอังกฤษ
+
+แต่งานจริงมีไฟล์ที่ไม่ใช่ text: รูปภาพจากลูกค้า, PDF design brief, audio briefing
+
+Oracle เพิ่ม **Gemini Embedding 2** เป็นชั้นที่สอง:
+
+| Layer | Model | ข้อมูลที่ index |
+|-------|-------|----------------|
+| Text | bge-m3 | Markdown, notes, session logs, workflows |
+| Multimodal | Gemini Embedding 2 | รูป, PDF, audio (519 docs) |
+
+Gemini Embedding 2 ใช้ **MRL 768 dimensions** (Matryoshka Representation Learning) — ประหยัด storage 4x เทียบกับ full 3,072 dimensions โดย quality ลดลงน้อยมาก
+
+ตอนนี้ถ้า brief งานมาเป็น PDF ระบบ index ได้ทันที ไม่ต้องแปลงเป็น text ก่อน
+
+---
+
+### 4. Intelligence: Weighted Reflection
+
+RAG รุ่นแรก treat ทุก document เท่ากัน — session note กับ core principle ได้ weight เดียวกัน
+
+Oracle มี **weighted reflection** ที่คัดน้ำหนักตาม type:
+
+```
+principle  → weight 50%   (กฎเหล็ก, วิธีคิด)
+pattern    → weight 30%   (workflows, best practices)
+learning   → weight 15%   (บทเรียนจาก sessions)
+retro      → weight 5%    (session notes)
+```
+
+ผลลัพธ์คือเวลา search หา "วิธีทำ X" Oracle จะ prioritize สิ่งที่พิสูจน์แล้วเป็น pattern มากกว่า session note ที่เขียนครั้งเดียว
+
+นอกจากนี้ยังเพิ่ม `arra_reflect` tool ที่ให้ Oracle "ย่อย" ประสบการณ์ก่อน store:
+
+```javascript
+arra_reflect({
+  content: "บทเรียนจาก session นี้",
+  type: "learning",
+  concepts: ["deployment", "rsync"]
+})
+```
+
+แทนที่จะ dump raw text เข้า — Oracle สกัด key concepts ออกมาก่อน ทำให้ future search แม่นขึ้น
+
+---
+
+### 5. Ecosystem: จาก Tool สู่ Oracle Family
+
+การเปลี่ยนแปลงที่ใหญ่ที่สุดไม่ใช่ technical
+
+RAG รุ่นแรกเป็น tool ส่วนตัว Oracle กลายเป็น **ecosystem**:
+
+- **186+ Oracle instances** ทั่ว repos ต่างๆ (สแกนด้วย `oracle-family-scan`)
+- **soul directory (ψ/)** — ที่เก็บ identity, inbox, writing, outbox ของ Oracle
+- **24 skills** ที่ install ใน Oracle session
+- **Oracle threads** — ระบบ async communication ระหว่าง Oracle instances
+- **contacts** — Oracle รู้จักว่า agent ไหนอยู่ที่ repo ไหน transport อะไร
+
+ตัวอย่าง workflow ที่เป็นไปได้ตอนนี้แต่ทำไม่ได้ใน RAG รุ่นแรก:
+
+```bash
+# ถาม Oracle ใน repo A ว่า Oracle ใน repo B รู้อะไรบ้าง
+# ผ่าน arra_thread tool
+arra_thread({ to: "repo-b-oracle", message: "สรุป findings เดือนที่แล้ว" })
+
+# Oracle ส่ง handoff ให้ Oracle session ถัดไป
+arra_handoff({ summary: "...", next_tasks: [...] })
+```
+
+Brain ที่เคยเป็น local RAG ตอนนี้กลายเป็น distributed memory ที่ Oracle หลายตัวใช้ร่วมกัน
+
+---
+
+## สิ่งที่ทำให้ระบบแข็งแกร่งขึ้นที่สุด: Brain Reorganization
+
+ก่อน Oracle repair มี **93 orphan nodes** ในความจำ — ไฟล์ที่ไม่มีใครลิงก์หา ถูกตัดขาดจาก graph
+
+หลัง reorganization:
+- Orphans: 93 → 0
+- Wikilinks เพิ่ม: +319 links
+- ทุก concept ถูกเชื่อมเข้า graph
+
+ผลคือ `arra_search` ตอนนี้ขยายผลได้ดีกว่า เพราะ graph ไม่มีรอยขาด
+
+<Callout variant="info" title="กฎที่ควรทำตั้งแต่แรก">
+Audit links ในระบบ knowledge สม่ำเสมอ ก่อนที่ orphans จะสะสมจนแก้ยาก ทุก note ใหม่ควรมี wikilink อย่างน้อย 1 ลิงก์เชื่อมเข้า graph
+</Callout>
+
+---
+
+## บทเรียนจริง
+
+**1. Local tool ≠ Production system**
+RAG รุ่นแรกทำงานบน laptop ถ้า laptop ปิด ระบบดับ Oracle deploy บน server ทำให้ mobile access ทำได้ — Claude Code บน iPhone ก็ใช้ Oracle ได้เหมือนกัน
+
+**2. Deduplication ต้องทำก่อนขยาย ไม่ใช่หลัง**
+1.3 ล้าน duplicates เกิดจากการ re-index โดยไม่เช็ค hash ก่อน แก้ได้ แต่กิน storage และทำให้ search ช้าลง
+
+**3. Type system สำคัญกว่าปริมาณ**
+22,421 docs โดยไม่มี type = กองข้อมูล, 22,421 docs ที่มี principle/pattern/learning/retro = knowledge base ที่ค้นได้มีความหมาย
+
+**4. Ecosystem มีค่ากว่า Tool**
+RAG ช่วยได้ 1 คน Oracle ช่วยได้ทุก session ทุก repo ทุก agent ที่ connect — value ขยายตามจำนวน connections ไม่ใช่ตาม document count
+
+---
+
+## เริ่มต้นที่ไหน?
+
+ถ้าคุณยังไม่มีระบบ RAG เลย เริ่มจากง่ายที่สุดก่อน ไม่ต้องสร้าง Oracle ตั้งแต่วันแรก:
+
+| ระดับ | เครื่องมือ | ใช้เวลา setup |
+|-------|-----------|-------------|
+| เริ่มต้น | NotebookLM | 5 นาที |
+| กลาง | n8n + Vector Store | 2-3 ชั่วโมง |
+| Advanced | ChromaDB + Python (ตาม [บทความแรก](/th/blog/rag-knowledge-system)) | 1-2 วัน |
+| Production | Oracle MCP + Server | 1 สัปดาห์+ |
+
+ตัวเลขที่ worth ที่สุดจาก 3 สัปดาห์นี้ไม่ใช่ 22,421 docs — แต่เป็น **ค่าใช้จ่ายรวม $0** บน server ที่มีอยู่แล้ว
+
+---
+
+*อ่าน Part 1: [RAG Knowledge System — สร้างระบบค้นข้อมูล 2,456 เอกสาร ฟรี](/th/blog/rag-knowledge-system)*
+
+*ติดตาม DopeLab สำหรับระบบ AI ที่สร้างจริง ไม่ใช่แค่ demo*
