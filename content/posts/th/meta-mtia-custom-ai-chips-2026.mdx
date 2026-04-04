@@ -1,0 +1,49 @@
+---
+title: "Meta สร้างชิป AI เอง — MTIA ท้าชน NVIDIA ราคา Inference จะถูกลง"
+description: "Meta ประกาศ deploy ชิป MTIA ทั่ว data center ด้วย MTIA 400/450/500 ท้าชน NVIDIA เพื่อลดต้นทุน inference สำหรับ 3 billion users"
+date: 2026-04-04
+cover: ../covers/meta-mtia-custom-ai-chips-2026.jpg
+category: "AI Business"
+tags: ["meta", "mtia", "nvidia", "ai-chips", "inference", "infrastructure"]
+featured: false
+draft: false
+---
+
+## Meta ไม่ยอมพึ่ง NVIDIA อีกต่อไป
+
+Meta ประกาศ deploy ชิป MTIA (Meta Training and Inference Accelerator) ทั่ว data center โดย MTIA 400 อยู่ระหว่างทดสอบ และ MTIA 450, 500 จะเข้า mass production ภายในปี 2027
+
+## ทำไม Meta ต้องสร้างชิปเอง
+
+NVIDIA ครอง 90%+ ของตลาดชิป AI — ทำให้ราคา GPU แพง ส่งไม่ทัน และ NVIDIA มีอำนาจต่อรองสูงมาก
+
+บริษัทใหญ่เริ่มไม่ยอม:
+- **Meta** → MTIA (custom chip)
+- **Google** → TPU (ใช้มาหลายปีแล้ว)
+- **Amazon** → Trainium + Inferentia
+- **Microsoft** → Maia (ร่วมกับ OpenAI)
+
+ทุกบริษัทพยายามลดการพึ่งพา NVIDIA ด้วยเหตุผลเดียวกัน: **ควบคุมต้นทุนและ supply chain**
+
+## MTIA 400/450/500
+
+| ชิป | สถานะ | เป้าหมาย |
+|-----|--------|----------|
+| MTIA 400 | กำลังทดสอบ | Inference workload ปัจจุบัน |
+| MTIA 450 | 2027 mass production | Training + Inference |
+| MTIA 500 | 2027 mass production | Next-gen AI models |
+
+สิ่งที่ Meta เน้นคือ **inference** — เพราะ Meta มี user 3+ billion คน ทุก feed, recommendation, ad targeting ใช้ AI inference ตลอดเวลา ค่า inference คือต้นทุนที่ใหญ่ที่สุด
+
+## ผลกระทบต่อราคา AI
+
+ถ้า Meta, Google, Amazon สร้างชิปเองได้สำเร็จ:
+- **ราคา inference จะถูกลง** — การแข่งขันทำให้ราคาลด
+- **NVIDIA อาจต้องลดราคา** — ไม่ได้ผูกขาดอีกต่อไป
+- **AI เข้าถึงง่ายขึ้น** — ต้นทุนถูก = API ถูก = SME ใช้ได้
+
+## สำหรับ SME ไทย
+
+1. **ไม่ต้องซื้อชิปเอง** — แค่ใช้ API ที่ถูกลงเรื่อยๆ
+2. **เปรียบเทียบราคา** — ราคา API จะลดลงใน 6-12 เดือนข้างหน้า อย่า lock ตัวเองกับ provider เดียว
+3. **วางแผนล่วงหน้า** — AI ที่เคยแพงเกินไป อาจเข้าถึงได้ในปีหน้า

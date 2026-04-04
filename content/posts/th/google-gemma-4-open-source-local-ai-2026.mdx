@@ -1,0 +1,49 @@
+---
+title: "Google Gemma 4 — AI ฟรี Apache 2.0 ที่รันบนเครื่องตัวเองได้"
+description: "Google ปล่อย Gemma 4 ตระกูล open-weight AI model 3 ขนาด (2B, 12B, 31B) ภายใต้ Apache 2.0 — ใช้ฟรีทั้งส่วนตัวและเชิงพาณิชย์ รันบน consumer hardware ได้ ไม่ต้องจ่ายค่า API"
+date: 2026-04-04
+cover: ../covers/google-gemma-4-open-source-local-ai-2026.jpg
+category: "AI Models"
+tags: ["gemma-4", "google", "open-source", "local-ai", "apache-2"]
+featured: false
+draft: false
+---
+
+## ยุคทองของ AI ฟรีมาถึงแล้ว
+
+Google เพิ่งปล่อย Gemma 4 ตระกูล open-weight AI model ภายใต้ Apache 2.0 — หมายความว่าใครก็ใช้ได้ฟรี ทั้งส่วนตัวและเชิงพาณิชย์ โดยไม่ต้องขออนุญาต
+
+## ทำไม Gemma 4 ถึงน่าสนใจ
+
+Gemma 4 มาพร้อม 3 ขนาด: **2B**, **12B**, และ **31B** parameters
+
+| Model | ขนาด | รันบน | จุดเด่น |
+|-------|------|------|---------|
+| Gemma 4 2B | เล็ก | มือถือ, Raspberry Pi | เบา เร็ว |
+| Gemma 4 12B | กลาง | Desktop ทั่วไป | สมดุล |
+| Gemma 4 31B | ใหญ่ | GPU หรือ cloud | ติด Top Global |
+
+ตัว 31B ติดอันดับ top global open models — แข่งกับ Llama 4 Scout ของ Meta ได้สบาย แต่สิ่งที่ต่างคือ **รันบน consumer hardware ได้** ไม่ต้องมี GPU ราคาแพง
+
+## Open Weight กับ Open Source ต่างกันยังไง
+
+สิ่งที่ Google ปล่อยคือ **open weight** ไม่ใช่ open source แบบเต็ม — หมายความว่าคุณได้ตัว model ไปใช้ แต่ไม่ได้ training data หรือ training code
+
+แต่สำหรับธุรกิจ สิ่งที่สำคัญคือ:
+- **ใช้ฟรี** ไม่มีค่า API per-token
+- **Data อยู่ในเครื่อง** ไม่ส่งออกไปไหน — เหมาะกับข้อมูลลับ
+- **Customize ได้** fine-tune ให้เข้ากับธุรกิจของคุณ
+- **Apache 2.0** ไม่มีเงื่อนไขลิขสิทธิ์ซับซ้อน
+
+## ใช้ทำอะไรได้จริง
+
+- **Customer support bot** ที่รันในออฟฟิศ ไม่ต้องส่งข้อมูลลูกค้าไปคลาวด์
+- **Document summarization** สรุปเอกสารภายในโดยไม่เสี่ยงข้อมูลรั่ว
+- **Code assistant** ช่วยทีม dev เขียนโค้ด โดยไม่ต้องจ่ายรายเดือน
+- **Translation** แปลเอกสารไทย-อังกฤษ ได้ offline
+
+## เปรียบเทียบกับ Llama 4
+
+Meta ก็เพิ่งปล่อย Llama 4 (Scout, Maverick, Behemoth) ในช่วงเดียวกัน การแข่งขัน open-weight ทำให้ทุกคนได้ประโยชน์ — model ดีขึ้น ฟรีขึ้น เร็วขึ้น
+
+สำหรับ SME ไทย ยุคนี้คือยุคทองของ AI ฟรี — ไม่ต้องจ่าย $20/เดือน ก็ใช้ AI ระดับ top ได้
