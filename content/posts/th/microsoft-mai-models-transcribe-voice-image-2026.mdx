@@ -1,0 +1,54 @@
+---
+title: "Microsoft MAI — 3 โมเดล AI ใหม่ที่ Microsoft สร้างเอง ลดพึ่ง OpenAI"
+description: "Microsoft เปิดตัว MAI-Transcribe-1, MAI-Voice-1, MAI-Image-2 — โมเดล AI สร้างเองครั้งแรกที่พร้อมใช้เชิงพาณิชย์ ถอด transcript แม่นสุดในโลก ลดการพึ่งพา OpenAI"
+date: 2026-04-05
+cover: ../covers/microsoft-mai-models-transcribe-voice-image-2026.jpg
+category: "AI Models"
+tags: ["microsoft", "mai", "transcribe", "voice", "image", "foundry"]
+featured: false
+draft: false
+---
+
+## Microsoft สร้าง AI เอง ไม่พึ่ง OpenAI อีกต่อไป
+
+วันที่ 2 เม.ย. 2026 Microsoft เปิดตัว MAI (Microsoft AI) models 3 ตัวแรกบน Microsoft Foundry — เป็นครั้งแรกที่โมเดลที่ Microsoft สร้างเองพร้อมใช้เชิงพาณิชย์
+
+## 3 โมเดลใหม่
+
+| Model | ทำอะไร | จุดเด่น |
+|-------|--------|---------|
+| **MAI-Transcribe-1** | ถอดเสียงเป็นข้อความ | WER 3.9% แม่นสุดในโลก, 25 ภาษา |
+| **MAI-Voice-1** | สร้างเสียงพูด | 1 นาทีของ audio ใน < 1 วินาที, สร้าง custom voice จาก 1 นาทีตัวอย่าง |
+| **MAI-Image-2** | สร้างภาพ | Top 3 บน Arena.ai, เร็วกว่าเดิม 2x |
+
+## MAI-Transcribe-1 แม่นสุดในโลก
+
+ตัวเลขที่น่าสนใจ:
+- **Word Error Rate 3.9%** — ต่ำสุดในอุตสาหกรรม
+- รองรับ **25 ภาษา** รวมภาษาที่ Microsoft ใช้ในผลิตภัณฑ์มากที่สุด
+- **เร็วกว่า Azure Fast เดิม 2.5 เท่า** ในโหมด batch
+- **GPU cost ต่ำกว่าคู่แข่งเกือบครึ่ง** ที่ความแม่นยำเทียบเท่า
+
+## ราคา
+
+| Model | ราคา |
+|-------|------|
+| MAI-Voice-1 | $22/1M characters |
+| MAI-Image-2 | $5/1M tokens (input), $33/1M tokens (output) |
+| MAI-Transcribe-1 | ยังไม่ประกาศราคาสาธารณะ |
+
+## ทำไมสำคัญ — Microsoft ลดพึ่ง OpenAI
+
+นี่คือสัญญาณชัดว่า Microsoft ไม่ต้องการเป็นแค่ **ตัวแทนจำหน่าย OpenAI** อีกต่อไป การสร้างโมเดลเองหมายถึง:
+
+- **ควบคุมต้นทุน** ได้ดีกว่า
+- **ลด dependency** ไม่ต้องรอ OpenAI ปล่อย update
+- **Product integration** ที่แน่นขึ้น — MAI-Voice-1 ใช้ใน Copilot แล้ว
+- **แข่งขันด้านราคา** ได้กับ Google, Amazon
+
+## สำหรับ SME ไทย
+
+- **ถอด transcript ภาษาไทย** ด้วย MAI-Transcribe-1 อาจแม่นกว่า Whisper
+- **สร้าง voiceover** ด้วย MAI-Voice-1 จาก 1 นาทีตัวอย่างเสียง
+- **สร้างภาพ** ด้วย MAI-Image-2 ผ่าน Foundry API
+- ทุกอย่างใช้ผ่าน **Microsoft Foundry** — ถ้าใช้ Azure อยู่แล้ว ต่อได้ทันที

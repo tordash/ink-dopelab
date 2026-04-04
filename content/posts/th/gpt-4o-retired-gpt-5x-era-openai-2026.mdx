@@ -1,0 +1,66 @@
+---
+title: "GPT-4o เกษียณแล้ว — ยุค GPT-5.x เริ่มต้นอย่างเป็นทางการ"
+description: "OpenAI ปิด GPT-4o อย่างเป็นทางการ 3 เม.ย. 2026 รวมทั้ง GPT-4.1 และ o4-mini — consolidate สู่ GPT-5.x family ที่มี 4 รุ่น ตั้งแต่ mini ถึง Pro สำหรับ developer ที่ยังเรียก GPT-4o ต้อง migrate ด่วน"
+date: 2026-04-05
+cover: ../covers/gpt-4o-retired-gpt-5x-era-openai-2026.jpg
+category: "AI Models"
+tags: ["openai", "gpt-4o", "gpt-5", "migration", "chatgpt", "api"]
+featured: false
+draft: false
+---
+
+## ปิดฉาก GPT-4o อย่างเป็นทางการ
+
+วันที่ 3 เม.ย. 2026 OpenAI **ปิด GPT-4o จากทุก plan** รวมถึง Enterprise และ Education — จบยุคของ model ที่เคยเป็นหัวใจของ ChatGPT
+
+## Timeline การเกษียณ
+
+| วันที่ | เหตุการณ์ |
+|--------|----------|
+| 29 ม.ค. 2026 | ประกาศจะเกษียณ GPT-4o |
+| 13 ก.พ. 2026 | ปิด GPT-4o, GPT-4.1, GPT-4.1 mini, o4-mini จาก ChatGPT ส่วนใหญ่ |
+| 11 มี.ค. 2026 | ปิด GPT-5.1 models ด้วย |
+| **3 เม.ย. 2026** | **ปิด GPT-4o จาก Enterprise/Education plan — เกษียณสมบูรณ์** |
+
+## GPT-5.x Family ปัจจุบัน
+
+| Model | จุดเด่น | ใช้ทำอะไร |
+|-------|---------|----------|
+| **GPT-5.3 Instant** | เร็ว เบา | งานทั่วไป chat ตอบเร็ว |
+| **GPT-5.4 Thinking** | Deep reasoning | วิเคราะห์ซับซ้อน คิดหลายขั้น |
+| **GPT-5.4 Pro** | Maximum capability | งานที่ต้องการคุณภาพสูงสุด |
+| **GPT-5.4 mini** | Cost-efficient | งาน reasoning แต่ประหยัด |
+
+## ตัวเลขที่ต้องรู้
+
+- GPT-5.4 **ลดข้อผิดพลาด 33%** เทียบกับ GPT-5.2 (per-claim accuracy)
+- Overall responses **มี error น้อยลง 18%**
+- ก่อนเกษียณ GPT-4o มีผู้ใช้ **ไม่ถึง 0.1%** แล้ว
+- GPT-5.4 มี **Computer Use** — ควบคุมคอมพิวเตอร์ได้โดยตรง
+- Context window **1 million tokens**
+
+## ถ้าคุณยังใช้ GPT-4o API
+
+**ต้อง migrate ด่วน** — API level ยังใช้ได้ชั่วคราวแต่ OpenAI แนะนำให้ย้ายแล้ว
+
+สิ่งที่ต้องทำ:
+1. **เช็ค API calls** — หา model parameter ที่ยังเป็น `gpt-4o`
+2. **ทดสอบกับ GPT-5.4** — output อาจต่างเล็กน้อย โดยเฉพาะ personality
+3. **อัปเดต prompt** — GPT-5.x ตอบตรงกว่า ไม่ sycophantic เท่า 4o
+4. **เช็คราคา** — pricing structure เปลี่ยน
+
+## ข้อถกเถียง — ChatGPT แย่ลงหรือเปล่า?
+
+มีผู้ใช้จำนวนมากบ่นว่า GPT-5.x **"ไม่เป็นมิตร"** เท่า GPT-4o:
+- ตอบตรงเกินไป ไม่ warm
+- Safety tuning เข้มขึ้น บางคำถามถูก refuse
+- Community ที่ใช้ ChatGPT เป็น companion ได้รับผลกระทบหนัก
+
+OpenAI ยืนยันว่าเป็น **design choice** — ลด sycophancy และ hallucination แลกกับ personality ที่ตรงกว่า
+
+## สำหรับ SME ไทย
+
+- **ถ้าใช้ ChatGPT Plus** — ไม่ต้องทำอะไร ระบบเปลี่ยนให้แล้ว
+- **ถ้าใช้ API** — เช็คและ migrate ก่อน OpenAI ปิด API level ด้วย
+- **เลือก model ให้เหมาะ:** 5.3 Instant สำหรับ chatbot ตอบเร็ว, 5.4 Thinking สำหรับวิเคราะห์ข้อมูล
+- **อย่ายึดติดกับ model เดียว** — ทดลอง Claude, Gemini ควบคู่กัน

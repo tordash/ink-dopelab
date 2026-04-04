@@ -1,0 +1,54 @@
+---
+title: "Claude Code Source Code หลุด — 500,000 บรรทัด กับ 44 ฟีเจอร์ลับ"
+description: "Anthropic ปล่อย source code ของ Claude Code หลุดโดยไม่ตั้งใจผ่าน npm — 1,900 ไฟล์ TypeScript, 500K+ บรรทัด, เผย 44 feature flags ที่ยังไม่เปิดใช้ รวมถึง background agents และ voice mode"
+date: 2026-04-05
+cover: ../covers/claude-code-source-code-leak-2026.jpg
+category: "AI News"
+tags: ["anthropic", "claude-code", "source-code", "leak", "security", "feature-flags"]
+featured: false
+draft: false
+---
+
+## Source Code หลุดผ่าน npm
+
+เมื่อ 31 มี.ค. 2026 Anthropic เผลอปล่อย source map ขนาด 59.8 MB ไปกับ Claude Code version 2.1.88 บน npm — ภายในมี link ไปยัง zip archive บน Cloudflare R2 ที่เปิด public
+
+ภายในไม่กี่ชั่วโมง:
+- **1,900 ไฟล์ TypeScript** ถูก download
+- **512,000+ บรรทัดโค้ด** ถูกเผยแพร่บน GitHub
+- **84,000+ stars** กลายเป็น repo ที่ถูก download เร็วที่สุดในประวัติศาสตร์ GitHub
+
+## Anthropic พูดว่าอะไร
+
+> "Earlier today, a Claude Code release included some internal source code. No sensitive customer data or credentials were involved or exposed. This was a release packaging issue caused by human error, not a security breach."
+
+## 44 ฟีเจอร์ลับที่เจอในโค้ด
+
+สิ่งที่น่าสนใจคือ **feature flags** — ฟีเจอร์ที่ build เสร็จแล้วแต่ยังไม่เปิด:
+
+- **Background agents** — Claude ทำงาน 24/7 ผ่าน GitHub webhooks
+- **Multi-agent orchestration** — Claude ตัวหนึ่งสั่ง Claude หลายตัวทำงาน
+- **Cron scheduling** — ตั้งเวลาให้ agent ทำงานอัตโนมัติ
+- **Voice command mode** — สั่งงาน Claude ด้วยเสียง
+- **Browser control ผ่าน Playwright** — ไม่ใช่แค่ fetch แต่ควบคุม browser จริงๆ
+- **Self-resume agents** — agent หลับแล้วตื่นเองได้
+- **Persistent memory** — จำข้ามเซสชันโดยไม่ต้องใช้ external storage
+
+## ความเสี่ยงด้านความปลอดภัย
+
+ภายใน 24 ชม. หลังหลุด:
+- มีคนสร้าง **npm packages ปลอม** ชื่อคล้ายๆ เพื่อหลอก developer
+- มีคนสร้าง **GitHub repo ปลอม** ที่อ้างว่าเป็น leaked code แต่ฝัง malware (Vidar stealer + GhostSocks)
+- Anthropic ส่ง **DMCA takedown** แต่โค้ดกระจายไปหลายร้อย repo แล้ว
+
+## บทเรียนสำคัญ
+
+1. **Human error เกิดได้แม้กับบริษัทระดับ Anthropic** — ไฟล์เดียวใน .npmignore ก็พอ
+2. **Supply chain attacks เร็วมาก** — แฮกเกอร์ไม่รอ ฝัง malware ใน hours
+3. **Feature flags บอก roadmap** — ถ้าคุณใช้ Claude Code อนาคตจะมีฟีเจอร์เหล่านี้
+
+## สำหรับ SME ไทย
+
+- **ระวัง download** จาก GitHub ที่อ้างว่าเป็น "leaked Claude Code" — อาจเป็น malware
+- **ตรวจสอบ dependencies** ของ project — npm package ปลอมเป็นภัยจริง
+- **ข่าวดี:** ฟีเจอร์ที่เจอ เช่น background agents, cron scheduling จะทำให้ Claude Code ทรงพลังมากขึ้นเมื่อเปิดใช้
