@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-51" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-51)"/>
+
+  <!-- Network decoration -->
+  <circle cx="1086" cy="173" r="3" fill="#27AE60" opacity="0.15"/><circle cx="948" cy="104" r="3" fill="#27AE60" opacity="0.15"/><line x1="1086" y1="173" x2="948" y2="104" stroke="#27AE60" stroke-width="0.5" opacity="0.1"/><circle cx="1031" cy="145" r="3" fill="#27AE60" opacity="0.15"/><line x1="948" y1="104" x2="1031" y2="145" stroke="#27AE60" stroke-width="0.5" opacity="0.1"/><circle cx="1091" cy="175" r="3" fill="#27AE60" opacity="0.15"/><line x1="1031" y1="145" x2="1091" y2="175" stroke="#27AE60" stroke-width="0.5" opacity="0.1"/><circle cx="1023" cy="141" r="3" fill="#27AE60" opacity="0.15"/><line x1="1091" y1="175" x2="1023" y2="141" stroke="#27AE60" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#27AE60"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">OpenAI business metrics</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">and revenue growth</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#27AE60" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <rect x="200" y="364" width="80" height="66" rx="6" fill="#27AE60" opacity="0.7"/>
+            <rect x="330" y="317" width="80" height="113" rx="6" fill="#27AE60" opacity="0.9"/>
+            <rect x="460" y="294" width="80" height="136" rx="6" fill="#27AE60" opacity="1.0"/>
+            <rect x="590" y="342" width="80" height="88" rx="6" fill="#27AE60" opacity="0.8"/>
+            <rect x="720" y="306" width="80" height="124" rx="6" fill="#27AE60" opacity="0.9"/>
+            <rect x="850" y="288" width="80" height="142" rx="6" fill="#27AE60" opacity="1.0"/>
+        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

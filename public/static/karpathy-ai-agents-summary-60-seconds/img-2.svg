@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-38" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-38)"/>
+
+  <!-- Network decoration -->
+  <circle cx="1097" cy="178" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="1024" cy="142" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1097" y1="178" x2="1024" y2="142" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="965" cy="112" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1024" y1="142" x2="965" y2="112" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="933" cy="96" r="3" fill="#FFCC00" opacity="0.15"/><line x1="965" y1="112" x2="933" y2="96" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1079" cy="169" r="3" fill="#FFCC00" opacity="0.15"/><line x1="933" y1="96" x2="1079" y2="169" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Software Engineering 3.0</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">จาก coding สู่ orchestration</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <circle cx="600" cy="380" r="80" fill="none" stroke="#FFCC00" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="600" cy="380" r="55" fill="none" stroke="#FFCC00" stroke-width="1" opacity="0.5"/>
+            <circle cx="600" cy="380" r="35" fill="#FFCC00" opacity="0.1"/>
+            <text x="600" y="395" text-anchor="middle" fill="#FFCC00" font-size="36">&#x2728;</text>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

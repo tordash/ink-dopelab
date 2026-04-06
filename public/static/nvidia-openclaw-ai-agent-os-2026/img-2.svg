@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-44" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-44)"/>
+
+  <!-- Network decoration -->
+  <circle cx="1006" cy="133" r="3" fill="#e74c3c" opacity="0.15"/><circle cx="938" cy="99" r="3" fill="#e74c3c" opacity="0.15"/><line x1="1006" y1="133" x2="938" y2="99" stroke="#e74c3c" stroke-width="0.5" opacity="0.1"/><circle cx="979" cy="119" r="3" fill="#e74c3c" opacity="0.15"/><line x1="938" y1="99" x2="979" y2="119" stroke="#e74c3c" stroke-width="0.5" opacity="0.1"/><circle cx="1034" cy="147" r="3" fill="#e74c3c" opacity="0.15"/><line x1="979" y1="119" x2="1034" y2="147" stroke="#e74c3c" stroke-width="0.5" opacity="0.1"/><circle cx="966" cy="113" r="3" fill="#e74c3c" opacity="0.15"/><line x1="1034" y1="147" x2="966" y2="113" stroke="#e74c3c" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#e74c3c"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">AI Agent Security Problem</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">อิสระ = อันตราย</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#e74c3c" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <path d="M600,280 L680,310 L680,400 C680,440 640,470 600,490 C560,470 520,440 520,400 L520,310 Z"
+                  fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+            <path d="M600,300 L660,322 L660,395 C660,425 635,450 600,465 C565,450 540,425 540,395 L540,322 Z"
+                  fill="#e74c3c" opacity="0.1"/>
+            <text x="600" y="400" text-anchor="middle" fill="#e74c3c" font-size="40">&#x1F6E1;&#xFE0F;</text>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-36" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-36)"/>
+
+  <!-- Network decoration -->
+  <circle cx="918" cy="89" r="3" fill="#9b59b6" opacity="0.15"/><circle cx="1077" cy="168" r="3" fill="#9b59b6" opacity="0.15"/><line x1="918" y1="89" x2="1077" y2="168" stroke="#9b59b6" stroke-width="0.5" opacity="0.1"/><circle cx="997" cy="128" r="3" fill="#9b59b6" opacity="0.15"/><line x1="1077" y1="168" x2="997" y2="128" stroke="#9b59b6" stroke-width="0.5" opacity="0.1"/><circle cx="937" cy="98" r="3" fill="#9b59b6" opacity="0.15"/><line x1="997" y1="128" x2="937" y2="98" stroke="#9b59b6" stroke-width="0.5" opacity="0.1"/><circle cx="1079" cy="169" r="3" fill="#9b59b6" opacity="0.15"/><line x1="937" y1="98" x2="1079" y2="169" stroke="#9b59b6" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#9b59b6"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">DeepSeek V4</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">1 Trillion Parameter Open-Source AI</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#9b59b6" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <circle cx="600" cy="380" r="80" fill="none" stroke="#9b59b6" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="600" cy="380" r="55" fill="none" stroke="#9b59b6" stroke-width="1" opacity="0.5"/>
+            <circle cx="600" cy="380" r="35" fill="#9b59b6" opacity="0.1"/>
+            <text x="600" y="395" text-anchor="middle" fill="#9b59b6" font-size="36">&#x1F916;</text>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

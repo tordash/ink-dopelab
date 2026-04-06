@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-30" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-30)"/>
+
+  <!-- Network decoration -->
+  <circle cx="950" cy="105" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="981" cy="120" r="3" fill="#FFCC00" opacity="0.15"/><line x1="950" y1="105" x2="981" y2="120" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1035" cy="147" r="3" fill="#FFCC00" opacity="0.15"/><line x1="981" y1="120" x2="1035" y2="147" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="916" cy="88" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1035" y1="147" x2="916" y2="88" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="902" cy="81" r="3" fill="#FFCC00" opacity="0.15"/><line x1="916" y1="88" x2="902" y2="81" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Token Optimization Summary</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">10 วิธีครบในที่เดียว</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <rect x="200" y="300" width="80" height="130" rx="6" fill="#FFCC00" opacity="1.0"/>
+            <rect x="330" y="345" width="80" height="85" rx="6" fill="#FFCC00" opacity="0.8"/>
+            <rect x="460" y="308" width="80" height="122" rx="6" fill="#FFCC00" opacity="1.0"/>
+            <rect x="590" y="349" width="80" height="81" rx="6" fill="#FFCC00" opacity="0.8"/>
+            <rect x="720" y="370" width="80" height="60" rx="6" fill="#FFCC00" opacity="0.7"/>
+            <rect x="850" y="320" width="80" height="110" rx="6" fill="#FFCC00" opacity="0.9"/>
+        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

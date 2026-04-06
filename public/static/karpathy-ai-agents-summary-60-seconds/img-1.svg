@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-37" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-37)"/>
+
+  <!-- Network decoration -->
+  <circle cx="917" cy="88" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="1027" cy="143" r="3" fill="#FFCC00" opacity="0.15"/><line x1="917" y1="88" x2="1027" y2="143" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1090" cy="175" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1027" y1="143" x2="1090" y2="175" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1098" cy="179" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1090" y1="175" x2="1098" y2="179" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="999" cy="129" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1098" y1="179" x2="999" y2="129" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">AutoResearch Pipeline</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">AI รัน experiments อัตโนมัติ</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <rect x="180" y="340" width="140" height="60" rx="10" fill="#1e1e3a" stroke="#FFCC00" stroke-width="1.5" opacity="0.9"/>
+            <text x="250" y="375" text-anchor="middle" fill="#FFCC00" font-size="14" font-weight="600">Input</text>
+            <line x1="320" y1="370" x2="400" y2="370" stroke="#FFCC00" stroke-width="1.5" opacity="0.5"/>
+            <polygon points="398,365 406,370 398,375" fill="#FFCC00" opacity="0.5"/>
+            <rect x="400" y="340" width="140" height="60" rx="10" fill="#1e1e3a" stroke="#FFCC00" stroke-width="1.5" opacity="0.9"/>
+            <text x="470" y="375" text-anchor="middle" fill="#FFCC00" font-size="14" font-weight="600">Process</text>
+            <line x1="540" y1="370" x2="620" y2="370" stroke="#FFCC00" stroke-width="1.5" opacity="0.5"/>
+            <polygon points="618,365 626,370 618,375" fill="#FFCC00" opacity="0.5"/>
+            <rect x="620" y="340" width="140" height="60" rx="10" fill="#1e1e3a" stroke="#FFCC00" stroke-width="1.5" opacity="0.9"/>
+            <text x="690" y="375" text-anchor="middle" fill="#FFCC00" font-size="14" font-weight="600">Transform</text>
+            <line x1="760" y1="370" x2="840" y2="370" stroke="#FFCC00" stroke-width="1.5" opacity="0.5"/>
+            <polygon points="838,365 846,370 838,375" fill="#FFCC00" opacity="0.5"/>
+            <rect x="840" y="340" width="140" height="60" rx="10" fill="#1e1e3a" stroke="#FFCC00" stroke-width="1.5" opacity="0.9"/>
+            <text x="910" y="375" text-anchor="middle" fill="#FFCC00" font-size="14" font-weight="600">Output</text>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

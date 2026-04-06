@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-27" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-27)"/>
+
+  <!-- Network decoration -->
+  <circle cx="1059" cy="159" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="919" cy="89" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1059" y1="159" x2="919" y2="89" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1077" cy="168" r="3" fill="#FFCC00" opacity="0.15"/><line x1="919" y1="89" x2="1077" y2="168" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1097" cy="178" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1077" y1="168" x2="1097" y2="178" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="974" cy="117" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1097" y1="178" x2="974" y2="117" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Claude Code Token Optimization</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">CLAUDE.md + /clear + Model Selection</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <rect x="200" y="311" width="80" height="119" rx="6" fill="#FFCC00" opacity="0.9"/>
+            <rect x="330" y="351" width="80" height="79" rx="6" fill="#FFCC00" opacity="0.8"/>
+            <rect x="460" y="311" width="80" height="119" rx="6" fill="#FFCC00" opacity="0.9"/>
+            <rect x="590" y="291" width="80" height="139" rx="6" fill="#FFCC00" opacity="1.0"/>
+            <rect x="720" y="281" width="80" height="149" rx="6" fill="#FFCC00" opacity="1.0"/>
+            <rect x="850" y="276" width="80" height="154" rx="6" fill="#FFCC00" opacity="1.0"/>
+        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

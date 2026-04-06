@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg-39" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-39)"/>
+
+  <!-- Network decoration -->
+  <circle cx="912" cy="86" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="1001" cy="130" r="3" fill="#FFCC00" opacity="0.15"/><line x1="912" y1="86" x2="1001" y2="130" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1012" cy="136" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1001" y1="130" x2="1012" y2="136" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1039" cy="149" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1012" y1="136" x2="1039" y2="149" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1092" cy="176" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1039" y1="149" x2="1092" y2="176" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Category badge -->
+  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+
+  <!-- Title -->
+  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">LLM Limitations</text>
+  <text x="80" y="115" fill="#aaaaaa" font-size="16">High IQ, Low Self-Knowledge</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main visual -->
+  
+            <circle cx="600" cy="380" r="80" fill="none" stroke="#FFCC00" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="600" cy="380" r="55" fill="none" stroke="#FFCC00" stroke-width="1" opacity="0.5"/>
+            <circle cx="600" cy="380" r="35" fill="#FFCC00" opacity="0.1"/>
+            <text x="600" y="395" text-anchor="middle" fill="#FFCC00" font-size="36">&#x2728;</text>
+
+  <!-- Footer -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+</svg>

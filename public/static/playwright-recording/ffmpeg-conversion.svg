@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg3)"/>
+
+  <text x="600" y="55" text-anchor="middle" fill="#FFCC00" font-size="22" font-weight="700">WebM → MP4 Conversion Pipeline</text>
+  <text x="600" y="80" text-anchor="middle" fill="#888" font-size="13">ffmpeg one-liner สำหรับ Social Media</text>
+
+  <!-- Input: WebM files -->
+  <rect x="60" y="130" width="280" height="280" rx="16" fill="#1e1e3a" stroke="#FF6B35" stroke-width="2"/>
+  <text x="200" y="170" text-anchor="middle" fill="#FF6B35" font-size="17" font-weight="700">Playwright Output</text>
+  <line x1="80" y1="182" x2="320" y2="182" stroke="#333" stroke-width="1"/>
+
+  <rect x="80" y="200" width="240" height="38" rx="8" fill="#2a1a0a" stroke="#FF6B35" stroke-width="1"/>
+  <text x="100" y="225" fill="#FF6B35" font-size="14">&#x1F3AC;</text>
+  <text x="125" y="225" fill="#fff" font-size="13">demo-login.webm</text>
+  <text x="280" y="225" text-anchor="end" fill="#666" font-size="11">4.2 MB</text>
+
+  <rect x="80" y="248" width="240" height="38" rx="8" fill="#2a1a0a" stroke="#FF6B35" stroke-width="1"/>
+  <text x="100" y="273" fill="#FF6B35" font-size="14">&#x1F3AC;</text>
+  <text x="125" y="273" fill="#fff" font-size="13">ep1-setup.webm</text>
+  <text x="280" y="273" text-anchor="end" fill="#666" font-size="11">3.8 MB</text>
+
+  <rect x="80" y="296" width="240" height="38" rx="8" fill="#2a1a0a" stroke="#FF6B35" stroke-width="1"/>
+  <text x="100" y="321" fill="#FF6B35" font-size="14">&#x1F3AC;</text>
+  <text x="125" y="321" fill="#fff" font-size="13">ep2-project.webm</text>
+  <text x="280" y="321" text-anchor="end" fill="#666" font-size="11">5.1 MB</text>
+
+  <text x="200" y="370" text-anchor="middle" fill="#888" font-size="12">VP8/VP9 codec</text>
+  <text x="200" y="390" text-anchor="middle" fill="#e74c3c" font-size="12" font-weight="600">&#x2716; FB/IG ไม่รับ WebM</text>
+
+  <!-- Arrow -->
+  <line x1="340" y1="270" x2="420" y2="270" stroke="#FFCC00" stroke-width="3"/>
+  <polygon points="420,264 434,270 420,276" fill="#FFCC00"/>
+
+  <!-- FFmpeg Process -->
+  <rect x="440" y="150" width="320" height="240" rx="16" fill="#1a1a2e" stroke="#FFCC00" stroke-width="2.5"/>
+  <text x="600" y="190" text-anchor="middle" fill="#FFCC00" font-size="18" font-weight="700">ffmpeg</text>
+  <line x1="460" y1="205" x2="740" y2="205" stroke="#444" stroke-width="1"/>
+
+  <!-- Command display -->
+  <rect x="460" y="218" width="280" height="70" rx="8" fill="#0d0d1a" stroke="#333" stroke-width="1"/>
+  <text x="475" y="240" fill="#27AE60" font-size="11" font-family="monospace">$ ffmpeg -i input.webm \</text>
+  <text x="475" y="258" fill="#aaa" font-size="11" font-family="monospace">  -c:v libx264 -crf 23 \</text>
+  <text x="475" y="276" fill="#aaa" font-size="11" font-family="monospace">  output.mp4</text>
+
+  <text x="600" y="315" text-anchor="middle" fill="#888" font-size="12">Options:</text>
+  <text x="510" y="338" fill="#FFCC00" font-size="12">-crf 23</text>
+  <text x="580" y="338" fill="#888" font-size="12">Quality (lower = better)</text>
+  <text x="510" y="358" fill="#FFCC00" font-size="12">-vf fade</text>
+  <text x="580" y="358" fill="#888" font-size="12">Add fade in/out effect</text>
+  <text x="510" y="378" fill="#FFCC00" font-size="12">batch</text>
+  <text x="580" y="378" fill="#888" font-size="12">for f in *.webm; do ... done</text>
+
+  <!-- Arrow -->
+  <line x1="760" y1="270" x2="840" y2="270" stroke="#27AE60" stroke-width="3"/>
+  <polygon points="840,264 854,270 840,276" fill="#27AE60"/>
+
+  <!-- Output: MP4 files -->
+  <rect x="860" y="130" width="280" height="280" rx="16" fill="#1e1e3a" stroke="#27AE60" stroke-width="2"/>
+  <text x="1000" y="170" text-anchor="middle" fill="#27AE60" font-size="17" font-weight="700">Social-Ready MP4</text>
+  <line x1="880" y1="182" x2="1120" y2="182" stroke="#333" stroke-width="1"/>
+
+  <rect x="880" y="200" width="240" height="38" rx="8" fill="#0a2a0a" stroke="#27AE60" stroke-width="1"/>
+  <text x="900" y="225" fill="#27AE60" font-size="14">&#x2714;</text>
+  <text x="920" y="225" fill="#fff" font-size="13">demo-login.mp4</text>
+  <text x="1080" y="225" text-anchor="end" fill="#666" font-size="11">3.1 MB</text>
+
+  <rect x="880" y="248" width="240" height="38" rx="8" fill="#0a2a0a" stroke="#27AE60" stroke-width="1"/>
+  <text x="900" y="273" fill="#27AE60" font-size="14">&#x2714;</text>
+  <text x="920" y="273" fill="#fff" font-size="13">ep1-setup.mp4</text>
+  <text x="1080" y="273" text-anchor="end" fill="#666" font-size="11">2.9 MB</text>
+
+  <rect x="880" y="296" width="240" height="38" rx="8" fill="#0a2a0a" stroke="#27AE60" stroke-width="1"/>
+  <text x="900" y="321" fill="#27AE60" font-size="14">&#x2714;</text>
+  <text x="920" y="321" fill="#fff" font-size="13">ep2-project.mp4</text>
+  <text x="1080" y="321" text-anchor="end" fill="#666" font-size="11">3.8 MB</text>
+
+  <text x="1000" y="370" text-anchor="middle" fill="#888" font-size="12">H.264 codec</text>
+  <text x="1000" y="390" text-anchor="middle" fill="#27AE60" font-size="12" font-weight="600">&#x2714; FB, IG, YouTube, TikTok</text>
+
+  <!-- Platform icons row -->
+  <rect x="200" y="470" width="800" height="80" rx="12" fill="#111122" stroke="#333" stroke-width="1"/>
+  <text x="600" y="500" text-anchor="middle" fill="#FFCC00" font-size="14" font-weight="600">Compatible Platforms</text>
+
+  <text x="300" y="530" text-anchor="middle" fill="#1877F2" font-size="14" font-weight="600">Facebook &#x2714;</text>
+  <text x="450" y="530" text-anchor="middle" fill="#E4405F" font-size="14" font-weight="600">Instagram &#x2714;</text>
+  <text x="600" y="530" text-anchor="middle" fill="#FF0000" font-size="14" font-weight="600">YouTube &#x2714;</text>
+  <text x="750" y="530" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">TikTok &#x2714;</text>
+  <text x="900" y="530" text-anchor="middle" fill="#0A66C2" font-size="14" font-weight="600">LinkedIn &#x2714;</text>
+
+  <!-- Footer -->
+  <text x="600" y="600" text-anchor="middle" fill="#555" font-size="12">DopeLab.Studio</text>
+</svg>

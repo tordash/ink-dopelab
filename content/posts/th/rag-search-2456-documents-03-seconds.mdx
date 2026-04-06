@@ -19,7 +19,7 @@ draft: false
 
 ผมสร้างระบบที่ค้น **2,456 เอกสาร** ได้ใน **0.3 วินาที** ในบทความนี้จะแชร์ตัวเลขจริง, สถาปัตยกรรมจริง และสิ่งที่ทำให้มันเร็วได้ขนาดนี้
 
-![RAG Search Architecture — จากคำถามสู่คำตอบใน 0.3 วินาที](/images/placeholder.jpg)
+![RAG Search Architecture — จากคำถามสู่คำตอบใน 0.3 วินาที](/static/rag-search-2456-documents-03-seconds/img-1.svg)
 
 ---
 
@@ -93,13 +93,13 @@ document ที่ติด top ในทั้งสองวิธีจะไ
 
 ผล: ความแม่นสูงขึ้น recall สูงขึ้น และยังเร็วพอๆ กับ BM25 อยู่
 
-![Hybrid Search — BM25 + Vector + RRF Fusion ทำงานอย่างไร](/images/placeholder.jpg)
+![Hybrid Search — BM25 + Vector + RRF Fusion ทำงานอย่างไร](/static/rag-search-2456-documents-03-seconds/img-2.svg)
 
 ---
 
 ## ตัวเลขจริงจากระบบ production
 
-![Production RAG System — metrics จริงจาก 2,456 documents](/images/placeholder.jpg)
+![Production RAG System — metrics จริงจาก 2,456 documents](/static/rag-search-2456-documents-03-seconds/img-3.svg)
 
 ระบบที่ผมสร้างใช้งานมาหลายสัปดาห์ นี่คือตัวเลขจริง:
 
@@ -185,13 +185,13 @@ BM25 (2,456 docs) → top 50 → Vector Search (50 docs) → RRF → top 10
 
 ลด compute ของ vector search จาก 2,456 docs เหลือแค่ 50 docs = เร็วขึ้น ~50x
 
-![Incremental indexing — index เฉพาะไฟล์ที่เปลี่ยน ไม่ re-index ทั้งหมด](/images/placeholder.jpg)
+![Incremental indexing — index เฉพาะไฟล์ที่เปลี่ยน ไม่ re-index ทั้งหมด](/static/rag-search-2456-documents-03-seconds/img-4.svg)
 
 ---
 
 ## สิ่งที่ควรรู้ก่อนสร้าง
 
-![RAG Production Pitfalls — สิ่งที่ต้องระวังก่อน deploy](/images/placeholder.jpg)
+![RAG Production Pitfalls — สิ่งที่ต้องระวังก่อน deploy](/static/rag-search-2456-documents-03-seconds/img-5.svg)
 
 ### RAG ไม่ใช่ silver bullet
 
