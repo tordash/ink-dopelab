@@ -1,0 +1,273 @@
+---
+title: "7 เหตุผลที่ใช้ Claude Code ทำงานจริง — ไม่ใช่แค่เขียนโค้ด"
+description: "เจ้าของ agency ที่ไม่ใช่ developer ใช้ Claude Code บริหาร 11 agents, ผลิต content, ทำ data ops, deploy website — ทุกวัน ผ่าน terminal. นี่คือ 7 เหตุผลจาก production จริง ไม่ใช่ demo"
+date: 2026-04-10
+cover: ../covers/7-reasons-claude-code-not-just-coding.jpg
+category: "AI Workflow"
+tags: ["claude-code", "ai-agent", "productivity", "terminal", "agency-workflow", "mcp"]
+draft: false
+---
+
+## ใช้ทุกวัน ไม่ใช่ developer
+
+เปิด terminal ทุกเช้า ไม่ใช่เพื่อเขียนโค้ด
+
+แต่เพื่อ**บริหาร agency** — สั่งงาน, ผลิต content, deploy website, วิเคราะห์ data, ส่งรายงาน
+
+ทั้งหมดผ่าน Claude Code บน terminal เครื่องเดียว
+
+ไม่เคยเรียน computer science ไม่เคยเป็น developer background คือ marketing และ business
+
+แต่ตอนนี้ Claude Code กลายเป็นเครื่องมือหลักที่ใช้ทำงานทุกวัน — มากกว่า browser, มากกว่า Figma, มากกว่า Google Docs
+
+นี่คือ 7 เหตุผลจากการใช้จริง ไม่ใช่ demo video
+
+---
+
+## 1. Agent System — ตั้งทีม AI ทำงานได้จริง
+
+ไม่ใช่แค่ "คุยกับ AI" — แต่ตั้ง**ทีม agents** ที่แต่ละตัวมีหน้าที่เฉพาะ
+
+ตอนนี้ทำงานกับ **11 agents** ใน repos แยกกัน:
+
+| Agent | หน้าที่ |
+|-------|---------|
+| Helm | บริหารรวม, มอบหมายงาน |
+| DopeLab | Content & brand |
+| MktExpert | Marketing research |
+| PlernXP | Content production |
+| NNTN | Restaurant operations |
+| Beacon | HomeLab & infrastructure |
+
+แต่ละ agent มี:
+- **Identity file** (CLAUDE.md) — บอกว่าคือใคร ทำอะไรได้
+- **Soul directory** — inbox, memory, writing, outbox
+- **Contacts** — รู้ว่า agent อื่นอยู่ที่ไหน ติดต่อยังไง
+
+เวลาต้องทำ research สั่ง MktExpert ทำ → เสร็จแล้วส่ง handoff กลับ Helm → Helm forward ให้ DopeLab เขียน content
+
+เหมือนทีมคนจริง แต่ทำงาน async ได้ 24 ชั่วโมง
+
+---
+
+## 2. Memory & Context — AI จำได้ข้าม session
+
+ปัญหาใหญ่ที่สุดของ ChatGPT หรือ Claude.ai ธรรมดาคือ **ลืม**
+
+เริ่ม session ใหม่ ต้องอธิบายใหม่ทั้งหมด
+
+Claude Code แก้ปัญหานี้ด้วย:
+
+**CLAUDE.md** — ไฟล์ที่บอก AI ว่าอยู่ที่ไหน ทำอะไร กฎอะไรบ้าง เปิดทุก session อ่านอัตโนมัติ
+
+**brain/** — โฟลเดอร์เก็บ knowledge แยกตาม type:
+
+```
+brain/
+├── Semantic/      # ความรู้เฉพาะทาง (marketing, tech, clients)
+├── Procedural/    # วิธีทำงาน (workflows, patterns, SOPs)
+├── Episodic/      # เหตุการณ์ (session logs, decisions)
+└── Meta/          # meta-knowledge (how to learn)
+```
+
+**memory/** — ความทรงจำของ agent แต่ละตัว (resonance, learnings, retrospectives)
+
+ผลลัพธ์: เปิด session ใหม่ Claude Code **รู้ทันที**ว่ากำลังทำอะไร ลูกค้าคือใคร กฎอะไรห้ามทำ
+
+ไม่ต้องอธิบายซ้ำ ไม่ต้อง paste context ไม่ต้องเริ่มใหม่
+
+---
+
+## 3. Skills — สร้างคำสั่งเฉพาะทาง 20+ ตัว
+
+Claude Code ให้สร้าง **custom skills** (slash commands) ที่ออกแบบเองได้
+
+ตอนนี้มี **20+ skills** สำหรับงานจริง:
+
+```
+/recap        → สรุปสถานะ session ปัจจุบัน
+/rrr          → เขียน retrospective + สกัดบทเรียน
+/forward      → สร้าง handoff ให้ session ถัดไป
+/standup      → daily standup check
+/learn [url]  → clone repo แล้วส่ง agents อ่านพร้อมกัน
+/inbox        → เช็คงานที่ค้าง
+/trace        → ค้นหา project/code ข้าม repos
+```
+
+แต่ละ skill คือ **markdown file** ที่เขียน prompt ไว้ — ไม่ต้องเขียนโค้ด ใช้ภาษาธรรมดาได้เลย
+
+ตัวอย่าง: `/learn` สั่งให้ Claude Code clone repository แล้วส่ง Haiku agents 3-5 ตัวไปอ่านพร้อมกัน กลับมาเขียนสรุปให้
+
+skill เดียว ประหยัดเวลา research **2-3 ชั่วโมง** ต่อ repo
+
+---
+
+## 4. CLI-First — Terminal ทำได้ทุกอย่าง
+
+ทำไมถึงเลือก terminal แทน GUI?
+
+เพราะ Claude Code อยู่บน terminal → มันเรียก**ทุก CLI tool** ได้โดยตรง:
+
+```bash
+# Deploy website
+npx wrangler pages deploy ./dist
+
+# ส่ง relay message ถึง agent อื่น
+curl -X POST http://localhost:3500/relay -d '{"from":"dopelab","to":"helm",...}'
+
+# Git operations
+git add . && git commit && git push
+
+# Screenshot HTML → PNG
+npx playwright screenshot page.html output.png
+```
+
+ทุกคำสั่งที่พิมพ์ใน terminal ได้ Claude Code ก็เรียกได้
+
+ความได้เปรียบคือ **chain commands** — สั่ง research → เขียน blog → gen image → deploy → ส่ง Slack ในบทสนทนาเดียว
+
+ไม่ต้องสลับไปมาระหว่าง 10 แอป
+
+---
+
+## 5. Multi-Agent Teams — หลาย Claude ทำงานพร้อมกัน
+
+Claude Code มี **Agent tool** ที่ spawn sub-agents ทำงานแบบ parallel
+
+```
+"อ่านไฟล์ 13 ไฟล์นี้ สกัด patterns"
+
+→ Agent 1: อ่านกลุ่ม Content & Brand (5 ไฟล์)
+→ Agent 2: อ่านกลุ่ม Oracle & Tech (3 ไฟล์)
+→ Agent 3: อ่านกลุ่ม Client Playbooks (3 ไฟล์)
+→ Agent 4: อ่านกลุ่ม Pipeline Docs (2 ไฟล์)
+
+→ ทั้ง 4 agents ทำงานพร้อมกัน
+→ รวมผลลัพธ์ → สกัด cross-file patterns
+```
+
+งานที่คนทำ 3-4 ชั่วโมง ใช้เวลา **~3 นาที**
+
+ไม่ใช่แค่เร็ว — แต่ **thoroughness** ด้วย agent อ่านทุกบรรทัด ไม่ข้ามไม่ลัด ไม่เบื่อ
+
+---
+
+## 6. MCP Ecosystem — เชื่อมต่อทุกเครื่องมือ
+
+MCP (Model Context Protocol) คือสิ่งที่ทำให้ Claude Code ไม่ใช่แค่ chatbot
+
+มันเชื่อมต่อ:
+
+| MCP Server | ทำอะไรได้ |
+|------------|-----------|
+| Gmail | อ่าน/เขียน email |
+| Google Calendar | จัดการนัด, เช็คตาราง |
+| Slack | ส่งข้อความ, อ่าน channel |
+| Notion | อ่าน/เขียน pages, databases |
+| Discord | ส่ง/รับ messages |
+| Oracle (custom) | ค้นหา knowledge base 22,000+ docs |
+| Chrome | บังคับ browser อัตโนมัติ |
+
+ตัวอย่างจริง: สั่ง Claude Code ว่า "เช็ค calendar วันนี้ แล้วสรุปลง Slack"
+
+มันอ่าน Google Calendar → สรุป → ส่ง Slack ทั้งหมดในคำสั่งเดียว
+
+ไม่ต้องเปิด Calendar ไม่ต้องเปิด Slack ไม่ต้อง copy-paste
+
+---
+
+## 7. ไม่ใช่แค่ Coding — ทำ Marketing, Ops, Data, Content ได้หมด
+
+นี่คือเหตุผลที่สำคัญที่สุด
+
+คนส่วนใหญ่คิดว่า Claude Code = เครื่องมือเขียนโค้ด
+
+แต่ในงานจริง ใช้ทำ:
+
+**Content Production**
+- เขียน blog post (แบบที่กำลังอ่านอยู่นี่)
+- สร้าง HTML news cards → screenshot เป็น PNG
+- เขียน VO script สำหรับ video สั้น
+- เขียน caption FB + IG
+
+**Data & Analysis**
+- วิเคราะห์ engagement data
+- สร้าง intelligence reports
+- สกัด patterns จากข้อมูลลูกค้า
+
+**Operations**
+- จัดการ inbox ข้าม agents
+- ส่ง handoff ระหว่าง sessions
+- Deploy websites
+
+**Research**
+- Clone repos แล้ว deep-dive ด้วย parallel agents
+- สรุป research papers
+- วิเคราะห์คู่แข่ง
+
+**Brand Management**
+- เช็ค brand consistency
+- สร้าง playbooks
+- ดูแล style guides
+
+Terminal เดียว ทำได้หมด
+
+---
+
+## ตัวเลขจริง
+
+| Metric | ก่อน Claude Code | หลัง Claude Code |
+|--------|-----------------|-----------------|
+| Blog production | 1 ชิ้น/สัปดาห์ | 1 ชิ้น/วัน |
+| Research depth | 3-5 sources | 15-20 sources (parallel agents) |
+| Agent team size | 0 | 11 agents |
+| Custom skills | 0 | 20+ skills |
+| Knowledge base | Google Drive (search ยาก) | Oracle 22,000+ docs (search 2 วินาที) |
+| Content pipeline | manual, 4 แอป | CLI-first, 1 terminal |
+
+---
+
+## เริ่มต้นยังไง
+
+ไม่ต้องเริ่มจากทั้งหมด เริ่มจาก 3 อย่าง:
+
+### Level 1: CLAUDE.md (5 นาที)
+สร้างไฟล์ `CLAUDE.md` ในโปรเจกต์ เขียนว่า AI คือใคร ทำอะไร กฎอะไรบ้าง
+
+### Level 2: Brain Directory (30 นาที)
+สร้าง `brain/` folder เก็บ knowledge ที่ใช้บ่อย ให้ Claude Code อ่านได้ทุก session
+
+### Level 3: Custom Skills (1 ชั่วโมง)
+สร้าง skill แรก — เอางานที่ทำซ้ำๆ มาเขียนเป็น slash command
+
+```
+# ตัวอย่าง skill: /daily-brief
+สรุปงานวันนี้จาก inbox + calendar + git log
+แล้วเขียนลง daily-brief.md
+```
+
+พอใช้ไปสักสัปดาห์ จะเข้าใจเองว่าทำไม terminal ถึงกลายเป็นเครื่องมือหลัก
+
+---
+
+## Prompt จริงที่ใช้ในบทความนี้
+
+```
+# Prompt สำหรับ blog research
+สแกน brain/Semantic/marketing/ หาหัวข้อ AI/tech ที่น่าสนใจ
+เสนอ 3 หัวข้อ พร้อมเหตุผลว่าทำไมเหมาะกับ DopeLab
+
+# Prompt สำหรับ deliverables study
+อ่านไฟล์ 13 ไฟล์ใน deliverables/ สกัด patterns: layout, structure,
+design approach, content format เขียนลง memory/learnings/
+
+# Prompt สำหรับเขียน blog
+Helm เลือกหัวข้อ A — เขียน blog draft ตาม workflow
+(ห้ามใช้ชื่อจริง, NB2 cover, ใส่ prompt จริง)
+```
+
+---
+
+*อ่านเพิ่ม: [จาก RAG Tool สู่ Oracle: Knowledge System ที่วิวัฒน์ใน 3 สัปดาห์](/th/blog/rag-to-oracle-evolution)*
+
+*ติดตาม DopeLab สำหรับ AI workflow จริงจาก agency ที่ใช้ทุกวัน — ไม่ใช่ demo*
