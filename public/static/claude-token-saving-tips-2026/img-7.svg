@@ -1,38 +1,146 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="'Kanit', sans-serif">
   <defs>
-    <linearGradient id="bg-30" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg7" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#1a1a2e"/>
     </linearGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-30)"/>
+  <rect width="1200" height="630" fill="url(#bg7)"/>
 
-  <!-- Network decoration -->
-  <circle cx="950" cy="105" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="981" cy="120" r="3" fill="#FFCC00" opacity="0.15"/><line x1="950" y1="105" x2="981" y2="120" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1035" cy="147" r="3" fill="#FFCC00" opacity="0.15"/><line x1="981" y1="120" x2="1035" y2="147" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="916" cy="88" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1035" y1="147" x2="916" y2="88" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="902" cy="81" r="3" fill="#FFCC00" opacity="0.15"/><line x1="916" y1="88" x2="902" y2="81" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+  <!-- Header -->
+  <text x="600" y="38" text-anchor="middle" font-size="13" fill="#636980" letter-spacing="4">10 METHODS SUMMARY</text>
+  <text x="600" y="72" text-anchor="middle" font-weight="700" font-size="24" fill="#FFCC00">ประหยัด Token คือ Engineering — ลดได้ 74%</text>
 
-  <!-- Category badge -->
-  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+  <!-- Two columns: Web (6) | Code (4) -->
+  <!-- Column headers -->
+  <rect x="45" y="95" width="545" height="36" rx="8" fill="#FFCC0010"/>
+  <text x="318" y="118" text-anchor="middle" font-weight="600" font-size="14" fill="#FFCC00">☁️ Claude Web — 6 วิธีพื้นฐาน</text>
 
-  <!-- Title -->
-  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Token Optimization Summary</text>
-  <text x="80" y="115" fill="#aaaaaa" font-size="16">10 วิธีครบในที่เดียว</text>
+  <rect x="610" y="95" width="545" height="36" rx="8" fill="#64ffda10"/>
+  <text x="883" y="118" text-anchor="middle" font-weight="600" font-size="14" fill="#64ffda">⌨️ Claude Code — 4 วิธี Power Users</text>
 
-  <!-- Divider -->
-  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+  <!-- WEB Column — 6 items -->
+  <!-- Item 1 -->
+  <rect x="45" y="142" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="45" y="142" width="4" height="58" rx="2" fill="#FFCC00"/>
+  <circle cx="75" cy="171" r="16" fill="#FFCC0015" stroke="#FFCC0030" stroke-width="1"/>
+  <text x="75" y="177" text-anchor="middle" font-weight="700" font-size="14" fill="#FFCC00">1</text>
+  <text x="102" y="165" font-weight="500" font-size="13" fill="#eef0f6">Edit Prompt แทนส่งใหม่</text>
+  <text x="102" y="184" font-size="11" fill="#636980">ไม่ต้อง reload history — ประหยัดทุก round</text>
+  <rect x="480" y="155" width="90" height="24" rx="6" fill="#FFCC0015"/>
+  <text x="525" y="172" text-anchor="middle" font-size="11" fill="#FFCC00" font-weight="600">ปานกลาง</text>
 
-  <!-- Main visual -->
-  
-            <rect x="200" y="300" width="80" height="130" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="330" y="345" width="80" height="85" rx="6" fill="#FFCC00" opacity="0.8"/>
-            <rect x="460" y="308" width="80" height="122" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="590" y="349" width="80" height="81" rx="6" fill="#FFCC00" opacity="0.8"/>
-            <rect x="720" y="370" width="80" height="60" rx="6" fill="#FFCC00" opacity="0.7"/>
-            <rect x="850" y="320" width="80" height="110" rx="6" fill="#FFCC00" opacity="0.9"/>
-        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+  <!-- Item 2 -->
+  <rect x="45" y="208" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="45" y="208" width="4" height="58" rx="2" fill="#FFCC00"/>
+  <circle cx="75" cy="237" r="16" fill="#FFCC0015" stroke="#FFCC0030" stroke-width="1"/>
+  <text x="75" y="243" text-anchor="middle" font-weight="700" font-size="14" fill="#FFCC00">2</text>
+  <text x="102" y="231" font-weight="500" font-size="13" fill="#eef0f6">แชทใหม่ทุก 20 ข้อความ</text>
+  <text x="102" y="250" font-size="11" fill="#636980">ขอสรุป → copy → แชทใหม่ วาง context</text>
+  <rect x="480" y="221" width="90" height="24" rx="6" fill="#FFCC0015"/>
+  <text x="525" y="238" text-anchor="middle" font-size="11" fill="#FFCC00" font-weight="600">ปานกลาง</text>
+
+  <!-- Item 3 -->
+  <rect x="45" y="274" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="45" y="274" width="4" height="58" rx="2" fill="#FFCC00"/>
+  <circle cx="75" cy="303" r="16" fill="#FFCC0015" stroke="#FFCC0030" stroke-width="1"/>
+  <text x="75" y="309" text-anchor="middle" font-weight="700" font-size="14" fill="#FFCC00">3</text>
+  <text x="102" y="297" font-weight="500" font-size="13" fill="#eef0f6">รวมคำถามไว้ใน 1 ข้อความ</text>
+  <text x="102" y="316" font-size="11" fill="#636980">3 คำถาม 1 ข้อความ = โหลด 1 รอบ (ไม่ใช่ 3)</text>
+  <rect x="480" y="287" width="90" height="24" rx="6" fill="#FFCC0015"/>
+  <text x="525" y="304" text-anchor="middle" font-size="11" fill="#FFCC00" font-weight="600">ปานกลาง</text>
+
+  <!-- Item 4 -->
+  <rect x="45" y="340" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="45" y="340" width="4" height="58" rx="2" fill="#FFCC00"/>
+  <circle cx="75" cy="369" r="16" fill="#FFCC0015" stroke="#FFCC0030" stroke-width="1"/>
+  <text x="75" y="375" text-anchor="middle" font-weight="700" font-size="14" fill="#FFCC00">4</text>
+  <text x="102" y="363" font-weight="500" font-size="13" fill="#eef0f6">Projects + Cache เอกสารซ้ำ</text>
+  <text x="102" y="382" font-size="11" fill="#636980">cache ประหยัด 90% สำหรับ repeated content</text>
+  <rect x="480" y="353" width="90" height="24" rx="6" fill="#FFCC0030"/>
+  <text x="525" y="370" text-anchor="middle" font-size="11" fill="#FFCC00" font-weight="700">สูง</text>
+
+  <!-- Item 5 -->
+  <rect x="45" y="406" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="45" y="406" width="4" height="58" rx="2" fill="#FFCC00"/>
+  <circle cx="75" cy="435" r="16" fill="#FFCC0015" stroke="#FFCC0030" stroke-width="1"/>
+  <text x="75" y="441" text-anchor="middle" font-weight="700" font-size="14" fill="#FFCC00">5</text>
+  <text x="102" y="429" font-weight="500" font-size="13" fill="#eef0f6">ตั้ง Memory ครั้งเดียว</text>
+  <text x="102" y="448" font-size="11" fill="#636980">ไม่ต้องบอก profile ซ้ำทุกแชท</text>
+  <rect x="480" y="419" width="90" height="24" rx="6" fill="#FFCC0015"/>
+  <text x="525" y="436" text-anchor="middle" font-size="11" fill="#FFCC00" font-weight="600">ปานกลาง</text>
+
+  <!-- Item 6 -->
+  <rect x="45" y="472" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="45" y="472" width="4" height="58" rx="2" fill="#FFCC00"/>
+  <circle cx="75" cy="501" r="16" fill="#FFCC0015" stroke="#FFCC0030" stroke-width="1"/>
+  <text x="75" y="507" text-anchor="middle" font-weight="700" font-size="14" fill="#FFCC00">6</text>
+  <text x="102" y="495" font-weight="500" font-size="13" fill="#eef0f6">ปิด Web Search + Extended Thinking</text>
+  <text x="102" y="514" font-size="11" fill="#636980">เปิดเฉพาะเมื่อจำเป็น ไม่ใช่ default</text>
+  <rect x="480" y="485" width="90" height="24" rx="6" fill="#FFCC0015"/>
+  <text x="525" y="502" text-anchor="middle" font-size="11" fill="#FFCC00" font-weight="600">ปานกลาง</text>
+
+  <!-- CODE Column — 4 items -->
+  <!-- Item 7 -->
+  <rect x="610" y="142" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="610" y="142" width="4" height="58" rx="2" fill="#64ffda"/>
+  <circle cx="640" cy="171" r="16" fill="#64ffda15" stroke="#64ffda30" stroke-width="1"/>
+  <text x="640" y="177" text-anchor="middle" font-weight="700" font-size="14" fill="#64ffda">7</text>
+  <text x="667" y="165" font-weight="500" font-size="13" fill="#eef0f6">CLAUDE.md กระชับ — ทุกบรรทัดคือเงิน</text>
+  <text x="667" y="184" font-size="11" fill="#636980">3,200 → 800 tokens = -75% system prompt cost</text>
+  <rect x="1045" y="155" width="90" height="24" rx="6" fill="#64ffda30"/>
+  <text x="1090" y="172" text-anchor="middle" font-size="11" fill="#64ffda" font-weight="700">สูงมาก</text>
+
+  <!-- Item 8 -->
+  <rect x="610" y="208" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="610" y="208" width="4" height="58" rx="2" fill="#64ffda"/>
+  <circle cx="640" cy="237" r="16" fill="#64ffda15" stroke="#64ffda30" stroke-width="1"/>
+  <text x="640" y="243" text-anchor="middle" font-weight="700" font-size="14" fill="#64ffda">8</text>
+  <text x="667" y="231" font-weight="500" font-size="13" fill="#eef0f6">/clear บ่อยๆ เมื่อเปลี่ยนงาน</text>
+  <text x="667" y="250" font-size="11" fill="#636980">-30% unnecessary context ทันที</text>
+  <rect x="1045" y="221" width="90" height="24" rx="6" fill="#64ffda30"/>
+  <text x="1090" y="238" text-anchor="middle" font-size="11" fill="#64ffda" font-weight="700">สูง</text>
+
+  <!-- Item 9 -->
+  <rect x="610" y="274" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="610" y="274" width="4" height="58" rx="2" fill="#64ffda"/>
+  <circle cx="640" cy="303" r="16" fill="#64ffda15" stroke="#64ffda30" stroke-width="1"/>
+  <text x="640" y="309" text-anchor="middle" font-weight="700" font-size="14" fill="#64ffda">9</text>
+  <text x="667" y="297" font-weight="500" font-size="13" fill="#eef0f6">Sonnet First, Opus Only เมื่อจำเป็น</text>
+  <text x="667" y="316" font-size="11" fill="#636980">-40% model cost — output เท่าเดิม 90% ของงาน</text>
+  <rect x="1045" y="287" width="90" height="24" rx="6" fill="#64ffda30"/>
+  <text x="1090" y="304" text-anchor="middle" font-size="11" fill="#64ffda" font-weight="700">สูง</text>
+
+  <!-- Item 10 -->
+  <rect x="610" y="340" width="545" height="58" rx="8" fill="#0f0f1a" stroke="#ffffff06" stroke-width="1"/>
+  <rect x="610" y="340" width="4" height="58" rx="2" fill="#64ffda"/>
+  <circle cx="640" cy="369" r="16" fill="#64ffda15" stroke="#64ffda30" stroke-width="1"/>
+  <text x="640" y="375" text-anchor="middle" font-weight="700" font-size="14" fill="#64ffda">10</text>
+  <text x="670" y="363" font-weight="500" font-size="13" fill="#eef0f6">MCP Servers — โหลดเฉพาะที่ใช้จริง</text>
+  <text x="670" y="382" font-size="11" fill="#636980">8 → 4 servers = -20% metadata overhead</text>
+  <rect x="1045" y="353" width="90" height="24" rx="6" fill="#64ffda20"/>
+  <text x="1090" y="370" text-anchor="middle" font-size="11" fill="#64ffda" font-weight="600">ปานกลาง</text>
+
+  <!-- Code column: Result box -->
+  <rect x="610" y="420" width="545" height="110" rx="12" fill="#0f0f1a" stroke="#FFCC0030" stroke-width="1.5"/>
+  <text x="883" y="452" text-anchor="middle" font-weight="600" font-size="15" fill="#eef0f6">ผลลัพธ์จริง: ใช้ทั้ง 10 วิธี</text>
+  <!-- Before/After -->
+  <text x="730" y="485" text-anchor="middle" font-size="13" fill="#636980">Before</text>
+  <text x="730" y="510" text-anchor="middle" font-weight="700" font-size="24" fill="#ff6b6b">$340</text>
+  <!-- Arrow -->
+  <text x="833" y="500" text-anchor="middle" font-size="22" fill="#636980">→</text>
+  <!-- After -->
+  <text x="940" y="485" text-anchor="middle" font-size="13" fill="#636980">After</text>
+  <text x="940" y="510" text-anchor="middle" font-weight="700" font-size="24" fill="#64ffda">$89</text>
+  <!-- Savings -->
+  <rect x="1020" y="480" width="110" height="36" rx="8" fill="#64ffda15" stroke="#64ffda30" stroke-width="1"/>
+  <text x="1075" y="503" text-anchor="middle" font-weight="700" font-size="16" fill="#64ffda">-74%</text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="572" text-anchor="middle" font-size="14" fill="#c8ccd4">ไม่มีวิธีไหนที่ต้องจ่ายเพิ่ม — แค่เปลี่ยนนิสัยการใช้งาน</text>
 
   <!-- Footer -->
-  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
-  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+  <line x1="80" y1="598" x2="1120" y2="598" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="618" text-anchor="middle" font-size="10" fill="#444">DopeLab Studio — ink.dopelab.studio</text>
 </svg>

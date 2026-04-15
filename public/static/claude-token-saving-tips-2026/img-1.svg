@@ -1,38 +1,102 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="'Kanit', sans-serif">
   <defs>
-    <linearGradient id="bg-24" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg1" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#1a1a2e"/>
     </linearGradient>
+    <filter id="glow1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-24)"/>
+  <rect width="1200" height="630" fill="url(#bg1)"/>
 
-  <!-- Network decoration -->
-  <circle cx="949" cy="104" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="956" cy="108" r="3" fill="#FFCC00" opacity="0.15"/><line x1="949" y1="104" x2="956" y2="108" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="932" cy="96" r="3" fill="#FFCC00" opacity="0.15"/><line x1="956" y1="108" x2="932" y2="96" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1054" cy="157" r="3" fill="#FFCC00" opacity="0.15"/><line x1="932" y1="96" x2="1054" y2="157" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1069" cy="164" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1054" y1="157" x2="1069" y2="164" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+  <!-- Subtle grid dots -->
+  <g opacity="0.03">
+    <circle cx="60" cy="60" r="1" fill="#fff"/><circle cx="120" cy="60" r="1" fill="#fff"/><circle cx="180" cy="60" r="1" fill="#fff"/><circle cx="240" cy="60" r="1" fill="#fff"/><circle cx="300" cy="60" r="1" fill="#fff"/><circle cx="360" cy="60" r="1" fill="#fff"/><circle cx="420" cy="60" r="1" fill="#fff"/><circle cx="480" cy="60" r="1" fill="#fff"/><circle cx="540" cy="60" r="1" fill="#fff"/><circle cx="600" cy="60" r="1" fill="#fff"/><circle cx="660" cy="60" r="1" fill="#fff"/><circle cx="720" cy="60" r="1" fill="#fff"/><circle cx="780" cy="60" r="1" fill="#fff"/><circle cx="840" cy="60" r="1" fill="#fff"/><circle cx="900" cy="60" r="1" fill="#fff"/><circle cx="960" cy="60" r="1" fill="#fff"/><circle cx="1020" cy="60" r="1" fill="#fff"/><circle cx="1080" cy="60" r="1" fill="#fff"/><circle cx="1140" cy="60" r="1" fill="#fff"/>
+  </g>
 
-  <!-- Category badge -->
-  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+  <!-- Header -->
+  <text x="600" y="42" text-anchor="middle" font-size="13" fill="#636980" letter-spacing="4">TOKEN MANAGEMENT OVERVIEW</text>
+  <text x="600" y="78" text-anchor="middle" font-weight="700" font-size="26" fill="#FFCC00">ทำไม Token ถึงหมดเร็ว?</text>
 
-  <!-- Title -->
-  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Claude Token Management</text>
-  <text x="80" y="115" fill="#aaaaaa" font-size="16">ใช้น้อยลง ได้ผลเท่าเดิม</text>
+  <!-- Central concept box -->
+  <rect x="370" y="105" width="460" height="70" rx="12" fill="#0f0f1a" stroke="#FFCC0040" stroke-width="1.5"/>
+  <text x="600" y="135" text-anchor="middle" font-size="14" fill="#c8ccd4">ทุกครั้งที่ Claude ตอบ</text>
+  <text x="600" y="158" text-anchor="middle" font-weight="600" font-size="16" fill="#FFCC00">= อ่าน context ทั้งหมดที่มีอยู่ก่อนตอบ</text>
 
-  <!-- Divider -->
-  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+  <!-- Arrow down -->
+  <line x1="600" y1="175" x2="600" y2="215" stroke="#636980" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <polygon points="600,225 594,215 606,215" fill="#636980"/>
 
-  <!-- Main visual -->
-  
-            <rect x="200" y="341" width="80" height="89" rx="6" fill="#FFCC00" opacity="0.8"/>
-            <rect x="330" y="366" width="80" height="64" rx="6" fill="#FFCC00" opacity="0.7"/>
-            <rect x="460" y="318" width="80" height="112" rx="6" fill="#FFCC00" opacity="0.9"/>
-            <rect x="590" y="294" width="80" height="136" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="720" y="342" width="80" height="88" rx="6" fill="#FFCC00" opacity="0.8"/>
-            <rect x="850" y="366" width="80" height="64" rx="6" fill="#FFCC00" opacity="0.7"/>
-        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+  <!-- 3 Source Cards -->
+  <!-- Card 1: Conversation History -->
+  <rect x="65" y="240" width="330" height="185" rx="12" fill="#0f0f1a" stroke="#FFCC0050" stroke-width="1"/>
+  <rect x="65" y="240" width="330" height="4" rx="2" fill="#FFCC00"/>
+  <text x="100" y="275" font-weight="600" font-size="15" fill="#eef0f6">💬 Conversation History</text>
+  <text x="100" y="298" font-size="12" fill="#c8ccd4">ประวัติการสนทนาทั้งหมด</text>
+  <!-- Bar chart -->
+  <rect x="95" y="320" width="270" height="22" rx="5" fill="#1a1a2e"/>
+  <rect x="95" y="320" width="202" height="22" rx="5" fill="#FFCC00" opacity="0.85"/>
+  <text x="196" y="336" text-anchor="middle" font-weight="700" font-size="12" fill="#0a0a0a">40-50%</text>
+  <!-- Mini icon messages -->
+  <rect x="95" y="358" width="60" height="8" rx="3" fill="#FFCC0030"/>
+  <rect x="165" y="358" width="45" height="8" rx="3" fill="#FFCC0020"/>
+  <rect x="220" y="358" width="55" height="8" rx="3" fill="#FFCC0030"/>
+  <rect x="285" y="358" width="40" height="8" rx="3" fill="#FFCC0020"/>
+  <rect x="95" y="374" width="50" height="8" rx="3" fill="#FFCC0025"/>
+  <rect x="155" y="374" width="65" height="8" rx="3" fill="#FFCC0015"/>
+  <rect x="230" y="374" width="45" height="8" rx="3" fill="#FFCC0025"/>
+  <text x="230" y="406" text-anchor="middle" font-size="11" fill="#636980">ยิ่งแชทยาว ยิ่งแพง</text>
+
+  <!-- Card 2: File Contents -->
+  <rect x="435" y="240" width="330" height="185" rx="12" fill="#0f0f1a" stroke="#64ffda50" stroke-width="1"/>
+  <rect x="435" y="240" width="330" height="4" rx="2" fill="#64ffda"/>
+  <text x="470" y="275" font-weight="600" font-size="15" fill="#eef0f6">📄 File Contents</text>
+  <text x="470" y="298" font-size="12" fill="#c8ccd4">ไฟล์ที่โหลดเข้า context</text>
+  <rect x="465" y="320" width="270" height="22" rx="5" fill="#1a1a2e"/>
+  <rect x="465" y="320" width="175" height="22" rx="5" fill="#64ffda" opacity="0.85"/>
+  <text x="553" y="336" text-anchor="middle" font-weight="700" font-size="12" fill="#0a0a0a">30-40%</text>
+  <!-- File icons -->
+  <rect x="465" y="358" width="38" height="28" rx="4" fill="#64ffda15" stroke="#64ffda30" stroke-width="0.5"/>
+  <text x="484" y="376" text-anchor="middle" font-size="9" fill="#64ffda">.ts</text>
+  <rect x="513" y="358" width="38" height="28" rx="4" fill="#64ffda15" stroke="#64ffda30" stroke-width="0.5"/>
+  <text x="532" y="376" text-anchor="middle" font-size="9" fill="#64ffda">.md</text>
+  <rect x="561" y="358" width="38" height="28" rx="4" fill="#64ffda15" stroke="#64ffda30" stroke-width="0.5"/>
+  <text x="580" y="376" text-anchor="middle" font-size="9" fill="#64ffda">.py</text>
+  <rect x="609" y="358" width="38" height="28" rx="4" fill="#64ffda15" stroke="#64ffda30" stroke-width="0.5"/>
+  <text x="628" y="376" text-anchor="middle" font-size="9" fill="#64ffda">.tsx</text>
+  <text x="600" y="406" text-anchor="middle" font-size="11" fill="#636980">code, docs, images</text>
+
+  <!-- Card 3: System Context -->
+  <rect x="805" y="240" width="330" height="185" rx="12" fill="#0f0f1a" stroke="#c084fc50" stroke-width="1"/>
+  <rect x="805" y="240" width="330" height="4" rx="2" fill="#c084fc"/>
+  <text x="840" y="275" font-weight="600" font-size="15" fill="#eef0f6">⚙️ System Context</text>
+  <text x="840" y="298" font-size="12" fill="#c8ccd4">CLAUDE.md, MCP, Memory</text>
+  <rect x="835" y="320" width="270" height="22" rx="5" fill="#1a1a2e"/>
+  <rect x="835" y="320" width="81" height="22" rx="5" fill="#c084fc" opacity="0.85"/>
+  <text x="876" y="336" text-anchor="middle" font-weight="700" font-size="12" fill="#0a0a0a">10-15%</text>
+  <!-- Config icons -->
+  <rect x="835" y="358" width="90" height="28" rx="4" fill="#c084fc15" stroke="#c084fc30" stroke-width="0.5"/>
+  <text x="880" y="376" text-anchor="middle" font-size="9" fill="#c084fc">CLAUDE.md</text>
+  <rect x="935" y="358" width="60" height="28" rx="4" fill="#c084fc15" stroke="#c084fc30" stroke-width="0.5"/>
+  <text x="965" y="376" text-anchor="middle" font-size="9" fill="#c084fc">MCP</text>
+  <rect x="1005" y="358" width="70" height="28" rx="4" fill="#c084fc15" stroke="#c084fc30" stroke-width="0.5"/>
+  <text x="1040" y="376" text-anchor="middle" font-size="9" fill="#c084fc">Memory</text>
+  <text x="970" y="406" text-anchor="middle" font-size="11" fill="#636980">ทุก message ต้องโหลด</text>
+
+  <!-- Connecting lines -->
+  <path d="M500,225 Q380,232 230,240" stroke="#636980" stroke-width="0.8" fill="none" stroke-dasharray="3,3"/>
+  <path d="M600,225 L600,240" stroke="#636980" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <path d="M700,225 Q820,232 970,240" stroke="#636980" stroke-width="0.8" fill="none" stroke-dasharray="3,3"/>
+
+  <!-- Bottom key insight -->
+  <rect x="220" y="460" width="760" height="75" rx="14" fill="#FFCC0008" stroke="#FFCC0025" stroke-width="1.5"/>
+  <text x="600" y="490" text-anchor="middle" font-size="15" fill="#c8ccd4">Input tokens คือ</text>
+  <text x="600" y="518" text-anchor="middle" font-weight="700" font-size="24" fill="#FFCC00" filter="url(#glow1)">85-92% ของค่าใช้จ่ายทั้งหมด</text>
+
+  <!-- Tagline -->
+  <text x="600" y="572" text-anchor="middle" font-size="13" fill="#636980">การลด input ต่างหากที่ประหยัดได้จริง — ไม่ใช่แค่ตอบสั้นลง</text>
 
   <!-- Footer -->
-  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
-  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+  <line x1="80" y1="598" x2="1120" y2="598" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="618" text-anchor="middle" font-size="10" fill="#444">DopeLab Studio — ink.dopelab.studio</text>
 </svg>

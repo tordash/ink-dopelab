@@ -1,38 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="'Kanit', sans-serif">
   <defs>
-    <linearGradient id="bg-25" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg2" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#1a1a2e"/>
     </linearGradient>
+    <filter id="glow2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-25)"/>
+  <rect width="1200" height="630" fill="url(#bg2)"/>
 
-  <!-- Network decoration -->
-  <circle cx="1076" cy="168" r="3" fill="#FF6B35" opacity="0.15"/><circle cx="947" cy="103" r="3" fill="#FF6B35" opacity="0.15"/><line x1="1076" y1="168" x2="947" y2="103" stroke="#FF6B35" stroke-width="0.5" opacity="0.1"/><circle cx="905" cy="82" r="3" fill="#FF6B35" opacity="0.15"/><line x1="947" y1="103" x2="905" y2="82" stroke="#FF6B35" stroke-width="0.5" opacity="0.1"/><circle cx="1025" cy="142" r="3" fill="#FF6B35" opacity="0.15"/><line x1="905" y1="82" x2="1025" y2="142" stroke="#FF6B35" stroke-width="0.5" opacity="0.1"/><circle cx="1015" cy="137" r="3" fill="#FF6B35" opacity="0.15"/><line x1="1025" y1="142" x2="1015" y2="137" stroke="#FF6B35" stroke-width="0.5" opacity="0.1"/>
+  <!-- Header -->
+  <text x="600" y="42" text-anchor="middle" font-size="13" fill="#636980" letter-spacing="4">PART 1: TOKEN COST BREAKDOWN</text>
+  <text x="600" y="78" text-anchor="middle" font-weight="700" font-size="26" fill="#FFCC00">Input Tokens = 85-92% ของค่าใช้จ่าย</text>
 
-  <!-- Category badge -->
-  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FF6B35"/>
+  <!-- LEFT: Donut Chart -->
+  <!-- Outer ring: Input (88.5% avg) vs Output (11.5%) -->
+  <g transform="translate(300,340)">
+    <!-- Background circle -->
+    <circle cx="0" cy="0" r="140" fill="none" stroke="#1a1a2e" stroke-width="40"/>
+    <!-- Input arc (88.5% = 318.6 degrees) — gold -->
+    <circle cx="0" cy="0" r="140" fill="none" stroke="#FFCC00" stroke-width="40"
+            stroke-dasharray="785 100" stroke-dashoffset="220" opacity="0.85"/>
+    <!-- Output arc (11.5%) — dim -->
+    <circle cx="0" cy="0" r="140" fill="none" stroke="#64ffda" stroke-width="40"
+            stroke-dasharray="102 783" stroke-dashoffset="118" opacity="0.6"/>
 
-  <!-- Title -->
-  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Token Cost Breakdown</text>
-  <text x="80" y="115" fill="#aaaaaa" font-size="16">ทำไม input tokens คือ 85-92% ของค่าใช้จ่าย</text>
+    <!-- Center text -->
+    <text x="0" y="-12" text-anchor="middle" font-weight="700" font-size="36" fill="#FFCC00" filter="url(#glow2)">88.5%</text>
+    <text x="0" y="14" text-anchor="middle" font-size="14" fill="#c8ccd4">Input Tokens</text>
+    <text x="0" y="34" text-anchor="middle" font-size="11" fill="#636980">(ค่าใช้จ่ายหลัก)</text>
+  </g>
+
+  <!-- Donut legend -->
+  <rect x="120" y="500" width="14" height="14" rx="3" fill="#FFCC00" opacity="0.85"/>
+  <text x="142" y="512" font-size="13" fill="#c8ccd4">Input Tokens — 85-92%</text>
+  <rect x="320" y="500" width="14" height="14" rx="3" fill="#64ffda" opacity="0.6"/>
+  <text x="342" y="512" font-size="13" fill="#c8ccd4">Output Tokens — 8-15%</text>
 
   <!-- Divider -->
-  <line x1="80" y1="140" x2="400" y2="140" stroke="#FF6B35" stroke-width="2" opacity="0.5"/>
+  <line x1="540" y1="120" x2="540" y2="540" stroke="#ffffff08" stroke-width="1"/>
 
-  <!-- Main visual -->
-  
-            <rect x="200" y="334" width="80" height="96" rx="6" fill="#FF6B35" opacity="0.9"/>
-            <rect x="330" y="362" width="80" height="68" rx="6" fill="#FF6B35" opacity="0.8"/>
-            <rect x="460" y="376" width="80" height="54" rx="6" fill="#FF6B35" opacity="0.7"/>
-            <rect x="590" y="383" width="80" height="47" rx="6" fill="#FF6B35" opacity="0.7"/>
-            <rect x="720" y="327" width="80" height="103" rx="6" fill="#FF6B35" opacity="0.9"/>
-            <rect x="850" y="299" width="80" height="131" rx="6" fill="#FF6B35" opacity="1.0"/>
-        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+  <!-- RIGHT: Stacked breakdown -->
+  <text x="870" y="120" text-anchor="middle" font-weight="600" font-size="18" fill="#eef0f6">Input Token แบ่งเป็น</text>
+
+  <!-- Bar 1: Conversation History 40-50% -->
+  <rect x="600" y="155" width="540" height="80" rx="10" fill="#0f0f1a" stroke="#ffffff08" stroke-width="1"/>
+  <rect x="600" y="155" width="270" height="80" rx="10" fill="#FFCC00" opacity="0.15"/>
+  <rect x="600" y="155" width="4" height="80" rx="2" fill="#FFCC00"/>
+  <text x="625" y="185" font-weight="600" font-size="15" fill="#eef0f6">💬 Conversation History</text>
+  <text x="625" y="208" font-size="12" fill="#c8ccd4">ประวัติสนทนา — ยิ่งยาวยิ่งแพง</text>
+  <text x="1110" y="200" text-anchor="end" font-weight="700" font-size="24" fill="#FFCC00">40-50%</text>
+
+  <!-- Bar 2: File Contents 30-40% -->
+  <rect x="600" y="250" width="540" height="80" rx="10" fill="#0f0f1a" stroke="#ffffff08" stroke-width="1"/>
+  <rect x="600" y="250" width="216" height="80" rx="10" fill="#64ffda" opacity="0.12"/>
+  <rect x="600" y="250" width="4" height="80" rx="2" fill="#64ffda"/>
+  <text x="625" y="280" font-weight="600" font-size="15" fill="#eef0f6">📄 File Contents</text>
+  <text x="625" y="303" font-size="12" fill="#c8ccd4">โค้ด เอกสาร ภาพ ที่โหลดเข้ามา</text>
+  <text x="1110" y="295" text-anchor="end" font-weight="700" font-size="24" fill="#64ffda">30-40%</text>
+
+  <!-- Bar 3: System Context 10-15% -->
+  <rect x="600" y="345" width="540" height="80" rx="10" fill="#0f0f1a" stroke="#ffffff08" stroke-width="1"/>
+  <rect x="600" y="345" width="81" height="80" rx="10" fill="#c084fc" opacity="0.12"/>
+  <rect x="600" y="345" width="4" height="80" rx="2" fill="#c084fc"/>
+  <text x="625" y="375" font-weight="600" font-size="15" fill="#eef0f6">⚙️ System Context</text>
+  <text x="625" y="398" font-size="12" fill="#c8ccd4">CLAUDE.md + MCP config + Memory</text>
+  <text x="1110" y="390" text-anchor="end" font-weight="700" font-size="24" fill="#c084fc">10-15%</text>
+
+  <!-- Bar 4: Output (small) -->
+  <rect x="600" y="440" width="540" height="60" rx="10" fill="#0f0f1a" stroke="#ffffff08" stroke-width="1"/>
+  <rect x="600" y="440" width="54" height="60" rx="10" fill="#636980" opacity="0.12"/>
+  <rect x="600" y="440" width="4" height="60" rx="2" fill="#636980"/>
+  <text x="625" y="467" font-weight="600" font-size="14" fill="#9a9ab0">✏️ Output (คำตอบของ Claude)</text>
+  <text x="1110" y="477" text-anchor="end" font-weight="700" font-size="20" fill="#636980">8-15%</text>
+
+  <!-- Bottom insight -->
+  <rect x="600" y="520" width="540" height="40" rx="8" fill="#FFCC0008" stroke="#FFCC0018" stroke-width="1"/>
+  <text x="870" y="545" text-anchor="middle" font-size="13" fill="#FFCC00">💡 ลด Input = ประหยัดได้จริง ลด Output = แทบไม่ต่าง</text>
 
   <!-- Footer -->
-  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
-  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+  <line x1="80" y1="598" x2="1120" y2="598" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="618" text-anchor="middle" font-size="10" fill="#444">DopeLab Studio — ink.dopelab.studio</text>
 </svg>

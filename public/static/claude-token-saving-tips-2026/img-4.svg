@@ -1,38 +1,161 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
   <defs>
-    <linearGradient id="bg-27" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg-4" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#1a1a2e"/>
     </linearGradient>
+    <linearGradient id="result" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff6b6b"/>
+      <stop offset="50%" stop-color="#FFCC00"/>
+      <stop offset="100%" stop-color="#64ffda"/>
+    </linearGradient>
+    <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-27)"/>
+  <rect width="1200" height="630" fill="url(#bg-4)"/>
 
-  <!-- Network decoration -->
-  <circle cx="1059" cy="159" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="919" cy="89" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1059" y1="159" x2="919" y2="89" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1077" cy="168" r="3" fill="#FFCC00" opacity="0.15"/><line x1="919" y1="89" x2="1077" y2="168" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1097" cy="178" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1077" y1="168" x2="1097" y2="178" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="974" cy="117" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1097" y1="178" x2="974" y2="117" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+  <circle cx="120" cy="120" r="120" fill="#FFCC00" opacity="0.04" filter="url(#glow4)"/>
+  <circle cx="1080" cy="510" r="140" fill="#64ffda" opacity="0.04" filter="url(#glow4)"/>
 
-  <!-- Category badge -->
-  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+  <!-- Header -->
+  <rect x="50" y="48" width="10" height="54" rx="5" fill="#64ffda"/>
+  <text x="80" y="80" fill="#ffffff" font-size="28" font-weight="700">Claude Code Token Optimization</text>
+  <text x="80" y="108" fill="#aaaaaa" font-size="15">Part 2 · 4 วิธีสำหรับ power users (#7–#10)</text>
+  <line x1="80" y1="130" x2="520" y2="130" stroke="#64ffda" stroke-width="2" opacity="0.5"/>
 
-  <!-- Title -->
-  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Claude Code Token Optimization</text>
-  <text x="80" y="115" fill="#aaaaaa" font-size="16">CLAUDE.md + /clear + Model Selection</text>
+  <!-- CARD #7 — CLAUDE.md -->
+  <g>
+    <rect x="80" y="160" width="520" height="180" rx="14" fill="#15152a" stroke="#FFCC00" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="118" cy="198" r="20" fill="#FFCC00" opacity="0.15"/>
+    <text x="118" y="204" fill="#FFCC00" font-size="18" font-weight="700" text-anchor="middle">7</text>
+    <text x="152" y="193" fill="#ffffff" font-size="20" font-weight="700">CLAUDE.md compact</text>
+    <text x="152" y="216" fill="#888" font-size="13">prepend เข้าทุก prompt · ทุกบรรทัด = เงิน</text>
 
-  <!-- Divider -->
-  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+    <g font-family="'Space Mono', monospace" font-size="11">
+      <text x="110" y="255" fill="#ff6b6b">3,200 tokens × 100 prompts/วัน</text>
+      <rect x="110" y="262" width="360" height="14" rx="3" fill="#ff6b6b" opacity="0.7"/>
+      <text x="480" y="273" fill="#ff6b6b" font-size="11">320k/วัน</text>
 
-  <!-- Main visual -->
-  
-            <rect x="200" y="311" width="80" height="119" rx="6" fill="#FFCC00" opacity="0.9"/>
-            <rect x="330" y="351" width="80" height="79" rx="6" fill="#FFCC00" opacity="0.8"/>
-            <rect x="460" y="311" width="80" height="119" rx="6" fill="#FFCC00" opacity="0.9"/>
-            <rect x="590" y="291" width="80" height="139" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="720" y="281" width="80" height="149" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="850" y="276" width="80" height="154" rx="6" fill="#FFCC00" opacity="1.0"/>
-        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+      <text x="110" y="295" fill="#64ffda">800 tokens × 100 prompts/วัน</text>
+      <rect x="110" y="302" width="90" height="14" rx="3" fill="#64ffda" opacity="0.8"/>
+      <text x="210" y="313" fill="#64ffda" font-size="11">80k/วัน</text>
+    </g>
 
-  <!-- Footer -->
-  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
-  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+    <rect x="440" y="313" width="146" height="18" rx="9" fill="#FFCC00" opacity="0.15"/>
+    <text x="513" y="327" fill="#FFCC00" font-size="12" font-weight="700" text-anchor="middle">−75% system prompt</text>
+  </g>
+
+  <!-- CARD #8 — /clear -->
+  <g>
+    <rect x="620" y="160" width="500" height="180" rx="14" fill="#15152a" stroke="#64ffda" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="658" cy="198" r="20" fill="#64ffda" opacity="0.15"/>
+    <text x="658" y="204" fill="#64ffda" font-size="18" font-weight="700" text-anchor="middle">8</text>
+    <text x="692" y="193" fill="#ffffff" font-size="20" font-weight="700">/clear between tasks</text>
+    <text x="692" y="216" fill="#888" font-size="13">เปลี่ยนงาน = เคลียร์ context ก่อน</text>
+
+    <g font-family="'Space Mono', monospace" font-size="11">
+      <rect x="650" y="248" width="110" height="30" rx="6" fill="#2a1818" stroke="#4a2828"/>
+      <text x="705" y="267" fill="#ff6b6b" text-anchor="middle">Task A context</text>
+      <text x="776" y="267" fill="#666" font-size="14" text-anchor="middle">+</text>
+      <rect x="792" y="248" width="110" height="30" rx="6" fill="#2a1818" stroke="#4a2828"/>
+      <text x="847" y="267" fill="#ff6b6b" text-anchor="middle">Task B work</text>
+      <text x="918" y="267" fill="#888" font-size="14" text-anchor="middle">=</text>
+      <rect x="934" y="248" width="160" height="30" rx="6" fill="#2a1818" stroke="#4a2828"/>
+      <text x="1014" y="267" fill="#ff6b6b" text-anchor="middle" font-size="10">paying for unused A</text>
+
+      <rect x="650" y="290" width="80" height="30" rx="6" fill="#14292a" stroke="#1f4a4a"/>
+      <text x="690" y="309" fill="#64ffda" text-anchor="middle">/clear</text>
+      <text x="746" y="309" fill="#666" font-size="14" text-anchor="middle">→</text>
+      <rect x="762" y="290" width="332" height="30" rx="6" fill="#14292a" stroke="#1f4a4a"/>
+      <text x="928" y="309" fill="#64ffda" text-anchor="middle">fresh context · Task B only</text>
+    </g>
+
+    <text x="1094" y="332" fill="#64ffda" font-size="12" font-weight="700" text-anchor="end">−30% unnecessary context</text>
+  </g>
+
+  <!-- CARD #9 — Model selection -->
+  <g>
+    <rect x="80" y="360" width="520" height="180" rx="14" fill="#15152a" stroke="#FFCC00" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="118" cy="398" r="20" fill="#FFCC00" opacity="0.15"/>
+    <text x="118" y="404" fill="#FFCC00" font-size="18" font-weight="700" text-anchor="middle">9</text>
+    <text x="152" y="393" fill="#ffffff" font-size="20" font-weight="700">Sonnet first · Opus เมื่อจำเป็น</text>
+    <text x="152" y="416" fill="#888" font-size="13">ใช้ Haiku 50% ของงาน routine</text>
+
+    <g font-family="'Space Mono', monospace" font-size="11">
+      <text x="110" y="450" fill="#666" font-size="10">MODEL</text>
+      <text x="300" y="450" fill="#666" font-size="10">INPUT</text>
+      <text x="400" y="450" fill="#666" font-size="10">OUTPUT</text>
+      <text x="510" y="450" fill="#666" font-size="10">USE</text>
+      <line x1="110" y1="458" x2="580" y2="458" stroke="#333" stroke-width="0.5"/>
+
+      <text x="110" y="478" fill="#ff6b6b">Opus 4.6</text>
+      <text x="300" y="478" fill="#ccc">$5/M</text>
+      <text x="400" y="478" fill="#ccc">$25/M</text>
+      <text x="510" y="478" fill="#888" font-size="10">complex only</text>
+
+      <text x="110" y="500" fill="#FFCC00">Sonnet 4.6</text>
+      <text x="300" y="500" fill="#ccc">$3/M</text>
+      <text x="400" y="500" fill="#ccc">$15/M</text>
+      <text x="510" y="500" fill="#FFCC00" font-size="10">default ★</text>
+
+      <text x="110" y="522" fill="#64ffda">Haiku 4.5</text>
+      <text x="300" y="522" fill="#ccc">$1/M</text>
+      <text x="400" y="522" fill="#ccc">$5/M</text>
+      <text x="510" y="522" fill="#888" font-size="10">routine</text>
+    </g>
+
+    <rect x="440" y="422" width="146" height="18" rx="9" fill="#FFCC00" opacity="0.15"/>
+    <text x="513" y="436" fill="#FFCC00" font-size="12" font-weight="700" text-anchor="middle">−40% model cost</text>
+  </g>
+
+  <!-- CARD #10 — MCP -->
+  <g>
+    <rect x="620" y="360" width="500" height="180" rx="14" fill="#15152a" stroke="#64ffda" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="658" cy="398" r="20" fill="#64ffda" opacity="0.15"/>
+    <text x="658" y="404" fill="#64ffda" font-size="16" font-weight="700" text-anchor="middle">10</text>
+    <text x="692" y="393" fill="#ffffff" font-size="20" font-weight="700">MCP audit · เดือนละครั้ง</text>
+    <text x="692" y="416" fill="#888" font-size="13">แต่ละ server ส่ง schema เข้า context ทุก session</text>
+
+    <text x="650" y="460" fill="#ff6b6b" font-size="11" font-family="'Space Mono', monospace">BEFORE · 8 servers</text>
+    <g transform="translate(650,470)">
+      <rect x="0" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828"/>
+      <rect x="32" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828"/>
+      <rect x="64" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828"/>
+      <rect x="96" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828"/>
+      <rect x="128" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828" opacity="0.5"/>
+      <rect x="160" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828" opacity="0.5"/>
+      <rect x="192" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828" opacity="0.5"/>
+      <rect x="224" y="0" width="26" height="22" rx="4" fill="#2a1818" stroke="#4a2828" opacity="0.5"/>
+    </g>
+
+    <text x="960" y="460" fill="#64ffda" font-size="11" font-family="'Space Mono', monospace">AFTER · 4 servers</text>
+    <g transform="translate(960,470)">
+      <rect x="0" y="0" width="26" height="22" rx="4" fill="#14292a" stroke="#1f4a4a"/>
+      <rect x="32" y="0" width="26" height="22" rx="4" fill="#14292a" stroke="#1f4a4a"/>
+      <rect x="64" y="0" width="26" height="22" rx="4" fill="#14292a" stroke="#1f4a4a"/>
+      <rect x="96" y="0" width="26" height="22" rx="4" fill="#14292a" stroke="#1f4a4a"/>
+    </g>
+
+    <text x="650" y="520" fill="#888" font-size="12">ลบ: duplicates + "น่าสนใจแต่ไม่ใช้"</text>
+    <rect x="928" y="505" width="166" height="18" rx="9" fill="#64ffda" opacity="0.15"/>
+    <text x="1011" y="519" fill="#64ffda" font-size="12" font-weight="700" text-anchor="middle">−20% metadata overhead</text>
+  </g>
+
+  <!-- Bottom result bar -->
+  <g>
+    <rect x="80" y="562" width="1040" height="34" rx="8" fill="#0f0f1e" stroke="#333" stroke-width="1"/>
+    <text x="110" y="585" fill="#aaa" font-size="13">ผลรวมจริง · 1 เดือน ·</text>
+    <text x="280" y="585" fill="#ff6b6b" font-size="16" font-weight="700" font-family="'Space Mono', monospace">$340</text>
+    <text x="335" y="585" fill="#666" font-size="14">→</text>
+    <text x="360" y="585" fill="#64ffda" font-size="16" font-weight="700" font-family="'Space Mono', monospace">$89</text>
+    <text x="420" y="585" fill="#aaa" font-size="13">·</text>
+    <text x="438" y="585" fill="url(#result)" font-size="16" font-weight="800">−74% · งานเท่าเดิม</text>
+    <text x="1090" y="585" fill="#666" font-size="11" text-anchor="end">tips #7–#10 applied</text>
+  </g>
+
+  <line x1="80" y1="608" x2="1120" y2="608" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="623" text-anchor="middle" fill="#444" font-size="10">DopeLab.Studio — ink.dopelab.studio</text>
 </svg>
