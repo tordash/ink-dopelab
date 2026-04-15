@@ -1,38 +1,160 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Kanit', 'Inter', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="'Kanit', sans-serif">
   <defs>
-    <linearGradient id="bg-28" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg5" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#1a1a2e"/>
     </linearGradient>
+    <filter id="glow5"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowRed5"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowTeal5"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
 
   <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-28)"/>
+  <rect width="1200" height="630" fill="url(#bg5)"/>
 
-  <!-- Network decoration -->
-  <circle cx="918" cy="89" r="3" fill="#FFCC00" opacity="0.15"/><circle cx="1052" cy="156" r="3" fill="#FFCC00" opacity="0.15"/><line x1="918" y1="89" x2="1052" y2="156" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1094" cy="177" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1052" y1="156" x2="1094" y2="177" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="924" cy="92" r="3" fill="#FFCC00" opacity="0.15"/><line x1="1094" y1="177" x2="924" y2="92" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/><circle cx="1078" cy="169" r="3" fill="#FFCC00" opacity="0.15"/><line x1="924" y1="92" x2="1078" y2="169" stroke="#FFCC00" stroke-width="0.5" opacity="0.1"/>
+  <!-- Grid dots -->
+  <g opacity="0.03">
+    <circle cx="60" cy="60" r="1" fill="#fff"/><circle cx="120" cy="60" r="1" fill="#fff"/><circle cx="180" cy="60" r="1" fill="#fff"/><circle cx="240" cy="60" r="1" fill="#fff"/><circle cx="300" cy="60" r="1" fill="#fff"/><circle cx="360" cy="60" r="1" fill="#fff"/><circle cx="420" cy="60" r="1" fill="#fff"/><circle cx="480" cy="60" r="1" fill="#fff"/><circle cx="540" cy="60" r="1" fill="#fff"/><circle cx="600" cy="60" r="1" fill="#fff"/><circle cx="660" cy="60" r="1" fill="#fff"/><circle cx="720" cy="60" r="1" fill="#fff"/><circle cx="780" cy="60" r="1" fill="#fff"/><circle cx="840" cy="60" r="1" fill="#fff"/><circle cx="900" cy="60" r="1" fill="#fff"/><circle cx="960" cy="60" r="1" fill="#fff"/><circle cx="1020" cy="60" r="1" fill="#fff"/><circle cx="1080" cy="60" r="1" fill="#fff"/><circle cx="1140" cy="60" r="1" fill="#fff"/>
+  </g>
 
-  <!-- Category badge -->
-  <rect x="50" y="50" width="10" height="50" rx="5" fill="#FFCC00"/>
+  <!-- Ambient glow behind numbers -->
+  <ellipse cx="267" cy="228" rx="170" ry="90" fill="rgba(255,107,53,0.07)"/>
+  <ellipse cx="933" cy="228" rx="170" ry="90" fill="rgba(100,255,218,0.06)"/>
 
-  <!-- Title -->
-  <text x="80" y="80" fill="#ffffff" font-size="26" font-weight="700">Bill จริง</text>
-  <text x="80" y="115" fill="#aaaaaa" font-size="16">ก่อนและหลัง token optimization</text>
+  <!-- Header -->
+  <text x="600" y="40" text-anchor="middle" font-size="11" fill="#636980" letter-spacing="4">BILL OPTIMIZATION BREAKDOWN</text>
+  <text x="600" y="76" text-anchor="middle" font-weight="700" font-size="27" fill="#ffffff">ตัวเลขจริง: ลด <tspan fill="#ff6b35">$340</tspan> เหลือ <tspan fill="#64ffda">$89</tspan></text>
+  <text x="600" y="100" text-anchor="middle" font-size="14" fill="#636980">งานได้เท่าเดิม — ลดได้ 74% ภายใน 1 เดือน แค่เปลี่ยนนิสัยการใช้</text>
 
-  <!-- Divider -->
-  <line x1="80" y1="140" x2="400" y2="140" stroke="#FFCC00" stroke-width="2" opacity="0.5"/>
+  <!-- ═══ BEFORE CARD ═══ -->
+  <rect x="45" y="115" width="455" height="225" rx="14" fill="#0f0f1a" stroke="rgba(255,107,53,0.35)" stroke-width="1.5"/>
+  <rect x="45" y="115" width="455" height="4" rx="2" fill="#ff6b35"/>
+  <!-- Label -->
+  <text x="68" y="143" font-size="11" font-weight="600" fill="#ff6b35" letter-spacing="0.1em">ก่อน · BEFORE</text>
+  <!-- Big price -->
+  <text x="65" y="252" font-size="88" font-weight="800" fill="#ff6b35" filter="url(#glowRed5)">$340</text>
+  <text x="68" y="285" font-size="14" fill="#636980">/เดือน</text>
+  <!-- Vertical sep -->
+  <line x1="300" y1="128" x2="300" y2="332" stroke="rgba(255,107,53,0.10)" stroke-width="1"/>
+  <!-- Detail list (right half) -->
+  <text x="316" y="147" font-size="9" fill="#4a4a5a" letter-spacing="0.08em">TOKEN SOURCES</text>
+  <!-- Bar 1: CLAUDE.md ~35% of bill -->
+  <rect x="316" y="158" width="170" height="7" rx="3.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="316" y="158" width="119" height="7" rx="3.5" fill="rgba(255,107,53,0.55)"/>
+  <text x="316" y="178" font-size="11" fill="#888">CLAUDE.md: 3,200 tokens</text>
+  <!-- Bar 2: Model ~30% -->
+  <rect x="316" y="188" width="170" height="7" rx="3.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="316" y="188" width="102" height="7" rx="3.5" fill="rgba(255,107,53,0.45)"/>
+  <text x="316" y="208" font-size="11" fill="#888">Model: Opus (ราคาสูง)</text>
+  <!-- Bar 3: Context ~20% -->
+  <rect x="316" y="218" width="170" height="7" rx="3.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="316" y="218" width="68" height="7" rx="3.5" fill="rgba(255,107,53,0.35)"/>
+  <text x="316" y="238" font-size="11" fill="#888">Context สะสม (ไม่ /clear)</text>
+  <!-- Bar 4: MCP -->
+  <rect x="316" y="248" width="170" height="7" rx="3.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="316" y="248" width="51" height="7" rx="3.5" fill="rgba(255,107,53,0.25)"/>
+  <text x="316" y="268" font-size="11" fill="#888">MCP: 8 servers (overhead)</text>
+  <!-- Bar 5: Round trips -->
+  <rect x="316" y="278" width="170" height="7" rx="3.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="316" y="278" width="43" height="7" rx="3.5" fill="rgba(255,107,53,0.20)"/>
+  <text x="316" y="298" font-size="11" fill="#888">คำถามทีละข้อ × หลายรอบ</text>
 
-  <!-- Main visual -->
-  
-            <rect x="200" y="292" width="80" height="138" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="330" y="341" width="80" height="89" rx="6" fill="#FFCC00" opacity="0.8"/>
-            <rect x="460" y="366" width="80" height="64" rx="6" fill="#FFCC00" opacity="0.7"/>
-            <rect x="590" y="318" width="80" height="112" rx="6" fill="#FFCC00" opacity="0.9"/>
-            <rect x="720" y="294" width="80" height="136" rx="6" fill="#FFCC00" opacity="1.0"/>
-            <rect x="850" y="282" width="80" height="148" rx="6" fill="#FFCC00" opacity="1.0"/>
-        <line x1="180" y1="430" x2="1000" y2="430" stroke="#444" stroke-width="1"/>
+  <!-- ═══ CENTER 74% BADGE ═══ -->
+  <!-- Left dashed line -->
+  <line x1="503" y1="228" x2="548" y2="228" stroke="#FFCC00" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <!-- Right dashed line -->
+  <line x1="652" y1="228" x2="695" y2="228" stroke="#FFCC00" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <!-- Arrow tip -->
+  <polygon points="696,222 710,228 696,234" fill="#FFCC00" opacity="0.65"/>
+  <!-- Outer ring -->
+  <circle cx="600" cy="228" r="55" fill="rgba(255,204,0,0.06)" stroke="rgba(255,204,0,0.25)" stroke-width="1.5"/>
+  <!-- Inner ring -->
+  <circle cx="600" cy="228" r="46" fill="rgba(255,204,0,0.05)" stroke="#FFCC00" stroke-width="1.5"/>
+  <!-- Text -->
+  <text x="600" y="220" text-anchor="middle" font-size="26" font-weight="800" fill="#FFCC00" filter="url(#glow5)">−74%</text>
+  <text x="600" y="242" text-anchor="middle" font-size="12" fill="#FFCC00">savings</text>
+  <!-- Savings amount -->
+  <text x="600" y="297" text-anchor="middle" font-size="11" fill="#636980">ประหยัด $251/เดือน</text>
+  <text x="600" y="313" text-anchor="middle" font-size="11" fill="#636980">= $3,012 ต่อปี</text>
+
+  <!-- ═══ AFTER CARD ═══ -->
+  <rect x="700" y="115" width="455" height="225" rx="14" fill="#0f0f1a" stroke="rgba(100,255,218,0.28)" stroke-width="1.5"/>
+  <rect x="700" y="115" width="455" height="4" rx="2" fill="#64ffda"/>
+  <text x="724" y="143" font-size="11" font-weight="600" fill="#64ffda" letter-spacing="0.1em">หลัง · AFTER</text>
+  <!-- Big price -->
+  <text x="720" y="252" font-size="88" font-weight="800" fill="#64ffda" filter="url(#glowTeal5)">$89</text>
+  <text x="724" y="285" font-size="14" fill="#636980">/เดือน</text>
+  <!-- Vertical sep -->
+  <line x1="950" y1="128" x2="950" y2="332" stroke="rgba(100,255,218,0.10)" stroke-width="1"/>
+  <!-- Detail list (right half) -->
+  <text x="966" y="147" font-size="9" fill="#4a4a5a" letter-spacing="0.08em">การเปลี่ยนแปลง</text>
+  <text x="966" y="172" font-size="11" fill="#64ffda">✓ CLAUDE.md: 800 tokens</text>
+  <text x="966" y="197" font-size="11" fill="#64ffda">✓ Sonnet เป็น default</text>
+  <text x="966" y="222" font-size="11" fill="#64ffda">✓ /clear ระหว่าง tasks</text>
+  <text x="966" y="247" font-size="11" fill="#64ffda">✓ MCP: 4 servers เท่านั้น</text>
+  <text x="966" y="272" font-size="11" fill="#64ffda">✓ Batch คำถาม รวมส่งทีเดียว</text>
+
+  <!-- ═══ CHANGE TABLE ═══ -->
+  <line x1="45" y1="354" x2="1155" y2="354" stroke="#1a1a2e" stroke-width="1.5"/>
+  <text x="45" y="348" font-size="9" fill="#3a3a50" letter-spacing="0.08em">5 CHANGES THAT DROVE −74%</text>
+
+  <!-- Column headers -->
+  <text x="65" y="372" font-size="9" fill="#555" letter-spacing="0.06em">การเปลี่ยนแปลง</text>
+  <text x="575" y="372" text-anchor="middle" font-size="9" fill="#555" letter-spacing="0.06em">TOKEN IMPACT (% saved)</text>
+  <text x="985" y="372" text-anchor="middle" font-size="9" fill="#555" letter-spacing="0.06em">ลดได้</text>
+  <text x="1140" y="372" text-anchor="end" font-size="9" fill="#555" letter-spacing="0.06em">ระดับ</text>
+
+  <!-- Row 1: CLAUDE.md (−75%) -->
+  <rect x="45" y="378" width="1110" height="38" rx="5" fill="rgba(255,255,255,0.018)"/>
+  <text x="65" y="397" font-size="13" font-weight="600" fill="#ddd">Trim CLAUDE.md</text>
+  <text x="65" y="412" font-size="10" fill="#555">3,200 → 800 tokens (−75% of system cost)</text>
+  <rect x="420" y="386" width="420" height="12" rx="6" fill="rgba(255,255,255,0.04)"/>
+  <rect x="420" y="386" width="315" height="12" rx="6" fill="rgba(255,107,53,0.45)"/>
+  <rect x="960" y="382" width="62" height="22" rx="11" fill="rgba(255,107,53,0.15)"/>
+  <text x="991" y="398" text-anchor="middle" font-size="12" font-weight="700" fill="#ff6b35">−75%</text>
+  <text x="1140" y="399" text-anchor="end" font-size="14" fill="#FFCC00">●●●</text>
+
+  <!-- Row 2: Default Sonnet (−40%) -->
+  <rect x="45" y="419" width="1110" height="38" rx="5" fill="rgba(255,255,255,0.010)"/>
+  <text x="65" y="438" font-size="13" font-weight="600" fill="#ddd">Default Sonnet (เดิม Opus)</text>
+  <text x="65" y="453" font-size="10" fill="#555">ใช้ Opus → เปลี่ยนเป็น Sonnet default (−40% of model cost)</text>
+  <rect x="420" y="427" width="420" height="12" rx="6" fill="rgba(255,255,255,0.04)"/>
+  <rect x="420" y="427" width="168" height="12" rx="6" fill="rgba(255,204,0,0.42)"/>
+  <rect x="960" y="423" width="62" height="22" rx="11" fill="rgba(255,204,0,0.12)"/>
+  <text x="991" y="439" text-anchor="middle" font-size="12" font-weight="700" fill="#FFCC00">−40%</text>
+  <text x="1140" y="440" text-anchor="end" font-size="14" fill="#FFCC00">●●●</text>
+
+  <!-- Row 3: /clear (−30%) -->
+  <rect x="45" y="460" width="1110" height="38" rx="5" fill="rgba(255,255,255,0.018)"/>
+  <text x="65" y="479" font-size="13" font-weight="600" fill="#ddd">/clear ระหว่าง tasks</text>
+  <text x="65" y="494" font-size="10" fill="#555">ลด context สะสมที่ไม่จำเป็น (−30% of context cost)</text>
+  <rect x="420" y="468" width="420" height="12" rx="6" fill="rgba(255,255,255,0.04)"/>
+  <rect x="420" y="468" width="126" height="12" rx="6" fill="rgba(100,255,218,0.38)"/>
+  <rect x="960" y="464" width="62" height="22" rx="11" fill="rgba(100,255,218,0.10)"/>
+  <text x="991" y="480" text-anchor="middle" font-size="12" font-weight="700" fill="#64ffda">−30%</text>
+  <text x="1140" y="481" text-anchor="end" font-size="14" fill="#64ffda">●●</text>
+
+  <!-- Row 4: MCP (−20%) -->
+  <rect x="45" y="501" width="1110" height="38" rx="5" fill="rgba(255,255,255,0.010)"/>
+  <text x="65" y="520" font-size="13" font-weight="600" fill="#ddd">ลบ MCP ที่ไม่ใช้</text>
+  <text x="65" y="535" font-size="10" fill="#555">8 → 4 servers (−20% of metadata overhead)</text>
+  <rect x="420" y="509" width="420" height="12" rx="6" fill="rgba(255,255,255,0.04)"/>
+  <rect x="420" y="509" width="84" height="12" rx="6" fill="rgba(192,132,252,0.38)"/>
+  <rect x="960" y="505" width="62" height="22" rx="11" fill="rgba(192,132,252,0.10)"/>
+  <text x="991" y="521" text-anchor="middle" font-size="12" font-weight="700" fill="#c084fc">−20%</text>
+  <text x="1140" y="522" text-anchor="end" font-size="14" fill="#c084fc">●</text>
+
+  <!-- Row 5: Batch (−25%) -->
+  <rect x="45" y="542" width="1110" height="38" rx="5" fill="rgba(255,255,255,0.018)"/>
+  <text x="65" y="561" font-size="13" font-weight="600" fill="#ddd">Batch คำถาม</text>
+  <text x="65" y="576" font-size="10" fill="#555">รวมส่งทีเดียวแทนทีละข้อ (−25% of round trips)</text>
+  <rect x="420" y="550" width="420" height="12" rx="6" fill="rgba(255,255,255,0.04)"/>
+  <rect x="420" y="550" width="105" height="12" rx="6" fill="rgba(192,132,252,0.32)"/>
+  <rect x="960" y="546" width="62" height="22" rx="11" fill="rgba(192,132,252,0.10)"/>
+  <text x="991" y="562" text-anchor="middle" font-size="12" font-weight="700" fill="#c084fc">−25%</text>
+  <text x="1140" y="563" text-anchor="end" font-size="14" fill="#c084fc">●</text>
 
   <!-- Footer -->
-  <line x1="80" y1="590" x2="1120" y2="590" stroke="#222" stroke-width="0.5"/>
-  <text x="600" y="615" text-anchor="middle" fill="#444" font-size="11">DopeLab.Studio — ink.dopelab.studio</text>
+  <line x1="80" y1="598" x2="1120" y2="598" stroke="#222" stroke-width="0.5"/>
+  <text x="600" y="618" text-anchor="middle" font-size="10" fill="#444">DopeLab Studio — ink.dopelab.studio</text>
 </svg>
