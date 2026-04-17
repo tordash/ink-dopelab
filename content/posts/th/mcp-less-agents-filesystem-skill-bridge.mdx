@@ -1,0 +1,151 @@
+---
+title: "Agent ไม่มี MCP ไม่ใช่จุดสิ้นสุด: Filesystem Skill Bridge สำหรับ Multi-Agent Workflow"
+description: "เมื่อ AI agent ตัวหนึ่งไม่มี MCP tools แต่ team ต้องการให้มันทำงานร่วมกับ agent อื่นได้ — pattern นี้คือทางออกที่เราใช้จริงใน production"
+date: 2026-04-17
+cover: ../covers/design-process-dead-figma-mcp.jpg
+category: "Agent Architecture"
+tags: ["AI agents", "MCP", "multi-tool workflow", "shared skill library", "agency ops", "multi-agent"]
+draft: false
+---
+
+## Agent ตัวหนึ่งใน team ทำไม่ได้
+
+เราเจอปัญหานี้จริงๆ ขณะ build ทีม AI agents สำหรับ content workflow
+
+มี agent หนึ่งตัวที่ทำงานด้านอื่นได้ดี แต่ไม่มี MCP tools ที่ agent ตัวอื่นในทีมใช้เป็นหลัก ผลคือมัน "ตัน" กับงานที่ต้องการ capability เฉพาะนั้น ทั้งที่ทุกอย่างอื่นพร้อม
+
+สิ่งที่น่าสนใจคือวิธีแก้ไม่ได้ซับซ้อน — แต่มันเปลี่ยนวิธีที่เราคิดเรื่อง tool access ใน multi-agent team ไปอย่างถาวร
+
+---
+
+## ทำไม Multi-Agent Team ถึงมีปัญหาเรื่อง Tool Access
+
+ปัญหาแบบนี้ไม่ได้เกิดเฉพาะกับ team เรา มันเป็นโครงสร้างของ ecosystem ตอนนี้
+
+MCP (Model Context Protocol) ยังไม่ได้ถูก implement ใน AI agent ทุกตัว agent บางตัวรองรับ MCP เต็มรูปแบบ บางตัวรองรับบางส่วน บางตัวไม่รองรับเลย ขึ้นอยู่กับ platform ที่ agent นั้นทำงานอยู่
+
+ถ้าใช้ agent แค่ตัวเดียวปัญหานี้ไม่เกิด แต่พอ team เริ่มมีหลาย agent ที่มาจาก environments ต่างกัน ก็เริ่มมี capability gap ขึ้นมา:
+
+- Agent A ใช้ Claude Code environment — MCP ครบ ใช้ tools ได้เต็มที่
+- Agent B ใช้ environment อื่น — อาจมี MCP บางส่วน หรือไม่มีเลย
+- Agent A และ B ต้องทำงานร่วมกันใน workflow เดียวกัน
+
+คำถามคือ: จะให้ Agent B ทำสิ่งที่ Agent A ทำได้ด้วย MCP ยังไง โดยไม่ต้อง rebuild ทั้ง environment ใหม่?
+
+---
+
+## Filesystem Skill Bridge: ความคิดพื้นฐาน
+
+วิธีที่เราคิดถึงมันคือ: ถ้า agent ไม่มี tool call แต่มี shell access — ปัญหาเปลี่ยนรูป
+
+แทนที่จะคิดว่า "จะให้ agent มี MCP tool ยังไง?" ให้คิดใหม่เป็น "capability นี้มันอยู่ที่ไหน และ agent เข้าถึงมันได้ยังไงโดยไม่ผ่าน MCP?"
+
+คำตอบคือ: script ที่เรียกใช้ได้ผ่าน shell
+
+ถ้า agent สามารถ run bash command ได้ มันก็สามารถ invoke script ได้ ไม่ว่า capability นั้นจะ wrapped อยู่ใน MCP server หรือไม่ก็ตาม
+
+Pattern ที่เราใช้เรียกว่า **filesystem skill bridge** — หลักการคือ:
+
+1. **Skill = script ที่เรียกใช้ได้** — ไม่ใช่ MCP tool ที่ต้อง register แต่เป็น shell script หรือ Python script ที่มี interface ชัดเจน
+2. **ทุก agent ที่ต้องการ capability นี้ชี้ไปที่ script เดียวกัน** — agent ที่มี MCP อาจใช้ผ่าน MCP wrapper, agent ที่ไม่มี MCP ก็เรียก script ตรงผ่าน shell
+3. **ความแตกต่างอยู่ที่ access layer ไม่ใช่ capability** — skill เดิม, path เดิม, result เดิม — แค่ invocation method ต่างกัน
+
+ภาพง่ายๆ คือ: มีห้องสมุด skills กลางหนึ่งห้อง agent ทุกตัวไปหยิบ capability จากห้องนี้ได้ บางตัวใช้ประตู MCP เข้า บางตัวใช้ประตู shell เข้า — แต่เนื้อหาในห้องเหมือนกัน
+
+---
+
+## ใช้ได้ดีเมื่อไหร่
+
+Pattern นี้ทำงานได้ดีในสถานการณ์แบบนี้:
+
+**ทีมที่ใช้ AI environments ผสมกัน**
+
+ถ้าทีมมี agent หลายตัวจาก platforms ที่แตกต่างกัน และต้องการให้ทุกตัวเข้าถึง capability ชุดเดียวกัน — filesystem bridge คือวิธีที่ตรงไปตรงมาที่สุด ไม่ต้องรอให้ platform นั้น implement MCP ก็ทำงานได้ทันที
+
+**Capability ที่ทำงานได้ดีใน stateless script**
+
+งานที่ script เริ่มต้น ทำงาน และจบใน run เดียว ไม่ต้องการ persistent connection เหมาะมาก เช่น: research pipeline, content generation, data processing, file transformation
+
+**ทีมที่ต้องการ consistency ข้าม agents**
+
+เมื่อ skill อยู่ที่เดียว ทุก agent ใช้ logic เดียวกัน ไม่มีเวอร์ชันแยกกันวิ่งใน production — ง่ายต่อการ update และ maintain
+
+**ทีมที่ scale ขึ้นทีละ agent**
+
+เพิ่ม agent ตัวใหม่เข้า team ให้มัน point ไปที่ shared skill directory ก็พร้อมใช้ capability เดิมได้เลย ไม่ต้อง onboard ทีละ tool
+
+---
+
+## ใช้ไม่ได้เมื่อไหร่
+
+Pattern นี้ไม่ใช่คำตอบสำหรับทุกสถานการณ์ และการรู้ว่า "ไม่ควรใช้เมื่อไหร่" สำคัญพอๆ กัน
+
+**เมื่อ security boundary เป็นเรื่องสำคัญ**
+
+Filesystem access หมายความว่า agent อ่าน/เขียน paths ที่ชี้ไปได้ ถ้า agent นั้นทำงานใน untrusted environment หรือมี user-controlled input ที่ไม่ได้ sanitize — shell access คือ attack surface ที่ต้องระวัง การให้ agent รัน arbitrary scripts เป็น risk จริง ต้องออกแบบ sandbox ให้ดีก่อนนำไปใช้ใน production ที่มี external input
+
+**เมื่อ streaming response สำคัญ**
+
+MCP tool call ให้ streaming ได้ตามธรรมชาติ — agent เห็น progress real-time แบบ token-by-token Script ที่เรียกผ่าน shell ได้ผลลัพธ์เมื่อ script จบเท่านั้น ถ้า use case ต้องการให้ agent ตอบสนองต่อ partial result ระหว่างรัน MCP ยังคือตัวเลือกที่ดีกว่า
+
+**เมื่อ observability เป็น requirement**
+
+MCP server มี built-in structure สำหรับ logging, error handling, และ tracing ที่ agent framework มักจะ capture ให้ Script execution ผ่าน shell ไม่มีตรงนี้โดยอัตโนมัติ ต้องเขียน logging เอง ถ้าทีมต้องการ full audit trail ของทุก tool call — การ implement shell script โดยไม่มี telemetry infrastructure รองรับอาจสร้าง blind spot
+
+**เมื่อ capability นั้น evolve เร็ว**
+
+ถ้า skill script เปลี่ยนบ่อย และ agents หลายตัวใช้ร่วมกัน การ deploy script version ใหม่จะกระทบทุกคนพร้อมกัน ต้องมี versioning strategy หรือ compatibility layer ก่อน — ไม่งั้นจะ break agents ที่ยังไม่ได้ update
+
+---
+
+## วิธีคิดเรื่อง Implementation
+
+ถ้าพิจารณาว่าจะนำ pattern นี้ไปใช้ สิ่งที่ต้องออกแบบก่อน:
+
+**1. Define the interface ก่อน**
+
+Script ที่ดีสำหรับ pattern นี้ต้องมี input/output ที่ชัดเจน — arguments ที่รับ, format ที่ output ออกมา, error codes ที่ return ถ้า interface ไม่ชัด agents จะ invoke แบบ inconsistent แล้ว debug ยากมาก
+
+**2. Shared location ที่ทุก agent เข้าถึงได้**
+
+Script ต้องอยู่ใน path ที่ทุก agent ที่ต้องการใช้สามารถอ่านได้ บน shared filesystem ที่ agents ทุกตัวเข้าถึงได้ ถ้า agents ทำงานบนเครื่องหลายเครื่อง ต้องมีกลไก sync หรือ mount ให้ path ตรงกัน
+
+**3. Registration per agent**
+
+Agent แต่ละตัวต้องรู้ว่ามี skill นี้อยู่ที่ไหน บาง environment มี config file สำหรับลงทะเบียน capability paths บาง environment ต้องใส่ใน system prompt โดยตรง วิธีการต่างกัน แต่หลักการเดียวกัน — agent ต้องรู้ว่า "capability นี้อยู่ที่ script นี้ เรียกแบบนี้"
+
+**4. Error handling ที่ script ระดับ**
+
+ถ้า script ล้มเหลว agent ต้องรู้ว่าล้มเหลวอย่างไร ออกแบบให้ script exit code และ error message ชัดเจนพอที่ agent จะตัดสินใจได้ว่าจะ retry หรือ fallback
+
+---
+
+## สิ่งที่เราเรียนรู้จากการทำจริง
+
+ข้อสังเกตที่ได้จาก production ที่ใช้ pattern นี้ในทีม multi-agent จริง:
+
+**Debugging ง่ายขึ้น** เพราะ skill อยู่ที่เดียว เวลามี bug ไม่ต้องตามหาว่า agent ไหน implement ผิด แค่แก้ที่ script กลาง ทุกคนได้รับ fix พร้อมกัน
+
+**Onboarding agent ใหม่เร็วขึ้น** agent ตัวใหม่ไม่ต้อง rebuild capability เดิม แค่ point มาที่ shared skill directory ก็ทำงานได้ทันที
+
+**เรื่องที่ต้องระวัง: path discipline** ถ้า agent หนึ่งตัว hardcode path แบบ absolute และ path นั้นเปลี่ยน — มันจะ break แบบ silent ที่หาสาเหตุยาก ทางแก้คือใช้ config file หรือ environment variable แทน hardcode ให้ทุกที่ชี้ผ่านค่าเดียวกัน
+
+**กรณีที่ pattern ไม่ได้ scale คือ**: เมื่อ skills เริ่มมีหลาย dependency หรือต้องการ runtime state ข้าม invocations — ตรงนั้นต้องเริ่มคิดถึง proper service layer แทน plain script
+
+---
+
+## Takeaway สำหรับทีมที่ Build Multi-Agent Workflow
+
+ถ้ากำลัง build ทีม AI agents และเจอ capability gap ระหว่าง agents ที่มี MCP กับตัวที่ไม่มี:
+
+**คำถามแรกที่ต้องถามไม่ใช่ "จะเพิ่ม MCP ให้ agent นี้ได้ยังไง?"** แต่คือ "capability นี้สามารถ exist เป็น script ที่เรียกได้ผ่าน shell มั้ย?"
+
+ถ้าใช่ — filesystem skill bridge เป็น path ที่ตรงกว่า เร็วกว่า และ maintain ง่ายกว่าการรอให้ platform implement MCP
+
+ถ้าไม่ใช่ (ต้องการ streaming, security boundary เข้มงวด, หรือ real-time observability) — ถึงเวลาลงทุนกับ proper MCP integration หรือ service layer จริงๆ
+
+ความจริงของ multi-agent ecosystem ตอนนี้คือ ไม่มี agent ไหน feature-complete ทุกด้าน การ build team หมายถึงการออกแบบ interoperability ระหว่าง agents ที่มี capability models ต่างกัน — และ filesystem skill bridge เป็นหนึ่งใน practical tools สำหรับงานนั้น
+
+---
+
+*ติดตาม DopeLab ที่ [ink.dopelab.studio](https://ink.dopelab.studio) สำหรับ workflow AI ที่เราทดสอบจริงจากการทำงานใน production — ไม่ใช่แค่ theory*

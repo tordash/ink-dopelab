@@ -1,0 +1,205 @@
+---
+title: "ทดสอบ Kling 3.0, Runway Gen-4, Veo 3 แล้ว — สรุปจาก Agency ที่ทำ BG Video จริง"
+description: "เราคิดว่า Kling แค่ถูกกว่า — ผิด สัปดาห์นี้ทดสอบ Kling I2V จริง render ใน 8-10 นาที 2 credits นี่คือตัวเลขจริง + แผนที่เราจะใช้ stack ทั้งหมดสำหรับ client BG video"
+date: 2026-04-17
+cover: ../covers/ai-video-wars-veo3-sora2-kling3.jpg
+category: "AI Workflow"
+tags: ["Kling 3.0", "Runway Gen-4", "Veo 3", "AI Video", "BG Video", "agency", "video production", "pipeline"]
+draft: false
+---
+
+## เราคิดว่า Kling แค่ถูกกว่า — ผิด
+
+สัปดาห์นี้ทดสอบ Kling 3.0 จริงครั้งแรกผ่าน Freepik's Kling I2V endpoint
+
+ผลลัพธ์: ไฟล์ portrait 1072×1928 ออกมาใน 8-10 นาที ใช้ 2 Freepik credits ต่อคลิป
+
+ตัวเลขไม่ได้น่าตกใจ แต่สิ่งที่น่าสนใจกว่าคือการเปรียบเทียบ feature set จริงๆ ระหว่างสามเครื่องมือหลักในตลาดตอนนี้ เพราะ Kling 3.0 ไม่ใช่แค่ "ตัวเลือกราคาถูก" อย่างที่เคยคิด มัน feature-complete มากกว่าที่วางไว้ใน hypothesis เดิมมาก
+
+---
+
+## ทำไม Agency ต้องตัดสินใจเรื่องนี้ตอนนี้
+
+BG video (Background video) กลายเป็น standard deliverable ในงาน content production สำหรับ agency หลายเจ้าแล้ว
+
+ลูกค้าต้องการ: ambient loop สำหรับหน้าเว็บ, hero section ที่เคลื่อนไหว, event backdrop, social story ที่ดูมีมิติมากกว่า static image ธรรมดา ความต้องการนี้เพิ่มขึ้นทุกไตรมาส
+
+ปัญหาของ agency ที่ทำ volume สูงคือตัดสินใจผิดงาน: เลือกเครื่องมือแพงสำหรับงานที่ไม่ต้องการ หรือใช้เครื่องมือถูกแล้วได้ quality ต่ำกว่า standard ของ client
+
+ตอนนี้มีสามเครื่องมือหลักที่ทุกคนพูดถึง และแต่ละตัวมีจุดแข็งต่างกันจริงๆ:
+
+- **Kling 3.0** จาก Kuaishou — ขึ้นมาเร็วมากใน 2025-2026, 4K/60fps, native audio
+- **Runway Gen-4** — ชื่อเสียงด้าน temporal consistency, seamless loop mode
+- **Veo 3** จาก Google DeepMind — photorealism ระดับ production, native audio ที่ดีที่สุด
+
+เมษายน 2026 เป็นช่วงที่ Kling 3.0 เพิ่ง update ใหม่ และมีข้อมูลใหม่มากพอที่จะตัดสินใจได้จริง ไม่ใช่แค่ spec sheet
+
+---
+
+## ตัวเลขที่ต้องรู้ก่อนเลือก
+
+*(ราคา ณ เมษายน 2026 — ราคาเปลี่ยนได้ตลอด ควร verify กับ provider โดยตรงก่อน commit budget)*
+
+| | Kling 3.0 | Runway Gen-4 | Veo 3 |
+|---|---|---|---|
+| **ราคา/วินาที** | ~$0.07 | ~$0.16 | ~$0.20 |
+| **Photorealism** | ดี | ดีมาก | ดีที่สุด |
+| **Temporal consistency** | ดี | ดีที่สุด | ดีมาก |
+| **Seamless loop** | ได้ | Built-in | ได้ |
+| **Native audio** | ✓ (5 ภาษา) | ✗ ต้องเพิ่ม post | ✓ |
+| **Clip ยาวสุด** | 3 นาที | 10 วินาที | ~8 วินาที |
+| **API พร้อมใช้** | ✓ | ✓ | ✗ waitlist |
+| **Volume workflow** | 50+ parallel | ดี | จำกัด |
+
+ข้อมูล Kling I2V ในตาราง เราทดสอบจริงสัปดาห์นี้ ส่วน Runway Gen-4 และ Veo 3 อิงจาก benchmark สาธารณะและ community reports — ระบุไว้ตรงๆ เพราะ transparency สำคัญกว่า
+
+---
+
+## บุคลิกของแต่ละเครื่องมือ
+
+### Kling 3.0 — ตัวที่ทำได้มากกว่าที่คิด
+
+hypothesis เดิมก่อนทดสอบ: Kling ถูกกว่า แต่ quality น่าจะสู้ Runway ไม่ได้ในงานสำคัญ
+
+สิ่งที่พบจริง: Kling 3.0 ไม่ได้แค่ถูก มันมี native audio sync สำหรับ 5 ภาษา, 4K/60fps, clip ยาวได้ถึง 3 นาที, และ API ที่ support high-volume parallel workflow ได้ในระดับ 50+ clips พร้อมกัน
+
+สำหรับ BG video ที่ต้องการ ambient sound — Kling ทำในรอบเดียวได้เลย ไม่ต้องหา audio track มาแยก วาง workflow ไว้ทีเดียวได้
+
+ตัวเลขจากการทดสอบจริงสัปดาห์นี้:
+- Output: portrait 1072×1928 pixels
+- Render time: 8-10 นาที ต่อ clip
+- Credit cost: 2 Freepik credits ต่อ clip
+- Access: ผ่าน Freepik's Kling I2V endpoint, ไม่ต้องรอ waitlist
+
+สิ่งที่ต้องรู้ก่อนเริ่มใช้: Kling 3.0 API รุ่นปัจจุบันเป็น I2V (Image-to-Video) เป็นหลัก ถ้าต้องการ T2V (Text-to-Video) แบบ direct มีข้อจำกัดบางอย่างที่ต้อง verify กับ endpoint ที่จะใช้ก่อน ราคา $0.07/s ที่อ้างถึงเป็นราคา API โดยตรง ไม่ใช่ Freepik credits — ค่า credits อาจต่างกัน ขึ้นอยู่กับ plan
+
+สำหรับงาน BG video ทั่วไปสำหรับ client ไทย เช่น ambient loop, lifestyle background, abstract motion — Kling เป็น starting point ที่สมเหตุสมผล
+
+### Runway Gen-4 — เจ้าของ seamless loop
+
+Runway Gen-4 มี Elo score 1247 จาก Artificial Analysis benchmarks ณ เมษายน 2026 ซึ่งสูงที่สุดในตลาดสำหรับ temporal consistency
+
+temporal consistency หมายความว่าอะไรในงานจริง: ถ้าคุณมีฉากที่ต้องการให้ทุก frame ดู "ถูกต้อง" ต่อเนื่อง ไม่มี flicker, ไม่มี shape ที่เปลี่ยนแบบแปลกๆ ระหว่าง frame — Runway Gen-4 ทำได้ดีที่สุด
+
+built-in seamless loop mode คือ feature ที่ทำให้ Runway ชนะสำหรับงาน website background โดยเฉพาะ เพราะ loop ที่ดีต้องไม่มี jump cut ตรงจุดที่วนซ้ำ — Runway ออกแบบมาสำหรับนี้โดยตรง
+
+character และ product consistency ผ่าน reference images ทำให้ Runway เป็นตัวเลือกสำหรับงานที่ต้องรักษา look ของ subject ข้าม shot
+
+จุดอ่อนที่ต้องรู้:
+- ไม่มี native audio ทุก clip ต้องหา ambient track มาเพิ่มใน post — ขั้นตอนเพิ่มขึ้น
+- Clip ยาวสุดแค่ 10 วินาที — งาน loop ยาวต้องต่อหลาย clip
+- ราคา $0.16/s สูงกว่า Kling เกือบ 2.3 เท่า สำหรับงาน volume สูงต้นทุนสะสมเร็ว
+
+เราไม่ได้ทดสอบ Runway Gen-4 โดยตรงในสัปดาห์นี้ — ข้อมูลส่วนนี้อิงจาก benchmark สาธารณะและ community reports ระบุไว้เพื่อ transparency
+
+### Veo 3 — ดีที่สุด แต่ยังเข้าไม่ถึง
+
+Veo 3 จาก Google DeepMind เป็นเครื่องมือที่ photorealism ดีที่สุดในตลาดตอนนี้ ไม่ว่าจะเป็น skin texture, lighting, shadow ที่ดูสมจริงในระดับ production
+
+Veo 3 ยังมี native audio generation ที่ครบที่สุด รวมถึง dialogue, SFX, ambient sound ในคลิปเดียว ซึ่งดีกว่า Kling ในเชิงคุณภาพของเสียง
+
+ปัญหาคือ: API ยังอยู่ใน waitlist เมษายน 2026
+
+สำหรับ agency ที่ต้องส่งงานลูกค้าตามกำหนดเวลา — ไม่มีทางพึ่ง Veo 3 เป็น operational tool ได้ในตอนนี้ ต่อให้ photorealism จะดีแค่ไหน ถ้า API ยังเข้าไม่ได้ มันก็แค่ aspirational ให้เก็บไว้ watch ไม่ใช่ deploy
+
+---
+
+## ทำไม Hypothesis เดิมถึงผิด
+
+hypothesis ก่อนทดสอบ: การเลือกระหว่าง Kling vs Runway เป็น tradeoff "ราคา vs quality" — จ่ายมากขึ้นได้ quality ดีขึ้น
+
+สิ่งที่พบจริง: tradeoff ไม่ได้อยู่ที่ราคากับ quality แต่อยู่ที่ **use case และ workflow requirement**
+
+Kling ชนะชัดในเรื่อง:
+- Volume production (50+ clips)
+- Audio-in-one-pass (ไม่ต้องหา track มาแยก)
+- Clip ยาว (3 นาที vs 10 วินาที)
+- ราคาต่อคลิปต่ำกว่ามาก
+
+Runway ชนะชัดในเรื่อง:
+- Seamless loop ที่ไม่มี jump cut
+- Temporal consistency ใน key scenes
+- Rapid prototyping ด้วย Turbo mode
+
+ทั้งสองตัวชนะในคนละเกม ถามว่า "ตัวไหนดีกว่า?" คือถามผิดคำถาม คำถามที่ถูกต้องคือ "คลิปนี้ต้องการอะไร?"
+
+---
+
+## แผนที่เราวางไว้ (Working Hypothesis)
+
+จากการทดสอบ Kling สัปดาห์นี้ + ข้อมูล benchmark ของ Runway Gen-4 เราวางแนวทางไว้แบบนี้:
+
+**70% งาน → Kling 3.0 เป็น default**
+- BG video volume สูง (5+ clips ต่องาน)
+- Clip ที่ต้องการ ambient audio ในตัว
+- งานที่ต้องการ loop ยาวกว่า 10 วินาที
+- Budget-sensitive projects
+
+**30% งาน → Runway Gen-4 สำหรับ hero shots**
+- Hero section BG ที่ต้อง seamless loop แบบสมบูรณ์
+- Key scenes ที่ temporal consistency คือ requirement ไม่ใช่ nice-to-have
+- Short clips สำหรับ rapid prototyping
+
+สิ่งสำคัญ: นี่เป็น working hypothesis จากข้อมูลที่มีอยู่ตอนนี้ ยังไม่ได้ run กับ client projects เต็มรูปแบบ ตัวเลขและ logic รองรับ แต่การทดสอบจริงอาจปรับ ratio ได้
+
+---
+
+## ตัวเลขต้นทุนก่อนตัดสินใจ
+
+สมมติทำ 100 clips/เดือน ความยาวเฉลี่ย 8 วินาทีต่อคลิป:
+
+| สูตร | ราคา/เดือน (ประมาณ) |
+|------|-------------------|
+| 100% Runway Gen-4 | ~$128 |
+| 70/30 Kling/Runway | ~$78 |
+| 100% Kling 3.0 | ~$56 |
+
+การใช้สูตร 70/30 เทียบกับ pure Runway: ประหยัด ~$50/เดือน หรือประมาณ 39%
+
+สำหรับ agency ที่ทำ content ให้ client หลายเจ้าพร้อมกัน ตัวเลขนี้สะสมได้มากตลอดทั้งปี
+
+*(ราคาประมาณตาม benchmark เมษายน 2026 — verify กับ current API pricing ก่อน commit จริง)*
+
+---
+
+## Practical: เมื่อไหร่ใช้อะไร
+
+ถ้ายังไม่แน่ใจว่าจะ route คลิปไหนไปเครื่องมือไหน ลองถามตัวเองสามคำถามนี้:
+
+**1. คลิปต้องการ seamless loop ที่ไม่มี jump cut มั้ย?**
+ใช่ → Runway Gen-4
+ไม่ → ไปคำถามต่อไป
+
+**2. ต้องการ ambient sound ในคลิปโดยไม่ต้องหา audio แยก?**
+ใช่ → Kling 3.0
+ไม่ → ประเมินราคาและ volume ก่อน
+
+**3. งานนี้ต้องการ premium photorealism และรอ API ได้?**
+ใช่ → เก็บ Veo 3 ไว้ดู (waitlist อยู่)
+ไม่ → Kling 3.0 เป็น default ที่สมเหตุสมผล
+
+---
+
+## สัปดาห์นี้ควรทำอะไร
+
+ถ้าคุณยังไม่ได้ทดสอบ Kling 3.0 เลย: เริ่มได้เลย Freepik มี Kling I2V endpoint ที่เข้าถึงได้โดยไม่ต้องรอ waitlist ทดสอบกับ image ที่มีอยู่แล้ว ดู render time และ output quality ก่อนตัดสินใจว่าจะ integrate เข้า workflow หลักยังไง
+
+ถ้าใช้ Runway อยู่แล้ว: ไม่จำเป็นต้องเปลี่ยนทั้งหมด ลองแยก BG volume work ไปใช้ Kling ก่อน เก็บ Runway สำหรับ hero shots และ seamless loop งานเฉพาะ ดูว่าต้นทุนรวมเปลี่ยนยังไง
+
+ถ้ายังรอ Veo 3: ถูกแล้ว รอต่อไป แต่อย่าหยุด production รอ — Kling + Runway ทำ BG video ได้ดีมากสำหรับงาน client ทั่วไปในตอนนี้
+
+---
+
+## Takeaway
+
+เมษายน 2026 ถ้าต้องเลือกจุดเริ่มต้นสำหรับ agency BG video pipeline:
+
+**เริ่มที่ Kling 3.0** เป็น default — cost, API access ทันที, audio-in-one-pass, volume capacity ดีกว่าที่คาดไว้มาก hypothesis "Kling แค่ถูกกว่า" ผิด มันคือ feature-complete choice สำหรับงานส่วนใหญ่
+
+**เพิ่ม Runway Gen-4** สำหรับ scenes ที่ seamless loop และ temporal consistency คือ requirement จริงๆ ไม่ใช่ nice-to-have ค่าใช้จ่ายสูงกว่า แต่มี use case ที่ชัดเจน
+
+**Watch Veo 3** เมื่อ API เปิดจริง มันน่าจะเปลี่ยน hero shot workflow สำหรับ premium brands ได้มาก แต่ตอนนี้ยังไม่ใช่เวลา — operational ไม่ได้ถ้า waitlist ยังอยู่
+
+---
+
+*ติดตาม DopeLab ที่ [ink.dopelab.studio](https://ink.dopelab.studio) สำหรับ workflow AI ที่เราทดสอบจริงก่อนเขียน — ไม่ใช่แค่ spec sheet จาก press release*
