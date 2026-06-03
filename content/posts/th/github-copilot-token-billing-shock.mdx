@@ -1,0 +1,85 @@
+---
+title: "GitHub Copilot เปลี่ยนคิดเงินตาม Token — บิลพุ่ง 10-50 เท่า สัญญาณเตือนสำหรับทุกคนที่ใช้ AI"
+description: "GitHub Copilot เปลี่ยนจากรายเดือนเหมาจ่ายเป็นคิดตาม token ผู้ใช้รายงานค่าใช้จ่ายพุ่งจาก $29 เป็น $750/เดือน — ยุค AI เหมาจ่ายกำลังจะจบ SME ไทยเตรียมตัวยังไง"
+date: 2026-06-03
+cover: ../covers/github-copilot-token-billing-shock.jpg
+category: "AI Business"
+tags: ["github-copilot", "ai-pricing", "token-billing", "ai-cost", "usage-based", "developer"]
+featured: false
+draft: false
+---
+
+## เกิดอะไรขึ้น
+
+เมื่อ 1 มิถุนายน GitHub Copilot เปลี่ยนระบบคิดเงินจากเหมาจ่ายรายเดือนเป็นคิดตาม token ที่ใช้จริง ผลลัพธ์ — developer ทั่วโลกตื่นมาเจอบิลพุ่ง 10 ถึง 50 เท่า
+
+นี่ไม่ใช่แค่ข่าวของ developer มันเป็นสัญญาณเตือนสำหรับทุกคนที่ใช้ AI
+
+GitHub Copilot เครื่องมือ AI เขียนโค้ดที่ใหญ่ที่สุดในโลก เปลี่ยนจากระบบ flat-rate เป็น usage-based billing
+
+แต่ token ไม่ได้ถูก:
+
+| แพลน | ค่ารายเดือนเดิม | เครดิตที่ได้ | ปัญหา |
+|------|----------------|------------|-------|
+| Pro | $10/เดือน | $10 credits | หมดภายในไม่กี่ชั่วโมง |
+| Pro+ | $39/เดือน | $39 credits | Power user ใช้หมดใน 1-2 วัน |
+
+## ตัวเลขจริงที่ developer รายงาน
+
+- **$29/เดือน → $750/เดือน** — developer คนหนึ่งใช้ agent mode เพื่อ refactor codebase
+- **$50/เดือน → $3,000/เดือน** — ทีมที่ใช้ code review + chat อย่างหนัก
+- **Credit หมดในไม่กี่ชั่วโมง** — หลายคนรายงานว่า $10 credit ใช้ได้แค่ครึ่งวัน
+
+สิ่งที่ยังฟรี: auto-complete ตอนพิมพ์โค้ด
+
+สิ่งที่กิน credit: chat, agent mode, code review — ฟีเจอร์ที่ทำให้ Copilot คุ้มค่าจริงๆ
+
+## ทำไม GitHub ต้องเปลี่ยน
+
+เอกสารภายใน Microsoft ที่หลุดออกมาเมื่อเมษายน เปิดเผยว่า ต้นทุนการดำเนินงานของ Copilot เพิ่มขึ้นเกือบ 2 เท่าตั้งแต่ต้นปี
+
+AI agent mode ที่ทรงพลังขึ้นเรื่อยๆ = ใช้ compute มากขึ้น = ค่าใช้จ่ายพุ่ง
+
+ระบบ flat-rate ไม่ sustainable — ยิ่ง AI เก่งขึ้น ยิ่งแพงขึ้น
+
+## นี่ไม่ใช่แค่เรื่องของ Copilot
+
+GitHub Copilot เป็นตัวแรกที่เปลี่ยน แต่จะไม่ใช่ตัวสุดท้าย
+
+ทุก AI tool ที่คุณใช้ตอนนี้ — ChatGPT, Jasper, Notion AI, Canva AI — กำลังเผชิญปัญหาเดียวกัน: ยิ่งผู้ใช้ใช้เยอะ ยิ่งต้นทุนสูง
+
+สัญญาณที่ควรจับตา:
+- **"Fair use" policies** — ข้อจำกัดที่ซ่อนอยู่ในเงื่อนไข
+- **Tier restructuring** — แพลนที่เคยได้ทุกอย่างเริ่มตัดฟีเจอร์ออก
+- **Credit systems** — เปลี่ยนจาก unlimited เป็น credit-based
+
+## สิ่งที่ผู้ประกอบการไทยต้องทำตอนนี้
+
+### 1. เช็คว่าใช้ AI token เดือนละเท่าไหร่
+เข้าไปดู usage dashboard ของทุก AI tool ที่จ่ายเงินอยู่ ถ้าไม่มี dashboard ให้เริ่มจดบันทึก
+
+### 2. แยกว่า AI ตัวไหนคุ้มจริง
+ไม่ใช่ทุก AI tool คุ้มค่า $20-50/เดือน ถ้าใช้แค่ 5% ของความสามารถ อาจใช้ free tier ได้
+
+### 3. หา alternative ราคาถูก
+- **MiniMax M3** — เพิ่งเปิดตัว $0.60/M tokens แทน $15
+- **Open-weight models** — รันเองบน server ไม่มีค่า API
+- **Self-host options** — Microsoft Foundry Local, NVIDIA RTX Spark
+
+### 4. ตั้งงบ AI แบบ variable ไม่ใช่ fixed
+หมดยุคที่จ่ายเดือนละ $20 แล้วใช้ได้ไม่จำกัด เริ่มตั้งงบ AI แบบยืดหยุ่นเหมือนค่าไฟ
+
+### 5. สอนทีมให้ใช้ AI อย่างมีประสิทธิภาพ
+Token = เงิน prompt ที่ดีใช้ token น้อยกว่า prompt ที่แย่ 3-5 เท่า ลงทุนสอนทีมเขียน prompt ดีๆ จะประหยัดเงินจริง
+
+## มุมมอง DopeLab
+
+ยุค "AI เหมาจ่าย" กำลังจะจบ GitHub Copilot เป็นตัวแรกที่เจ็บตัว แต่ทุกค่ายจะตามมา
+
+สำหรับผู้ประกอบการ นี่ไม่ใช่ข่าวร้าย — มันเป็นการเปลี่ยนจาก "จ่ายเท่ากันหมด" เป็น "จ่ายตามที่ใช้จริง" คนที่ใช้ AI เก่ง จะจ่ายน้อยลง คนที่ใช้สิ้นเปลือง จะจ่ายมากขึ้น
+
+ทักษะ prompt engineering ไม่ใช่ nice-to-have อีกแล้ว — มันคือ cost management skill
+
+---
+
+*Prompt ที่ใช้: "GitHub Copilot usage-based billing token pricing June 2026" + "developer backlash Copilot credit depletion cost increase"*
