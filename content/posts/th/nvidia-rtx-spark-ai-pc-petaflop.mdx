@@ -1,0 +1,83 @@
+---
+title: "NVIDIA RTX Spark — AI 1 Petaflop บน PC ไม่ต้องพึ่ง Cloud"
+description: "Jensen Huang เปิดตัว RTX Spark ที่ GTC Taipei — ชิป AI 1 Petaflop สำหรับ PC รัน AI Agent ในเครื่อง ไม่ต้องพึ่ง Cloud พร้อม Vera Rubin สำหรับ Enterprise"
+date: 2026-06-01
+cover: ../covers/nvidia-rtx-spark-ai-pc-petaflop.jpg
+category: "AI Hardware"
+tags: ["nvidia", "rtx-spark", "ai-pc", "jensen-huang", "gtc-2026", "blackwell", "local-ai"]
+featured: false
+draft: false
+---
+
+## ทำไมเรื่องนี้สำคัญ
+
+วันที่ 1 มิถุนายน 2569 Jensen Huang ขึ้นเวที GTC Taipei แล้วเปิดตัวชิปที่เปลี่ยนเกม AI ตลอดกาล
+
+RTX Spark — ชิปที่ยัด AI 1 Petaflop ลงใน PC เครื่องเดียว
+
+ตลอด 2-3 ปีที่ผ่านมา การใช้ AI หมายถึงการส่งข้อมูลขึ้น cloud ทุกครั้ง
+
+ส่งข้อความไป ChatGPT — ข้อมูลออกไปข้างนอก
+ใช้ Claude เขียนโค้ด — ทุก token ผ่าน server
+สร้างภาพด้วย AI — ต้องรอ queue บน cloud
+
+RTX Spark เปลี่ยนสมการนี้ ทุกอย่างรันบนเครื่องตัวเอง ไม่มีข้อมูลหลุดออกไป ไม่มีค่า API รายเดือน
+
+## สเปกที่น่าตกใจ
+
+NVIDIA จับมือ MediaTek สร้างชิปบน TSMC 3nm:
+
+- **20 คอร์ CPU** (ARM-based Grace architecture)
+- **6,144 CUDA cores** (Blackwell RTX GPU)
+- **1 Petaflop** ของ AI compute
+- **128GB unified LPDDR5X memory** (สูงสุด)
+- **กินไฟ 8-80W** — จากโน้ตบุ๊กถึง desktop
+
+ตัวเลข 1 Petaflop ฟังดูเป็นนามธรรม เทียบให้เห็นภาพ: เมื่อ 10 ปีก่อน supercomputer ที่ติด Top 500 ของโลกหลายตัวยังทำไม่ถึง 1 Petaflop ตอนนี้มันอยู่ใน laptop
+
+ประสิทธิภาพเทียบเท่า RTX 5070 laptop GPU แต่กินไฟน้อยกว่ามาก
+
+## AI Agent ไม่ต้องพึ่ง Cloud
+
+จุดเปลี่ยนที่แท้จริงไม่ใช่แค่ตัวเลข แต่คือสิ่งที่ทำได้
+
+RTX Spark ออกแบบมาเพื่อรัน AI agents บนเครื่องโดยเฉพาะ ไม่ใช่แค่ chatbot ที่ตอบคำถาม แต่เป็น agent ที่ทำงานหลายขั้นตอน ตัดสินใจเอง ใช้เครื่องมือภายนอกได้
+
+Jensen Huang เรียกยุคนี้ว่า Agentic AI — ระบบ 2 ชั้น ชั้นแรกคิด ชั้นสองลงมือทำ
+
+สำหรับธุรกิจ SME สิ่งนี้หมายความว่า:
+
+1. **ข้อมูลอยู่ในเครื่อง** — ไม่ต้องส่งข้อมูลลูกค้าออกไป cloud
+2. **ค่าใช้จ่ายคงที่** — ซื้อเครื่องครั้งเดียว ไม่มีค่า subscription รายเดือน
+3. **ทำงานได้แม้ offline** — ไม่ต้องพึ่งอินเทอร์เน็ตตลอดเวลา
+4. **ความเร็ว** — ไม่ต้องรอ queue บน server คนอื่น
+
+## Vera Rubin — ฝั่ง Enterprise ก็เปลี่ยน
+
+นอกจาก RTX Spark สำหรับ PC แล้ว Jensen ยังประกาศว่า Vera Rubin เริ่มผลิตจริงแล้ว
+
+Vera Rubin คือแพลตฟอร์ม AI infrastructure รุ่นถัดไปจาก Blackwell:
+
+- 7 ชิปแบบ custom
+- 6 ล้านล้าน transistors
+- 18,000+ components ต่อ board
+- SQL เร็วขึ้น 3 เท่าบน Vera CPU
+
+สำหรับบริษัทใหญ่ที่ train model เอง นี่คือ hardware ที่จะใช้ในปีหน้า
+
+## ใครร่วมด้วย
+
+Dell, ASUS, Lenovo, HP, Microsoft — ทุกค่ายจะออก PC ที่ใช้ RTX Spark
+
+ไม่ใช่แค่ NVIDIA ประกาศเอง แต่ทั้ง ecosystem พร้อมเดินหน้า
+
+## สิ่งที่ผู้ประกอบการไทยควรรู้
+
+1. **AI PC จะเป็น standard** — ภายใน 1-2 ปี คอมพิวเตอร์ที่รัน AI ได้ในเครื่องจะเป็นเรื่องปกติ ไม่ใช่ของ premium
+2. **Cloud ไม่หายไป แต่ local AI เสริม** — งานที่ต้องการ privacy หรือ low-latency จะย้ายมา local
+3. **เตรียมทีม** — คนที่รู้จักใช้ AI agents ในงานประจำจะมีข้อได้เปรียบ
+4. **ติดตาม pricing** — RTX Spark PC คาดว่าจะเริ่มขายปลายปีนี้ รอดูราคาตลาดไทย
+
+---
+
+*Prompt ที่ใช้: "NVIDIA GTC Taipei 2026 RTX Spark Vera Rubin announcements" + "NVIDIA RTX Spark MediaTek specs AI PC petaflop"*
