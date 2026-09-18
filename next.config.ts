@@ -16,6 +16,9 @@ const nextConfig = {
       // caption URL mismatch fix รอบ 2 (18 ก.ย. 2569 — golden G2 สแกนเจอ)
       { source: "/th/blog/anthropic-ipo-trillion-dollar-ai", destination: "/th/blog/anthropic-ipo-350b", permanent: true },
       { source: "/th/blog/ai-catches-competitor-price-cheating", destination: "/th/blog/ai-competitor-price-monitor", permanent: true },
+      // locale-less /blog/* เคยเป็น 404 เปล่า — กัน external link ที่ไม่มี /th (Helm triple-check 18 ก.ย.)
+      { source: "/blog", destination: "/th/blog", permanent: true },
+      { source: "/blog/:path*", destination: "/th/blog/:path*", permanent: true },
     ];
   },
 };
