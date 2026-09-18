@@ -13,6 +13,9 @@ const nextConfig = {
       { source: "/th/blog/xiaomi-hunter-alpha-ai-ecosystem", destination: "/th/blog/xiaomi-hunter-alpha-600-million-ai-devices", permanent: true },
       { source: "/th/blog/human-made-anti-ai-movement", destination: "/th/blog/human-made-label-ai-backlash-premium", permanent: true },
       { source: "/th/blog/true-corp-nvidia-gtc-2026-thailand-ai", destination: "/th/blog/true-corp-nvidia-gtc-thailand-ai-infrastructure", permanent: true },
+      // caption URL mismatch fix รอบ 2 (18 ก.ย. 2569 — golden G2 สแกนเจอ)
+      { source: "/th/blog/anthropic-ipo-trillion-dollar-ai", destination: "/th/blog/anthropic-ipo-350b", permanent: true },
+      { source: "/th/blog/ai-catches-competitor-price-cheating", destination: "/th/blog/ai-competitor-price-monitor", permanent: true },
     ];
   },
 };

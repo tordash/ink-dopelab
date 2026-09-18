@@ -1,0 +1,140 @@
+---
+title: "WWDC 2026: Apple จ่าย $1B ซื้อ Google Gemini มาใส่ใน Siri — iPhone 1.2 พันล้านเครื่องกำลังจะได้ AI ฟรี"
+description: "WWDC 2026 วันที่ 8 มิถุนายน Apple เปิดตัว iOS 27 พร้อม Siri โฉมใหม่ขับเคลื่อนด้วย Google Gemini, Extensions ให้เลือก Claude/ChatGPT, Visual Intelligence และ on-device AI — SME ไทยต้องรู้อะไรบ้าง"
+date: 2026-06-06
+cover: ../covers/wwdc-2026-apple-ai-siri-gemini-ios27.jpg
+category: "AI News"
+tags: ["apple", "wwdc", "siri", "ios27", "gemini", "apple-intelligence", "on-device-ai"]
+draft: false
+---
+
+## Siri ต้องพิสูจน์ตัวเองในงานสุดท้ายของ Tim Cook
+
+วันจันทร์ที่ 8 มิถุนายน 2026 Apple เปิด WWDC ประจำปีที่ Apple Park, Cupertino นอกจากจะเป็น WWDC ครั้งสุดท้ายของ Tim Cook ในฐานะ CEO — มันยังเป็นงานที่ Apple ต้องพิสูจน์ว่า Siri ยังไม่ตาย
+
+ตั้งแต่ ChatGPT ระเบิดขึ้นมาในปี 2022 Siri ถูกเยาะเย้ยซ้ำๆ ว่าเป็น "AI ที่โง่ที่สุดในบ้าน" Apple เงียบมาสามปี แต่ตอนนี้พร้อมแล้ว
+
+## ตัวเลขที่ต้องรู้ก่อนดู Keynote
+
+| รายละเอียด | ข้อมูล |
+|-----------|--------|
+| วันจัดงาน Keynote | 8 มิถุนายน 2026 (22:00 น. เวลาไทย) |
+| ระยะเวลา WWDC | 8–12 มิถุนายน 2026 |
+| ระบบปฏิบัติการใหม่ | iOS 27, iPadOS 27, macOS 27, watchOS 27, tvOS 27, visionOS 27 |
+| มูลค่า deal Apple-Google Gemini | ~$1 พันล้านดอลลาร์/ปี |
+| Developer Beta | เริ่มทันทีหลัง Keynote |
+| Public Beta | กรกฎาคม 2026 |
+| วางจำหน่ายจริง | กันยายน 2026 |
+| อุปกรณ์รองรับ Apple Intelligence | iPhone 15 Pro/Pro Max ขึ้นไป, iPhone 16 ทุกรุ่น, Mac M-series, iPad M1+ |
+
+## Siri ใหม่คืออะไร — และต่างจากเดิมอย่างไร
+
+### 1. Chatbot-style Interface
+
+Siri ได้รับ interface ใหม่ทั้งหมด — พิมพ์หรือพูดก็ได้ เห็น conversation history ต่อเนื่อง ไม่ต้อง start ใหม่ทุกครั้ง Dynamic Island แสดง Siri แบบ glowing indicator แทนที่ animation วงกลมเดิม
+
+### 2. Google Gemini Under the Hood
+
+Apple ทำ deal กับ Google จ่ายประมาณ $1 พันล้านดอลลาร์ต่อปี เพื่อใช้ Gemini (โมเดลขนาด ~1.2 ล้านล้าน parameter) ขับเคลื่อน Siri ในฝั่ง cloud — ขณะที่ on-device features ยังใช้ Apple Foundation Models ของตัวเอง
+
+### 3. Extensions Framework — เลือก AI ได้เอง
+
+นี่คือ feature ที่น่าสนใจที่สุด iOS 27 มีระบบ "Extensions" ใน Settings ที่ให้ผู้ใช้เลือกว่าจะให้ Siri ส่งต่อ query ไปหา AI ตัวไหน:
+
+- Claude (Anthropic)
+- ChatGPT (OpenAI)
+- Gemini (Google)
+- หรือ AI อื่นที่ developer เลือก integrate
+
+OpenAI เคยเป็น partner exclusive มาก่อน แต่ตอนนี้ Apple เปิดกว้างทุกค่าย
+
+### 4. Multi-step Agentic Tasks
+
+บอก Siri ว่า "จองร้านอาหารศุกร์นี้ 7 โมงเย็น ใกล้ออฟฟิศ ส่ง invite ให้ทีม แล้วนำทางให้ด้วย" — Siri ใหม่ทำได้ใน 1 คำสั่ง ผ่าน App Intents ที่ developer ต้อง implement เอง
+
+### 5. Visual Intelligence ใน Camera
+
+Camera app ได้รับ mode ใหม่ชื่อ "Visual Intelligence" — จ่อกล้องไปที่เมนูอาหาร, ป้ายร้าน, หรือโปสเตอร์ Siri บอกได้ทันทีว่าอะไร มีรีวิวไหม ซื้อที่ไหน ราคาเท่าไหร่
+
+### 6. On-Device AI ที่ไม่ต้องส่งข้อมูลไปไหน
+
+Apple โฆษณา on-device processing เป็นจุดขายด้าน privacy ข้อมูลที่ sensitive (photos, emails, messages) ประมวลผลบนเครื่อง ไม่ผ่านคลาวด์ มีแค่ query ที่ซับซ้อนเท่านั้นที่ส่งออกไป — ผ่าน Private Cloud Compute
+
+### 7. AI Photos Editing ด้วยภาษาธรรมชาติ
+
+แทนที่จะกด slider หรือใช้ preset Photos app ใน iOS 27 รับคำสั่งภาษาพูดว่า "ทำให้ท้องฟ้าสวยขึ้น ลบคนในพื้นหลัง แล้วปรับ brightness" แล้วทำให้เลย
+
+### 8. Developer Tools: Xcode + AI Agents
+
+Apple นำ AI coding agents มาใส่ใน Xcode รองรับทั้ง Anthropic Claude Agent และ OpenAI Codex — developer เขียนโค้ดได้เร็วขึ้น และ SiriKit เก่าถูกประกาศ deprecated อย่างเป็นทางการ
+
+## iOS 27 โดยรวม: "Snow Leopard Year"
+
+นักวิเคราะห์เรียก iOS 27 ว่าเป็น "Snow Leopard Year" — ปีที่เน้นความเสถียร, performance, และ code quality แทนที่จะเพิ่ม feature ใหม่กองท่วมหัว
+
+เหตุผลคือ iOS 27 ต้องรองรับ **Foldable iPhone** ที่กำลังเปิดตัวกันยายนนี้ ที่ต้องทำงานได้ทั้งในโหมด folded (ขนาด iPhone ปกติ) และ unfolded (ขนาดใกล้ iPad แสดง 2 app พร้อมกัน)
+
+## Tim Cook ส่งไม้ต่อ
+
+WWDC 2026 เป็น WWDC ครั้งสุดท้ายที่ Tim Cook ขึ้น Keynote ในฐานะ CEO Apple ประกาศเดือนเมษายนว่าเขาจะพ้นจากตำแหน่งวันที่ 1 กันยายน 2026 โดยส่งมอบให้ John Ternus SVP Hardware Engineering
+
+Tim Cook ดำรงตำแหน่งมาตั้งแต่ปี 2011 สืบทอดจาก Steve Jobs และพา Apple กลายเป็นบริษัทมูลค่าสูงสุดในโลกได้สำเร็จ งาน WWDC ครั้งนี้จึงเป็นทั้ง legacy moment และ make-or-break ของ Siri ในเวลาเดียวกัน
+
+## คำถามสำคัญสำหรับผู้ใช้ไทย
+
+### ภาษาไทยรองรับได้ไหม?
+
+**คำตอบสั้น: ยังไม่ได้** Apple Intelligence ยังไม่รองรับภาษาไทยแม้แต่ใน iOS 26.1 (ล่าสุด) ภาษาที่รองรับ ได้แก่ อังกฤษ, จีน, ฝรั่งเศส, เยอรมัน, อิตาลี, สเปน, เกาหลี, ญี่ปุ่น, โปรตุเกส, เวียดนาม ฯลฯ — ไทยยังไม่อยู่ในลิสต์
+
+### ใช้กับ iPhone รุ่นไหนได้?
+
+- iPhone 15 Pro / 15 Pro Max (chip A17 Pro)
+- iPhone 16 ทุกรุ่น (A18 / A18 Pro)
+- ต้องใช้ iOS 27 ขึ้นไป
+- iPhone 14 series และเก่ากว่า — ไม่รองรับ Apple Intelligence
+
+### แล้วถ้าอยากใช้ Siri ใหม่เป็นภาษาไทย?
+
+ใช้ไม่ได้ตรงๆ แต่ **Extension framework** เปิดทางให้ผู้ใช้ส่ง query ภาษาไทยไปหา Claude หรือ Gemini ที่รองรับไทยได้ดีกว่า — นี่อาจเป็น workaround ที่ใช้งานได้จริงก่อนที่ Apple จะ add ภาษาไทย
+
+### Privacy: ข้อมูลไปที่ Google ไหม?
+
+Apple ออกแบบให้ query ที่ sensitive (photos, health, location) ประมวลผล on-device ก่อน มีแค่ query ที่ต้องการ cloud processing จึงจะส่งออกไป และอ้างว่าไม่เก็บ log ใน Private Cloud Compute แต่ส่วนที่ใช้ Gemini — Apple ยังไม่เปิดเผยรายละเอียดว่า data ที่ส่งไป Google มีอะไรบ้าง
+
+## มุมมอง DopeLab
+
+**Siri ที่พัง ไม่ได้แปลว่า Apple หมดไฟ — มันแปลว่า Apple รอจังหวะ**
+
+ต่างจาก ChatGPT, Claude, หรือ Gemini ที่เข้าถึงได้ผ่าน app หรือเว็บ Siri ของ Apple มาพร้อม iPhone 1.2 พันล้านเครื่องทั่วโลก ถ้า Siri ใหม่ทำงานได้จริงตามที่ Apple claim — มันคือการ deploy AI ที่ใหญ่ที่สุดในประวัติศาสตร์ ไม่ต้อง download app ไม่ต้องสมัคร account ไม่ต้องเสียเงินเพิ่ม
+
+สำหรับผู้ประกอบการไทย: ถ้า Apple Intelligence ยังไม่รองรับภาษาไทยในปีนี้ ก็ยังไม่ต้องกังวลมาก แต่ **Extension framework ที่เปิดให้เลือก AI** คือสัญญาณที่น่าสนใจมาก — มันหมายความว่า Apple กำลังเปลี่ยนจาก "platform ปิด" เป็น "AI marketplace" ที่เราเลือก tool ได้เอง
+
+สิ่งที่ควรจับตา (ไม่ใช่แค่ WWDC 2026): ดู iOS 27.1 หรือ 27.2 ที่จะมาในปี 2027 — นั่นคือรอบที่ภาษาใหม่มักถูก add เข้ามา
+
+## Actionable: ผู้ประกอบการไทยทำอะไรได้ตอนนี้
+
+### 1. เช็ค iPhone ว่ารองรับหรือไม่
+
+ถ้าใช้ iPhone 15 Pro / 16 ขึ้นไป ตอนกันยายนสามารถ update iOS 27 แล้วทดลอง Apple Intelligence ได้เลย (เป็นภาษาอังกฤษ) — ลองดูว่า Siri ช่วยงานธุรกิจได้จริงไหม
+
+### 2. ทดลอง Extension Framework ตั้งแต่วันแรก
+
+เมื่อ iOS 27 ออก ลอง set ให้ Siri ส่งต่อไปหา Claude หรือ ChatGPT สำหรับ query ภาษาไทย — อาจเป็น workflow ที่ smooth กว่าการเปิดหลาย app
+
+### 3. ลงทุนใน Visual Intelligence Use Case
+
+ร้านค้า, ร้านอาหาร, หรือธุรกิจที่มีสินค้าจริง ลองคิดว่า Visual Intelligence ช่วยลูกค้าได้อย่างไร — ถ้าลูกค้าจ่อกล้อง iPhone ไปที่สินค้าคุณ แล้ว Siri บอกข้อมูลได้ทันที นั่นคือ marketing opportunity ใหม่
+
+### 4. ยังไม่ต้อง upgrade เฉพาะเพื่อ AI
+
+ถ้าใช้ iPhone 14 หรือเก่ากว่า ยังไม่ต้อง upgrade รีบ รอดูว่าฟีเจอร์จริงๆ ที่ถูกใช้คืออะไร ก่อนตัดสินใจ — Apple Intelligence ยังพัฒนาต่อเนื่อง ไม่ใช่ finished product
+
+### 5. ติดตาม Thai Language Roadmap
+
+ตรวจสอบ Apple Feature Availability page (support.apple.com) เป็นระยะ ถ้าภาษาไทยถูก add เมื่อไหร่ จะเห็นที่นั่นก่อน
+
+---
+
+*Prompt ที่ใช้ในการวิจัย: "WWDC 2026 announcements Apple Intelligence Siri AI June 2026", "Apple WWDC 2026 Siri Gemini integration pricing", "Apple Intelligence Thai language support 2026", "WWDC 2026 iOS 27 developer tools AI features", "Apple on-device AI small business WWDC 2026"*
+
+*Sources: TechCrunch, Bloomberg, MacRumors, TechRepublic, Newsweek, Apple Developer (developer.apple.com/wwdc26)*
