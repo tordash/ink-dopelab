@@ -1,0 +1,1 @@
+ink-dopelab git-deploy check 2026-09-27 (requireVerifiedCommits=false)
