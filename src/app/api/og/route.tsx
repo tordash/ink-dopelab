@@ -1,9 +1,8 @@
 import { ImageResponse } from "next/og";
+import { SITE_URL } from "@/lib/site";
 
 export const runtime = "edge";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
 
 async function loadFont(
   family: string,

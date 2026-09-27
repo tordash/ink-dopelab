@@ -47,7 +47,11 @@
     "updated": "Updated",
     "reading_time": "{minutes} min read",
     "tags": "Tags",
-    "comments": "Comments"
+    "comments": "Comments",
+    "cta_title": "Want content like this for your business?",
+    "cta_description": "One shoot, 16 ready-to-post pieces — a full month of content.",
+    "cta_button": "Book a shoot — chat on LINE",
+    "cta_secondary": "See work and packages at dopelab.studio"
   },
   "about": {
     "hero_badge": "About Us",

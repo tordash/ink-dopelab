@@ -47,7 +47,11 @@
     "updated": "อัปเดต",
     "reading_time": "อ่าน {minutes} นาที",
     "tags": "แท็ก",
-    "comments": "ความคิดเห็น"
+    "comments": "ความคิดเห็น",
+    "cta_title": "อยากได้ content แบบนี้ให้ร้านคุณ?",
+    "cta_description": "ถ่ายครั้งเดียว ได้ 16 ชิ้น พร้อมโพสต์ทั้งเดือน",
+    "cta_button": "จองคิวถ่าย — ทัก LINE",
+    "cta_secondary": "ดูผลงานและแพ็กเกจที่ dopelab.studio"
   },
   "about": {
     "hero_badge": "เกี่ยวกับเรา",

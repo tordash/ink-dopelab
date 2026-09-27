@@ -6,12 +6,14 @@ import { TableOfContents } from "@/components/blog/toc";
 import { ArticleCard, CATEGORY_STYLES } from "@/components/blog/article-card";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { Comments } from "@/components/blog/comments";
+import { PostCta } from "@/components/blog/post-cta";
 // import { Newsletter } from "@/components/blog/newsletter";
 import { createMetadata, articleJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/site";
 
 export async function generateStaticParams() {
   const allPosts = getPostsByLocale("th").concat(getPostsByLocale("en"));
@@ -31,8 +33,6 @@ export async function generateMetadata({
   const post = getPostBySlug(slug, locale);
   if (!post) return {};
 
-  const SITE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
   const coverImage = post.cover
     ? `${SITE_URL}${post.cover.src}`
     : undefined;
@@ -59,8 +59,6 @@ export default async function ArticlePage({
   if (!post) notFound();
 
   const related = getRelatedPosts(slug, locale);
-  const SITE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
 
   const articleImage = post.cover
     ? `${SITE_URL}${post.cover.src}`
@@ -178,6 +176,9 @@ export default async function ArticlePage({
 
               {/* Share buttons */}
               <ShareButtons title={post.title} />
+
+              {/* Sales CTA */}
+              <PostCta slug={post.slugAsParams} />
             </div>
 
             {/* Sidebar TOC (desktop) */}

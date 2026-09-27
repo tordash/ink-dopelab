@@ -11,6 +11,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SearchProvider } from "@/components/layout/search-provider";
 import "@/app/globals.css";
+import { SITE_URL } from "@/lib/site";
 
 const leagueSpartan = League_Spartan({
   subsets: ["latin"],
@@ -40,9 +41,7 @@ export const metadata: Metadata = {
   },
   description:
     "บล็อกเกี่ยวกับ AI, Digital Marketing, และ Business Automation จากประสบการณ์จริง",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio"
-  ),
+  metadataBase: new URL(SITE_URL),
 };
 
 export function generateStaticParams() {

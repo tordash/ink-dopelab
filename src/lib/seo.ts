@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
+import { SITE_URL } from "@/lib/site";
 
 export function createMetadata({
   title,

@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
 import { posts } from "#site/content";
 import { getAllCategories, getAllTags } from "@/lib/content";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const postUrls = posts

@@ -1,7 +1,6 @@
 import { posts } from "#site/content";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://ink.dopelab.studio";
 
 function escapeXml(str: string) {
   return str
