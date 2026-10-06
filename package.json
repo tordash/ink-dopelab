@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "velite --watch & next dev --turbopack",
-    "build": "velite && next build",
+    "build": "node scripts/migration/check-reserved-slugs.mjs && velite && next build",
     "start": "next start",
     "lint": "next lint"
   },
