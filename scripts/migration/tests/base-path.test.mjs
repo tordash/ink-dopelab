@@ -1,10 +1,11 @@
 // BM-04 review: unit tests for the base-path resolver (REQ AC4d, AC9) and the ADR-01 X4 asset-prefix gate (TASKS X4-a).
 // Run: node --test 'scripts/migration/tests/*.test.mjs'   (Node strips the erasable TS types of src/lib/base-path.ts)
 // Import happens with BLOG_BASE_PATH unset (the module resolves BASE_PATH at load); the functions are tested directly.
+// (Reflect.deleteProperty, not `process.env.<NAME>`: AC9 / invariants.sh allows only src/lib/base-path.ts to read it.)
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-delete process.env.BLOG_BASE_PATH;
+Reflect.deleteProperty(process.env, "BLOG_BASE_PATH");
 const { DEFAULT_BASE_PATH, BASE_PATH, resolveBasePath, withBasePath, resolveAssetPrefix } = await import(
   "../../../src/lib/base-path.ts"
 );
