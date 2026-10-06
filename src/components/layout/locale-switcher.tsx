@@ -1,18 +1,24 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { useRouter } from "next/navigation";
+import { getPathname, usePathname } from "@/i18n/navigation";
 import { Globe } from "lucide-react";
+import { counterpartPath, type SwitchIndex } from "@/lib/routes";
 
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ switchIndex }: { switchIndex: SwitchIndex }) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("nav");
 
+  // BM-04 (U1): go to the same page in the other locale when it exists there, else to that locale's home.
+  // Not next-intl's router.replace(href, { locale }): it forces a locale prefix on locale changes
+  // (navigation/react-client/createNavigation.js `forcePrefix`), i.e. /blog/th/…, which is a 404 under U1.
+  // getPathname without forcePrefix gives the as-needed path (th: none, en: /en); Next's router adds the basePath.
   const switchLocale = () => {
     const next = locale === "th" ? "en" : "th";
-    router.replace(pathname, { locale: next });
+    router.replace(getPathname({ href: counterpartPath(pathname, switchIndex), locale: next }));
   };
 
   return (

@@ -13,6 +13,7 @@ import { SearchProvider } from "@/components/layout/search-provider";
 import "@/app/globals.css";
 import { SITE_URL } from "@/lib/site";
 import { withBasePath } from "@/lib/base-path";
+import { getSharedSwitchIndex } from "@/lib/locale-switch";
 
 const leagueSpartan = League_Spartan({
   subsets: ["latin"],
@@ -94,7 +95,10 @@ export default async function LocaleLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <NextIntlClientProvider messages={messages}>
             <div className="flex min-h-screen flex-col">
-              <Header searchSlot={<SearchProvider locale={locale as "th" | "en"} />} />
+              <Header
+                searchSlot={<SearchProvider locale={locale as "th" | "en"} />}
+                switchIndex={getSharedSwitchIndex()}
+              />
               <main className="flex-1">{children}</main>
               <Footer />
             </div>

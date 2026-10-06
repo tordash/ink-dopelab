@@ -7,7 +7,14 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
 import { ROUTES } from "@/lib/routes";
 import { withBasePath } from "@/lib/base-path";
-export function Header({ searchSlot }: { searchSlot?: React.ReactNode }) {
+import type { SwitchIndex } from "@/lib/routes";
+export function Header({
+  searchSlot,
+  switchIndex,
+}: {
+  searchSlot?: React.ReactNode;
+  switchIndex: SwitchIndex;
+}) {
   const t = useTranslations("nav");
 
   return (
@@ -65,7 +72,7 @@ export function Header({ searchSlot }: { searchSlot?: React.ReactNode }) {
         {/* Actions */}
         <div className="flex items-center gap-2">
           {searchSlot}
-          <LocaleSwitcher />
+          <LocaleSwitcher switchIndex={switchIndex} />
           <ThemeToggle />
           <MobileNav />
         </div>
