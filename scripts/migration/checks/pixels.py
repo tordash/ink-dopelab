@@ -92,7 +92,7 @@ TOP_JS = """async () => {
 }"""
 
 
-def shoot(browser, url: str, width: int, out: Path) -> tuple[int, list[str], int]:
+def shoot(browser, url: str, width: int, out: Path, acao_origin: str | None = None) -> tuple[int, list[str], int]:
     ctx = browser.new_context(
         viewport={"width": width, "height": WIDTHS[width]},
         device_scale_factor=1,
@@ -104,6 +104,12 @@ def shoot(browser, url: str, width: int, out: Path) -> tuple[int, list[str], int
     reached = []
     ctx.route("**/*", lambda r: r.abort() if BLOCK.search(r.request.url) else r.continue_())
     ctx.on("requestfinished", lambda req: reached.append(req.url) if BLOCK.search(req.url) else None)
+    if acao_origin:  # T11 only: simulate the asset host's `access-control-allow-origin: *` (live Vercel sends it on
+        # /_next/static/media; local `next start` does not), so cross-origin fonts load as they will in production
+        def add_acao(route):
+            r = route.fetch()
+            route.fulfill(response=r, headers={**r.headers, "access-control-allow-origin": "*"})
+        ctx.route(acao_origin.rstrip("/") + "/**", add_acao)
     page = ctx.new_page()
     resp = page.goto(url, wait_until="networkidle", timeout=90000)
     status = resp.status if resp else 0
@@ -143,6 +149,7 @@ def main() -> int:
     ap.add_argument("--b-url", default=C.B1_URL)
     ap.add_argument("--b-paths", choices=["b0", "b1"], default="b1")
     ap.add_argument("--label", default="pixels")
+    ap.add_argument("--acao-origin", help="T11: add access-control-allow-origin: * to responses from this origin (asset host)")
     a = ap.parse_args()
     widths = [int(w) for w in a.widths.split(",")]
     pages = [p for p in a.pages.split(",") if p]
@@ -167,8 +174,8 @@ def main() -> int:
             fa = png / f"{a.label}-{tag}-{kind}-{p}-{w}-A.png"
             fb = png / f"{a.label}-{tag}-{kind}-{p}-{w}-B.png"
             fd = png / f"{a.label}-{tag}-{kind}-{p}-{w}-diff.png"
-            sa, ba, ra = shoot(browser, ua, w, fa)
-            sb, bb, rb = shoot(browser, ub, w, fb)
+            sa, ba, ra = shoot(browser, ua, w, fa, a.acao_origin)
+            sb, bb, rb = shoot(browser, ub, w, fb, a.acao_origin)
             reached_total += ra + rb
             ha, hb, ratio = diff(fa, fb, fd)
             limit = NOISE_MAX if kind == "noise" else PAIR_MAX
