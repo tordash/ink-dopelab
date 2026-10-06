@@ -1,0 +1,23 @@
+---
+title: "BM-04 rewrite fixture: protected contexts only"
+cover: ../covers/x.jpg
+link: /th/blog/y
+---
+
+Everything below sits in a protected context, so `rewrite-mdx-links.mjs` must leave this file byte-identical.
+
+```md
+[a](/th/blog/x)
+![b](/images/b.png)
+https://ink.dopelab.studio
+```
+
+~~~
+<img src="/images/b.png" />
+[ink.dopelab.studio](https://ink.dopelab.studio/th/blog/x)
+~~~
+
+Inline code: `/images/a.png` · ``](/th/blog/z)`` · `[c](/th/blog/c)` · `![d](/images/d.png)` · `<video src="/videos/v.mp4" />` · `https://ink.dopelab.studio/en`
+
+Already under the base path: [e](/blog/x) · ![f](/blog/images/f.png) · <img src="/blog/diagrams/g.svg" />
+External and anchors: [h](https://example.com/th/blog/x) · [i](#section) · [j](//cdn.example.com/a.png)
