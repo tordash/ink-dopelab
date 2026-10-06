@@ -7,7 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { ArrowRight, Pen } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
 import { ROUTES } from "@/lib/routes";
-import { withBasePath } from "@/lib/base-path";
+import { publicAssetSrc } from "@/lib/base-path";
 
 export default async function HomePage() {
   const locale = (await getLocale()) as Locale;
@@ -31,7 +31,7 @@ export default async function HomePage() {
         </video>
         {/* Layer 1b: Static fallback */}
         <img
-          src={withBasePath("/hero-bg.jpg")}
+          src={publicAssetSrc("/hero-bg.jpg")}
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"

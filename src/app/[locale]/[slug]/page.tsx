@@ -15,7 +15,7 @@ import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
 import { ROUTES, postPath } from "@/lib/routes";
-import { withBasePath } from "@/lib/base-path";
+import { publicAssetSrc, withAssetHost } from "@/lib/base-path";
 
 export async function generateStaticParams() {
   const allPosts = getPostsByLocale("th").concat(getPostsByLocale("en"));
@@ -98,7 +98,7 @@ export default async function ArticlePage({
         {post.cover && (
           <div className="mx-auto mb-8 max-w-[var(--container-article)] overflow-hidden rounded-2xl">
             <img
-              src={post.cover.src}
+              src={withAssetHost(post.cover.src)}
               alt={post.title}
               loading="eager"
               className="h-auto max-h-[400px] w-full object-cover"
@@ -140,7 +140,7 @@ export default async function ArticlePage({
           {/* Author byline */}
           <div className="mt-6 flex items-center gap-3">
             <img
-              src={withBasePath("/author-tor.jpg")}
+              src={publicAssetSrc("/author-tor.jpg")}
               alt="Tor Supakit"
               className="h-10 w-10 rounded-full object-cover"
             />

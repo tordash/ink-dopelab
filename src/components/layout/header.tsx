@@ -6,7 +6,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { LocaleSwitcher } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
 import { ROUTES } from "@/lib/routes";
-import { withBasePath } from "@/lib/base-path";
+import { publicAssetSrc } from "@/lib/base-path";
 import type { SwitchIndex } from "@/lib/routes";
 export function Header({
   searchSlot,
@@ -23,7 +23,7 @@ export function Header({
         {/* Logo */}
         <Link href="/" prefetch={false} className="flex items-center gap-2 group">
           <img
-            src={withBasePath("/logo-sphere.jpg")}
+            src={publicAssetSrc("/logo-sphere.jpg")}
             alt="DopeLab"
             className="h-9 w-9 rounded-lg object-cover transition-transform group-hover:scale-105"
           />

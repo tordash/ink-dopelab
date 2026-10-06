@@ -1,3 +1,5 @@
+import { withAssetHost } from "@/lib/base-path";
+
 interface ImageFigureProps {
   src: string;
   alt: string;
@@ -17,7 +19,7 @@ export function ImageFigure({
     <figure className="my-8">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={src}
+        src={withAssetHost(src)}
         alt={alt}
         width={width}
         height={height}

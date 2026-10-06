@@ -4,8 +4,11 @@
 
 1. next.config.ts as Next itself loads it (next/dist/server/config loadConfig, phase-production-build), per env:
      unset                                   → basePath /blog · assetPrefix not absolute (Next default = basePath) ·
-                                               images.path /blog/_next/image · env.BLOG_BASE_PATH /blog · no redirects()
+                                               images.path /blog/_next/image · env.BLOG_BASE_PATH /blog ·
+                                               env.BLOG_ASSET_PREFIX "" (X4-f: inlined, so raw <img> stay on /blog) ·
+                                               no redirects()
      BLOG_ASSET_PREFIX=P, VERCEL_ENV unset   → assetPrefix P · images.path P/_next/image          (X4-b, X4-c)
+                                               · env.BLOG_ASSET_PREFIX P (X4-f: raw <img> on the asset host)
      BLOG_ASSET_PREFIX=P, VERCEL_ENV=production → same
      BLOG_ASSET_PREFIX=P, VERCEL_ENV=preview|development → off, like unset (Gate 1 / bm/* previews never get it)
      BLOG_ASSET_PREFIX=not-a-url | P/        → config load fails with the resolver message
@@ -75,12 +78,13 @@ def load(extra: dict) -> tuple[dict | None, str]:
 
 def off(c: dict | None) -> bool:
     return (c is not None and c["basePath"] == "/blog" and not str(c["assetPrefix"] or "").startswith("http")
-            and c["imagesPath"] == "/blog/_next/image" and c["env"].get("BLOG_BASE_PATH") == "/blog" and c["redirects"] == 0)
+            and c["imagesPath"] == "/blog/_next/image" and c["env"].get("BLOG_BASE_PATH") == "/blog"
+            and c["env"].get("BLOG_ASSET_PREFIX") == "" and c["redirects"] == 0)
 
 
 def on(c: dict | None) -> bool:
     return (c is not None and c["basePath"] == "/blog" and c["assetPrefix"] == P and c["imagesPath"] == f"{P}/_next/image"
-            and c["redirects"] == 0)
+            and c["env"].get("BLOG_ASSET_PREFIX") == P and c["redirects"] == 0)
 
 
 def main() -> int:

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { withAssetHost } from "@/lib/base-path";
 
 interface SvgEmbedProps {
   src: string;
@@ -12,7 +13,7 @@ export function SvgEmbed({ src, caption, darkInvert }: SvgEmbedProps) {
       <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-white p-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src}
+          src={withAssetHost(src)}
           alt={caption || ""}
           loading="lazy"
           className={cn("mx-auto w-full", darkInvert && "dark:invert")}

@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Rss } from "lucide-react";
-import { withBasePath } from "@/lib/base-path";
+import { publicAssetSrc } from "@/lib/base-path";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -14,7 +14,7 @@ export function Footer() {
           {/* Logo */}
           <Link href="/" prefetch={false} className="flex items-center gap-2">
             <img
-              src={withBasePath("/logo-sphere.jpg")}
+              src={publicAssetSrc("/logo-sphere.jpg")}
               alt="DopeLab"
               className="h-8 w-8 rounded-lg object-cover"
             />
