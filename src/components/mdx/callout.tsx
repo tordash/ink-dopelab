@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { AlertCircle, CheckCircle, Info, AlertTriangle } from "lucide-react";
+import { AlertCircle, CheckCircle, Info, AlertTriangle, Lightbulb } from "lucide-react";
 
 const variants = {
   info: {
@@ -30,10 +30,18 @@ const variants = {
     text: "text-[#7C1D1D] dark:text-[#F8A8A8]",
     iconColor: "text-[#EF4444]",
   },
+  insight: {
+    icon: Lightbulb,
+    bg: "bg-[#FFF8DB] dark:bg-[#2a2410]",
+    border: "border-[#FFCC00] dark:border-[#5a4a10]",
+    text: "text-[#3D3200] dark:text-[#FFE07A]",
+    iconColor: "text-[#B38F00] dark:text-[#FFCC00]",
+  },
 };
 
 interface CalloutProps {
-  variant?: keyof typeof variants;
+  // MDX passes any string; unknown variants fall back to "info" instead of crashing the page (500).
+  variant?: keyof typeof variants | (string & {});
   title?: string;
   children: React.ReactNode;
 }
@@ -43,7 +51,8 @@ export function Callout({
   title,
   children,
 }: CalloutProps) {
-  const { icon: Icon, bg, border, text, iconColor } = variants[variant];
+  const { icon: Icon, bg, border, text, iconColor } =
+    variants[variant as keyof typeof variants] ?? variants.info;
 
   return (
     <div
