@@ -11,6 +11,10 @@ Measurement = BM-02 measure_rpv.py (ψ/…/stories/BM-02, categorisation copied,
 requests to --asset-origin (the assetPrefix / images.path host) are counted apart: they bypass the Worker.
 req/view = ceil(Σ mix × run-max via-Worker) + 1 beacon (Fraction-exact, as BM-02); headroom = 100,000 / req/day,
 req/day = PV × req/view + crawler (ADR-01 X4: high = 2,000 PV + 6,000 crawler).
+X4-f (fix round 1, reviewer F2): every via-Worker URL is listed per template (run max count, category); URLs other
+than html + vercel_insights are flagged "extra" (each must be explained). B1 is judged: RESULT PASS when the
+measured req/view ≤ --max-rpv (default 6 = ≥ 5× headroom at "high": 2,000 × 6 + 6,000 = 18,000/day), else FAIL
+(exit 1). B0 (old app) is the reference and never judged. --post SLUG also takes "en/<slug>".
 Writes a NEW x4-rpv-<label>-<HHMMSS>.txt (+ .json) under $EVIDENCE_DIR.
 """
 from __future__ import annotations
@@ -42,6 +46,7 @@ BLOCK = re.compile(r"google-analytics\.com|googletagmanager\.com|/_vercel/insigh
 UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 "
       "(KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1 dopelab-bm04-rpv")
 DROP_AP = ("next_js", "next_css", "next_font", "next_image")  # BM-02: leave the Worker under assetPrefix + images.path
+EXPECTED = ("html", "vercel_insights")  # X4-f: the only via-Worker URLs a view should need once images are on the asset host
 
 
 def origin(u: str) -> str:
@@ -81,6 +86,8 @@ def measure_one(browser, url: str, asset_origin: str | None) -> dict:
     ctx = browser.new_context(viewport={"width": 390, "height": 844}, device_scale_factor=3,
                               is_mobile=True, has_touch=True, user_agent=UA)
     counts: dict[str, int] = {}
+    urls: dict[str, int] = {}
+    url_cat: dict[str, str] = {}
     asset: dict[str, int] = {}
     rsc_urls: list[str] = []
     failed: list[str] = []
@@ -104,6 +111,10 @@ def measure_one(browser, url: str, asset_origin: str | None) -> dict:
         c = cat(rq.url, rq.resource_type, rq.headers)
         if o == page_origin:
             counts[c] = counts.get(c, 0) + 1
+            pu = urlparse(rq.url)
+            key = pu.path + (("?" + pu.query) if pu.query else "")
+            urls[key] = urls.get(key, 0) + 1
+            url_cat[key] = c
             if c == "rsc":
                 rsc_urls.append(urlparse(rq.url).path)
         elif asset_origin and o == asset_origin:
@@ -136,6 +147,7 @@ def measure_one(browser, url: str, asset_origin: str | None) -> dict:
         "third_party": {k[3:]: v for k, v in counts.items() if k.startswith("3p:")},
         "rsc": same.get("rsc", 0),
         "rsc_paths": sorted(set(rsc_urls)),
+        "via_worker_urls": [[u, url_cat[u], n] for u, n in sorted(urls.items())],
         "projected_ap": sum(v for k, v in same.items() if k not in DROP_AP),
         "failed": failed[:10],
         "aborted": aborted["n"],
@@ -236,6 +248,7 @@ def main() -> int:
     ap.add_argument("--post", metavar="SLUG", help="measure this post (th) as the post template instead of 90-percent-business-from-phone")
     ap.add_argument("--prime-proof", metavar="PREFIX", help="B1′ checks for this BLOG_ASSET_PREFIX value instead of measuring")
     ap.add_argument("--og-file", type=Path, default=C.EVIDENCE_DIR / "x4-og-image.json")
+    ap.add_argument("--max-rpv", type=int, default=6, help="X4-f: B1 passes when req/view via Worker ≤ this (default 6)")
     a = ap.parse_args()
     if a.prime_proof:
         return prime_proof(a.prime_proof.rstrip("/"), a.og_file)
@@ -281,12 +294,37 @@ def main() -> int:
                 day = pv * r + crawl
                 out.append(f"  {name} {sc:4} {lab:12} PV {pv:>5} × {r} + crawler {crawl:>5} = {day:>7,}/day → headroom {QUOTA / day:.1f}× "
                            f"({'meets' if QUOTA / day >= 5 else 'BELOW'} 5×{' · ≥ ADR alert line 20,000/day' if day >= 20000 else ''})")
+    # X4-f: per-template via-Worker URL list (count = max over runs) + extras, then the B1 verdict
+    verdict = None
+    for name, tm in data["builds"].items():
+        for t, d in tm.items():
+            mx: dict[str, list] = {}
+            for r in d["runs"]:
+                for u, c, n in r["via_worker_urls"]:
+                    mx[u] = [c, max(n, mx.get(u, [c, 0])[1])]
+            d["via_worker_urls_max"] = [[u, c, n] for u, (c, n) in sorted(mx.items())]
+            extra = [(u, c, n) for u, (c, n) in sorted(mx.items()) if c not in EXPECTED]
+            d["extra"] = [list(x) for x in extra]
+            out.append(f"{name} {t} {d['path']}: via-Worker URLs {len(mx)} (requests {sum(n for c, n in mx.values())}) · "
+                       f"extra (not {'/'.join(EXPECTED)}) {len(extra)}")
+            for u, (c, n) in sorted(mx.items()):
+                out.append(f"    {'extra ' if c not in EXPECTED else '      '}{n}× {c:16} {u}")
+        if name == "b1":
+            r_meas = rpv({t: tm[t]["max_via_worker"] for t in MIX})
+            day = SCENARIOS["high"][0] * r_meas + SCENARIOS["high"][1]
+            n_extra = sum(len(tm[t]["extra"]) for t in tm)
+            verdict = r_meas <= a.max_rpv
+            out.append(f"RESULT {'PASS' if verdict else 'FAIL'} (b1 req/view via Worker {r_meas} {'≤' if verdict else '>'} "
+                       f"{a.max_rpv} · high {day:,}/day → headroom {QUOTA / day:.1f}× · extra via-Worker URLs {n_extra}"
+                       f"{' (each must be explained)' if n_extra else ''})")
+    if verdict is None:
+        out.append("RESULT n/a (b0 only: the old app is the reference, not judged)")
     p = C.evidence_path(f"x4-rpv-{a.label}", "txt")
     p.write_text("\n".join(out) + "\n", encoding="utf-8")
     p.with_suffix(".json").write_text(json.dumps(data, indent=1, ensure_ascii=False), encoding="utf-8")
     print("\n".join(out))
     print(f"evidence {p}")
-    return 0
+    return 0 if verdict is not False else 1
 
 
 if __name__ == "__main__":
