@@ -14,6 +14,8 @@ import { Link } from "@/i18n/navigation";
 import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
+import { ROUTES, postPath } from "@/lib/routes";
+import { withBasePath } from "@/lib/base-path";
 
 export async function generateStaticParams() {
   const allPosts = getPostsByLocale("th").concat(getPostsByLocale("en"));
@@ -40,7 +42,7 @@ export async function generateMetadata({
   return createMetadata({
     title: post.title,
     description: post.description,
-    path: `/blog/${post.slugAsParams}`,
+    path: postPath(post.slugAsParams),
     locale,
     type: "article",
     image: coverImage,
@@ -84,7 +86,8 @@ export default async function ArticlePage({
       <div className="mx-auto max-w-[var(--container-wide)] px-4 py-8 sm:px-6">
         {/* Back link */}
         <Link
-          href="/blog"
+          href={ROUTES.list}
+          prefetch={false}
           className="mb-6 inline-flex items-center gap-1 text-sm text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-text-primary)]"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -137,7 +140,7 @@ export default async function ArticlePage({
           {/* Author byline */}
           <div className="mt-6 flex items-center gap-3">
             <img
-              src="/author-tor.jpg"
+              src={withBasePath("/author-tor.jpg")}
               alt="Tor Supakit"
               className="h-10 w-10 rounded-full object-cover"
             />

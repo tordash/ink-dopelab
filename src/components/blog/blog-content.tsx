@@ -6,6 +6,7 @@ import { ArticleCard, CATEGORY_STYLES } from "./article-card";
 import { SearchPosts } from "./search-posts";
 import { Link } from "@/i18n/navigation";
 import { Hash, ChevronLeft, ChevronRight } from "lucide-react";
+import { categoryPath, tagPath } from "@/lib/routes";
 
 const POSTS_PER_PAGE = 9;
 
@@ -168,7 +169,8 @@ function CategoryPills({ categories }: { categories: string[] }) {
         return (
           <Link
             key={cat}
-            href={`/blog/category/${encodeURIComponent(cat)}`}
+            href={categoryPath(cat)}
+            prefetch={false}
             className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 py-1.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-primary)]/40 hover:text-[var(--color-text-primary)]"
           >
             <span
@@ -195,7 +197,8 @@ function TagCloud({ tags }: { tags: string[] }) {
         {tags.map((tag) => (
           <Link
             key={tag}
-            href={`/blog/tag/${encodeURIComponent(tag)}`}
+            href={tagPath(tag)}
+            prefetch={false}
             className="rounded-lg border border-[var(--color-border)] px-3 py-1.5 text-sm text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 hover:text-[var(--color-primary)]"
           >
             #{tag}

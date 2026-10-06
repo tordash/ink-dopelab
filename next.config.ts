@@ -3,7 +3,7 @@ import { ASSET_PREFIX, BASE_PATH } from "./src/lib/base-path";
 
 const withNextIntl = createNextIntlPlugin();
 
-// BM-04: the app lives under BASE_PATH ("/blog"). The old redirects() (6 legacy slugs + /blog → /th/blog)
+// BM-04: the app lives under BASE_PATH ("/blog"). The 8 old redirect rules (6 legacy slugs + /blog → /th/blog)
 // moved to the ink-host redirect layer (url-rules.json, BM-08); under /blog the only 3xx is Next's trailing-slash strip.
 // ADR-01 X4: assetPrefix + images.path only when BLOG_ASSET_PREFIX is on (production env, set at Gate 2).
 const nextConfig = {

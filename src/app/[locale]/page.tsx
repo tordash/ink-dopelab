@@ -6,6 +6,8 @@ import { HeroBackground } from "@/components/hero-background";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, Pen } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
+import { ROUTES } from "@/lib/routes";
+import { withBasePath } from "@/lib/base-path";
 
 export default async function HomePage() {
   const locale = (await getLocale()) as Locale;
@@ -29,7 +31,7 @@ export default async function HomePage() {
         </video>
         {/* Layer 1b: Static fallback */}
         <img
-          src="/hero-bg.jpg"
+          src={withBasePath("/hero-bg.jpg")}
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
@@ -153,7 +155,8 @@ function LatestSection({
           </h2>
         </div>
         <Link
-          href="/blog"
+          href={ROUTES.list}
+          prefetch={false}
           className="flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-all hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
         >
           {t("view_all")}

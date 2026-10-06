@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { createMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
+import { withBasePath } from "@/lib/base-path";
 import { HeroBackground } from "@/components/hero-background";
 import {
   Bot,
@@ -52,7 +53,7 @@ function HeroSection() {
     <section className="relative overflow-hidden border-b border-[var(--color-border)] bg-[#0a0a0a]">
       {/* Background image — flowing ink + golden particles */}
       <img
-        src="/about-hero-bg.jpg"
+        src={withBasePath("/about-hero-bg.jpg")}
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50"

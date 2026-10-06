@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Rss } from "lucide-react";
+import { withBasePath } from "@/lib/base-path";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -11,9 +12,9 @@ export function Footer() {
       <div className="mx-auto max-w-[var(--container-wide)] px-4 py-12 sm:px-6">
         <div className="flex flex-col items-center gap-6 text-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" prefetch={false} className="flex items-center gap-2">
             <img
-              src="/logo-sphere.jpg"
+              src={withBasePath("/logo-sphere.jpg")}
               alt="DopeLab"
               className="h-8 w-8 rounded-lg object-cover"
             />

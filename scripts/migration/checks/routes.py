@@ -121,7 +121,17 @@ def sitemap(base: str, repo: Path) -> int:
     for r in sm:
         if r[3] != 200:
             other[r[3]] = other.get(r[3], 0) + 1
-    tail = [summary, f"sitemap non-200 by status: {other or '{}'}", "RESULT " + ("PASS" if ok else "FAIL")]
+    # Reported, never excused: a non-200 row whose OLD url answers the same status on B0 is a pre-existing
+    # base defect (e.g. the 5 Callout "insight" 500s at e7743c4, fixed on ink main a059826). RESULT stays FAIL.
+    same_b0 = []
+    for r in sm:
+        if r[3] != 200 and r[2] != "-":
+            st0, _h0, _b0 = C.fetch(C.B0_URL, C.path_of(r[2]))
+            if st0 == r[3]:
+                same_b0.append(f"{r[1]}={r[3]}")
+    tail = [summary, f"sitemap non-200 by status: {other or '{}'}",
+            f"base-defect (same non-200 on B0 {C.B0_URL}): {len(same_b0)} {' '.join(same_b0) or '-'}",
+            "RESULT " + ("PASS" if ok else "FAIL")]
     head = C.header("routes.py sitemap (AC7)") + [f"# target {base}"]
     p = C.write_tsv("ac7-sitemap", head, ["group", "path", "old_url", "status", "location"], out, tail)
     print("\n".join(head))
