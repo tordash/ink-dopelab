@@ -1,0 +1,5 @@
+{
+  "source": "dopelab deliverables/blog-migration/data/url-rules.json v1.0.0 @ d9e4a8a (sha256 e7305d76a1ffd522c01126ec982fd44671a809d65a41b1fe5f969cc7192c141c) — vendored by BM-04: Vercel builds cannot read the dopelab repo. Rule changes go through BM-03 (#4), then re-vendor.",
+  "version": "1.0.0",
+  "reserved_slugs": ["en", "th", "tag", "category", "about", "contact", "feed.xml", "sitemap.xml", "api", "static", "images", "videos", "diagrams", "all", "blog", "_next"]
+}

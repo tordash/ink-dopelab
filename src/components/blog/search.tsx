@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import Fuse from "fuse.js";
 import { Search as SearchIcon, X } from "lucide-react";
+import { postPath } from "@/lib/routes";
 
 interface SearchItem {
   title: string;
@@ -64,7 +65,7 @@ export function SearchButton({ items }: { items: SearchItem[] }) {
   const handleSelect = useCallback(
     (slug: string) => {
       handleClose();
-      router.push(`/blog/${slug}`);
+      router.push(postPath(slug));
     },
     [handleClose, router]
   );

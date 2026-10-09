@@ -19,13 +19,13 @@ export default function NotFound() {
       {/* Two buttons */}
       <div className="flex flex-wrap items-center justify-center gap-4">
         <Link
-          href="/th"
+          href="/"
           className="inline-flex items-center gap-2 rounded-lg bg-[#FFCC00] px-6 py-3 font-semibold text-[#191919] transition-transform hover:scale-105"
         >
           กลับหน้าแรก
         </Link>
         <Link
-          href="/en/blog"
+          href="/en/all"
           className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-6 py-3 font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/5"
         >
           Browse Articles

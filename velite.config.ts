@@ -2,6 +2,7 @@ import { defineConfig, defineCollection, s } from "velite";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import { BASE_PATH } from "./src/lib/base-path";
 
 const posts = defineCollection({
   name: "Post",
@@ -53,7 +54,7 @@ export default defineConfig({
   output: {
     data: ".velite",
     assets: "public/static",
-    base: "/static/",
+    base: `${BASE_PATH}/static/`,
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },

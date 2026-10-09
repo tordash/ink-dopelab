@@ -5,16 +5,25 @@ import { Link } from "@/i18n/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { LocaleSwitcher } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
-export function Header({ searchSlot }: { searchSlot?: React.ReactNode }) {
+import { ROUTES } from "@/lib/routes";
+import { publicAssetSrc } from "@/lib/base-path";
+import type { SwitchIndex } from "@/lib/routes";
+export function Header({
+  searchSlot,
+  switchIndex,
+}: {
+  searchSlot?: React.ReactNode;
+  switchIndex: SwitchIndex;
+}) {
   const t = useTranslations("nav");
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-surface)]/80 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center justify-between px-4 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" prefetch={false} className="flex items-center gap-2 group">
           <img
-            src="/logo-sphere.jpg"
+            src={publicAssetSrc("/logo-sphere.jpg")}
             alt="DopeLab"
             className="h-9 w-9 rounded-lg object-cover transition-transform group-hover:scale-105"
           />
@@ -32,24 +41,28 @@ export function Header({ searchSlot }: { searchSlot?: React.ReactNode }) {
         <nav className="hidden items-center gap-1 md:flex">
           <Link
             href="/"
+            prefetch={false}
             className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] hover:text-[var(--color-text-primary)]"
           >
             {t("home")}
           </Link>
           <Link
-            href="/blog"
+            href={ROUTES.list}
+            prefetch={false}
             className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] hover:text-[var(--color-text-primary)]"
           >
             {t("blog")}
           </Link>
           <Link
             href="/about"
+            prefetch={false}
             className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] hover:text-[var(--color-text-primary)]"
           >
             {t("about")}
           </Link>
           <Link
             href="/contact"
+            prefetch={false}
             className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)] hover:text-[var(--color-text-primary)]"
           >
             {t("contact")}
@@ -59,7 +72,7 @@ export function Header({ searchSlot }: { searchSlot?: React.ReactNode }) {
         {/* Actions */}
         <div className="flex items-center gap-2">
           {searchSlot}
-          <LocaleSwitcher />
+          <LocaleSwitcher switchIndex={switchIndex} />
           <ThemeToggle />
           <MobileNav />
         </div>

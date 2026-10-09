@@ -8,6 +8,7 @@ import {
 import { BlogContent } from "@/components/blog/blog-content";
 import { createMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
+import { ROUTES } from "@/lib/routes";
 
 export async function generateMetadata() {
   const locale = (await getLocale()) as Locale;
@@ -17,7 +18,7 @@ export async function generateMetadata() {
       locale === "th"
         ? "เรื่องเล่า ประสบการณ์ และ case study จากการใช้ AI ในงานจริง"
         : "Stories, experiences, and case studies from using AI in real work",
-    path: "/blog",
+    path: ROUTES.list,
     locale,
   });
 }

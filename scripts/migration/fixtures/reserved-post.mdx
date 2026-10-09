@@ -1,0 +1,12 @@
+---
+title: "BM-04 reserved-slug fixture"
+description: "Test fixture for the reserved-slug guard (REQ AC4). Copied temporarily under a reserved name; never committed under content/."
+date: 2026-10-06
+category: "Test"
+tags: ["bm-04-fixture"]
+draft: true
+---
+
+This file lives in `scripts/migration/fixtures/` (outside `content/`, so velite never reads it here).
+The AC4 procedure copies it to `content/posts/th/all.mdx`, `content/posts/en/Tag.mdx` and
+`content/posts/th/deploy-check.txt.mdx`; `npm run build` must then fail in the guard, before velite.

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Menu, X } from "lucide-react";
+import { ROUTES } from "@/lib/routes";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -24,13 +25,15 @@ export function MobileNav() {
           <nav className="flex flex-col gap-1">
             <Link
               href="/"
+              prefetch={false}
               onClick={() => setOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)]"
             >
               {t("home")}
             </Link>
             <Link
-              href="/blog"
+              href={ROUTES.list}
+              prefetch={false}
               onClick={() => setOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)]"
             >
@@ -38,6 +41,7 @@ export function MobileNav() {
             </Link>
             <Link
               href="/about"
+              prefetch={false}
               onClick={() => setOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)]"
             >
@@ -45,6 +49,7 @@ export function MobileNav() {
             </Link>
             <Link
               href="/contact"
+              prefetch={false}
               onClick={() => setOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-tertiary)]"
             >

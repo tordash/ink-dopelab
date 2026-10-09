@@ -13,7 +13,7 @@ draft: false
 
 ## ปัญหา: อยากมีบล็อก แต่ไม่มีเวลาสร้าง
 
-![สร้าง Blog ด้วย Agent Teams](/images/blog/building-blog.jpg)
+![สร้าง Blog ด้วย Agent Teams](/blog/images/blog/building-blog.jpg)
 
 ผมรัน agency เล็กๆ ที่ใช้ AI ทำงานแทบทุกอย่าง มี projects ลูกค้า 5 brands, ร้านอาหารที่ต้องดูแล operations, ระบบ stock, ระบบขาย — งานล้นมืออยู่แล้ว
 
@@ -27,7 +27,7 @@ Agent Teams คือ feature ของ Claude Code ที่ให้ **หล�
 
 ผมใช้มันสร้างบล็อกนี้ใน session เดียว แบ่งเป็น 5 phases:
 
-![Blog Build Pipeline — 5 Phases จาก scaffold ถึง production](/diagrams/blog-build-pipeline.svg)
+![Blog Build Pipeline — 5 Phases จาก scaffold ถึง production](/blog/diagrams/blog-build-pipeline.svg)
 
 ```
 Phase 0: Scaffold (single agent)
@@ -194,7 +194,7 @@ Agent Teams spawn หลาย Claude instance พร้อมกัน แต�
 - **Deploy:** Vercel (auto-deploy จาก GitHub push)
 - **Content:** 8 articles (TH+EN = 16 files MDX)
 
-สร้างทั้งหมดใน **1 วัน** ตั้งแต่ `git init` ถึง production ที่ [ink.dopelab.studio](https://ink.dopelab.studio)
+สร้างทั้งหมดใน **1 วัน** ตั้งแต่ `git init` ถึง production ที่ [dopelab.studio/blog](https://dopelab.studio/blog)
 
 <Callout variant="success" title="สรุป">
 Agent Teams ไม่ใช่ magic — มันเป็นเครื่องมือที่ต้องวางแผนก่อนใช้ ต้องแบ่งไฟล์ให้ชัด ต้องเลือกงานที่ parallelize ได้ แต่ถ้าใช้ถูกจังหวะ มันเปลี่ยนงาน 2-3 ชั่วโมงให้เป็น 5 นาทีได้จริง บล็อกที่คุณอ่านอยู่นี้คือหลักฐาน

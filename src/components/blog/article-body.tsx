@@ -8,6 +8,7 @@ import { YouTubeEmbed } from "@/components/mdx/youtube-embed";
 import { CopyableCode } from "@/components/mdx/copy-code";
 import { ProsCons } from "@/components/mdx/pros-cons";
 import { SvgEmbed } from "@/components/mdx/svg-embed";
+import { withAssetHost, withAssetHostMdxRuntime } from "@/lib/base-path";
 
 const sharedComponents = {
   Callout,
@@ -21,6 +22,7 @@ const sharedComponents = {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         {...props}
+        src={typeof props.src === "string" ? withAssetHost(props.src) : props.src}
         alt={props.alt || ""}
         className="w-full rounded-xl border border-[var(--color-border)]"
         loading="lazy"
@@ -42,10 +44,13 @@ const sharedComponents = {
   ),
 };
 
+// X4-f: literal JSX <img> in MDX bypasses components.img; this runtime maps its src (prefix off → `runtime` itself).
+const mdxRuntime = withAssetHostMdxRuntime(runtime);
+
 function useMDXComponent(code: string) {
   return useMemo(() => {
     const fn = new Function(code);
-    return fn({ ...runtime }).default;
+    return fn({ ...mdxRuntime }).default;
   }, [code]);
 }
 

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/lib/utils";
+import { postPath } from "@/lib/routes";
 import {
   Calendar,
   Clock,
@@ -163,7 +164,8 @@ export function ArticleCard({
   if (featured) {
     return (
       <Link
-        href={`/blog/${slug}`}
+        href={postPath(slug)}
+        prefetch={false}
         className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/40 hover:shadow-xl hover:shadow-[var(--color-primary)]/5"
         style={cardCssVars}
       >
@@ -238,7 +240,8 @@ export function ArticleCard({
 
   return (
     <Link
-      href={`/blog/${slug}`}
+      href={postPath(slug)}
+      prefetch={false}
       className="group relative flex flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-200 hover:border-[var(--color-primary)]/30 hover:shadow-lg hover:shadow-[var(--color-primary)]/5"
       style={cardCssVars}
     >
