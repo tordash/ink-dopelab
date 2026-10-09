@@ -36,8 +36,8 @@ export async function generateMetadata({
       locale === "th"
         ? `${posts.length} บทความที่แท็ก #${decoded}`
         : `${posts.length} articles tagged #${decoded}`,
-    path: `/tag/${tag}`,
-    locale,
+    page: { kind: "tag", value: decoded }, // decoded param, re-encoded by the URL module (SPEC §1.3)
+    locale: locale as Locale,
   });
 }
 
