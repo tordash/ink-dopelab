@@ -1,8 +1,8 @@
 // BM-16 · the custom 410 page for a retired post (tordash/dopelab-oracle#19 · SPEC §9.3, S3).
 //
 // Pure and import-free (erasable TypeScript only), so `node --test` runs it without a build.
-// Served by src/app/api/gone/route.ts. Brand: black / white / safety yellow, Kanit; no scripts,
-// no analytics, noindex. Links go to the article-list hub and the blog home of the same locale,
+// Served by src/app/api/gone/route.ts. Brand: black / white / safety yellow, Kanit (TH) and League
+// Spartan (the EN line); no scripts, no analytics, noindex. Links go to the article-list hub and the blog home of the same locale,
 // never to the main-site home (Helm's redirect policy: never home).
 
 export type GoneLocale = "th" | "en";
@@ -45,13 +45,13 @@ export function renderGonePage({ locale, title, hubHref, homeHref }: GonePageInp
     "<title>บทความนี้ถูกเก็บแล้ว · DopeLab</title>",
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
-    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap">',
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&family=League+Spartan:wght@400;600&display=swap">',
     "<style>",
     "*{box-sizing:border-box}",
     "html,body{margin:0;background:#000000;color:#FFFFFF;font-family:Kanit,sans-serif}",
     "main{min-height:100vh;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:48px 24px;max-width:640px;margin:0 auto}",
     "h1{margin:0;font-size:36px;font-weight:600;line-height:1.3}",
-    ".en{margin:0;font-size:20px}",
+    ".en{margin:0;font-size:20px;font-family:'League Spartan',Kanit,sans-serif}",
     ".t{margin:8px 0 0;font-size:18px;opacity:.8}",
     "a{font-size:18px;font-weight:600;text-decoration:none}",
     ".btn{display:inline-block;margin-top:24px;padding:14px 22px;background:#FFCC00;color:#000000;border-radius:6px;align-self:flex-start}",

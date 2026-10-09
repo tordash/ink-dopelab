@@ -53,6 +53,9 @@ test("brand only: no scripts, no banned tokens, no real names, brand colours pre
   assert.equal(html.includes("Tor Supakit"), false);
   for (const c of ["#000000", "#FFFFFF", "#FFCC00"]) assert.ok(html.includes(c), c);
   assert.ok(html.includes("Kanit"));
+  // review L2 (#19 · REQ §7 brand): League Spartan for the EN line, loaded with Kanit
+  assert.match(html, /family=Kanit:[^"]*&family=League\+Spartan:/);
+  assert.match(html, /\.en\{[^}]*font-family:'League Spartan',Kanit,sans-serif\}/);
 });
 
 test("sources: no quoted blog-path literal, gone-page.ts is import-free, route imports are expected", () => {
