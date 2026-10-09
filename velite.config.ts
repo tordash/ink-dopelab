@@ -3,6 +3,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { BASE_PATH } from "./src/lib/base-path";
+import rehypePruneLinks from "./src/lib/prune/rehype-prune-links.mjs";
 
 const posts = defineCollection({
   name: "Post",
@@ -63,6 +64,7 @@ export default defineConfig({
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
+      rehypePruneLinks,
       [rehypePrettyCode, { theme: "github-dark-dimmed", keepBackground: true }],
     ],
   },
