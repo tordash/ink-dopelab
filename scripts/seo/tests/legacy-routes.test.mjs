@@ -2,12 +2,15 @@
 // The file is GENERATED from BM-03 url-rules.json by scripts/seo/gen-legacy-routes.mjs (REQ D3: never typed by hand).
 // The drift check against the real rules is a separate command (the dopelab repo is not part of the ink test run):
 //   node scripts/seo/gen-legacy-routes.mjs --rules <dopelab>/deliverables/blog-migration/data/url-rules.json --check
-// Run: node --test scripts/seo/tests/*.test.mjs
+// Run: node --test scripts/seo/tests/*.test.mjs   (AC13 red run: BM05_RED=1 → today's implicit map, fixtures/today.mjs)
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-const legacy = JSON.parse(readFileSync(new URL("../../../src/lib/legacy-routes.json", import.meta.url), "utf8"));
+const RED = Reflect.get(process.env, "BM05_RED") === "1";
+const legacy = RED
+  ? (await import("./fixtures/today.mjs")).legacyRoutes
+  : JSON.parse(readFileSync(new URL("../../../src/lib/legacy-routes.json", import.meta.url), "utf8"));
 
 const KINDS = ["home", "list", "about", "contact", "post", "tag", "category"];
 const PARAM = { post: ":slug", tag: ":tag", category: ":cat" };
