@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
 import { posts } from "#site/content";
 import { getAllCategories, getAllTags } from "@/lib/content";
-import { SITE_URL } from "@/lib/site";
+import { pageUrl } from "@/lib/seo";
 
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const postUrls = posts
     .filter((post) => !post.draft)
     .map((post) => ({
-      url: `${SITE_URL}${post.permalink}`,
+      url: pageUrl({ kind: "post", slug: post.slugAsParams }, post.locale),
       lastModified: new Date(post.updated || post.date),
       changeFrequency: "weekly" as const,
       priority: post.featured ? 0.9 : 0.7,
@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const categoryUrls = (["th", "en"] as const).flatMap((locale) =>
     getAllCategories(locale).map((cat) => ({
-      url: `${SITE_URL}/${locale}/blog/category/${encodeURIComponent(cat)}`,
+      url: pageUrl({ kind: "category", value: cat }, locale),
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.7,
@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const tagUrls = (["th", "en"] as const).flatMap((locale) =>
     getAllTags(locale).map((tag) => ({
-      url: `${SITE_URL}/${locale}/blog/tag/${encodeURIComponent(tag)}`,
+      url: pageUrl({ kind: "tag", value: tag }, locale),
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.6,
@@ -34,49 +34,49 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: `${SITE_URL}/th`,
+      url: pageUrl({ kind: "home" }, "th"),
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: `${SITE_URL}/en`,
+      url: pageUrl({ kind: "home" }, "en"),
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: `${SITE_URL}/th/blog`,
+      url: pageUrl({ kind: "list" }, "th"),
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/en/blog`,
+      url: pageUrl({ kind: "list" }, "en"),
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/th/about`,
+      url: pageUrl({ kind: "about" }, "th"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${SITE_URL}/en/about`,
+      url: pageUrl({ kind: "about" }, "en"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${SITE_URL}/th/contact`,
+      url: pageUrl({ kind: "contact" }, "th"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${SITE_URL}/en/contact`,
+      url: pageUrl({ kind: "contact" }, "en"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
