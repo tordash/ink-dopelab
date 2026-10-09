@@ -826,7 +826,7 @@ def cmd_feed(a) -> int:
         validity = (re.search(r"<m:validity>(\w+)</m:validity>", txt) or [None, None])[1]
         errors = (re.search(r"<m:errorcount>(\d+)</m:errorcount>", txt) or [None, "?"])[1]
         warnings = (re.search(r"<m:warningcount>(\d+)</m:warningcount>", txt) or [None, "?"])[1]
-        wtypes = sorted(set(re.findall(r"<m:warning>.*?<type>([^<]+)</type>", txt, re.S)))
+        wtypes = sorted(set(re.findall(r"<warning>.*?<type>([^<]+)</type>", txt, re.S)))
         rep.info(f"# W3C request 1 (declared external call: POST rawdata to {W3C_FEED}, curl exit {r.returncode}) · "
                  f"response {resp} ({len(r.stdout)} bytes)")
         rep.check(validity == "true", f"validator validity={validity} (errors {errors} · warnings {warnings}"
