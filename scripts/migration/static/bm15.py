@@ -334,6 +334,29 @@ def link_entries(value: str) -> list[str]:
     return [e.strip() for e in re.split(r",\s*(?=<)", value) if e.strip()]
 
 
+def hreflang_links(hdrs: list[tuple[str, str]], base: str) -> list[str]:
+    """REQ AC4b: the next-intl hreflang `Link` entries (rel="alternate"), with the request origin masked
+    (next-intl builds them from the Host header, so two local servers differ only by port)."""
+    return [e.replace(base, "<origin>") for v in hvals(hdrs, "link") for e in link_entries(v) if 'rel="alternate"' in e]
+
+
+FONT_LINK_HDR = re.compile(r'<([^>]+)>;[^,]*\brel=preload\b[^,]*\bas="font"')
+LINK_TAG = re.compile(r"<link\b[^>]*>", re.I)
+
+
+def font_preloads(hdrs: list[tuple[str, str]], html_text: str) -> tuple[list[str], list[str]]:
+    """Font preload hints: (from the HTTP Link header, from <link rel=preload as=font> in <head>)."""
+    in_hdr = sorted(m for v in hvals(hdrs, "link") for m in FONT_LINK_HDR.findall(v))
+    head = html_text[:max(html_text.find("</head>"), 0)]
+    in_html = []
+    for tag in LINK_TAG.findall(head):
+        if re.search(r'\brel="preload"', tag) and re.search(r'\bas="font"', tag):
+            m = re.search(r'\bhref="([^"]+)"', tag)
+            if m:
+                in_html.append(m.group(1))
+    return in_hdr, sorted(in_html)
+
+
 def hvals(hdrs: list[tuple[str, str]], name: str) -> list[str]:
     return [v for k, v in hdrs if k == name]
 
@@ -756,16 +779,21 @@ def cmd_compare(a: argparse.Namespace, argv: list[str]) -> int:
         if outside:
             lines.append(f"    metadata outside <head> on B (first 3): "
                          + " | ".join(f"{p}: {eb[p]['meta_outside_head'][:3]}" for p in outside[:3]))
-        lh_ok = 0
+        lh_ok = fp_same = 0
+        fp_where = collections.Counter()
         for p in S18:
-            la, lb = hvals(ra[p][1], "link"), hvals(rb[p][1], "link")
-            if la == lb:
+            alt_a, alt_b = hreflang_links(ra[p][1], A), hreflang_links(rb[p][1], B)
+            if alt_a and alt_a == alt_b:
                 lh_ok += 1
             else:
-                alt_a = [e for v in la for e in link_entries(v) if 'rel="alternate"' in e]
-                alt_b = [e for v in lb for e in link_entries(v) if 'rel="alternate"' in e]
-                lines.append(f"    LINK {p}: A {len(la)} header(s) / B {len(lb)} · hreflang entries equal {alt_a == alt_b}"
-                             f" · A={'; '.join(la)[:200]!r} · B={'; '.join(lb)[:200]!r}")
+                lines.append(f"    LINK {p}: hreflang entries A={alt_a} · B={alt_b}")
+            ha, ma = font_preloads(ra[p][1], ra[p][2].decode("utf-8", errors="replace"))
+            hb, mb = font_preloads(rb[p][1], rb[p][2].decode("utf-8", errors="replace"))
+            fp_same += sorted(ha + ma) == sorted(hb + mb)
+            fp_where[f"A header {len(ha)}/html {len(ma)} · B header {len(hb)}/html {len(mb)}"] += 1
+        lines.append(f"S18 hreflang Link header (origin masked) equal {lh_ok}/{len(S18)}")
+        lines.append(f"font preloads (info, not an AC): same font set A vs B {fp_same}/{len(S18)} · where: "
+                     + "; ".join(f"{k} ×{c}" for k, c in fp_where.items()))
         # AC8 compare rows
         ut_a, ut_b = ea[UNKNOWN_TAG], eb[UNKNOWN_TAG]
         lines.append(f"unknown tag {UNKNOWN_TAG}: status {ra[UNKNOWN_TAG][0]}/{rb[UNKNOWN_TAG][0]} · <h1> "

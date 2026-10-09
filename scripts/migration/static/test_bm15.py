@@ -245,6 +245,27 @@ class Extractor(unittest.TestCase):
         b = bm15.extract(page(chunk="ffffffffffffffff", build="ZZZZZZZZZZZZZZZZZZZZZ"))
         self.assertEqual(bm15.diff_fields(a, b), [])
 
+    def test_hreflang_link_origin_normalised(self):
+        h4511 = [("link", '<http://localhost:4511/blog/about>; rel="alternate"; hreflang="th", '
+                          '<http://localhost:4511/blog/en/about>; rel="alternate"; hreflang="en"'),
+                 ("link", '</blog/_next/static/media/a.woff2>; rel=preload; as="font"; crossorigin=""')]
+        h4512 = [("link", '<http://localhost:4512/blog/about>; rel="alternate"; hreflang="th", '
+                          '<http://localhost:4512/blog/en/about>; rel="alternate"; hreflang="en"')]
+        a = bm15.hreflang_links(h4511, "http://localhost:4511")
+        self.assertEqual(a, ['<<origin>/blog/about>; rel="alternate"; hreflang="th"',
+                             '<<origin>/blog/en/about>; rel="alternate"; hreflang="en"'])
+        self.assertEqual(a, bm15.hreflang_links(h4512, "http://localhost:4512"))
+        h_bad = [("link", '<http://localhost:4512/blog/about>; rel="alternate"; hreflang="th"')]
+        self.assertNotEqual(a, bm15.hreflang_links(h_bad, "http://localhost:4512"))
+
+    def test_font_preloads_header_or_html(self):
+        hdr = [("link", '</blog/_next/static/media/a.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2"')]
+        html = ('<html><head><link rel="preload" href="/blog/_next/static/media/a.woff2" as="font" crossorigin=""/>'
+                '<link rel="preload" href="/x.png" as="image"/></head><body></body></html>')
+        self.assertEqual(bm15.font_preloads(hdr, "<html><head></head></html>"),
+                         (["/blog/_next/static/media/a.woff2"], []))
+        self.assertEqual(bm15.font_preloads([], html), ([], ["/blog/_next/static/media/a.woff2"]))
+
     def test_link_split(self):
         self.assertEqual(bm15.link_entries('<a>; rel="alternate", <b>; rel=preload'),
                          ['<a>; rel="alternate"', "<b>; rel=preload"])
