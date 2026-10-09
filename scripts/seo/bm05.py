@@ -276,6 +276,7 @@ class PageParser(HTMLParser):
         self.canonical: list[str] = []
         self.hreflang: list[tuple[str, str]] = []
         self.rss: list[str] = []
+        self.css: list[str] = []  # <link rel=stylesheet> hrefs (review: D14 stylesheet check)
         self.meta: dict[str, list[str]] = {}
         self.anchors: list[dict] = []
         self.jsonld: list[str] = []
@@ -296,6 +297,8 @@ class PageParser(HTMLParser):
                 self.hreflang.append((a["hreflang"], a.get("href", "")))
             if "alternate" in rel and a.get("type", "").lower() == "application/rss+xml":
                 self.rss.append(a.get("href", ""))
+            if "stylesheet" in rel:
+                self.css.append(a.get("href", ""))
         elif tag == "meta" and self.in_head:
             key = a.get("property") or a.get("name")
             if key:
@@ -696,6 +699,36 @@ def cmd_sweep(a) -> int:
     if base:
         rep.check(title_ok == n and desc_ok == n and n > 0,
                   f"title {title_ok}/{n} · description {desc_ok}/{n} byte-equal vs {base}")
+        # REQ D14 (look frozen, ต่อ ข.), added in review: every stylesheet the pages link is byte-equal to --base's.
+        # Tailwind v4 scans the whole repo (scripts/ too), so a class-like word in a check script can change the CSS.
+        def css_bodies(origin: str, recs: list) -> tuple[dict[str, bytes], int]:
+            hrefs = sorted({h for p in recs if p is not None for h in p.css})
+            got, bad = {}, 0
+            for h in hrefs:
+                pq = path_of_ref(origin + "/", h, origin)
+                if pq is None:
+                    bad += 1
+                    continue
+                s, _h, b = net.get(origin, pq)
+                if s == 200:
+                    got[h] = b
+                else:
+                    bad += 1
+            return got, bad
+        css_t, bad_t = css_bodies(target, [x["p"] for x in pages])
+        css_b, bad_b = css_bodies(base, [x["bp"] for x in pages])
+        rules = lambda d: sorted(r for b in d.values() for r in b.decode("utf-8", "replace").split("}") if r.strip())  # noqa: E731
+        r_t, r_b = rules(css_t), rules(css_b)
+        same = b"".join(css_t[k] for k in sorted(css_t)) == b"".join(css_b[k] for k in sorted(css_b))
+        rep.check(bool(same and css_t and not bad_t and not bad_b),
+                  f"stylesheets byte-equal vs {base} {same} (target {len(css_t)} · base {len(css_b)} · not 200 "
+                  f"{bad_t}+{bad_b})")
+        if not same:
+            ra, rb = set(r_t), set(r_b)
+            for r in sorted(ra - rb)[:5]:
+                rep.info(f"  css rule only on target: {r[:160]}")
+            for r in sorted(rb - ra)[:5]:
+                rep.info(f"  css rule only on base: {r[:160]}")
 
     if mode == "off":
         R = C.rules()
@@ -804,7 +837,7 @@ def cmd_feed(a) -> int:
         else:
             got_seq.append((r["locale"], r["value"]))
     order_ok = sum(1 for g, w in zip(got_seq, want_seq) if g == w)
-    rep.check(order_ok == len(want_seq) == len(items), f"items {order_ok}/{len(want_seq)} (data top-20 order; got {len(items)})")
+    rep.check(order_ok == len(want_seq) == len(items), f"items {order_ok}/{len(want_seq)} (data top 20 order; got {len(items)})")  # not "top" + "-20": Tailwind would emit that class
     url_ok = sum(1 for (link, g, pl), w in zip(items, want_urls) if link == w and g == link and pl == "true")
     rep.check(url_ok == len(want_urls) == len(items),
               f"item <link> = <guid isPermaLink=true> = expected URL {url_ok}/{len(want_urls)}")
