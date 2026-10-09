@@ -162,3 +162,40 @@ test("CLI: usage error exits 2, apply/revert exit 0", () => {
   assert.equal(v.status, 0);
   assert.match(v.stdout, /reverted 1 · map reset/);
 });
+
+// --- fix round 1 (review F2 · L1, tordash/dopelab-oracle#19) -------------------------------------------------
+
+test("F2: a stale marker refuses apply; --revert then apply the smaller list leaves exactly that list hidden", () => {
+  const r = root({ "th/a-false.mdx": "with-false.mdx", "en/b-absent.mdx": "no-draft.mdx" });
+  const before = read(r, "content/posts/en/b-absent.mdx");
+  const big = list(r, [row("th", "a-false", "R2", "https://dopelab.studio/blog/all"),
+                       row("en", "b-absent", "R2", "https://dopelab.studio/blog/en/all")], "big.tsv");
+  const small = list(r, [row("th", "a-false", "R2", "https://dopelab.studio/blog/all")], "small.tsv");
+  assert.equal(applyList({ root: r, listPath: big }).code, 0);
+  const marked = { a: read(r, "content/posts/th/a-false.mdx"), b: read(r, "content/posts/en/b-absent.mdx") };
+  const m1 = readFileSync(mapPath(r), "utf8");
+  const res = applyList({ root: r, listPath: small });
+  assert.equal(res.code, 1);
+  assert.match(res.lines.join("\n"), /FAIL en\/b-absent: hidden by an earlier apply .*run --revert, then apply/);
+  assert.equal(read(r, "content/posts/th/a-false.mdx"), marked.a);       // nothing written
+  assert.equal(read(r, "content/posts/en/b-absent.mdx"), marked.b);
+  assert.equal(readFileSync(mapPath(r), "utf8"), m1);
+  assert.equal(revert({ root: r }).code, 0);                              // the recovery path the message names
+  const again = applyList({ root: r, listPath: small });
+  assert.equal(again.code, 0, again.lines.join("\n"));
+  assert.match(again.lines.join("\n"), /applied 1 · already 0 · skipped 0 · map 1 entries/);
+  assert.equal(read(r, "content/posts/en/b-absent.mdx"), before);         // b is published again, byte-exact
+  assert.deepEqual(Object.keys(JSON.parse(readFileSync(mapPath(r), "utf8")).posts), ["th/a-false"]);
+});
+
+test("F2: a marker string in the post body (outside frontmatter) is not a stale marker", () => {
+  const r = root({ "th/a-false.mdx": "with-false.mdx", "th/c-body.mdx": "with-false.mdx" });
+  const p = join(r, "content", "posts", "th", "c-body.mdx");
+  writeFileSync(p, read(r, "content/posts/th/c-body.mdx") + "\ndraft: true # bm16-prune was=false\n");
+  const body = read(r, "content/posts/th/c-body.mdx");
+  const res = applyList({ root: r, listPath: list(r, [row("th", "a-false", "R2", "https://dopelab.studio/blog/all")]) });
+  assert.equal(res.code, 0, res.lines.join("\n"));
+  assert.equal(read(r, "content/posts/th/c-body.mdx"), body);
+  assert.equal(revert({ root: r }).code, 0);
+  assert.equal(read(r, "content/posts/th/c-body.mdx"), body);             // revert leaves the body alone too
+});

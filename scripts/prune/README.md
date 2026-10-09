@@ -18,6 +18,9 @@ node scripts/prune/apply.mjs --revert [--root <repo dir>]            # undo ever
   search, `generateStaticParams`, sitemap, feed) and the post URL answers 404.
 - All-or-nothing: a missing slug, a real `draft: true`, an odd or duplicate `draft:` line, or a
   duplicate list row → exit 1 and nothing is written.
+- The hidden set always equals the list: a post that already carries the marker but is not a
+  `drop` row of this list → exit 1 and nothing is written (apply never re-publishes). To apply a
+  smaller list (ต่อ changed his answer), run `--revert`, then apply the new list.
 - A second apply prints `applied 0 · already k` and leaves every byte unchanged.
 - Output: `applied N · already N · skipped N · map N entries` / `reverted N · map reset`.
   Exit 0 ok · 1 data error · 2 usage/IO.

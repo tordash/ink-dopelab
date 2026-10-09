@@ -11,6 +11,8 @@
 // the MDX stays in git. Then src/lib/prune/prune-map.json is written from the drop rows (structured
 // targets, never hrefs) for the build-time link rewrite and the /api/gone handler.
 // All-or-nothing: every edit is computed first; one error = nothing is written.
+// The marked set must equal the drop set: a post that already carries the marker but is not a drop row of
+// this list is an error (apply never re-publishes; to apply a smaller list run --revert, then apply).
 // Revert: every marker line under content/posts/{th,en}/*.mdx is restored and the map is reset.
 //
 // Exit: 0 ok · 1 data error (slug missing, unexpected draft line, malformed TSV) · 2 usage/IO.
@@ -93,6 +95,25 @@ function planApply(text, key) {
   return { state: "apply", text: lines.join("\n") };
 }
 
+/** Every content/posts/{th,en}/*.mdx with a frontmatter block: {key, file, lines, marks} where marks = the
+ *  frontmatter line indexes that carry the BM-16 marker. Shared by apply (stale check) and revert. */
+function* scanPosts(root) {
+  for (const loc of LOCALES) {
+    const dir = join(root, "content", "posts", loc);
+    if (!existsSync(dir)) continue;
+    for (const name of readdirSync(dir).sort()) {
+      if (!name.endsWith(".mdx")) continue;
+      const file = join(dir, name);
+      const lines = readFileSync(file, "utf8").split("\n");
+      const end = frontmatter(lines);
+      if (end === null) continue;
+      const marks = [];
+      for (let i = 1; i < end; i++) if (lines[i] === MARK_FALSE || lines[i] === MARK_ABSENT) marks.push(i);
+      yield { key: `${loc}/${name.slice(0, -".mdx".length)}`, file, lines, marks };
+    }
+  }
+}
+
 function writeMap(root, obj) {
   const p = join(root, MAP_REL);
   mkdirSync(dirname(p), { recursive: true });
@@ -142,6 +163,14 @@ export function applyList({ root = process.cwd(), listPath }) {
         errors.push(e.message);
       }
     }
+    // Review F2 (#19 · REQ §5.1 · AC10): the marked set must equal the drop set. A post hidden by an earlier apply
+    // that is not a drop row of this list would stay unpublished with no map entry (no link rewrite, no 410, no rule).
+    // Refuse instead of guessing; the way to apply a smaller list is --revert, then apply.
+    for (const p of scanPosts(root)) {
+      if (p.marks.length && !seen.has(p.key)) {
+        errors.push(`${p.key}: hidden by an earlier apply but not a drop row of this list (run --revert, then apply this list)`);
+      }
+    }
     if (errors.length) {
       for (const e of errors) out.push(`FAIL ${e}`);
       out.push(`RESULT FAIL exit 1 · nothing written (${errors.length} error(s))`);
@@ -163,30 +192,14 @@ export function applyList({ root = process.cwd(), listPath }) {
 export function revert({ root = process.cwd() }) {
   let n = 0;
   try {
-    for (const loc of LOCALES) {
-      const dir = join(root, "content", "posts", loc);
-      if (!existsSync(dir)) continue;
-      for (const name of readdirSync(dir).sort()) {
-        if (!name.endsWith(".mdx")) continue;
-        const file = join(dir, name);
-        const lines = readFileSync(file, "utf8").split("\n");
-        const end = frontmatter(lines);
-        if (end === null) continue;
-        let changed = false;
-        for (let i = end - 1; i >= 1; i--) {
-          if (lines[i] === MARK_FALSE) {
-            lines[i] = "draft: false";
-            changed = true;
-          } else if (lines[i] === MARK_ABSENT) {
-            lines.splice(i, 1);
-            changed = true;
-          }
-        }
-        if (changed) {
-          writeFileSync(file, lines.join("\n"));
-          n++;
-        }
+    for (const { file, lines, marks } of scanPosts(root)) {
+      if (!marks.length) continue;
+      for (const i of [...marks].reverse()) {
+        if (lines[i] === MARK_FALSE) lines[i] = "draft: false";
+        else lines.splice(i, 1);
       }
+      writeFileSync(file, lines.join("\n"));
+      n++;
     }
     writeMap(root, EMPTY_MAP);
     return { code: 0, lines: [`reverted ${n} · map reset`] };
