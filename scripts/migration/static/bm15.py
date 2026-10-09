@@ -37,7 +37,9 @@ headers (AC1 runtime, AC2, AC8). Run FIRST after `next start` (a first GET must 
       200 · cache-control with s-maxage= and no private/no-store/no-cache · no set-cookie · vary without * / cookie.
   (iv) AC8: /blog/api/og 200 image/png · POST /blog/api/newsletter {"email":"x"} 400 {"error":"Invalid email"} ·
       4 × 404 (unknown post, /blog/th/th, /blog/th/<post>, /blog/EN/<post>). `--only ac8` runs (iv) alone (B1 side).
-  (v) recorded, not judged: the unknown tag and the unknown post, twice each, + new .html files they leave.
+  (v) recorded, not judged: the unknown tag and the unknown post, twice each, + the new .html files the run leaves
+      (on-demand ISR writes: th/tag/<unknown>.html, th/<unknown post>.html, th/th.html = the middleware's 404
+      target); any other new file counts as "new html files for expected URLs" (judged in FALLBACK mode).
 
 compare (AC4a/b, AC5, AC6, AC8 rows). Pages = the N expected paths + the unknown post + the unknown tag.
   Per page, A vs B: equal status and byte-equal fields from the whole document (html lang, title, meta description,
@@ -690,13 +692,16 @@ def cmd_headers(a: argparse.Namespace, argv: list[str]) -> int:
             tsv.append(["v", p, f"#{k}", s, hfirst(hd, "x-nextjs-cache") or "-", hfirst(hd, "cache-control"), "recorded"])
     after = set(html_list(app))
     new = sorted(after - before)
-    unknown_new = [f for f in new if "zzz-not-a-" in f]
-    other_new = [f for f in new if "zzz-not-a-" not in f]
-    lines.append(f"(v) new .html under .next/server/app after the run: {len(new)} · for the unknown URLs "
-                 f"{unknown_new or 'none'}")
-    lines.append(f"new html files for expected URLs {len(other_new)}" + (f" (first 5: {other_new[:5]})" if other_new else ""))
+    # explained = written by the (iv)/(v) requests: the unknown tag/post and th/th.html (the middleware's internal 404
+    # target /th/th for /blog/th/* and /blog/EN/*). Anything else would be an on-demand render of an expected URL
+    # (under a non-predicted name, or a predicted one missing from the snapshot).
+    explained = [f for f in new if "zzz-not-a-" in f or f == "th/th.html"]
+    unexplained = [f for f in new if f not in explained]
+    lines.append(f"(v) new .html under .next/server/app after the run: {len(new)} · from the unknown/404 requests "
+                 f"{explained or 'none'}")
+    lines.append(f"new html files for expected URLs {len(unexplained)}" + (f" (first 5: {unexplained[:5]})" if unexplained else ""))
     if mode == "fallback":
-        ok &= not other_new
+        ok &= not unexplained
     p = C.write_tsv(f"bm15-headers-{label}", lines[:2], cols, tsv, [])
     lines.append(f"tsv {p.name}")
     return report("headers", label, lines, ok)
