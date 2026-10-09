@@ -188,5 +188,85 @@ class RouteTable(unittest.TestCase):
         self.assertEqual(bm15.judge_routes(table), (0, []))
 
 
+def page(canonical_in_body: bool = False, canonical: str = "https://ink.dopelab.studio/th/tag/ai",
+         main: str = "<h1>ai</h1><p>2 posts</p>", chunk: str = "82abf2d65f5428ae", build: str = "c6dTrDhG553P38RR5SMgm") -> str:
+    canon = f'<link rel="canonical" href="{canonical}"/>'
+    return (
+        '<!DOCTYPE html><html lang="th"><head><meta charSet="utf-8"/><title>#ai | INK by DopeLab</title>'
+        '<meta name="description" content="2 posts"/>'
+        + ("" if canonical_in_body else canon)
+        + '<link rel="alternate" hrefLang="th" href="https://ink.dopelab.studio/th/tag/ai"/>'
+        '<meta property="og:url" content="https://ink.dopelab.studio/th/tag/ai"/>'
+        '<meta name="twitter:card" content="summary_large_image"/>'
+        f'<script src="/blog/_next/static/chunks/{chunk}.js" async=""></script></head>'
+        '<body><header><a href="/blog">INK</a></header>'
+        + (canon if canonical_in_body else "")
+        + f'<main class="flex-1">{main}<a href="/blog/p1">P1</a>'
+        '<img src="/blog/static/p1.jpg" alt=""/><script type="application/ld+json">{"a":1}</script></main>'
+        f'<link rel="preload" href="/blog/_next/static/media/{chunk}.woff2"/>'
+        f'<a href="/blog/_next/data/{build}/x.json">x</a>'
+        f'<script>self.__next_f.push([1,"0:{{\\"P\\":null,\\"b\\":\\"{build}\\"}}"])</script></body></html>'
+    )
+
+
+class Extractor(unittest.TestCase):
+    def test_fields(self):
+        d = bm15.extract(page())
+        self.assertEqual(d["lang"], ["th"])
+        self.assertEqual(d["canonical"], ["https://ink.dopelab.studio/th/tag/ai"])
+        self.assertEqual(d["hreflang"], [["th", "https://ink.dopelab.studio/th/tag/ai"]])
+        self.assertIn(["og:url", "https://ink.dopelab.studio/th/tag/ai"], d["social"])
+        self.assertEqual(d["jsonld"], ['{"a":1}'])
+        self.assertEqual(d["main_text"], "ai 2 posts P1")
+        self.assertEqual(d["h1_main"], ["ai"])
+        self.assertIn("/blog/p1", d["main_hrefs"])
+        self.assertEqual(d["meta_outside_head"], [])
+
+    def test_identical_pages_no_mismatch(self):
+        self.assertEqual(bm15.diff_fields(bm15.extract(page()), bm15.extract(page())), [])
+
+    def test_canonical_in_body_flagged(self):
+        d = bm15.extract(page(canonical_in_body=True))
+        self.assertEqual(len(d["meta_outside_head"]), 1)
+        self.assertIn("canonical", d["meta_outside_head"][0])
+
+    def test_changed_canonical_flagged(self):
+        a = bm15.extract(page())
+        b = bm15.extract(page(canonical="https://ink.dopelab.studio/th/tag/AI"))
+        self.assertEqual(bm15.diff_fields(a, b), ["canonical"])
+
+    def test_changed_main_text_flagged(self):
+        a = bm15.extract(page())
+        b = bm15.extract(page(main="<h1>ai</h1><p>3 posts</p>"))
+        self.assertEqual(bm15.diff_fields(a, b), ["main_text"])
+
+    def test_ignores_next_static_and_build_id(self):
+        a = bm15.extract(page())
+        b = bm15.extract(page(chunk="ffffffffffffffff", build="ZZZZZZZZZZZZZZZZZZZZZ"))
+        self.assertEqual(bm15.diff_fields(a, b), [])
+
+    def test_link_split(self):
+        self.assertEqual(bm15.link_entries('<a>; rel="alternate", <b>; rel=preload'),
+                         ['<a>; rel="alternate"', "<b>; rel=preload"])
+
+
+class CacheJudge(unittest.TestCase):
+    def test_static_ok(self):
+        probs, smax = bm15.judge_cache(200, [("cache-control", "s-maxage=31536000"),
+                                              ("vary", "rsc, next-router-state-tree, Accept-Encoding")])
+        self.assertEqual((probs, smax), ([], "31536000"))
+
+    def test_dynamic_fails(self):
+        probs, _ = bm15.judge_cache(200, [("cache-control", "private, no-cache, no-store, max-age=0, must-revalidate"),
+                                          ("set-cookie", "NEXT_LOCALE=th; Path=/blog; SameSite=lax")])
+        joined = " ".join(probs)
+        for word in ("s-maxage", "private", "no-store", "no-cache", "set-cookie"):
+            self.assertIn(word, joined)
+
+    def test_vary_cookie_fails(self):
+        probs, _ = bm15.judge_cache(200, [("cache-control", "s-maxage=1"), ("vary", "Cookie")])
+        self.assertTrue(probs)
+
+
 if __name__ == "__main__":
     unittest.main()
