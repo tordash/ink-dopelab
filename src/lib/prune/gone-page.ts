@@ -14,14 +14,22 @@ export interface GonePageInput {
   homeHref: string;
 }
 
-/** The article-list hub: /<loc>/blog on this base · <bp>/all or <bp>/en/all after BM-04 (bp = the /blog basePath). */
-export function listHubHref(locale: GoneLocale, bp: string): string {
-  return bp === "" ? `/${locale}/blog` : `${bp}${locale === "en" ? "/en" : ""}/all`;
+/** The locale-less, basePath-less routes the page links to: BM-04's `ROUTES` (src/lib/routes.ts), passed in by route.ts. */
+export interface GoneRoutes {
+  home: string;
+  list: string;
 }
 
-/** The blog home: /<loc> on this base · <bp> or <bp>/en after BM-04. */
-export function blogHomeHref(locale: GoneLocale, bp: string): string {
-  return bp === "" ? `/${locale}` : `${bp}${locale === "en" ? "/en" : ""}`;
+/**
+ * The two links of the 410 page: the article-list hub (`routes.list`) and the blog home (`routes.home`) of `locale`.
+ * href = <bp> + "/en" for en only (next-intl localePrefix "as-needed") + the route; the home route "/" adds nothing,
+ * so no href ends in "/" (Next would answer 308). th: <bp>/all · <bp> · en: <bp>/en/all · <bp>/en.
+ * <bp> = BASE_PATH from src/lib/base-path.ts. Never request.nextUrl.basePath: it is empty in a route handler (SPEC R4).
+ */
+export function goneHrefs(locale: GoneLocale, bp: string, routes: GoneRoutes): { hubHref: string; homeHref: string } {
+  const prefix = `${bp}${locale === "en" ? "/en" : ""}`;
+  const at = (route: string): string => (route === "/" ? prefix || "/" : `${prefix}${route}`);
+  return { hubHref: at(routes.list), homeHref: at(routes.home) };
 }
 
 function esc(s: string): string {

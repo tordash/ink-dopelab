@@ -11,8 +11,10 @@
 // request time, so the handler behaves the same on `next start` and on Vercel.
 import type { NextRequest } from "next/server";
 import { posts } from "#site/content";
+import { BASE_PATH } from "@/lib/base-path";
+import { ROUTES } from "@/lib/routes";
 import pruneMap from "@/lib/prune/prune-map.json";
-import { renderGonePage, listHubHref, blogHomeHref, type GoneLocale } from "@/lib/prune/gone-page";
+import { renderGonePage, goneHrefs, type GoneLocale } from "@/lib/prune/gone-page";
 
 export const dynamic = "force-dynamic";
 
@@ -40,13 +42,8 @@ export function GET(request: NextRequest): Response {
   const post = posts.find((p) => p.locale === locale && p.slugAsParams === slug);
   if (!post || post.draft !== true) return notFound();
   const loc = locale as GoneLocale;
-  const bp = request.nextUrl.basePath;
-  const html = renderGonePage({
-    locale: loc,
-    title: post.title,
-    hubHref: listHubHref(loc, bp),
-    homeHref: blogHomeHref(loc, bp),
-  });
+  // review F3: links from BM-04's BASE_PATH + ROUTES, never the request's basePath (empty in a route handler, SPEC R4)
+  const html = renderGonePage({ locale: loc, title: post.title, ...goneHrefs(loc, BASE_PATH, ROUTES) });
   return new Response(html, {
     status: 410,
     headers: {
