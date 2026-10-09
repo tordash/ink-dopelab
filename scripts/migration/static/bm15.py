@@ -47,6 +47,14 @@ compare (AC4a/b, AC5, AC6, AC8 rows). Pages = the N expected paths + the unknown
   the exact tag, its post links are exactly the posts with that exact tag, and its fields equal A. AC6: every tag +
   category page has the same canonical / og:url / hreflang on A and B, none with a raw space or a /tag/<a>/<b> split.
   `--only canon` = AC6 alone (early check on B2′), `--only casefold` = AC5 alone.
+
+ondemand --b1 URL --b2p URL --asset-origin ORIGIN (AC10b on-demand rows; Playwright, Chromium 1280×800, the
+  img_host.py aborted hosts + its access-control-allow-origin shim on the asset origin). Step 0: on B1 the 404 of
+  the unknown post renders outside the header layout (SSR <header> 0 · <img> 0 · _next/static scripts ≥ 1); if B1
+  differs, the 404 row is judged on what B1 shows. On B2′: the unknown tag (200) has every SSR header/footer <img>
+  and every _next/static script on the asset origin, hydrates, and has ≤ B1's console errors; the unknown post is
+  404 with every _next/static script (≥ 1) and any <img> on the asset origin and ≤ B1's errors. 0 aborted-host
+  requests may finish.
 """
 from __future__ import annotations
 
@@ -805,6 +813,154 @@ def cmd_compare(a: argparse.Namespace, argv: list[str]) -> int:
     return report("compare", label, lines, ok)
 
 
+# ---------------------------------------------------------------- ondemand (Playwright)
+
+# same aborted hosts as ../checks/img_host.py (copied, never imported: checks/ stays untouched)
+BLOCK = re.compile(r"google-analytics\.com|googletagmanager\.com|analytics\.google\.com|/_vercel/insights/(view|event)"
+                   r"|/_vercel/speed-insights|giscus\.app|lin\.ee|lab\.dopelab\.studio")
+LOCAL_ONLY = re.compile(r"404 \(Not Found\) @ <origin>/blog/_vercel/insights/script\.js$")
+HYDRATED_JS = ("() => { const h = document.querySelector('header');"
+               " return !!h && Object.keys(h).some(k => k.startsWith('__reactFiber')); }")
+SCRIPT_SRC = re.compile(r'<script\b[^>]*\bsrc="([^"]+)"', re.I)
+IMG_SRC = re.compile(r'<img\b[^>]*\bsrc="([^"]*)"', re.I)
+
+
+def _origin(u: str) -> str:
+    s = urlsplit(u)
+    return f"{s.scheme}://{s.netloc}"
+
+
+def scan_page(browser, base: str, path: str, asset_origin: str) -> dict:
+    """One page in Chromium (img_host.py settings): SSR scripts/imgs, hydration, console errors, network."""
+    from urllib.parse import urljoin
+    ctx = browser.new_context(viewport={"width": 1280, "height": 800}, color_scheme="light", locale="th-TH",
+                              timezone_id="Asia/Bangkok")
+    ctx.route("**/*", lambda r: r.abort() if BLOCK.search(r.request.url) else r.continue_())
+
+    def add_acao(route):  # img_host.py / pixels.py --acao-origin shim: live Vercel sends ACAO, `next start` does not
+        r = route.fetch()
+        route.fulfill(response=r, headers={**r.headers, "access-control-allow-origin": "*"})
+
+    if _origin(asset_origin) != _origin(base):
+        ctx.route(asset_origin + "/**", add_acao)
+    errors, local, blocked_err, reached = [], [], [], []
+    net = collections.Counter()
+    pg = ctx.new_page()
+
+    def norm(line: str) -> str:
+        for o in (asset_origin, base):
+            line = line.replace(o, "<origin>")
+        return line
+
+    def on_console(m):
+        if m.type != "error":
+            return
+        loc = (m.location or {}).get("url", "") if isinstance(m.location, dict) else ""
+        line = norm(f"{m.text[:200]} @ {loc}")
+        if BLOCK.search(m.text) or BLOCK.search(loc):
+            blocked_err.append(line)
+        elif LOCAL_ONLY.search(line):
+            local.append(line)
+        else:
+            errors.append(line)
+
+    pg.on("console", on_console)
+    pg.on("pageerror", lambda e: errors.append(norm(f"pageerror: {str(e)[:200]}")))
+    ctx.on("requestfinished", lambda rq: reached.append(rq.url) if BLOCK.search(rq.url) else None)
+
+    def on_req(rq):
+        if "/_next/static/" in rq.url or rq.resource_type == "image":
+            where = "asset" if rq.url.startswith(asset_origin + "/") else (
+                "page" if rq.url.startswith(base + "/") else "other")
+            net[f"{rq.resource_type}:{where}"] += 1
+
+    pg.on("request", on_req)
+    url = base + path
+    try:
+        resp = pg.goto(url, wait_until="networkidle", timeout=60000)
+        status = resp.status if resp else 0
+        ssr = resp.text() if resp else ""
+    except Exception as e:  # noqa: BLE001 — judged below
+        status, ssr = -1, ""
+        errors.append(f"goto: {str(e)[:160]}")
+    try:
+        pg.wait_for_function(HYDRATED_JS, timeout=20000)
+        hydrated = True
+    except Exception:  # noqa: BLE001
+        hydrated = False
+    pg.wait_for_timeout(1000)
+    ctx.close()
+    scripts = [urljoin(url, s) for s in SCRIPT_SRC.findall(ssr) if "/_next/static/" in s]
+    hf = "".join(re.findall(r"<header\b.*?</header>", ssr, re.S | re.I) + re.findall(r"<footer\b.*?</footer>", ssr, re.S | re.I))
+    return {
+        "status": status, "hydrated": hydrated, "errors": errors, "local_only": local, "blocked_errors": blocked_err,
+        "reached": reached, "net": dict(net), "n_header": len(re.findall(r"<header\b", ssr, re.I)),
+        "imgs": [urljoin(url, s) for s in IMG_SRC.findall(ssr)], "hf_imgs": [urljoin(url, s) for s in IMG_SRC.findall(hf)],
+        "scripts": scripts,
+    }
+
+
+def cmd_ondemand(a: argparse.Namespace, argv: list[str]) -> int:
+    from playwright.sync_api import sync_playwright
+    b1, b2p, ao = a.b1.rstrip("/"), a.b2p.rstrip("/"), a.asset_origin.rstrip("/")
+    label = a.label or "ondemand"
+    lines = head_lines("ondemand", argv, None) + [f"# B1 {b1} · B2′ {b2p} · asset origin {ao}"]
+    ok = True
+    on_ao = lambda u: u.startswith(ao + "/")  # noqa: E731
+    with sync_playwright() as pw:
+        br = pw.chromium.launch()
+        try:
+            r1 = {p: scan_page(br, b1, p, ao if _origin(ao) == _origin(b1) else b1) for p in (UNKNOWN_TAG, UNKNOWN_POST)}
+            r2 = {p: scan_page(br, b2p, p, ao) for p in (UNKNOWN_TAG, UNKNOWN_POST)}
+        finally:
+            br.close()
+
+    # Step 0 (REQ r2 addendum): the 404 on B1 renders outside the header layout
+    s0 = r1[UNKNOWN_POST]
+    want0 = s0["n_header"] == 0 and len(s0["imgs"]) == 0 and len(s0["scripts"]) >= 1
+    lines.append(f"Step 0 B1 {UNKNOWN_POST}: status {s0['status']} · SSR <header> {s0['n_header']} · <img> {len(s0['imgs'])}"
+                 f" · _next/static scripts {len(s0['scripts'])} → "
+                 + ("as the REQ addendum says" if want0 else "DIFFERS from the addendum: the 404 row is judged on what B1 shows"))
+    for p in (UNKNOWN_TAG, UNKNOWN_POST):
+        lines.append(f"B1 {p}: status {r1[p]['status']} · console/page errors {len(r1[p]['errors'])} {r1[p]['errors'][:3]}"
+                     f" · local-only {len(r1[p]['local_only'])} · aborted-host {len(r1[p]['blocked_errors'])}")
+
+    t = r2[UNKNOWN_TAG]
+    off_s = [u for u in t["scripts"] if not on_ao(u)]
+    off_i = [u for u in t["hf_imgs"] if not on_ao(u)]
+    row = (t["status"] == 200 and t["hf_imgs"] and not off_i and t["scripts"] and not off_s and t["hydrated"]
+           and len(t["errors"]) <= len(r1[UNKNOWN_TAG]["errors"]) and not t["net"].get("script:page"))
+    lines.append(f"{'PASS' if row else 'FAIL'} B2′ {UNKNOWN_TAG}: status {t['status']} · header/footer <img> "
+                 f"{len(t['hf_imgs']) - len(off_i)}/{len(t['hf_imgs'])} on the asset origin · _next/static scripts "
+                 f"{len(t['scripts']) - len(off_s)}/{len(t['scripts'])} on the asset origin · hydrated {t['hydrated']} · "
+                 f"errors {len(t['errors'])} (B1 {len(r1[UNKNOWN_TAG]['errors'])}) · requests {t['net']}")
+    lines += [f"    off-origin: {u}" for u in (off_s + off_i)[:5]]
+    lines += [f"    error: {e}" for e in t["errors"][:5]]
+    ok &= bool(row)
+
+    t = r2[UNKNOWN_POST]
+    off_s = [u for u in t["scripts"] if not on_ao(u)]
+    off_i = [u for u in t["imgs"] if not on_ao(u)]
+    shape = (t["n_header"] == s0["n_header"] and len(t["imgs"]) == len(s0["imgs"]))
+    row = (t["status"] == 404 and t["scripts"] and not off_s and not off_i and shape
+           and len(t["errors"]) <= len(r1[UNKNOWN_POST]["errors"]) and not t["net"].get("script:page"))
+    lines.append(f"{'PASS' if row else 'FAIL'} B2′ {UNKNOWN_POST}: status {t['status']} · _next/static scripts "
+                 f"{len(t['scripts']) - len(off_s)}/{len(t['scripts'])} on the asset origin · <img> "
+                 f"{len(t['imgs']) - len(off_i)}/{len(t['imgs'])} on it · SSR <header> {t['n_header']} (B1 {s0['n_header']})"
+                 f" · errors {len(t['errors'])} (B1 {len(r1[UNKNOWN_POST]['errors'])}) · requests {t['net']}")
+    lines += [f"    off-origin: {u}" for u in (off_s + off_i)[:5]]
+    lines += [f"    error: {e}" for e in t["errors"][:5]]
+    ok &= bool(row)
+
+    reached = [u for r in (*r1.values(), *r2.values()) for u in r["reached"]]
+    lines.append(f"blocked-host requests {len(reached)}" + (f" {reached[:3]}" if reached else ""))
+    ok &= not reached
+    p = C.evidence_path(f"bm15-ondemand-{label}", "json")
+    p.write_text(json.dumps({"b1": r1, "b2p": r2}, ensure_ascii=False, indent=1), encoding="utf-8")
+    lines.append(f"json {p.name}")
+    return report("ondemand", label, lines, ok)
+
+
 # ---------------------------------------------------------------- main
 
 def main(argv: list[str]) -> int:
@@ -829,8 +985,13 @@ def main(argv: list[str]) -> int:
     c.add_argument("--repo", default=".")
     c.add_argument("--only", choices=("all", "canon", "casefold"), default="all")
     c.add_argument("--label")
+    o = sub.add_parser("ondemand")
+    o.add_argument("--b1", required=True)
+    o.add_argument("--b2p", required=True)
+    o.add_argument("--asset-origin", required=True)
+    o.add_argument("--label")
     a = ap.parse_args(argv)
-    return {"build": cmd_build, "headers": cmd_headers, "compare": cmd_compare}[a.sub](a, argv)
+    return {"build": cmd_build, "headers": cmd_headers, "compare": cmd_compare, "ondemand": cmd_ondemand}[a.sub](a, argv)
 
 
 if __name__ == "__main__":
