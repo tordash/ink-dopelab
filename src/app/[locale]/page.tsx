@@ -1,5 +1,5 @@
 import { useTranslations, useLocale } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { getPostsByLocale, getFeaturedPosts } from "@/lib/content";
 import { ArticleCard } from "@/components/blog/article-card";
 import { HeroBackground } from "@/components/hero-background";
@@ -9,8 +9,9 @@ import type { Locale } from "@/i18n/routing";
 import { ROUTES } from "@/lib/routes";
 import { publicAssetSrc } from "@/lib/base-path";
 
-export default async function HomePage() {
-  const locale = (await getLocale()) as Locale;
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const allPosts = getPostsByLocale(locale);
   const featured = getFeaturedPosts(locale);
   const latest = allPosts.filter((p) => !p.featured).slice(0, 6);

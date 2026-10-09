@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import { League_Spartan, Kanit, Special_Elite } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
@@ -63,6 +63,7 @@ export default async function LocaleLayout({
     notFound();
   }
 
+  setRequestLocale(locale); // BM-15: locale from params, never from request headers → static rendering
   const messages = await getMessages();
 
   return (

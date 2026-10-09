@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import {
   getPostsByLocale,
   getAllCategories,
@@ -10,8 +10,8 @@ import { createMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 import { ROUTES } from "@/lib/routes";
 
-export async function generateMetadata() {
-  const locale = (await getLocale()) as Locale;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale as Locale;
   return createMetadata({
     title: locale === "th" ? "บทความทั้งหมด" : "All Articles",
     description:
@@ -23,8 +23,9 @@ export async function generateMetadata() {
   });
 }
 
-export default async function BlogListPage() {
-  const locale = (await getLocale()) as Locale;
+export default async function BlogListPage({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const posts = getPostsByLocale(locale);
   const categories = getAllCategories(locale);
   const tags = getAllTags(locale);

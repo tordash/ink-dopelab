@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { getPostsByTag, getAllTags } from "@/lib/content";
 import { ArticleCard } from "@/components/blog/article-card";
 import { createMetadata } from "@/lib/seo";
@@ -46,9 +46,10 @@ export default async function TagPage({
 }: {
   params: Promise<{ locale: string; tag: string }>;
 }) {
-  const { tag } = await params;
+  const { locale: l, tag } = await params;
+  setRequestLocale(l);
   const decoded = decodeURIComponent(tag);
-  const locale = (await getLocale()) as Locale;
+  const locale = l as Locale;
   const posts = getPostsByTag(decoded, locale);
 
   return (
