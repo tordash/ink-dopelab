@@ -1,9 +1,13 @@
 #!/usr/bin/env python3.13
 """BM-05 checks (SPEC §5.1; TASKS T4-T6): SEO metadata on the new host. python3.13 stdlib only; local servers only.
 
-  bm05.py data  --repo <tree> [--prune-counts <json>] [--label L]
-  bm05.py sweep --target URL --repo <tree> --mode normal|noindex|off|asset [--base URL] [--asset-origin O]
-                [--baseline <ink sitemap urls txt>] [--named-diff <txt>] [--label L]
+  bm05.py data       --repo <tree> [--prune-counts <json>] [--label L]
+  bm05.py sweep      --target URL --repo <tree> --mode normal|noindex|off|asset [--base URL] [--asset-origin O]
+                     [--baseline <ink sitemap urls txt>] [--named-diff <txt>] [--label L]
+  bm05.py feed       --target URL --repo <tree> [--mode normal|off] [--validate] [--label L]
+  bm05.py robots     --target URL --dopelab <dopelab tree> [--repo <tree>] [--mode normal|off] [--label L]
+  bm05.py vercelhost --target URL [--repo <tree>] [--noindex] [--label L]
+  bm05.py ac2judge   --tsv <BM-04 ac2-violations tsv> [--label L]
 
 Data (never a literal count): <tree>/.velite/posts.json (non-draft) → N = 8 + posts + tags(th,en) + categories(th,en),
 the expected URL of every page in both modes (normal: SITE + /blog + en prefix + route; mode off: the legacy template
@@ -884,6 +888,81 @@ def cmd_robots(a) -> int:
     return rep.finish()
 
 
+# ---------------------------------------------------------------------------------------------------- vercelhost
+VERCEL_HOSTS = ["ink-dopelab.vercel.app", "ink-dopelab-git-bm-r1-x.vercel.app"]
+OTHER_HOSTS = ["dopelab.studio", "ink.dopelab.studio", "<target>", "vercel.app.example.com"]
+
+
+def cmd_vercelhost(a) -> int:
+    """AC9: 6 Host headers × 6 paths against the local server; X-Robots-Tag lines per response.
+    *.vercel.app → exactly 1 noindex line everywhere (also on "/" outside the basePath); other hosts → 0 lines,
+    except with --noindex (a BLOG_NOINDEX=1 build): every /blog path → exactly 1 line (overlap check, SPEC §1.2 A6)."""
+    rep = Report("vercelhost", a.label)
+    for h in C.header("bm05.py vercelhost"):
+        rep.info(h)
+    target = a.target.rstrip("/")
+    net = Net(target)
+    d = compute_data(a.repo, SITE)
+    post = next(r for r in d["rows"] if r["kind"] == "post" and r["locale"] == "th")
+    tag = next(r for r in d["rows"] if r["kind"] == "tag" and r["locale"] == "th")
+    paths = [BASE, path_query(post["new_url"]), path_query(tag["new_url"]), BASE + "/sitemap.xml", post["cover"], "/"]
+    rows, ok = [], 0
+    for host in VERCEL_HOSTS + OTHER_HOSTS:
+        hh = urlsplit(target).netloc if host == "<target>" else host
+        for path in paths:
+            s, h, _b = net.get(target, path, host=hh)
+            lines = hvals(h, "x-robots-tag")
+            noidx = [v for v in lines if "noindex" in v.lower()]
+            if host in VERCEL_HOSTS:
+                want = 1
+            elif a.noindex and (path == BASE or path.startswith(BASE + "/")):
+                want = 1
+            else:
+                want = 0
+            good = len(lines) == want and len(noidx) == want
+            ok += good
+            rows.append([hh, path, s, len(lines), " | ".join(lines), want, "PASS" if good else "FAIL"])
+    p = C.write_tsv(f"bm05-vercelhost-{a.label}", [f"# bm05.py vercelhost · target {target} · noindex build {a.noindex}"],
+                    ["host", "path", "status", "x_robots_tag_lines", "values", "want_lines", "result"], rows, [])
+    for r in rows:
+        rep.info("  " + "\t".join(str(x) for x in r))
+    rep.info(f"rows {p}")
+    vrows = [r for r in rows if r[0] in VERCEL_HOSTS]
+    rep.check(ok == len(rows), f"vercelhost {'PASS' if ok == len(rows) else 'FAIL'} {ok}/{len(rows)} · vercel rows with "
+                               f"exactly 1 line {sum(1 for r in vrows if r[3] == 1)}/{len(vrows)}")
+    rep.check(net.nonlocal_requests == 0, f"non-local requests {net.nonlocal_requests} · requests {net.requests}")
+    return rep.finish()
+
+
+# ---------------------------------------------------------------------------------------------------- ac2judge
+def cmd_ac2judge(a) -> int:
+    """SPEC §11 C1: BM-04 ac2_html.py (d) maps B0's footer /feed.xml to itself but keeps B1's /blog/feed.xml, so it
+    exits 1 by construction. Allowed (d) rows: per pair, `missing on B1 ×1` for /feed.xml + `extra on B1 ×1` for
+    /blog/feed.xml, ctx component. Anything else = FAIL."""
+    rep = Report("ac2judge", a.label)
+    for h in C.header("bm05.py ac2judge"):
+        rep.info(h)
+    import ac2_html  # BM-04, read only (PAIRS)
+    pairs_b1 = [b1 for _b0, b1 in ac2_html.PAIRS]
+    rows = [r for r in C.read_tsv(Path(a.tsv)) if r.get("check") == "d"]
+    named, other = [], []
+    want = {(b1, "/feed.xml", "missing"): 0 for b1 in pairs_b1} | {(b1, "/blog/feed.xml", "extra"): 0 for b1 in pairs_b1}
+    for r in rows:
+        kind = "missing" if r["detail"].startswith("missing on B1 ×1 ") else "extra" if r["detail"] == "extra on B1 ×1" else ""
+        key = (r["page"], r["value"], kind)
+        if key in want and r["ctx"] == "component" and r["tag"] == "a" and r["attr"] == "href" and want[key] == 0:
+            want[key] = 1
+            named.append(r)
+        else:
+            other.append(r)
+    for r in other[:20]:
+        rep.info(f"  other {r['page']} {r['ctx']} {r['value']} {r['detail']}")
+    rep.info(f"# tsv {a.tsv} · (d) rows {len(rows)} · pairs {len(pairs_b1)}")
+    ok = len(named) == len(want) and not other
+    rep.check(ok, f"ac2 (d) delta {len(named)}/{len(want)} named · other {len(other)}")
+    return rep.finish()
+
+
 # ---------------------------------------------------------------------------------------------------- main
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
@@ -913,8 +992,17 @@ def main() -> int:
     p.add_argument("--repo", type=Path, default=INK, help="ink tree (legacy-routes.json for mode off)")
     p.add_argument("--mode", choices=["normal", "off"], default="normal")
     p.add_argument("--label", default="robots")
+    p = sub.add_parser("vercelhost")
+    p.add_argument("--target", required=True)
+    p.add_argument("--repo", type=Path, default=INK)
+    p.add_argument("--noindex", action="store_true", help="the target is a BLOG_NOINDEX=1 build (B-X)")
+    p.add_argument("--label", default="vercelhost")
+    p = sub.add_parser("ac2judge")
+    p.add_argument("--tsv", required=True, help="BM-04 ac2_html.py ac2-violations-*.tsv")
+    p.add_argument("--label", default="ac2judge")
     a = ap.parse_args()
-    return {"data": cmd_data, "sweep": cmd_sweep, "feed": cmd_feed, "robots": cmd_robots}[a.cmd](a)
+    return {"data": cmd_data, "sweep": cmd_sweep, "feed": cmd_feed, "robots": cmd_robots, "vercelhost": cmd_vercelhost,
+            "ac2judge": cmd_ac2judge}[a.cmd](a)
 
 
 if __name__ == "__main__":
