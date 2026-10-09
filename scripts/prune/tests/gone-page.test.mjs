@@ -85,7 +85,10 @@ test("sources: no quoted blog-path literal, gone-page.ts is import-free, route i
   const route = readFileSync(join(SRC, "app", "api", "gone", "route.ts"), "utf8");
   for (const s of [gp, route]) assert.equal(/["'`]\/blog/.test(s), false);
   assert.equal(/^import /m.test(gp), false);
-  assert.ok(route.includes('export const dynamic = "force-dynamic"'));
+  // review F4: no route-segment `dynamic` export / dynamic APIs (BM-04 invariants.sh #4 guards BM-15 static rendering).
+  // A GET handler that reads `request` is dynamic anyway (build route table: ƒ /api/gone).
+  assert.equal(/cookies\(\)|headers\(\)|export const dynamic/.test(route), false);
+  assert.ok(route.includes("request.nextUrl.searchParams"));
   assert.ok(route.includes("status: 410"));
   for (const s of [gp, route]) {
     assert.equal(BANNED.test(s), false);

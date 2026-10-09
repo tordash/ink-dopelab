@@ -16,8 +16,6 @@ import { ROUTES } from "@/lib/routes";
 import pruneMap from "@/lib/prune/prune-map.json";
 import { renderGonePage, goneHrefs, type GoneLocale } from "@/lib/prune/gone-page";
 
-export const dynamic = "force-dynamic";
-
 const SLUG = /^[a-z0-9-]+$/;
 const MAP = pruneMap as unknown as { posts: Record<string, { rule?: string; kind?: string }> };
 
