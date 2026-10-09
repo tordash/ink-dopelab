@@ -145,6 +145,20 @@ def hvals(hdrs: list[tuple[str, str]], name: str) -> list[str]:
     return [v for k, v in hdrs if k == name]
 
 
+def path_of_ref(page_url: str, href: str, target: str) -> str | None:
+    """Resolve href against the (local) page URL. A result on the target origin or on SITE gives its path (+query);
+    anything else (another host) gives None: it is never fetched."""
+    from urllib.parse import urljoin
+    if not href:
+        return None
+    u = urljoin(page_url, href)
+    if origin_of(u) == origin_of(target):
+        return path_query(u)
+    if u == SITE or u.startswith(SITE + "/"):
+        return path_query(u)
+    return None
+
+
 def xmllint_ok(body: bytes) -> tuple[bool, str]:
     r = subprocess.run(["xmllint", "--noout", "-"], input=body, capture_output=True)
     return r.returncode == 0, r.stderr.decode("utf-8", "replace").strip().splitlines()[0] if r.returncode else "ok"
@@ -416,10 +430,13 @@ def cmd_sweep(a) -> int:
     # ---- fetch + parse
     pages = []
     for loc, r, path, why in plan:
-        rec = {"loc": loc, "row": r, "path": path, "why": why, "status": None, "hdrs": [], "p": None}
+        rec = {"loc": loc, "row": r, "path": path, "why": why, "status": None, "hdrs": [], "p": None, "bp": None}
         if path is not None:
             s, h, b = net.get(target, path)
             rec.update(status=s, hdrs=h, p=parse_page(b) if s == 200 else None)
+            if base and s == 200:  # AC12: the same new path on --base (title / description byte-equal)
+                bs, _bh, bb = net.get(base, path)
+                rec["bp"] = parse_page(bb) if bs == 200 else None
         pages.append(rec)
     on_demand = []
     for path, want, what in ON_DEMAND + gone_rows(a.repo):
@@ -441,6 +458,17 @@ def cmd_sweep(a) -> int:
     observed_alts: dict[str, dict[str, str]] = {}
     canon_set: set[str] = set()
     url_field_newhost = 0  # mode off: SITE+/blog in canonical/og:url/JSON-LD url/hreflang/<loc>
+    # T5 fields
+    img_ok = 0
+    img_unexpected = 0
+    asset_hits = 0
+    img_on_site = 0
+    img_urls: dict[str, str] = {}  # distinct image URL -> template (cover | og:<kind>)
+    rss_ok = foot_ok = 0
+    slash_feed = 0  # href="/feed.xml" (root-relative, outside the basePath)
+    meta_noindex = 0
+    hdr_noindex = 0
+    title_ok = desc_ok = 0
     rows_out = []
     for x in pages:
         r, p = x["row"], x["p"]
@@ -512,9 +540,58 @@ def cmd_sweep(a) -> int:
                 olalt_ok += 1
             else:
                 reasons.append("og:locale:alternate")
+        og_img = tw_img = ld_img = None
+        rss_href = foot_href = ""
+        xrt = [v for v in hvals(x["hdrs"], "x-robots-tag")]
+        mrob: list[str] = []
+        if p is not None:
+            art = p.article()
+            og_img, tw_img = p.one("og:image"), p.one("twitter:image")
+            ld_img = art.get("image") if art else None
+            # AC7: og:image = twitter:image (= post JSON-LD image) on SITE + basePath, never the asset host (ADR-01 09)
+            if r is not None:
+                if r["kind"] == "post":
+                    want_img = SITE + r["cover"] if r.get("cover") else None
+                else:
+                    want_img = f"{SITE}{BASE}/api/og?title={enc(p.one('og:title') or '')}&locale={r['locale']}"
+                fields = [og_img, tw_img] + ([ld_img] if r["kind"] == "post" else [])
+                if want_img and all(v == want_img for v in fields):
+                    img_ok += 1
+                else:
+                    reasons.append("image fields")
+                if og_img and og_img.startswith(SITE + BASE + "/"):
+                    img_on_site += 1
+                    img_urls.setdefault(og_img, "cover" if r["kind"] == "post" else f"og:{r['kind']}")
+                elif og_img:
+                    img_unexpected += 1
+                if a.asset_origin:
+                    asset_hits += sum(1 for v in fields if v and v.startswith(a.asset_origin.rstrip("/")))
+            # AC5: RSS <link> + footer RSS <a> resolve (against the page) to BASE/feed.xml
+            rss_href = p.rss[0] if p.rss else ""
+            feeds = [an.get("href", "") for an in p.anchors if an.get("title") == "RSS Feed"]
+            foot_href = feeds[0] if feeds else ""
+            slash_feed += sum(1 for v in p.rss + [an.get("href", "") for an in p.anchors] if v == "/feed.xml")
+            page_url = target + (x["path"] or "/")
+            if len(p.rss) == 1 and path_of_ref(page_url, rss_href, target) == BASE + "/feed.xml":
+                rss_ok += 1
+            else:
+                reasons.append("rss link")
+            if len(feeds) == 1 and path_of_ref(page_url, foot_href, target) == BASE + "/feed.xml":
+                foot_ok += 1
+            else:
+                reasons.append("footer rss")
+            # AC8: noindex meta + header
+            mrob = p.meta.get("robots", [])
+            meta_noindex += any("noindex" in v.lower() for v in mrob)
+            hdr_noindex += any("noindex" in v.lower() for v in xrt)
+            # AC12: <title> + description byte-equal vs --base
+            if x["bp"] is not None:
+                title_ok += p.title == x["bp"].title and p.title is not None
+                desc_ok += p.meta.get("description") == x["bp"].meta.get("description")
         rows_out.append([x["path"] or "", x["loc"], x["status"] or "", r["kind"] if r else "", r["locale"] if r else "",
                          canon or "", og_url or "", tw_url or "", ld_url or "", json.dumps(alts, ensure_ascii=False),
                          "|".join(olalt), len([v for v in links if "hreflang" in v.lower()]),
+                         og_img or "", tw_img or "", ld_img or "", rss_href, foot_href, "|".join(mrob), len(xrt),
                          "OK" if not reasons else "; ".join(reasons)])
 
     # ---- reciprocity (A lists B ⇔ B lists A), hreflang hrefs ⊆ sitemap set
@@ -557,6 +634,64 @@ def cmd_sweep(a) -> int:
               f" · 3xx {loc3xx}")
     od_ok = all(o["status"] == o["want"] for o in on_demand)
     rep.check(od_ok, "on-demand " + " · ".join(f"{o['path']} {o['status']} (want {o['want']})" for o in on_demand))
+
+    # ---- AC5 rss: the feed the pages point at answers 200
+    fs, fh, _fb = net.get(target, BASE + "/feed.xml")
+    rep.check(rss_ok == n and foot_ok == n and n > 0 and slash_feed == 0 and fs == 200,
+              f"rss-link {rss_ok}/{n} → {BASE}/feed.xml {fs} · footer-rss {foot_ok}/{n} · \"/feed.xml\" hrefs {slash_feed}")
+
+    # ---- AC7 images: every distinct cover + one api/og per template, origin-substituted, 200 image/*, no redirect
+    picks: dict[str, str] = {}
+    for u, tmpl in img_urls.items():
+        if tmpl == "cover" or tmpl not in picks.values():
+            picks[u] = tmpl
+    fetch_ok, fetch_bad = 0, []
+    extra_hdrs: list[tuple[str, int, list[str]]] = []  # (what, status, x-robots-tag lines) for AC8 "extra"
+    for u, tmpl in sorted(picks.items(), key=lambda kv: kv[1]):
+        s, h, _b = net.get(target, path_query(u))
+        ct = dict(h).get("content-type", "")
+        if s == 200 and ct.startswith("image/"):
+            fetch_ok += 1
+        else:
+            fetch_bad.append(f"{tmpl} {u} → {s} {ct}")
+        if tmpl == "cover" and not any(w == "cover" for w, _, _ in extra_hdrs) or (
+                tmpl.startswith("og:") and not any(w.startswith("og:") for w, _, _ in extra_hdrs)):
+            extra_hdrs.append((tmpl, s, hvals(h, "x-robots-tag")))
+    tmpls = sorted({t for t in picks.values() if t != "cover"})
+    rep.check(img_ok == n and n > 0 and img_unexpected == 0 and fetch_ok == len(picks) and len(picks) > 0,
+              f"og {img_ok}/{n} {'PASS' if img_ok == n and n else 'FAIL'} · on {SITE}{BASE}/ {img_on_site}/{n} · "
+              f"unexpected origin {img_unexpected} (never fetched) · fetch {fetch_ok}/{len(picks)} 200 image/* "
+              f"(covers {sum(1 for t in picks.values() if t == 'cover')} + og templates {','.join(tmpls)})")
+    for z in fetch_bad[:5]:
+        rep.info(f"  image {z}")
+    if mode == "asset":
+        rep.check(asset_hits == 0, f"asset-origin hits {asset_hits} in og:image / twitter:image / JSON-LD image "
+                                   f"(asset origin {a.asset_origin})")
+
+    # ---- AC8 noindex: meta + X-Robots-Tag
+    rs, rh, _rb = net.get(target, BASE + "/robots.txt")
+    extra_hdrs = [("sitemap", st, hvals(sh, "x-robots-tag")), ("feed", fs, hvals(fh, "x-robots-tag")),
+                  ("robots", rs, hvals(rh, "x-robots-tag"))] + extra_hdrs
+    if mode == "noindex":
+        extra_ok = sum(1 for _w, _s, v in extra_hdrs if any("noindex" in z.lower() for z in v))
+        od_meta = sum(1 for o in on_demand if o["p"] is not None and any("noindex" in v.lower() for v in o["p"].meta.get("robots", [])))
+        rep.check(meta_noindex == n and hdr_noindex == n and n > 0 and extra_ok == len(extra_hdrs) == 5,
+                  f"noindex meta {meta_noindex}/{n} · header {hdr_noindex}/{n} · extra {extra_ok}/{len(extra_hdrs)} "
+                  f"({', '.join(w for w, _s, _v in extra_hdrs)}) · on-demand 200 meta {od_meta}")
+    else:
+        resp = [(x["status"], hvals(x["hdrs"], "x-robots-tag")) for x in pages if x["status"] is not None]
+        resp += [(o["status"], hvals(o["hdrs"], "x-robots-tag")) for o in on_demand]
+        resp += [(s, v) for _w, s, v in extra_hdrs]
+        excepted = sum(1 for s, v in resp if s in (404, 410) and v)
+        hdr_other = sum(1 for s, v in resp if s not in (404, 410) and v)
+        rep.check(meta_noindex == 0 and hdr_other == 0,
+                  f"noindex meta {meta_noindex}/{n} · header {hdr_other} (404/410 excepted: {excepted}) · "
+                  f"responses {len(resp)}")
+
+    # ---- AC12 title / description vs --base
+    if base:
+        rep.check(title_ok == n and desc_ok == n and n > 0,
+                  f"title {title_ok}/{n} · description {desc_ok}/{n} byte-equal vs {base}")
 
     if mode == "off":
         R = C.rules()
@@ -606,11 +741,146 @@ def cmd_sweep(a) -> int:
 
     p_tsv = C.write_tsv(f"bm05-sweep-{a.label}", [f"# bm05.py sweep --mode {mode} · target {target}"],
                         ["path", "loc", "status", "kind", "locale", "canonical", "og_url", "twitter_url", "jsonld_url",
-                         "hreflang", "og_locale_alternate", "link_hreflang_lines", "result"], rows_out,
+                         "hreflang", "og_locale_alternate", "link_hreflang_lines", "og_image", "twitter_image",
+                         "jsonld_image", "rss_href", "footer_rss_href", "meta_robots", "x_robots_tag_lines", "result"],
+                        rows_out,
                         [f"on-demand {o['path']} {o['status']}" for o in on_demand])
     rep.info(f"per-page {p_tsv}")
     rep.check(net.nonlocal_requests == 0, f"non-local requests {net.nonlocal_requests} · requests {net.requests} · "
                                           f"{time.time() - t0:.0f}s")
+    return rep.finish()
+
+
+# ---------------------------------------------------------------------------------------------------- feed
+ATOM = "{http://www.w3.org/2005/Atom}"
+W3C_FEED = "https://validator.w3.org/feed/check.cgi"
+
+
+def cmd_feed(a) -> int:
+    rep = Report("feed", a.label)
+    for h in C.header(f"bm05.py feed --mode {a.mode}"):
+        rep.info(h)
+    target = a.target.rstrip("/")
+    net = Net(target)
+    d = compute_data(a.repo, SITE)
+    lr = d["lr"]
+    mode = a.mode
+    rep.info(f"# target {target} · mode {mode} · data: " + data_summary(d))
+    s, h, body = net.get(target, BASE + "/feed.xml")
+    ct = dict(h).get("content-type", "")
+    saved = C.evidence_path(f"bm05-feed-{a.label}-body", "xml")
+    saved.write_bytes(body)
+    rep.info(f"# saved {saved} ({len(body)} bytes)")
+    lint_ok, lint_msg = xmllint_ok(body) if s == 200 else (False, f"status {s}")
+    rep.check(s == 200 and ct == "application/rss+xml; charset=utf-8" and lint_ok,
+              f"feed status {s} · content-type {ct!r} · xmllint {lint_msg}")
+    items: list[tuple[str, str, str]] = []
+    ch_link = self_href = None
+    if lint_ok:
+        ch = ET.fromstring(body).find("channel")
+        ch_link = (ch.findtext("link") or "").strip()
+        al = ch.find(f"{ATOM}link")
+        self_href = al.get("href") if al is not None else None
+        for it in ch.findall("item"):
+            g = it.find("guid")
+            items.append(((it.findtext("link") or "").strip(), (g.text or "").strip() if g is not None else "",
+                          g.get("isPermaLink", "") if g is not None else ""))
+    want_home = expected_url(d["idx"][("home", "th", "")], mode)
+    want_self = (lr["legacy_origin"] + lr["routes"]["files"]["feed"]) if mode == "off" else SITE + BASE + "/feed.xml"
+    rep.check(ch_link == want_home, f"channel <link> {ch_link} (want {want_home})")
+    rep.check(self_href == want_self, f"atom:link self {self_href} (want {want_self})")
+    want_seq = [(p["locale"], p["slugAsParams"]) for p in d["feed"]]
+    want_urls = [expected_url(d["idx"][("post", lo, sl)], mode) for lo, sl in want_seq]
+    got_seq = []
+    for link, _g, _p in items:
+        r = d["by_new"].get(link) or d["by_legacy"].get(link)
+        if r is None:  # today's shape (SITE_URL + permalink): /<locale>/blog/<slug> on any origin
+            m = re.search(r"/(th|en)/blog/([^/?#]+)$", link)
+            got_seq.append((m.group(1), m.group(2)) if m else ("?", link))
+        else:
+            got_seq.append((r["locale"], r["value"]))
+    order_ok = sum(1 for g, w in zip(got_seq, want_seq) if g == w)
+    rep.check(order_ok == len(want_seq) == len(items), f"items {order_ok}/{len(want_seq)} (data top-20 order; got {len(items)})")
+    url_ok = sum(1 for (link, g, pl), w in zip(items, want_urls) if link == w and g == link and pl == "true")
+    rep.check(url_ok == len(want_urls) == len(items),
+              f"item <link> = <guid isPermaLink=true> = expected URL {url_ok}/{len(want_urls)}")
+    st, _sh, sbody = net.get(target, BASE + "/sitemap.xml")
+    locs = set()
+    if st == 200:
+        locs = {(e.text or "").strip() for e in ET.fromstring(sbody).iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")}
+    in_set = sum(1 for link, _g, _p in items if link in locs)
+    rep.check(in_set == len(items) and items, f"item links ∈ sitemap set {in_set}/{len(items)}")
+    if mode == "off":
+        newhost = sum(1 for v in [ch_link, self_href] + [i[0] for i in items] if v and v.startswith(SITE + BASE))
+        rep.check(newhost == 0, f"{SITE}{BASE} in feed links {newhost}")
+    if a.validate:
+        resp = C.evidence_path(f"bm05-feed-{a.label}-w3c", "xml")
+        r = subprocess.run(["curl", "-s", "--max-time", "90", "--data-urlencode", f"rawdata@{saved}",
+                            "--data", "output=soap12", W3C_FEED], capture_output=True)
+        resp.write_bytes(r.stdout)
+        txt = r.stdout.decode("utf-8", "replace")
+        validity = (re.search(r"<m:validity>(\w+)</m:validity>", txt) or [None, None])[1]
+        errors = (re.search(r"<m:errorcount>(\d+)</m:errorcount>", txt) or [None, "?"])[1]
+        warnings = (re.search(r"<m:warningcount>(\d+)</m:warningcount>", txt) or [None, "?"])[1]
+        wtypes = sorted(set(re.findall(r"<m:warning>.*?<type>([^<]+)</type>", txt, re.S)))
+        rep.info(f"# W3C request 1 (declared external call: POST rawdata to {W3C_FEED}, curl exit {r.returncode}) · "
+                 f"response {resp} ({len(r.stdout)} bytes)")
+        rep.check(validity == "true", f"validator validity={validity} (errors {errors} · warnings {warnings}"
+                                      f"{' · ' + ', '.join(wtypes) if wtypes else ''})")
+    rep.check(net.nonlocal_requests == 0, f"non-local requests {net.nonlocal_requests} (blog) · requests {net.requests}")
+    return rep.finish()
+
+
+# ---------------------------------------------------------------------------------------------------- robots
+ROOT_ROBOTS = "User-agent: *\nAllow: /\nSitemap: https://dopelab.studio/blog/sitemap.xml\n"  # ADR-01 07, byte for byte
+
+
+def diff_lines(a_text: str, b_text: str) -> int:
+    import difflib
+    minus = plus = 0
+    for ln in difflib.unified_diff(a_text.splitlines(), b_text.splitlines(), lineterm="", n=0):
+        if ln.startswith("-") and not ln.startswith("---"):
+            minus += 1
+        elif ln.startswith("+") and not ln.startswith("+++"):
+            plus += 1
+    return max(minus, plus)
+
+
+def cmd_robots(a) -> int:
+    rep = Report("robots", a.label)
+    for h in C.header(f"bm05.py robots --mode {a.mode}"):
+        rep.info(h)
+    target = a.target.rstrip("/")
+    net = Net(target)
+    lr = json.loads((a.repo / "src" / "lib" / "legacy-routes.json").read_text(encoding="utf-8"))
+    s, h, body = net.get(target, BASE + "/robots.txt")
+    ct = dict(h).get("content-type", "")
+    text = body.decode("utf-8", "replace")
+    rep.info(f"# {target}{BASE}/robots.txt → {s} {ct!r} · {len(body)} bytes:")
+    for ln in text.splitlines():
+        rep.info(f"#   {ln}")
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    kv = [(ln.split(":", 1)[0].strip().lower(), ln.split(":", 1)[1].strip()) for ln in lines if ":" in ln]
+    want_sm = (lr["legacy_origin"] + lr["routes"]["files"]["sitemap"]) if a.mode == "off" else SITE + BASE + "/sitemap.xml"
+    sm = [v for k, v in kv if k == "sitemap"]
+    dis = [v for k, v in kv if k == "disallow" and v]
+    ok = (s == 200 and ct.startswith("text/plain") and ("user-agent", "*") in kv and ("allow", "/") in kv and not dis
+          and sm == [want_sm])
+    rep.check(ok, f"robots 200 text/plain · User-Agent * · Allow / · Disallow with a path {len(dis)} · Sitemap: "
+                  f"{' '.join(sm) or '-'} (want {want_sm})")
+    srv = a.dopelab / "deliverables" / "blog-migration" / "server"
+    ink_fx, root_fx = srv / "ink-robots.txt", srv / "robots.txt"
+    d_ink = diff_lines(ink_fx.read_text(encoding="utf-8"), text) if ink_fx.exists() else -1
+    d_root = diff_lines(ROOT_ROBOTS, root_fx.read_text(encoding="utf-8")) if root_fx.exists() else -1
+    byte_root = root_fx.exists() and root_fx.read_bytes() == ROOT_ROBOTS.encode()
+    byte_ink = ink_fx.exists() and ink_fx.read_bytes() == body
+    if a.mode == "off":
+        rep.info(f"INFO diff ink-robots {d_ink} (normal-mode fixture; mode off is not judged against it)")
+    else:
+        rep.check(d_ink == 0 and byte_ink, f"diff ink-robots {d_ink} (byte-equal {byte_ink}) vs {ink_fx}")
+    rep.check(d_root == 0 and byte_root, f"diff root {d_root} (byte-equal {byte_root}) vs ADR-01 07 body · {root_fx}")
+    rep.info(f"robots {'PASS' if rep.fails == 0 else 'FAIL'} · diff ink-robots {d_ink} · diff root {d_root}")
+    rep.check(net.nonlocal_requests == 0, f"non-local requests {net.nonlocal_requests} · requests {net.requests}")
     return rep.finish()
 
 
@@ -631,8 +901,20 @@ def main() -> int:
     p.add_argument("--baseline", default=str(Path(os.environ["BM03_DIR"]) / "data" / "ink-sitemap-urls-2026-10-06.txt"))
     p.add_argument("--named-diff")
     p.add_argument("--label", default="sweep")
+    p = sub.add_parser("feed")
+    p.add_argument("--target", required=True)
+    p.add_argument("--repo", type=Path, required=True)
+    p.add_argument("--mode", choices=["normal", "off"], default="normal")
+    p.add_argument("--validate", action="store_true", help="POST the saved feed to the W3C Feed Validation Service")
+    p.add_argument("--label", default="feed")
+    p = sub.add_parser("robots")
+    p.add_argument("--target", required=True)
+    p.add_argument("--dopelab", type=Path, required=True, help="dopelab tree holding deliverables/blog-migration/server/")
+    p.add_argument("--repo", type=Path, default=INK, help="ink tree (legacy-routes.json for mode off)")
+    p.add_argument("--mode", choices=["normal", "off"], default="normal")
+    p.add_argument("--label", default="robots")
     a = ap.parse_args()
-    return {"data": cmd_data, "sweep": cmd_sweep}[a.cmd](a)
+    return {"data": cmd_data, "sweep": cmd_sweep, "feed": cmd_feed, "robots": cmd_robots}[a.cmd](a)
 
 
 if __name__ == "__main__":
