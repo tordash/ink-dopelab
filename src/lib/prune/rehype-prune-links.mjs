@@ -7,8 +7,8 @@
 // The map is src/lib/prune/prune-map.json (written by scripts/prune/apply.mjs), read from
 // process.cwd() (velite runs from the repo root) unless `{ posts }` is passed. It holds structured
 // targets, never hrefs, and the rewritten href keeps the form of the href it replaces:
-//   legacy  /<loc>/blog/<slug>            (this base, before BM-04)
-//   new     /blog/<slug> · /blog/en/<slug> (after BM-04's MDX rewrite)
+//   legacy  /<loc>/blog/<slug>            (the pre-BM-04 form, still accepted)
+//   new     /blog/<slug> · /blog/en/<slug> (BM-04's MDX rewrite, the current base)
 // with or without the https://ink.dopelab.studio / https://dopelab.studio origin. `?query` is kept,
 // `#fragment` dropped, one trailing "/" ignored. Paths are composed from segments on purpose: this
 // file holds no quoted blog-path literal (BM-04 base-path invariant).

@@ -1,5 +1,5 @@
 // BM-16 · GET <app>/api/gone?locale=<th|en>&slug=<slug> -> the custom 410 page of a retired post
-// (tordash/dopelab-oracle#19 · SPEC §9.3, S3). <app> = empty on this base, the /blog basePath after BM-04.
+// (tordash/dopelab-oracle#19 · SPEC §9.3, S3). <app> = BASE_PATH (src/lib/base-path.ts), the /blog basePath (BM-04).
 //
 // 410 only when prune-map.json says `kind: "gone"` for <locale>/<slug> AND velite holds that post
 // with draft === true (applied by scripts/prune/apply.mjs). Everything else -> 404 text/plain

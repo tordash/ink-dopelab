@@ -46,8 +46,8 @@ Committed empty state: `{"source": null, "posts": {}}`.
 
 Targets are structured (never hrefs) and always in the key's locale. `src/lib/prune/rehype-prune-links.mjs`
 (velite rehype plugin) rewrites every body link to a pruned post straight to its target, in the same
-form as the source link (legacy `/<loc>/blog/<slug>` on this base, `/blog/<slug>` · `/blog/en/<slug>`
-after BM-04's MDX rewrite); a `gone` target turns the link into plain text. No kept MDX file is edited.
+form as the source link (legacy `/<loc>/blog/<slug>`, the pre-BM-04 form, or `/blog/<slug>` · `/blog/en/<slug>`
+from BM-04's MDX rewrite, the current base); a `gone` target turns the link into plain text. No kept MDX file is edited.
 
 **Landing mode:** `list` targets use landing mode i (`…/all` in the new form, `/<loc>/blog` in the
 legacy form). If the INK landing decision flips to mode ii, re-run apply + build (the redirect rules
@@ -59,7 +59,18 @@ already carry both modes in `to_by_mode`).
 GET <app>/api/gone?locale=<th|en>&slug=<slug>
 ```
 
-`<app>` is empty on this base and `/blog` after BM-04 (the handler reads `request.nextUrl.basePath`).
+`<app>` = `BASE_PATH` from `src/lib/base-path.ts` (`/blog`; BM-04 is in this base), so the handler answers at
+`/blog/api/gone`. The page's two links come from `goneHrefs(loc, BASE_PATH, ROUTES)`
+(`src/lib/prune/gone-page.ts`, `ROUTES` = BM-04's `src/lib/routes.ts`): `/en` after the basePath for en only,
+never a trailing `/` (that would 308):
+
+| locale | list hub | blog home |
+|---|---|---|
+| th | `/blog/all` | `/blog` |
+| en | `/blog/en/all` | `/blog/en` |
+
+Never build these from `request.nextUrl.basePath`: it is empty inside a route handler (SPEC R4), which gave the
+dead pre-BM-04 links `/th/blog` · `/th` (review F3 on #19).
 
 | condition | answer |
 |---|---|
@@ -75,11 +86,12 @@ redirect — the request to the handler, so the asked URL itself answers 410:
 ```ts
 // middleware.ts (sketch) — `gone` = { "<legacy or new path>": { locale, slug } } generated from the rules
 import { NextResponse, type NextRequest } from "next/server";
+import { BASE_PATH } from "@/lib/base-path"; // the R4-safe source, not req.nextUrl.basePath
 
 export function middleware(req: NextRequest) {
   const hit = gone[req.nextUrl.pathname];
   if (hit) {
-    const url = new URL(`${req.nextUrl.basePath}/api/gone?locale=${hit.locale}&slug=${hit.slug}`, req.url);
+    const url = new URL(`${BASE_PATH}/api/gone?locale=${hit.locale}&slug=${hit.slug}`, req.url);
     return NextResponse.rewrite(url);
   }
 }
@@ -96,7 +108,8 @@ node --test "scripts/prune/tests/*.test.mjs"
 
 - `apply.test.mjs` — round trips byte-identical, idempotent, all-or-nothing, map serialization
 - `rehype.test.mjs` — legacy/new/absolute forms × post/category/list/gone, query/fragment, mdxJsx `<a>`, empty map
-- `gone-page.test.mjs` — noindex, TH+EN lines, hub/home hrefs for both bases, escaping, brand tokens
+- `gone-page.test.mjs` — noindex, TH+EN lines, hub/home hrefs as exact `BASE_PATH` + `ROUTES` strings (th + en),
+  route.ts source (links from `BASE_PATH` + `ROUTES`, no `nextUrl.basePath`, no `dynamic` export), escaping, brand tokens
 
 The end-to-end dry run (build, apply, build, crawl, revert) lives in the dopelab repo
 (`deliverables/blog-migration/tools/prune_site_check.py`) and runs against a local `next start` only.
