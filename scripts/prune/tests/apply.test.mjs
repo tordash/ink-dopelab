@@ -199,3 +199,15 @@ test("F2: a marker string in the post body (outside frontmatter) is not a stale 
   assert.equal(revert({ root: r }).code, 0);
   assert.equal(read(r, "content/posts/th/c-body.mdx"), body);             // revert leaves the body alone too
 });
+
+test("L1: an R1 target that is itself a drop row of the same list -> exit 1, nothing written", () => {
+  const files = { "th/a-false.mdx": "with-false.mdx", "th/b-false.mdx": "with-false.mdx" };
+  const r = root(files);
+  const before = Object.fromEntries(Object.keys(files).map((k) => [k, read(r, `content/posts/${k}`)]));
+  const res = applyList({ root: r, listPath: list(r, [row("th", "a-false", "R1", "https://dopelab.studio/blog/b-false"),
+                                                      row("th", "b-false", "R2", "https://dopelab.studio/blog/all")]) });
+  assert.equal(res.code, 1);
+  assert.match(res.lines.join("\n"), /th\/a-false: R1 target th\/b-false is itself a drop row/);
+  for (const k of Object.keys(files)) assert.equal(read(r, `content/posts/${k}`), before[k]);
+  assert.equal(existsSync(mapPath(r)), false);
+});

@@ -163,6 +163,12 @@ export function applyList({ root = process.cwd(), listPath }) {
         errors.push(e.message);
       }
     }
+    // Review L1 (#19): an R1 post target must not itself be a drop row of this list (the kept link would land on
+    // a hidden post). approve/generate already guard this upstream; this is defence in depth.
+    for (const [key, p] of Object.entries(posts)) {
+      const target = `${key.split("/")[0]}/${p.slug}`;
+      if (p.kind === "post" && seen.has(target)) errors.push(`${key}: ${p.rule} target ${target} is itself a drop row of this list`);
+    }
     // Review F2 (#19 · REQ §5.1 · AC10): the marked set must equal the drop set. A post hidden by an earlier apply
     // that is not a drop row of this list would stay unpublished with no map entry (no link rewrite, no 410, no rule).
     // Refuse instead of guessing; the way to apply a smaller list is --revert, then apply.
