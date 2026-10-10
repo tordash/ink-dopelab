@@ -8,6 +8,14 @@ import { ArrowRight, Pen } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
 import { ROUTES } from "@/lib/routes";
 import { publicAssetSrc } from "@/lib/base-path";
+import { createMetadata } from "@/lib/seo";
+
+// BM-05 (REQ F4/D14): the home gains canonical / og / hreflang; title + description stay the layout's (absolute).
+// Metadata needs no translations, so no setRequestLocale here (static rendering, BM-15).
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale as Locale;
+  return createMetadata({ page: { kind: "home" }, locale });
+}
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale as Locale;

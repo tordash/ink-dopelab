@@ -8,13 +8,12 @@ import { ShareButtons } from "@/components/blog/share-buttons";
 import { Comments } from "@/components/blog/comments";
 import { PostCta } from "@/components/blog/post-cta";
 // import { Newsletter } from "@/components/blog/newsletter";
-import { createMetadata, articleJsonLd } from "@/lib/seo";
+import { createMetadata, articleJsonLd, pageUrl, postImage } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
-import { SITE_URL } from "@/lib/site";
-import { ROUTES, postPath } from "@/lib/routes";
+import { ROUTES } from "@/lib/routes";
 import { publicAssetSrc, withAssetHost } from "@/lib/base-path";
 
 export async function generateStaticParams() {
@@ -35,17 +34,13 @@ export async function generateMetadata({
   const post = getPostBySlug(slug, locale);
   if (!post) return {};
 
-  const coverImage = post.cover
-    ? `${SITE_URL}${post.cover.src}`
-    : undefined;
-
   return createMetadata({
     title: post.title,
     description: post.description,
-    path: postPath(post.slugAsParams),
+    page: { kind: "post", slug: post.slugAsParams },
     locale,
     type: "article",
-    image: coverImage,
+    image: postImage(post),
   });
 }
 
@@ -63,17 +58,13 @@ export default async function ArticlePage({
 
   const related = getRelatedPosts(slug, locale);
 
-  const articleImage = post.cover
-    ? `${SITE_URL}${post.cover.src}`
-    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&locale=${locale}&category=${encodeURIComponent(post.category)}`;
-
   const jsonLd = articleJsonLd({
     title: post.title,
     description: post.description,
     date: post.date,
     updated: post.updated,
-    url: `${SITE_URL}${post.permalink}`,
-    image: articleImage,
+    url: pageUrl({ kind: "post", slug: post.slugAsParams }, locale),
+    image: postImage(post),
     locale,
   });
 

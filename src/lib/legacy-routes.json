@@ -1,0 +1,48 @@
+{
+ "rules_version": "1.0.0",
+ "rules_sha256": "e7305d76a1ffd522c01126ec982fd44671a809d65a41b1fe5f969cc7192c141c",
+ "landing_mode": "i",
+ "legacy_origin": "https://ink.dopelab.studio",
+ "routes": {
+  "th": {
+   "home": "/th",
+   "list": "/th/blog",
+   "about": "/th/about",
+   "contact": "/th/contact",
+   "tag": "/th/blog/tag/:tag",
+   "category": "/th/blog/category/:cat",
+   "post": "/th/blog/:slug"
+  },
+  "en": {
+   "home": "/en",
+   "list": "/en/blog",
+   "about": "/en/about",
+   "contact": "/en/contact",
+   "tag": "/en/blog/tag/:tag",
+   "category": "/en/blog/category/:cat",
+   "post": "/en/blog/:slug"
+  },
+  "files": {
+   "feed": "/feed.xml",
+   "sitemap": "/sitemap.xml"
+  }
+ },
+ "rule_ids": {
+  "en/about": "R-PAGE.en-about",
+  "en/category": "R-CAT.en",
+  "en/contact": "R-PAGE.en-contact",
+  "en/home": "R-HOME.en",
+  "en/list": "R-LIST.en",
+  "en/post": "R-POST.en",
+  "en/tag": "R-TAG.en",
+  "files/feed": "R-FEED.feed",
+  "files/sitemap": "R-FEED.sitemap",
+  "th/about": "R-PAGE.th-about",
+  "th/category": "R-CAT.th",
+  "th/contact": "R-PAGE.th-contact",
+  "th/home": "R-HOME.th",
+  "th/list": "R-LIST.th",
+  "th/post": "R-POST.th",
+  "th/tag": "R-TAG.th"
+ }
+}

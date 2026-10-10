@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { SITE_URL } from "@/lib/site";
+import { BASE_PATH } from "@/lib/base-path";
+import { ogFooterText } from "@/lib/urls";
 
 export const runtime = "edge";
 
@@ -166,7 +168,7 @@ export async function GET(request: Request) {
               display: "flex",
             }}
           >
-            {SITE_URL.replace("https://", "")}
+            {ogFooterText(SITE_URL, BASE_PATH)}
           </div>
         </div>
       </div>

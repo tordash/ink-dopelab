@@ -1,5 +1,5 @@
 import { posts } from "#site/content";
-import { SITE_URL } from "@/lib/site";
+import { blogFileUrl, pageUrl } from "@/lib/seo";
 
 
 function escapeXml(str: string) {
@@ -18,27 +18,29 @@ export function GET() {
     .slice(0, 20);
 
   const items = allPosts
-    .map(
-      (post) => `    <item>
+    .map((post) => {
+      // BM-05 (D12): item <link> = <guid> = the post's page URL (same as its canonical and sitemap <loc>)
+      const url = escapeXml(pageUrl({ kind: "post", slug: post.slugAsParams }, post.locale));
+      return `    <item>
       <title>${escapeXml(post.title)}</title>
-      <link>${SITE_URL}${post.permalink}</link>
-      <guid isPermaLink="true">${SITE_URL}${post.permalink}</guid>
+      <link>${url}</link>
+      <guid isPermaLink="true">${url}</guid>
       <description>${escapeXml(post.description)}</description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <category>${escapeXml(post.category)}</category>
-    </item>`
-    )
+    </item>`;
+    })
     .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>INK by DopeLab</title>
-    <link>${SITE_URL}</link>
+    <link>${escapeXml(pageUrl({ kind: "home" }, "th"))}</link>
     <description>AI × Digital Marketing — Stories from the Trenches</description>
     <language>th</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${escapeXml(blogFileUrl("feed"))}" rel="self" type="application/rss+xml"/>
 ${items}
   </channel>
 </rss>`;

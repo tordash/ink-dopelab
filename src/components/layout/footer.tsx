@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Rss } from "lucide-react";
-import { publicAssetSrc } from "@/lib/base-path";
+import { publicAssetSrc, withBasePath } from "@/lib/base-path";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -33,7 +33,7 @@ export function Footer() {
             <span>{t("built_with")}</span>
             <span>·</span>
             <a
-              href="/feed.xml"
+              href={withBasePath("/feed.xml")}
               className="inline-flex items-center gap-1 transition-colors hover:text-[var(--color-primary)]"
               title="RSS Feed"
             >

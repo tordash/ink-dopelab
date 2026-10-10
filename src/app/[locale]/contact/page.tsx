@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale === "th"
         ? "ติดต่อ DopeLab Studio — Digital Marketing Agency ที่ใช้ AI ทำงานจริง"
         : "Contact DopeLab Studio — A Digital Marketing Agency powered by AI",
-    path: "/contact",
+    page: { kind: "contact" },
     locale,
   });
 }

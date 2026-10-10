@@ -39,8 +39,8 @@ export async function generateMetadata({
       locale === "th"
         ? `${posts.length} บทความในหมวด ${decoded}`
         : `${posts.length} articles in ${decoded}`,
-    path: `/category/${category}`,
-    locale,
+    page: { kind: "category", value: decoded }, // decoded param, re-encoded by the URL module (SPEC §1.3)
+    locale: locale as Locale,
   });
 }
 

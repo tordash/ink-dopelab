@@ -12,6 +12,8 @@ import { Footer } from "@/components/layout/footer";
 import { SearchProvider } from "@/components/layout/search-provider";
 import "@/app/globals.css";
 import { SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/seo";
+import { BLOG_NOINDEX } from "@/lib/seo-env";
 import { withBasePath } from "@/lib/base-path";
 import { getSharedSwitchIndex } from "@/lib/locale-switch";
 
@@ -38,12 +40,13 @@ const specialElite = Special_Elite({
 
 export const metadata: Metadata = {
   title: {
-    default: "INK by DopeLab — AI × Digital Marketing Blog",
+    default: SITE_TITLE,
     template: "%s | INK by DopeLab",
   },
-  description:
-    "บล็อกเกี่ยวกับ AI, Digital Marketing, และ Business Automation จากประสบการณ์จริง",
+  description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
+  // BM-05 (REQ D8): BLOG_NOINDEX=1 (Gate 1, build time) → <meta name="robots" content="noindex"> on every page
+  ...(BLOG_NOINDEX ? { robots: { index: false } } : {}),
 };
 
 export function generateStaticParams() {
@@ -89,7 +92,7 @@ export default async function LocaleLayout({
           rel="alternate"
           type="application/rss+xml"
           title="INK by DopeLab"
-          href="/feed.xml"
+          href={withBasePath("/feed.xml")}
         />
       </head>
       <body className="min-h-screen bg-[var(--color-surface)] font-sans antialiased">

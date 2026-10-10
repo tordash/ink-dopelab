@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale === "th"
         ? "INK by DopeLab — บล็อกที่บันทึก case studies จริงจากการใช้ AI ในธุรกิจ โดย DopeLab Studio"
         : "INK by DopeLab — A blog documenting real AI case studies in business by DopeLab Studio",
-    path: "/about",
+    page: { kind: "about" },
     locale,
   });
 }
