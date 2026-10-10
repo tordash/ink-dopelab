@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { createMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 import { publicAssetSrc } from "@/lib/base-path";
@@ -19,8 +19,8 @@ import {
   Zap,
 } from "lucide-react";
 
-export async function generateMetadata() {
-  const locale = (await getLocale()) as Locale;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale as Locale;
   return createMetadata({
     title: locale === "th" ? "เกี่ยวกับ INK" : "About INK",
     description:
@@ -32,7 +32,8 @@ export async function generateMetadata() {
   });
 }
 
-export default async function AboutPage() {
+export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
+  setRequestLocale((await params).locale);
   return (
     <>
       <HeroSection />

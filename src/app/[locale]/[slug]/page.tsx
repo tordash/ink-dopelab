@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { getPostBySlug, getPostsByLocale, getRelatedPosts } from "@/lib/content";
 import { ArticleBody } from "@/components/blog/article-body";
 import { TableOfContents } from "@/components/blog/toc";
@@ -28,10 +28,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const locale = (await getLocale()) as Locale;
-  const { slug } = await params;
+  const { locale: l, slug } = await params;
+  const locale = l as Locale;
   const post = getPostBySlug(slug, locale);
   if (!post) return {};
 
@@ -52,10 +52,11 @@ export async function generateMetadata({
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const locale = (await getLocale()) as Locale;
-  const { slug } = await params;
+  const { locale: l, slug } = await params;
+  const locale = l as Locale;
+  setRequestLocale(locale);
   const post = getPostBySlug(slug, locale);
 
   if (!post) notFound();

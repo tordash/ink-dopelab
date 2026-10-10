@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import {
   getPostsByCategory,
   getAllCategories,
@@ -49,9 +49,10 @@ export default async function CategoryPage({
 }: {
   params: Promise<{ locale: string; category: string }>;
 }) {
-  const { category } = await params;
+  const { locale: l, category } = await params;
+  setRequestLocale(l);
   const decoded = decodeURIComponent(category);
-  const locale = (await getLocale()) as Locale;
+  const locale = l as Locale;
   const posts = getPostsByCategory(decoded, locale);
 
   return (
