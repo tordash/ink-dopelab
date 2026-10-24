@@ -63,6 +63,17 @@ export function nameOf(list: ReadonlyArray<{ key: string; names: Names }>, key: 
   return item?.names?.[locale] || key;
 }
 
+/** S13 (review F1): the category/tag fields of a search index = display NAMES (users type Thai), never keys.
+ *  Every Fuse index (header SearchButton, /all SearchPosts) builds them here, so they cannot drift apart. */
+export function searchFields(
+  t: Pick<Taxonomy, "categories" | "tags">,
+  category: string,
+  tagKeys: readonly string[],
+  locale: Locale,
+): { category: string; tags: string[] } {
+  return { category: nameOf(t.categories, category, locale), tags: tagKeys.map((k) => nameOf(t.tags, k, locale)) };
+}
+
 /** A category is visible in a locale iff its non-draft post count there ≥ min_posts (default 1). */
 export function visible(cat: { min_posts?: number }, count: number): boolean {
   return count >= (cat.min_posts ?? 1);

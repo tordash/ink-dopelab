@@ -2,7 +2,7 @@
 // Frontmatter and URLs carry the ASCII key; every reader-facing text resolves through categoryName / tagName.
 // Separate module on purpose: "use client" files may import it (BM-05 invariants05 4c bans @/lib/seo in them, F-S8).
 import data from "@/lib/taxonomy/taxonomy.json";
-import { nameOf, visible, type Category, type Locale, type Tag, type Taxonomy } from "./model";
+import { nameOf, searchFields, visible, type Category, type Locale, type Tag, type Taxonomy } from "./model";
 
 const taxonomy = data as Taxonomy;
 const categories: Category[] = taxonomy.categories;
@@ -19,6 +19,8 @@ export const isTagKey = (key: string): boolean => tagOrder.includes(key);
 /** Unknown key → the key itself (never throws at render). */
 export const categoryName = (key: string, locale: Locale): string => nameOf(categories, key, locale);
 export const tagName = (key: string, locale: Locale): string => nameOf(tags, key, locale);
+/** Search-index fields (category + tags) as display names — used by every Fuse index (S13, review F1). */
+export const searchNames = (category: string, tagKeys: readonly string[], locale: Locale) => searchFields(taxonomy, category, tagKeys, locale);
 
 /** A category with `count` non-draft posts in a locale has a page iff count ≥ its min_posts (studio = 3). */
 export function isVisibleCategory(key: string, count: number): boolean {

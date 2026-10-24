@@ -7,7 +7,7 @@ import { SearchPosts } from "./search-posts";
 import { Link } from "@/i18n/navigation";
 import { Hash, ChevronLeft, ChevronRight } from "lucide-react";
 import { categoryPath, tagPath } from "@/lib/routes";
-import { categoryName, tagName } from "@/lib/taxonomy";
+import { categoryName, searchNames, tagName } from "@/lib/taxonomy";
 
 const POSTS_PER_PAGE = 9;
 
@@ -43,6 +43,7 @@ export function BlogContent({
   locale,
 }: BlogContentProps) {
   const t = useTranslations("blog");
+  const loc = useLocale() === "en" ? "en" : "th";
   const allSlugs = posts.map((p) => p.slugAsParams);
   const [visibleSlugs, setVisibleSlugs] = useState<string[]>(allSlugs);
   const [page, setPage] = useState(1);
@@ -67,8 +68,7 @@ export function BlogContent({
           slugAsParams: p.slugAsParams,
           title: p.title,
           description: p.description,
-          category: p.category,
-          tags: p.tags,
+          ...searchNames(p.category, p.tags, loc), // BM-18 S13 (review F1): index names, not keys
         }))}
         onFilter={setVisibleSlugs}
       />
