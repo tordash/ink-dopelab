@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "key": "how-to",
+      "role": "สอนทีละขั้น",
+      "ai_topic": false,
+      "min_posts": 1,
+      "names": {
+        "th": "วิธีทำ",
+        "en": "How-to"
+      },
+      "description": {
+        "th": "สอนทีละขั้น ทำตามได้จริง",
+        "en": "Step-by-step guides you can follow."
+      }
+    },
+    {
+      "key": "shop",
+      "role": "งานร้านจริง · เคส SME",
+      "ai_topic": false,
+      "min_posts": 1,
+      "names": {
+        "th": "เคสร้านจริง",
+        "en": "Shop cases"
+      },
+      "description": {
+        "th": "เคสจากร้านและธุรกิจ SME จริง",
+        "en": "Real cases from shops and small businesses."
+      }
+    },
+    {
+      "key": "marketing",
+      "role": "การตลาด · คอนเทนต์ · SEO",
+      "ai_topic": false,
+      "min_posts": 1,
+      "names": {
+        "th": "การตลาดออนไลน์",
+        "en": "Online marketing"
+      },
+      "description": {
+        "th": "การตลาดออนไลน์ คอนเทนต์ และ SEO",
+        "en": "Online marketing, content and SEO."
+      }
+    },
+    {
+      "key": "tools",
+      "role": "เครื่องมือ · แอป",
+      "ai_topic": false,
+      "min_posts": 1,
+      "names": {
+        "th": "เครื่องมือช่วยงาน",
+        "en": "Tools"
+      },
+      "description": {
+        "th": "รีวิวเครื่องมือและแอปที่ช่วยให้ทำงานง่ายขึ้น",
+        "en": "Reviews of tools and apps that make work easier."
+      }
+    },
+    {
+      "key": "ai",
+      "role": "AI ในงานจริง",
+      "ai_topic": true,
+      "min_posts": 1,
+      "names": {
+        "th": "AI ในงานจริง",
+        "en": "AI at work"
+      },
+      "description": {
+        "th": "AI ที่ใช้ในงานจริง",
+        "en": "How AI is used in real work."
+      }
+    },
+    {
+      "key": "studio",
+      "role": "ผลงานถ่ายร้านของ DopeLab",
+      "ai_topic": false,
+      "min_posts": 3,
+      "names": {
+        "th": "ผลงานถ่ายร้านของ DopeLab",
+        "en": "DopeLab studio work"
+      },
+      "description": {
+        "th": "ผลงานถ่ายภาพและวิดีโอร้านค้าของ DopeLab",
+        "en": "DopeLab's photo and video work for shops."
+      }
+    }
+  ],
+  "tags": [
+    {
+      "key": "claude-code",
+      "names": {
+        "th": "Claude Code",
+        "en": "Claude Code"
+      }
+    },
+    {
+      "key": "claude",
+      "names": {
+        "th": "Claude",
+        "en": "Claude"
+      }
+    },
+    {
+      "key": "chatgpt",
+      "names": {
+        "th": "ChatGPT",
+        "en": "ChatGPT"
+      }
+    },
+    {
+      "key": "gemini",
+      "names": {
+        "th": "Gemini",
+        "en": "Gemini"
+      }
+    },
+    {
+      "key": "ai-agents",
+      "names": {
+        "th": "AI Agent",
+        "en": "AI agents"
+      }
+    },
+    {
+      "key": "automation",
+      "names": {
+        "th": "ระบบอัตโนมัติ",
+        "en": "Automation"
+      }
+    },
+    {
+      "key": "productivity",
+      "names": {
+        "th": "ทำงานให้ไวขึ้น",
+        "en": "Productivity"
+      }
+    },
+    {
+      "key": "ai-tools",
+      "names": {
+        "th": "เครื่องมือ AI",
+        "en": "AI tools"
+      }
+    },
+    {
+      "key": "beginner",
+      "names": {
+        "th": "มือใหม่เริ่มใช้ AI",
+        "en": "Beginner guide"
+      }
+    },
+    {
+      "key": "restaurant",
+      "names": {
+        "th": "ร้านอาหาร",
+        "en": "Restaurants"
+      }
+    },
+    {
+      "key": "sme",
+      "names": {
+        "th": "ธุรกิจ SME",
+        "en": "Small business"
+      }
+    },
+    {
+      "key": "agency",
+      "names": {
+        "th": "เอเจนซี่",
+        "en": "Agency"
+      }
+    },
+    {
+      "key": "content",
+      "names": {
+        "th": "ทำคอนเทนต์",
+        "en": "Content creation"
+      }
+    },
+    {
+      "key": "video",
+      "names": {
+        "th": "วิดีโอ",
+        "en": "Video"
+      }
+    },
+    {
+      "key": "voice-audio",
+      "names": {
+        "th": "เสียงและดนตรี AI",
+        "en": "Voice & audio"
+      }
+    },
+    {
+      "key": "social-media",
+      "names": {
+        "th": "โซเชียลมีเดีย",
+        "en": "Social media"
+      }
+    },
+    {
+      "key": "line-oa",
+      "names": {
+        "th": "LINE OA",
+        "en": "LINE OA"
+      }
+    },
+    {
+      "key": "chatbot",
+      "names": {
+        "th": "แชทบอท",
+        "en": "Chatbots"
+      }
+    },
+    {
+      "key": "data",
+      "names": {
+        "th": "ข้อมูลและแดชบอร์ด",
+        "en": "Data & dashboards"
+      }
+    },
+    {
+      "key": "inventory",
+      "names": {
+        "th": "สต็อกสินค้า",
+        "en": "Inventory"
+      }
+    },
+    {
+      "key": "crm",
+      "names": {
+        "th": "ดูแลลูกค้า (CRM)",
+        "en": "CRM"
+      }
+    },
+    {
+      "key": "marketing",
+      "names": {
+        "th": "การตลาด",
+        "en": "Marketing"
+      }
+    },
+    {
+      "key": "seo",
+      "names": {
+        "th": "SEO",
+        "en": "SEO"
+      }
+    },
+    {
+      "key": "website",
+      "names": {
+        "th": "เว็บไซต์",
+        "en": "Websites"
+      }
+    },
+    {
+      "key": "e-commerce",
+      "names": {
+        "th": "ขายออนไลน์",
+        "en": "E-commerce"
+      }
+    },
+    {
+      "key": "knowledge-base",
+      "names": {
+        "th": "คลังความรู้ AI (RAG)",
+        "en": "Knowledge base (RAG)"
+      }
+    },
+    {
+      "key": "cost",
+      "names": {
+        "th": "ต้นทุนและความคุ้มค่า",
+        "en": "Cost & ROI"
+      }
+    },
+    {
+      "key": "remote-work",
+      "names": {
+        "th": "ทำงานจากที่ไหนก็ได้",
+        "en": "Remote work"
+      }
+    },
+    {
+      "key": "ai-models",
+      "names": {
+        "th": "โมเดล AI ใหม่",
+        "en": "AI models"
+      }
+    },
+    {
+      "key": "ai-safety",
+      "names": {
+        "th": "ความปลอดภัย AI",
+        "en": "AI safety"
+      }
+    },
+    {
+      "key": "big-tech",
+      "names": {
+        "th": "ข่าวบริษัทเทค",
+        "en": "Big tech"
+      }
+    },
+    {
+      "key": "startup-funding",
+      "names": {
+        "th": "สตาร์ทอัพและการระดมทุน",
+        "en": "Startups & funding"
+      }
+    },
+    {
+      "key": "behind-the-scenes",
+      "names": {
+        "th": "เบื้องหลังระบบ DopeLab",
+        "en": "Behind the system"
+      }
+    },
+    {
+      "key": "design",
+      "names": {
+        "th": "งานดีไซน์",
+        "en": "Design"
+      }
+    }
+  ]
+}

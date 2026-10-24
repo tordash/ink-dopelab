@@ -7,15 +7,15 @@ R05	/blog/anthropic-ipo-350b	200	-	REQ §4.1
 R06	/blog/th-ai-passport-free-ai-tools	200	-	REQ §4.1
 R07	/blog/90-percent-business-from-phone	200	-	REQ §4.1
 R08	/blog/en/agent-teams-11-ai	200	-	REQ §4.1
-R09	/blog/tag/ai	200	-	REQ §4.1
-R10	/blog/tag/A%2FB-test	200	-	REQ §4.1
-R11	/blog/tag/gpt-5.4	200	-	REQ §4.1
-R12	/blog/tag/Kling%203.0	200	-	REQ §4.1
-R13	/blog/tag/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94	200	-	REQ §4.1
-R14	/blog/en/tag/karpathy	200	-	REQ §4.1
-R15	/blog/category/AI%20News	200	-	REQ §4.1
-R16	/blog/category/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B9%81%E0%B8%AA%E0%B8%99%E0%B8%AA%E0%B8%99%E0%B8%B8%E0%B8%81	200	-	REQ §4.1
-R17	/blog/en/category/AI%20Workflow	200	-	REQ §4.1
+R09	/blog/tag/claude-code	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/tag/ai)
+R10	/blog/tag/marketing	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/tag/A%2FB-test)
+R11	/blog/tag/chatgpt	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/tag/gpt-5.4)
+R12	/blog/tag/automation	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/tag/Kling%203.0)
+R13	/blog/tag/sme	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/tag/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94)
+R14	/blog/en/tag/automation	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/en/tag/karpathy)
+R15	/blog/category/ai	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/category/AI%20News)
+R16	/blog/category/how-to	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/category/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B9%81%E0%B8%AA%E0%B8%99%E0%B8%AA%E0%B8%99%E0%B8%B8%E0%B8%81)
+R17	/blog/en/category/how-to	200	-	BM-18 S8 · SPEC §8.1a (key page; was /blog/en/category/AI%20Workflow)
 R18	/blog/about	200	-	REQ §4.1
 R19	/blog/contact	200	-	REQ §4.1
 R20	/blog/en/about	200	-	REQ §4.1
@@ -67,3 +67,12 @@ R65	/blog/En	404	-	SPEC §5.3 (case-variant locale prefix; next-intl would 307)
 R66	/blog/Th	404	-	SPEC §5.3 (case-variant locale prefix; next-intl would 307)
 R67	/blog/	308	/blog	REQ §4.3
 R68	/blog/anthropic-ipo-350b/	308	/blog/anthropic-ipo-350b	REQ §4.3
+R69	/blog/tag/ai	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R09 200
+R70	/blog/tag/A%2FB-test	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R10 200
+R71	/blog/tag/gpt-5.4	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R11 200
+R72	/blog/tag/Kling%203.0	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R12 200
+R73	/blog/tag/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R13 200
+R74	/blog/en/tag/karpathy	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R14 200
+R75	/blog/category/AI%20News	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R15 200
+R76	/blog/category/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B9%81%E0%B8%AA%E0%B8%99%E0%B8%AA%E0%B8%99%E0%B8%B8%E0%B8%81	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R16 200
+R77	/blog/en/category/AI%20Workflow	404	-	BM-18 S8 (old taxonomy value → app 404; its 301 is BM-08) · was R17 200

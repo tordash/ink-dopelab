@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import {
@@ -10,6 +11,7 @@ import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { ChevronRight } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
+import { categoryName } from "@/lib/taxonomy";
 
 export async function generateStaticParams() {
   const params: { locale: string; category: string }[] = [];
@@ -29,16 +31,18 @@ export async function generateMetadata({
 }) {
   const { locale, category } = await params;
   const decoded = decodeURIComponent(category);
+  if (!getAllCategories(locale as Locale).includes(decoded)) notFound(); // BM-18 S8: only a visible key has a page
   const posts = getPostsByCategory(decoded, locale as Locale);
+  const name = categoryName(decoded, locale as Locale);
   return createMetadata({
     title:
       locale === "th"
-        ? `${decoded} — บทความในหมวดนี้`
-        : `${decoded} — Articles in this category`,
+        ? `${name} — บทความในหมวดนี้`
+        : `${name} — Articles in this category`,
     description:
       locale === "th"
-        ? `${posts.length} บทความในหมวด ${decoded}`
-        : `${posts.length} articles in ${decoded}`,
+        ? `${posts.length} บทความในหมวด ${name}`
+        : `${posts.length} articles in ${name}`,
     page: { kind: "category", value: decoded }, // decoded param, re-encoded by the URL module (SPEC §1.3)
     locale: locale as Locale,
   });
@@ -53,12 +57,14 @@ export default async function CategoryPage({
   setRequestLocale(l);
   const decoded = decodeURIComponent(category);
   const locale = l as Locale;
+  if (!getAllCategories(locale).includes(decoded)) notFound(); // BM-18 S8: old name / hidden / empty → 404
   const posts = getPostsByCategory(decoded, locale);
+  const name = categoryName(decoded, locale);
 
   return (
     <div className="mx-auto max-w-[var(--container-wide)] px-4 py-12 sm:px-6">
-      <Breadcrumb category={decoded} />
-      <CategoryHeader category={decoded} count={posts.length} />
+      <Breadcrumb category={name} />
+      <CategoryHeader category={name} count={posts.length} />
 
       {posts.length > 0 ? (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,6 +1,6 @@
 {
- "rules_version": "1.0.0",
- "rules_sha256": "e7305d76a1ffd522c01126ec982fd44671a809d65a41b1fe5f969cc7192c141c",
+ "rules_version": "2.0.0",
+ "rules_sha256": "75c3f69de842744a969a991a343f8d190dd3f0b756376920bed82aff7901275e",
  "landing_mode": "i",
  "legacy_origin": "https://ink.dopelab.studio",
  "routes": {

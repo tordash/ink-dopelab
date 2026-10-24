@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ArticleCard, CATEGORY_STYLES } from "./article-card";
 import { SearchPosts } from "./search-posts";
 import { Link } from "@/i18n/navigation";
 import { Hash, ChevronLeft, ChevronRight } from "lucide-react";
 import { categoryPath, tagPath } from "@/lib/routes";
+import { categoryName, searchNames, tagName } from "@/lib/taxonomy";
 
 const POSTS_PER_PAGE = 9;
 
@@ -42,6 +43,7 @@ export function BlogContent({
   locale,
 }: BlogContentProps) {
   const t = useTranslations("blog");
+  const loc = useLocale() === "en" ? "en" : "th";
   const allSlugs = posts.map((p) => p.slugAsParams);
   const [visibleSlugs, setVisibleSlugs] = useState<string[]>(allSlugs);
   const [page, setPage] = useState(1);
@@ -66,8 +68,7 @@ export function BlogContent({
           slugAsParams: p.slugAsParams,
           title: p.title,
           description: p.description,
-          category: p.category,
-          tags: p.tags,
+          ...searchNames(p.category, p.tags, loc), // BM-18 S13 (review F1): index names, not keys
         }))}
         onFilter={setVisibleSlugs}
       />
@@ -158,6 +159,7 @@ function Pagination({
 
 function CategoryPills({ categories }: { categories: string[] }) {
   const t = useTranslations("blog");
+  const loc = useLocale() === "en" ? "en" : "th";
   return (
     <div className="mb-8 flex flex-wrap gap-2">
       <span className="inline-flex items-center rounded-full border-2 border-[var(--color-primary)] bg-[var(--color-primary)]/10 px-4 py-1.5 text-sm font-semibold text-[var(--color-primary)]">
@@ -177,7 +179,7 @@ function CategoryPills({ categories }: { categories: string[] }) {
               className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: bg }}
             />
-            {cat}
+            {categoryName(cat, loc)}
           </Link>
         );
       })}
@@ -187,6 +189,7 @@ function CategoryPills({ categories }: { categories: string[] }) {
 
 function TagCloud({ tags }: { tags: string[] }) {
   const t = useTranslations("blog");
+  const loc = useLocale() === "en" ? "en" : "th";
   return (
     <div className="mt-16 border-t border-[var(--color-border)] pt-10">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-[var(--color-text-primary)]">
@@ -201,7 +204,7 @@ function TagCloud({ tags }: { tags: string[] }) {
             prefetch={false}
             className="rounded-lg border border-[var(--color-border)] px-3 py-1.5 text-sm text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 hover:text-[var(--color-primary)]"
           >
-            #{tag}
+            #{tagName(tag, loc)}
           </Link>
         ))}
       </div>

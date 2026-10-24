@@ -23,18 +23,22 @@ import common as C  # noqa: E402
 
 B1 = C.B1_URL
 BLOCK = re.compile(r"googletagmanager\.com|google-analytics\.com|analytics\.google\.com|giscus\.app|lin\.ee|lab\.dopelab\.studio|/_vercel/insights")
-THAI_TAG = "/blog/tag/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94"
+# BM-18 (tordash/dopelab-oracle#27 · review F2): taxonomy pages are KEY pages now (S8); the old-name starts 404.
+# Same cases with live keys (scripts/taxonomy/tests/contract.test.mjs checks them against content + counterpartPath):
+# a th-only tag → /blog/en (was the Thai tag การตลาด and A%2FB-test) · a tag in both locales ↔ (was karpathy) ·
+# a category in both locales (was AI%20News).
+TH_ONLY_TAG = "/blog/tag/video"
 SWITCH_ROWS = [  # (start, expected landing, source)
     ("/blog/agent-teams-11-ai", "/blog/en/agent-teams-11-ai", "REQ"),
     ("/blog/anthropic-ipo-350b", "/blog/en", "REQ"),
     ("/blog/en/agent-teams-11-ai", "/blog/agent-teams-11-ai", "REQ"),
-    (THAI_TAG, "/blog/en", "REQ"),
+    (TH_ONLY_TAG, "/blog/en", "REQ"),
     ("/blog/all", "/blog/en/all", "REQ"),
     ("/blog/about", "/blog/en/about", "REQ"),
-    ("/blog/tag/karpathy", "/blog/en/tag/karpathy", "SPEC"),
-    ("/blog/en/tag/karpathy", "/blog/tag/karpathy", "SPEC"),
-    ("/blog/tag/A%2FB-test", "/blog/en", "SPEC"),
-    ("/blog/category/AI%20News", "/blog/en/category/AI%20News", "SPEC"),
+    ("/blog/tag/automation", "/blog/en/tag/automation", "SPEC"),
+    ("/blog/en/tag/automation", "/blog/tag/automation", "SPEC"),
+    ("/blog/tag/design", "/blog/en", "SPEC"),
+    ("/blog/category/ai", "/blog/en/category/ai", "SPEC"),
     ("/blog/en", "/blog", "SPEC"),
 ]
 POST = "/blog/anthropic-ipo-350b"

@@ -18,7 +18,8 @@ and the fixture is written there, never under the real content/.
   D   BLOG_BASE_PATH=/x npm run build (real tree) → exit ≠ 0 with the resolver message; content/ + public/static unchanged
   P   parity: vendored reserved_slugs == url-rules.json reserved_slugs ($BM03_DIR) · guard lines 2–4 ==
       BM-03 check_redirects.py --check-reserved --ink-repo <tree> lines 2–4
-  G   package.json build runs the guard first: "node scripts/migration/check-reserved-slugs.mjs && velite && next build"
+  G   package.json build runs the guard first: "node scripts/migration/check-reserved-slugs.mjs && node scripts/taxonomy/check.mjs && velite && next build"
+      (BM-18 #27: the taxonomy guard is chained SECOND, so the mirror cases still stop at the reserved-slug guard)
 Exit 0 = every case passes.
 """
 from __future__ import annotations
@@ -37,7 +38,7 @@ import common as C  # noqa: E402
 REPO = C.REPO
 GUARD = "scripts/migration/check-reserved-slugs.mjs"
 FIXTURE = REPO / "scripts/migration/fixtures/reserved-post.mdx"
-BUILD = "node scripts/migration/check-reserved-slugs.mjs && velite && next build"
+BUILD = "node scripts/migration/check-reserved-slugs.mjs && node scripts/taxonomy/check.mjs && velite && next build"
 ENV = {k: v for k, v in os.environ.items() if k not in ("BLOG_BASE_PATH", "BLOG_ASSET_PREFIX", "VERCEL_ENV")}
 
 out: list[str] = []

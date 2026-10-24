@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/lib/utils";
 import { postPath } from "@/lib/routes";
+import { categoryName } from "@/lib/taxonomy";
 import {
   Calendar,
   Clock,
@@ -151,6 +152,7 @@ export function ArticleCard({
 }: ArticleCardProps) {
   const t = useTranslations("home");
   const style = getCategoryStyle(category);
+  const catName = categoryName(category, locale === "en" ? "en" : "th"); // BM-18: key → display name
   const Icon = style.icon;
 
   // CSS custom properties for per-card category colors (cascade to child .cat-* elements)
@@ -191,14 +193,14 @@ export function ArticleCard({
             {/* Category pill overlaid on image */}
             <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold shadow-sm cat-pill">
               <Icon className="h-3.5 w-3.5" />
-              {category}
+              {catName}
             </span>
           </div>
         ) : (
           <div className="flex h-20 items-center gap-3 px-6 cat-header">
             <Icon className="h-7 w-7 cat-header-icon" />
             <span className="text-sm font-semibold cat-header-content">
-              {category}
+              {catName}
             </span>
           </div>
         )}
@@ -266,7 +268,7 @@ export function ArticleCard({
           {/* Category pill overlaid on image */}
           <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold shadow-sm cat-pill">
             <Icon className="h-3.5 w-3.5" />
-            {category}
+            {catName}
           </span>
         </div>
       ) : (
@@ -280,7 +282,7 @@ export function ArticleCard({
           {!cover && (
             <span className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-0.5 text-xs font-semibold cat-pill">
               <Icon className="h-3 w-3" />
-              {category}
+              {catName}
             </span>
           )}
           <span className="text-xs text-[var(--color-text-tertiary)]">

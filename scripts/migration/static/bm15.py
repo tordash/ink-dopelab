@@ -83,12 +83,15 @@ import common as C  # noqa: E402  (BM-04, read-only: evidence_path, stamp, fetch
 PAGES = [("R-HOME", ""), ("R-PAGE", "/all"), ("R-PAGE", "/about"), ("R-PAGE", "/contact")]
 S18 = [  # REQ §4 header sample (stories/BM-15/data/s18.tsv): all 18 are BM-04 AC1 contract rows
     "/blog", "/blog/en", "/blog/all", "/blog/en/all", "/blog/anthropic-ipo-350b", "/blog/en/agent-teams-11-ai",
-    "/blog/tag/ai", "/blog/tag/Kling%203.0", "/blog/tag/A%2FB-test", "/blog/tag/gpt-5.4",
-    "/blog/tag/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94", "/blog/en/tag/karpathy",
-    "/blog/category/AI%20News", "/blog/en/category/AI%20Workflow", "/blog/about", "/blog/en/about",
+    # BM-18 (tordash/dopelab-oracle#27 · SPEC §8.1a): the 8 old taxonomy URLs 404 after the key migration (S8) →
+    # live key URLs in the same slots (the A%2FB-test encoding case moved to the redirect tests, F-S6)
+    "/blog/tag/claude-code", "/blog/tag/automation", "/blog/tag/marketing", "/blog/tag/chatgpt",
+    "/blog/tag/sme", "/blog/en/tag/automation",
+    "/blog/category/ai", "/blog/en/category/how-to", "/blog/about", "/blog/en/about",
     "/blog/contact", "/blog/en/contact",
 ]
 UNKNOWN_TAG = "/blog/tag/zzz-not-a-tag-bm15"
+UNKNOWN_TAG_STATUS = 404  # BM-18 S8: an unknown taxonomy value is a 404 (was the empty-state 200)
 UNKNOWN_POST = "/blog/zzz-not-a-post-bm15"
 RSC_PATH = "/blog/anthropic-ipo-350b"
 NOT_FOUND_PATHS = [UNKNOWN_POST, "/blog/th/th", "/blog/th/anthropic-ipo-350b", "/blog/EN/agent-teams-11-ai"]
@@ -961,7 +964,7 @@ def cmd_ondemand(a: argparse.Namespace, argv: list[str]) -> int:
     t = r2[UNKNOWN_TAG]
     off_s = [u for u in t["scripts"] if not on_ao(u)]
     off_i = [u for u in t["hf_imgs"] if not on_ao(u)]
-    row = (t["status"] == 200 and t["hf_imgs"] and not off_i and t["scripts"] and not off_s and t["hydrated"]
+    row = (t["status"] == UNKNOWN_TAG_STATUS and t["hf_imgs"] and not off_i and t["scripts"] and not off_s and t["hydrated"]
            and len(t["errors"]) <= len(r1[UNKNOWN_TAG]["errors"]) and not t["net"].get("script:page"))
     lines.append(f"{'PASS' if row else 'FAIL'} B2′ {UNKNOWN_TAG}: status {t['status']} · header/footer <img> "
                  f"{len(t['hf_imgs']) - len(off_i)}/{len(t['hf_imgs'])} on the asset origin · _next/static scripts "

@@ -17,7 +17,7 @@ count_lines() { grep -c . || true; }
 echo "# invariants.sh (AC9) · $(date '+%F %T %z') · repo $(pwd) · HEAD $(git rev-parse --short HEAD) · BASE $BASE=$(git rev-parse --short "$BASE")"
 
 # 1. GA id in the rendered <head>: same count on B0 and B1 for the 8 AC2(d) pages
-pairs="/th:/blog /th/blog:/blog/all /th/blog/90-percent-business-from-phone:/blog/90-percent-business-from-phone /th/blog/tag/ai:/blog/tag/ai /en:/blog/en /en/blog/agent-teams-11-ai:/blog/en/agent-teams-11-ai /th/about:/blog/about /en/contact:/blog/en/contact"
+pairs="/th:/blog /th/blog:/blog/all /th/blog/90-percent-business-from-phone:/blog/90-percent-business-from-phone /th/blog/tag/claude-code:/blog/tag/claude-code /en:/blog/en /en/blog/agent-teams-11-ai:/blog/en/agent-teams-11-ai /th/about:/blog/about /en/contact:/blog/en/contact"
 for pr in $pairs; do
   b0="${pr%%:*}"; b1="${pr##*:}"
   g0=$(curl -s "$B0_URL$b0" | sed -n '1,/<\/head>/p' | grep -o 'G-SVY8Q547WJ' | count_lines)
