@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getPostsByTag, getAllTags } from "@/lib/content";
@@ -7,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { ChevronRight, Hash } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
+import { tagName } from "@/lib/taxonomy";
 
 export async function generateStaticParams() {
   const params: { locale: string; tag: string }[] = [];
@@ -26,16 +28,18 @@ export async function generateMetadata({
 }) {
   const { locale, tag } = await params;
   const decoded = decodeURIComponent(tag);
+  if (!getAllTags(locale as Locale).includes(decoded)) notFound(); // BM-18 S8: only a key with posts has a page
   const posts = getPostsByTag(decoded, locale as Locale);
+  const name = tagName(decoded, locale as Locale);
   return createMetadata({
     title:
       locale === "th"
-        ? `#${decoded} — บทความที่แท็กนี้`
-        : `#${decoded} — Tagged articles`,
+        ? `#${name} — บทความที่แท็กนี้`
+        : `#${name} — Tagged articles`,
     description:
       locale === "th"
-        ? `${posts.length} บทความที่แท็ก #${decoded}`
-        : `${posts.length} articles tagged #${decoded}`,
+        ? `${posts.length} บทความที่แท็ก #${name}`
+        : `${posts.length} articles tagged #${name}`,
     page: { kind: "tag", value: decoded }, // decoded param, re-encoded by the URL module (SPEC §1.3)
     locale: locale as Locale,
   });
@@ -50,12 +54,14 @@ export default async function TagPage({
   setRequestLocale(l);
   const decoded = decodeURIComponent(tag);
   const locale = l as Locale;
+  if (!getAllTags(locale).includes(decoded)) notFound(); // BM-18 S8: old name / unknown / empty → 404
   const posts = getPostsByTag(decoded, locale);
+  const name = tagName(decoded, locale);
 
   return (
     <div className="mx-auto max-w-[var(--container-wide)] px-4 py-12 sm:px-6">
-      <Breadcrumb tag={decoded} />
-      <TagHeader tag={decoded} count={posts.length} />
+      <Breadcrumb tag={name} />
+      <TagHeader tag={name} count={posts.length} />
 
       {posts.length > 0 ? (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

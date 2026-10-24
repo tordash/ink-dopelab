@@ -4,6 +4,7 @@ import { getPostBySlug, getPostsByLocale, getRelatedPosts } from "@/lib/content"
 import { ArticleBody } from "@/components/blog/article-body";
 import { TableOfContents } from "@/components/blog/toc";
 import { ArticleCard, CATEGORY_STYLES } from "@/components/blog/article-card";
+import { categoryName, tagName } from "@/lib/taxonomy";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { Comments } from "@/components/blog/comments";
 import { PostCta } from "@/components/blog/post-cta";
@@ -108,7 +109,7 @@ export default async function ArticlePage({
                 className="inline-block h-3 w-3 rounded-sm"
                 style={{ backgroundColor: (CATEGORY_STYLES[post.category] || { bg: "#1A1A1A" }).bg }}
               />
-              {post.category}
+              {categoryName(post.category, locale)}
             </span>
             <span className="flex items-center gap-1.5 text-sm text-[var(--color-text-tertiary)]">
               <Calendar className="h-3.5 w-3.5" />
@@ -163,7 +164,7 @@ export default async function ArticlePage({
                       key={tag}
                       className="rounded-full bg-[var(--color-surface-tertiary)] px-3 py-1 text-xs font-medium text-[var(--color-text-secondary)]"
                     >
-                      {tag}
+                      {tagName(tag, locale)}
                     </span>
                   ))}
                 </div>

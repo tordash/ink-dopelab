@@ -1,5 +1,6 @@
 import { posts } from "#site/content";
 import { blogFileUrl, pageUrl } from "@/lib/seo";
+import { categoryName } from "@/lib/taxonomy";
 
 
 function escapeXml(str: string) {
@@ -27,7 +28,7 @@ export function GET() {
       <guid isPermaLink="true">${url}</guid>
       <description>${escapeXml(post.description)}</description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <category>${escapeXml(post.category)}</category>
+      <category>${escapeXml(categoryName(post.category, post.locale))}</category>
     </item>`;
     })
     .join("\n");

@@ -9,6 +9,7 @@ import { BASE_PATH } from "@/lib/base-path";
 import { INK_CANONICAL } from "@/lib/seo-env";
 import { getSharedSwitchIndex } from "@/lib/locale-switch";
 import legacy from "@/lib/legacy-routes.json";
+import { categoryName } from "@/lib/taxonomy";
 import {
   absoluteUrl,
   coverUrl,
@@ -43,7 +44,7 @@ export const blogFileUrl = (kind: FileKind) => fileUrl(kind, URL_CTX);
 export const ogImage = (o: { title: string; locale: Locale; category?: string }) => ogImageUrl(o, SITE_URL, BASE_PATH);
 /** A post's og:image / twitter:image / JSON-LD image: its cover, else the generated image with its category. */
 export const postImage = (p: { title: string; locale: Locale; category: string; cover?: { src: string } }) =>
-  p.cover ? coverUrl(p.cover.src, SITE_URL) : ogImage({ title: p.title, locale: p.locale, category: p.category });
+  p.cover ? coverUrl(p.cover.src, SITE_URL) : ogImage({ title: p.title, locale: p.locale, category: categoryName(p.category, p.locale) });
 
 /**
  * Page metadata: canonical + og:url from pageUrl, hreflang only when the page exists in both locales (th, en,

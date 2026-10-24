@@ -1,5 +1,6 @@
 import { posts } from "#site/content";
 import type { Locale } from "@/i18n/routing";
+import { categoryOrder, isVisibleCategory, tagOrder } from "@/lib/taxonomy";
 
 export function getPostsByLocale(locale: Locale) {
   return posts
@@ -25,14 +26,16 @@ export function getPostsByTag(tag: string, locale: Locale) {
   return getPostsByLocale(locale).filter((post) => post.tags.includes(tag));
 }
 
+/** BM-18 (S2): visible category keys of a locale (non-draft posts ≥ min_posts; studio hidden below 3), D2 order. */
 export function getAllCategories(locale: Locale) {
   const cats = getPostsByLocale(locale).map((post) => post.category);
-  return [...new Set(cats)];
+  return categoryOrder.filter((key) => isVisibleCategory(key, cats.filter((c) => c === key).length));
 }
 
+/** BM-18: tag keys that have a post in the locale, in the controlled-list order. */
 export function getAllTags(locale: Locale) {
-  const tags = getPostsByLocale(locale).flatMap((post) => post.tags);
-  return [...new Set(tags)];
+  const tags = new Set(getPostsByLocale(locale).flatMap((post) => post.tags));
+  return tagOrder.filter((key) => tags.has(key));
 }
 
 export function getRelatedPosts(
