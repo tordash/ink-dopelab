@@ -1,0 +1,606 @@
+{
+  "content/posts/en/agent-teams-11-ai.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"agent-teams\", \"claude-code\", \"automation\", \"ai-workflow\", \"productivity\"]"
+  },
+  "content/posts/en/ai-carousel-pipeline.mdx": {
+    "category": "category: \"AI Content\"",
+    "tags": "tags: [\"carousel\", \"content-creation\", \"gemini\", \"blotato\", \"social-media\"]"
+  },
+  "content/posts/en/ai-competitor-price-monitor.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"e-commerce\", \"price-monitoring\", \"web-scraping\", \"automation\", \"data-analysis\"]"
+  },
+  "content/posts/en/ai-content-calendar-monthly.mdx": {
+    "category": "category: \"Content Marketing\"",
+    "tags": "tags: [\"content-calendar\", \"social-media\", \"content-plan\", \"marketing\", \"productivity\"]"
+  },
+  "content/posts/en/ai-line-oa-bot.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"line-oa\", \"chatbot\", \"customer-service\", \"automation\", \"small-business\"]"
+  },
+  "content/posts/en/ai-marketing-team-16-minutes.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"claude-code\", \"multi-agent\", \"ai-marketing\", \"behind-the-system\", \"agency\"]"
+  },
+  "content/posts/en/ai-menu-design-restaurant.mdx": {
+    "category": "category: \"Restaurant Business\"",
+    "tags": "tags: [\"menu-engineering\", \"food-cost\", \"restaurant\", \"ai-restaurant\", \"pricing\"]"
+  },
+  "content/posts/en/ai-pitch-deck-startup.mdx": {
+    "category": "category: \"Startup & Investment\"",
+    "tags": "tags: [\"pitch-deck\", \"startup\", \"fundraising\", \"presentation\", \"financial-model\"]"
+  },
+  "content/posts/en/ai-proposal-30-minutes.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"proposal\", \"freelance\", \"agency\", \"ai-tools\", \"productivity\"]"
+  },
+  "content/posts/en/ai-restaurant-stock-management.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"inventory\", \"restaurant\", \"airtable\", \"sqlite\", \"automation\"]"
+  },
+  "content/posts/en/ai-sales-analytics-3-channels.mdx": {
+    "category": "category: \"Data & Analytics\"",
+    "tags": "tags: [\"sales-analytics\", \"data-driven\", \"restaurant\", \"delivery-platform\", \"dashboard\"]"
+  },
+  "content/posts/en/ai-seo-audit-website.mdx": {
+    "category": "category: \"SEO & Web\"",
+    "tags": "tags: [\"seo-audit\", \"website\", \"google-search\", \"page-speed\", \"meta-tags\"]"
+  },
+  "content/posts/en/ai-simple-crm.mdx": {
+    "category": "category: \"Business Operations\"",
+    "tags": "tags: [\"crm\", \"airtable\", \"google-sheets\", \"small-business\", \"customer-management\"]"
+  },
+  "content/posts/en/ai-website-1-hour.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"ai-website\", \"landing-page\", \"claude-code\", \"no-code\", \"small-business\"]"
+  },
+  "content/posts/en/building-blog-with-agent-teams.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"agent-teams\", \"claude-code\", \"next-js\", \"automation\", \"blog\"]"
+  },
+  "content/posts/en/claude-channels-telegram-remote-agent.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"claude-code\", \"telegram\", \"channels\", \"remote-work\", \"tutorial\"]"
+  },
+  "content/posts/en/claude-number-1-app-store.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"claude\", \"chatgpt\", \"anthropic\", \"openai\", \"pentagon\", \"app-store\", \"ai-tools\", \"productivity\"]"
+  },
+  "content/posts/en/client-dashboard-in-one-hour.mdx": {
+    "category": "category: \"Agency Tools\"",
+    "tags": "tags: [\"dashboard\", \"client-management\", \"agency\", \"web-development\", \"automation\"]"
+  },
+  "content/posts/en/cost-analysis-with-ai.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"cost-analysis\", \"restaurant\", \"google-sheets\", \"data-analysis\", \"variance\"]"
+  },
+  "content/posts/en/cowork-guide-ep1.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-cowork\", \"ai-for-business\", \"beginner-guide\", \"productivity\", \"automation\"]"
+  },
+  "content/posts/en/cowork-guide-ep2.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-cowork\", \"file-management\", \"productivity\", \"beginner-guide\", \"automation\"]"
+  },
+  "content/posts/en/karpathy-harness-validation.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"karpathy\", \"validation\", \"harness\", \"reliability\", \"claude-code\"]"
+  },
+  "content/posts/en/remote-dev-setup.mdx": {
+    "category": "category: \"Developer Tools\"",
+    "tags": "tags: [\"remote-dev\", \"tailscale\", \"tmux\", \"iphone\", \"claude-code\"]"
+  },
+  "content/posts/en/restaurant-sales-drop-7-checks.mdx": {
+    "category": "category: \"Content Marketing\"",
+    "tags": "tags: [\"restaurant\", \"sme\", \"marketing-checklist\", \"google-maps\", \"facebook\", \"line-oa\"]"
+  },
+  "content/posts/en/smart-intern-rule.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"ai-for-business\", \"smart-intern\", \"ai-mindset\", \"productivity\", \"beginner-guide\"]"
+  },
+  "content/posts/en/stock-bot-for-staff.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"chatbot\", \"automation\", \"restaurant\", \"inventory\", \"telegram\"]"
+  },
+  "content/posts/en/vision-eval-ai-checks-ai.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"vision-eval\", \"gemini\", \"image-quality\", \"validation\", \"ai-tools\"]"
+  },
+  "content/posts/th/100-hours-claude-code-lessons.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"claude-code\", \"ai-workflow\", \"lessons-learned\", \"behind-the-system\", \"productivity\", \"agency\"]"
+  },
+  "content/posts/th/22-videos-2-weeks-solo-ai-production.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"video-production\", \"ai-workflow\", \"productivity\", \"content-creation\"]"
+  },
+  "content/posts/th/5-ai-tools-march-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"AI tools\", \"Claude Code\", \"n8n\", \"Lovable\", \"NotebookLM\", \"Perplexity\"]"
+  },
+  "content/posts/th/5-pillar-content-system-135-pieces.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"content-management\", \"content-strategy\", \"productivity\", \"system-design\"]"
+  },
+  "content/posts/th/7-reasons-claude-code-not-just-coding.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"claude-code\", \"ai-agent\", \"productivity\", \"terminal\", \"agency-workflow\", \"mcp\"]"
+  },
+  "content/posts/th/7-videos-1-day-pipeline.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"video production\", \"AI pipeline\", \"ElevenLabs\", \"Remotion\", \"FFmpeg\", \"BTS\"]"
+  },
+  "content/posts/th/70k-month-no-team-claude-code.mdx": {
+    "category": "category: \"YouTube Digest\"",
+    "tags": "tags: [\"claude-code\", \"content-operating-system\", \"ai-workflow\", \"solo-creator\", \"automation\", \"brock-mesarich\"]"
+  },
+  "content/posts/th/90-percent-business-from-phone.mdx": {
+    "category": "category: \"YouTube Digest\"",
+    "tags": "tags: [\"claude-code\", \"remote-control\", \"ai-agency\", \"mobile-workflow\", \"nick-puru\", \"automation\"]"
+  },
+  "content/posts/th/agent-teams-11-ai.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"agent-teams\", \"claude-code\", \"automation\", \"ai-workflow\", \"productivity\"]"
+  },
+  "content/posts/th/agent-teams-victor-perez.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"agent-teams\", \"multi-agent\", \"claude-code\", \"automation\", \"youtube-digest\"]"
+  },
+  "content/posts/th/agentic-ai-explained.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"Agentic AI\", \"AI automation\", \"n8n\", \"Claude Code\", \"NVIDIA GTC\", \"SME\"]"
+  },
+  "content/posts/th/ai-carousel-pipeline.mdx": {
+    "category": "category: \"AI Content\"",
+    "tags": "tags: [\"carousel\", \"content-creation\", \"gemini\", \"blotato\", \"social-media\"]"
+  },
+  "content/posts/th/ai-coding-agents-agentic-era-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"coding-agents\", \"claude-code\", \"agentic-coding\", \"developer-tools\", \"automation\"]"
+  },
+  "content/posts/th/ai-competitor-price-monitor.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"e-commerce\", \"price-monitoring\", \"web-scraping\", \"automation\", \"data-analysis\"]"
+  },
+  "content/posts/th/ai-content-calendar-monthly.mdx": {
+    "category": "category: \"Content Marketing\"",
+    "tags": "tags: [\"content-calendar\", \"social-media\", \"content-plan\", \"marketing\", \"productivity\"]"
+  },
+  "content/posts/th/ai-facebook-ad-copy.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"facebook-ads\", \"ad-copy\", \"claude-code\", \"copywriting\", \"A/B-test\", \"ai-workflow\", \"agency\"]"
+  },
+  "content/posts/th/ai-line-oa-bot.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"line-oa\", \"chatbot\", \"customer-service\", \"automation\", \"small-business\"]"
+  },
+  "content/posts/th/ai-marketing-team-16-minutes.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"claude-code\", \"multi-agent\", \"ai-marketing\", \"behind-the-system\", \"agency\"]"
+  },
+  "content/posts/th/ai-menu-design-restaurant.mdx": {
+    "category": "category: \"Restaurant Business\"",
+    "tags": "tags: [\"menu-engineering\", \"food-cost\", \"restaurant\", \"ai-restaurant\", \"pricing\"]"
+  },
+  "content/posts/th/ai-pitch-deck-startup.mdx": {
+    "category": "category: \"Startup & Investment\"",
+    "tags": "tags: [\"pitch-deck\", \"startup\", \"fundraising\", \"presentation\", \"financial-model\"]"
+  },
+  "content/posts/th/ai-proposal-30-minutes.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"proposal\", \"freelance\", \"agency\", \"ai-tools\", \"productivity\"]"
+  },
+  "content/posts/th/ai-receipt-imap-pipeline.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"automation\", \"gmail-imap\", \"sqlite\", \"data-pipeline\", \"restaurant\", \"grabfood\"]"
+  },
+  "content/posts/th/ai-restaurant-2026-where-roi-matters.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"restaurant\", \"ai-adoption\", \"roi\", \"food-business\", \"practical-guide\"]"
+  },
+  "content/posts/th/ai-restaurant-stock-management.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"inventory\", \"restaurant\", \"airtable\", \"sqlite\", \"automation\"]"
+  },
+  "content/posts/th/ai-roi-faster-intuit-benchmark-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"ai roi\", \"intuit\", \"enterprise tech\", \"benchmark\", \"digital transformation\", \"sme\"]"
+  },
+  "content/posts/th/ai-rules-20-disciplines.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"AI rules\", \"discipline\", \"Claude Code\", \"session protocol\", \"BTS\", \"productivity\"]"
+  },
+  "content/posts/th/ai-safety-vs-military-pentagon-battle.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"ai safety\", \"pentagon\", \"anthropic\", \"ai ethics\", \"ai policy\"]"
+  },
+  "content/posts/th/ai-sales-analytics-3-channels.mdx": {
+    "category": "category: \"Data & Analytics\"",
+    "tags": "tags: [\"sales-analytics\", \"data-driven\", \"restaurant\", \"delivery-platform\", \"dashboard\"]"
+  },
+  "content/posts/th/ai-seo-audit-website.mdx": {
+    "category": "category: \"SEO & Web\"",
+    "tags": "tags: [\"seo-audit\", \"website\", \"google-search\", \"page-speed\", \"meta-tags\"]"
+  },
+  "content/posts/th/ai-simple-crm.mdx": {
+    "category": "category: \"Business Operations\"",
+    "tags": "tags: [\"crm\", \"airtable\", \"google-sheets\", \"small-business\", \"customer-management\"]"
+  },
+  "content/posts/th/ai-sycophancy-trap.mdx": {
+    "category": "category: \"AI Research\"",
+    "tags": "tags: [\"sycophancy\", \"ai-safety\", \"stanford\", \"research\", \"chatbot\"]"
+  },
+  "content/posts/th/ai-video-wars-veo3-sora2-kling3.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"AI video\", \"Veo 3\", \"Sora 2\", \"Kling\", \"video generation\", \"content creation\"]"
+  },
+  "content/posts/th/ai-website-1-hour.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"ai-website\", \"landing-page\", \"claude-code\", \"no-code\", \"small-business\"]"
+  },
+  "content/posts/th/algorithm-commission-hidden-platform-taxes.mdx": {
+    "category": "category: \"Case Study\"",
+    "tags": "tags: [\"algorithm-commission\", \"hidden-fees\", \"sme-thailand\", \"delivery-platform\", \"facebook-reach\", \"cost-reduction\"]"
+  },
+  "content/posts/th/anthropic-965b-opus-48.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"anthropic\", \"claude\", \"opus-48\", \"ai-startup\", \"openai\", \"kpmg\", \"ai-2026\"]"
+  },
+  "content/posts/th/anthropic-ipo-350b.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"anthropic\", \"ipo\", \"claude\", \"ai-business\", \"investment\"]"
+  },
+  "content/posts/th/baidu-apollo-go-robotaxi-freeze-wuhan-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"baidu\", \"apollo-go\", \"robotaxi\", \"autonomous-vehicle\", \"wuhan\", \"safety\"]"
+  },
+  "content/posts/th/bcg-ai-cost-advantage-only-leaders-win-2026.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"bcg-research\", \"ai-investment\", \"roi\", \"business-strategy\", \"ai-adoption\"]"
+  },
+  "content/posts/th/building-blog-with-agent-teams.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"agent-teams\", \"claude-code\", \"next-js\", \"automation\", \"blog\"]"
+  },
+  "content/posts/th/chatgpt-shopping-agentic-commerce.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"ai\", \"chatgpt\", \"openai\", \"shopping\", \"shopify\", \"sme\"]"
+  },
+  "content/posts/th/chatgpt-super-app-openai-852b-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"chatgpt\", \"openai\", \"super-app\", \"ipo\", \"revenue\"]"
+  },
+  "content/posts/th/claude-45-features-90-days.mdx": {
+    "category": "category: \"AI Update\"",
+    "tags": "tags: [\"claude\", \"features\", \"anthropic\", \"ai-tools\", \"productivity\"]"
+  },
+  "content/posts/th/claude-brain-long-term-memory.mdx": {
+    "category": "category: \"Behind the System\"",
+    "tags": "tags: [\"claude-brain\", \"long-term-memory\", \"obsidian\", \"claude-code\", \"behind-the-system\"]"
+  },
+  "content/posts/th/claude-channels-telegram-remote-agent.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"claude-code\", \"telegram\", \"channels\", \"remote-work\", \"tutorial\"]"
+  },
+  "content/posts/th/claude-code-notebooklm-research-30min.mdx": {
+    "category": "category: \"Tutorial\"",
+    "tags": "tags: [\"claude code\", \"notebooklm\", \"tutorial\", \"ai writing\", \"content creation\", \"productivity\"]"
+  },
+  "content/posts/th/claude-code-source-code-leak-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"anthropic\", \"claude-code\", \"source-code\", \"leak\", \"security\", \"feature-flags\"]"
+  },
+  "content/posts/th/claude-computer-use-ai-controls-pc.mdx": {
+    "category": "category: \"AI Update\"",
+    "tags": "tags: [\"claude\", \"computer-use\", \"ai-agent\", \"anthropic\", \"automation\", \"cowork\", \"dispatch\"]"
+  },
+  "content/posts/th/claude-market-leader-kalshi-54-percent-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"claude\", \"anthropic\", \"kalshi\", \"ai-race\", \"claude-code\"]"
+  },
+  "content/posts/th/claude-md-ai-control-file.mdx": {
+    "category": "category: \"Behind the System\"",
+    "tags": "tags: [\"claude-code\", \"claude-md\", \"ai-workflow\", \"system-design\", \"agent-routing\", \"behind-the-system\"]"
+  },
+  "content/posts/th/claude-number-1-app-store.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"claude\", \"chatgpt\", \"anthropic\", \"openai\", \"pentagon\", \"app-store\", \"ai-tools\", \"productivity\"]"
+  },
+  "content/posts/th/claude-opus-firefox-bugs.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"claude-opus\", \"cybersecurity\", \"firefox\", \"ai-security\", \"vulnerability\", \"penetration-testing\", \"bug-hunting\"]"
+  },
+  "content/posts/th/claude-skills-stop-repeating-prompts.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-skills\", \"prompt\", \"automation\", \"tutorial\", \"productivity\"]"
+  },
+  "content/posts/th/claude-token-saving-tips-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"claude\", \"anthropic\", \"token-management\", \"ai-tools\", \"cost-optimization\"]"
+  },
+  "content/posts/th/claude-update-roundup-march-2026.mdx": {
+    "category": "category: \"News & Tools\"",
+    "tags": "tags: [\"claude-update\", \"opus-4\", \"skills\", \"agent-teams\", \"news\"]"
+  },
+  "content/posts/th/client-dashboard-in-one-hour.mdx": {
+    "category": "category: \"Agency Tools\"",
+    "tags": "tags: [\"dashboard\", \"client-management\", \"agency\", \"web-development\", \"automation\"]"
+  },
+  "content/posts/th/cold-iq-claude-code-lead-gen.mdx": {
+    "category": "category: \"YouTube Digest\"",
+    "tags": "tags: [\"claude-code\", \"lead-gen\", \"b2b-sales\", \"outbound\", \"gtm\", \"agency\", \"automation\", \"cold-iq\"]"
+  },
+  "content/posts/th/competitor-analysis-notebooklm.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"notebooklm\", \"competitor-analysis\", \"e-commerce\", \"research\", \"ai-workflow\"]"
+  },
+  "content/posts/th/content-calendar-why-you-need-one.mdx": {
+    "category": "category: \"การตลาดแสนสนุก\"",
+    "tags": "tags: [\"content calendar\", \"content marketing\", \"SME\", \"การตลาด\", \"social media\"]"
+  },
+  "content/posts/th/content-creation-2080-formula.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"content-creation\", \"productivity\", \"ai-workflow\", \"20-80\", \"burnout\"]"
+  },
+  "content/posts/th/cost-analysis-with-ai.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"cost-analysis\", \"restaurant\", \"google-sheets\", \"data-analysis\", \"variance\"]"
+  },
+  "content/posts/th/cowork-guide-ep1.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-cowork\", \"ai-for-business\", \"beginner-guide\", \"productivity\", \"automation\"]"
+  },
+  "content/posts/th/cowork-guide-ep2.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-cowork\", \"file-management\", \"productivity\", \"beginner-guide\", \"automation\"]"
+  },
+  "content/posts/th/cowork-guide-ep3.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-cowork\", \"report\", \"data-analysis\", \"beginner-guide\", \"productivity\"]"
+  },
+  "content/posts/th/cowork-guide-ep4.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-cowork\", \"chrome\", \"browser-automation\", \"beginner-guide\", \"productivity\", \"web-scraping\"]"
+  },
+  "content/posts/th/deepseek-v4-trillion-parameter-ai-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"deepseek\", \"ai-models\", \"open-source-ai\", \"parameters\", \"competition\"]"
+  },
+  "content/posts/th/design-process-dead-figma-mcp.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"claude-code\", \"figma\", \"design\", \"mcp\", \"design-process\", \"ai-tools\"]"
+  },
+  "content/posts/th/elevenlabs-elevenmusic-ai-music-app-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"elevenlabs\", \"elevenmusic\", \"ai-music\", \"suno\", \"udio\", \"music-generation\"]"
+  },
+  "content/posts/th/facebook-ads-3000-baht-worth-it.mdx": {
+    "category": "category: \"การตลาดแสนสนุก\"",
+    "tags": "tags: [\"facebook ads\", \"การตลาด\", \"SME\", \"งบโฆษณา\", \"meta ads\"]"
+  },
+  "content/posts/th/gemini-31-ultra-google-benchmark-2026.mdx": {
+    "category": "category: \"AI Models\"",
+    "tags": "tags: [\"gemini\", \"google\", \"benchmark\", \"gpqa\", \"flash-lite\", \"multimodal\"]"
+  },
+  "content/posts/th/gemini-flash-live-realtime-voice-ai.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"gemini\", \"voice ai\", \"call center\", \"real-time ai\", \"google ai\"]"
+  },
+  "content/posts/th/geo-generative-engine-optimization-thai-guide.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"geo\", \"seo\", \"ai-search\", \"content-optimization\", \"marketing-2026\"]"
+  },
+  "content/posts/th/github-copilot-token-billing-shock.mdx": {
+    "category": "category: \"AI Business\"",
+    "tags": "tags: [\"github-copilot\", \"ai-pricing\", \"token-billing\", \"ai-cost\", \"usage-based\", \"developer\"]"
+  },
+  "content/posts/th/google-business-profile-restaurant-guide.mdx": {
+    "category": "category: \"Content Marketing\"",
+    "tags": "tags: [\"restaurant\", \"google-maps\", \"local-seo\", \"google-business-profile\", \"sme\"]"
+  },
+  "content/posts/th/google-gemma-4-open-source-local-ai-2026.mdx": {
+    "category": "category: \"AI Models\"",
+    "tags": "tags: [\"gemma-4\", \"google\", \"open-source\", \"local-ai\", \"apache-2\"]"
+  },
+  "content/posts/th/gpt-4o-retired-gpt-5x-era-openai-2026.mdx": {
+    "category": "category: \"AI Models\"",
+    "tags": "tags: [\"openai\", \"gpt-4o\", \"gpt-5\", \"migration\", \"chatgpt\", \"api\"]"
+  },
+  "content/posts/th/gpt54-release-quitgpt-backlash.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"gpt-5\", \"openai\", \"chatgpt\", \"claude\", \"gemini\", \"ai-tools\", \"model-war\", \"quitgpt\"]"
+  },
+  "content/posts/th/gpt54-vs-claude-coding-king.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"gpt-5.4\", \"claude\", \"benchmark\", \"ai-comparison\"]"
+  },
+  "content/posts/th/high-views-no-sales-sme.mdx": {
+    "category": "category: \"การตลาดแสนสนุก\"",
+    "tags": "tags: [\"conversion\", \"การตลาด\", \"SME\", \"customer journey\", \"ร้านอาหาร\"]"
+  },
+  "content/posts/th/human-made-label-ai-backlash-premium.mdx": {
+    "category": "category: \"Marketing\"",
+    "tags": "tags: [\"human-made\", \"ai backlash\", \"brand strategy\", \"premium\", \"craft\"]"
+  },
+  "content/posts/th/install-claude-code-from-zero.mdx": {
+    "category": "category: \"Tutorial\"",
+    "tags": "tags: [\"tutorial\", \"claude-code\", \"setup\", \"beginner\", \"installation\"]"
+  },
+  "content/posts/th/karpathy-ai-agents-summary-60-seconds.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"karpathy\", \"ai-agents\", \"ai-trends\", \"expert-insights\"]"
+  },
+  "content/posts/th/karpathy-harness-validation.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"karpathy\", \"validation\", \"harness\", \"reliability\", \"claude-code\"]"
+  },
+  "content/posts/th/kling3-vs-runway-gen4-veo3-agency-bgvideo.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"Kling 3.0\", \"Runway Gen-4\", \"Veo 3\", \"AI Video\", \"BG Video\", \"agency\", \"video production\", \"pipeline\"]"
+  },
+  "content/posts/th/knowledge-graph-ai-brain-connected.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"knowledge graph\", \"RAG\", \"vector search\", \"Obsidian\", \"ChromaDB\", \"hybrid search\"]"
+  },
+  "content/posts/th/line-oa-block-vs-wait.mdx": {
+    "category": "category: \"การตลาดแสนสนุก\"",
+    "tags": "tags: [\"LINE OA\", \"CRM\", \"ร้านอาหาร\", \"การตลาด\", \"SME\"]"
+  },
+  "content/posts/th/lyria-3-pro-ai-music-generation.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"lyria\", \"google\", \"ai music\", \"music generation\", \"content creator\"]"
+  },
+  "content/posts/th/mcp-less-agents-filesystem-skill-bridge.mdx": {
+    "category": "category: \"Agent Architecture\"",
+    "tags": "tags: [\"AI agents\", \"MCP\", \"multi-tool workflow\", \"shared skill library\", \"agency ops\", \"multi-agent\"]"
+  },
+  "content/posts/th/meta-ai-shopping-instagram-facebook.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"ai\", \"meta\", \"instagram\", \"facebook\", \"shopping\", \"sme\"]"
+  },
+  "content/posts/th/meta-mtia-custom-ai-chips-2026.mdx": {
+    "category": "category: \"AI Business\"",
+    "tags": "tags: [\"meta\", \"mtia\", \"nvidia\", \"ai-chips\", \"inference\", \"infrastructure\"]"
+  },
+  "content/posts/th/microsoft-agent-governance-toolkit-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"microsoft\", \"agent-governance\", \"open-source\", \"ai-security\", \"eu-ai-act\", \"compliance\"]"
+  },
+  "content/posts/th/microsoft-copilot-multi-model-critique-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"copilot\", \"microsoft\", \"multi-model\", \"hallucination\", \"critique\"]"
+  },
+  "content/posts/th/microsoft-mai-models-transcribe-voice-image-2026.mdx": {
+    "category": "category: \"AI Models\"",
+    "tags": "tags: [\"microsoft\", \"mai\", \"transcribe\", \"voice\", \"image\", \"foundry\"]"
+  },
+  "content/posts/th/minimax-m3-open-weight-beats-gpt55.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"minimax\", \"open-weight\", \"gpt-55\", \"ai-pricing\", \"self-host\", \"coding\", \"frontier-ai\"]"
+  },
+  "content/posts/th/mistral-voxtral-voice-cloning-3-seconds.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"mistral\", \"voxtral\", \"voice cloning\", \"tts\", \"ai audio\"]"
+  },
+  "content/posts/th/multi-agent-shared-memory.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"multi-agent\", \"shared memory\", \"Claude Code\", \"parallel\", \"BTS\", \"agent teams\"]"
+  },
+  "content/posts/th/no-code-automation-gumloop-n8n-zapier-2026.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"no-code\", \"automation\", \"n8n\", \"zapier\", \"gumloop\", \"make\", \"ai tools\"]"
+  },
+  "content/posts/th/notebooklm-claude-code-skills-combo.mdx": {
+    "category": "category: \"YouTube Digest\"",
+    "tags": "tags: [\"notebooklm\", \"claude-code\", \"skills\", \"content-workflow\", \"research\", \"automation\"]"
+  },
+  "content/posts/th/nvidia-openclaw-ai-agent-os-2026.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"nvidia\", \"openclaw\", \"ai-agents\", \"robotics\", \"open-source\"]"
+  },
+  "content/posts/th/nvidia-rtx-spark-ai-pc-petaflop.mdx": {
+    "category": "category: \"AI Hardware\"",
+    "tags": "tags: [\"nvidia\", \"rtx-spark\", \"ai-pc\", \"jensen-huang\", \"gtc-2026\", \"blackwell\", \"local-ai\"]"
+  },
+  "content/posts/th/openai-120b-funding-largest-in-history.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"openai\", \"funding\", \"ai-industry\", \"business-impact\"]"
+  },
+  "content/posts/th/openai-5-percent-government-stake.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"openai\", \"anthropic\", \"ipo\", \"ai-politics\", \"chatgpt\", \"ai-business\"]"
+  },
+  "content/posts/th/openai-acquires-tbpn-podcast-media-2026.mdx": {
+    "category": "category: \"AI Business\"",
+    "tags": "tags: [\"openai\", \"tbpn\", \"podcast\", \"media\", \"acquisition\", \"creator-economy\"]"
+  },
+  "content/posts/th/oracle-skill.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"Oracle\", \"AI Agent\", \"Claude Code\", \"skill\", \"lifecycle\", \"memory\"]"
+  },
+  "content/posts/th/perplexity-personal-computer-always-on-ai.mdx": {
+    "category": "category: \"News & Tools\"",
+    "tags": "tags: [\"perplexity\", \"ai-agent\", \"personal-computer\", \"mac-mini\", \"news\", \"automation\"]"
+  },
+  "content/posts/th/plan-mode-ai-planning.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"claude-code\", \"plan-mode\", \"productivity\", \"workflow\", \"ai-for-business\"]"
+  },
+  "content/posts/th/playwright-screen-recording-automated-clips.mdx": {
+    "category": "category: \"AI Tools\"",
+    "tags": "tags: [\"playwright\", \"automation\", \"screen-recording\", \"developer-tools\"]"
+  },
+  "content/posts/th/quitgpt-movement-ai-ethics.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"AI ethics\", \"ChatGPT\", \"Claude\", \"Anthropic\", \"OpenAI\", \"Pentagon\"]"
+  },
+  "content/posts/th/rag-knowledge-system.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"RAG\", \"ChromaDB\", \"knowledge graph\", \"vector search\", \"Obsidian\", \"BTS\"]"
+  },
+  "content/posts/th/rag-search-2456-documents-03-seconds.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"rag\", \"search\", \"vector-database\", \"ai-workflow\", \"knowledge-management\"]"
+  },
+  "content/posts/th/rag-to-oracle-evolution.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"RAG\", \"Oracle\", \"ChromaDB\", \"Gemini Embedding\", \"knowledge system\", \"BTS\", \"MCP\"]"
+  },
+  "content/posts/th/remote-dev-setup.mdx": {
+    "category": "category: \"Developer Tools\"",
+    "tags": "tags: [\"remote-dev\", \"tailscale\", \"tmux\", \"iphone\", \"claude-code\"]"
+  },
+  "content/posts/th/restaurant-sales-drop-7-checks.mdx": {
+    "category": "category: \"Content Marketing\"",
+    "tags": "tags: [\"restaurant\", \"sme\", \"marketing-checklist\", \"google-maps\", \"facebook\", \"line-oa\"]"
+  },
+  "content/posts/th/runway-10m-fund-ai-startup-ecosystem-2026.mdx": {
+    "category": "category: \"AI Business\"",
+    "tags": "tags: [\"runway\", \"fund\", \"startup\", \"ecosystem\", \"investment\", \"ai-video\"]"
+  },
+  "content/posts/th/short-video-restaurant-5-types.mdx": {
+    "category": "category: \"การตลาดแสนสนุก\"",
+    "tags": "tags: [\"คลิปสั้น\", \"TikTok\", \"Reels\", \"ร้านอาหาร\", \"video marketing\"]"
+  },
+  "content/posts/th/smart-intern-rule.mdx": {
+    "category": "category: \"AI Guide\"",
+    "tags": "tags: [\"ai-for-business\", \"smart-intern\", \"ai-mindset\", \"productivity\", \"beginner-guide\"]"
+  },
+  "content/posts/th/sora-shutdown-spud-ai-understands-video.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"sora\", \"openai\", \"spud\", \"video ai\", \"ai news\"]"
+  },
+  "content/posts/th/stock-bot-for-staff.mdx": {
+    "category": "category: \"AI for Restaurant\"",
+    "tags": "tags: [\"chatbot\", \"automation\", \"restaurant\", \"inventory\", \"telegram\"]"
+  },
+  "content/posts/th/th-ai-passport-free-ai-tools.mdx": {
+    "category": "category: \"AI Thailand\"",
+    "tags": "tags: [\"th-ai-passport\", \"ai-thailand\", \"chatgpt\", \"claude\", \"gemini\", \"sme\", \"government\"]"
+  },
+  "content/posts/th/true-corp-nvidia-gtc-thailand-ai-infrastructure.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"true corp\", \"nvidia gtc\", \"thailand ai\", \"ai infrastructure\", \"thai tech\"]"
+  },
+  "content/posts/th/turboquant-ai-memory-6x-cheaper.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"turboquant\", \"quantization\", \"ai cost\", \"sme\", \"ai accessibility\"]"
+  },
+  "content/posts/th/vc-267-billion-record-q1-2026.mdx": {
+    "category": "category: \"AI Business\"",
+    "tags": "tags: [\"venture-capital\", \"funding\", \"startup\", \"investment\", \"ai-business\"]"
+  },
+  "content/posts/th/vision-eval-ai-checks-ai.mdx": {
+    "category": "category: \"AI Workflow\"",
+    "tags": "tags: [\"vision-eval\", \"gemini\", \"image-quality\", \"validation\", \"ai-tools\"]"
+  },
+  "content/posts/th/wwdc-2026-apple-ai-siri-gemini-ios27.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"apple\", \"wwdc\", \"siri\", \"ios27\", \"gemini\", \"apple-intelligence\", \"on-device-ai\"]"
+  },
+  "content/posts/th/xiaomi-hunter-alpha-600-million-ai-devices.mdx": {
+    "category": "category: \"AI News\"",
+    "tags": "tags: [\"xiaomi\", \"hunter alpha\", \"ai devices\", \"edge ai\", \"china tech\"]"
+  }
+}
