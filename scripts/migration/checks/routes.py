@@ -21,6 +21,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common as C  # noqa: E402
 
 WORKERS = 8
+# BM-18 (tordash/dopelab-oracle#27 · review F2): R10 = /blog/tag/marketing → th name of tag key `marketing` in
+# src/lib/taxonomy/taxonomy.json (scripts/taxonomy/tests/contract.test.mjs pins the two together). The old R10 case
+# (/blog/tag/A%2FB-test stays one [tag] segment) is now R70 → 404; its encoding case lives in the redirect tests (F-S6).
+R10_H1 = "การตลาด"
 
 
 def _html_pick(body: str, prefix: str) -> str | None:
@@ -67,9 +71,9 @@ def contract(base: str) -> int:
             ok = ok and _loc_ok(loc, exp_loc, base)
         elif loc:
             ok = False  # a 200/404 row must carry no redirect
-        if ok and rid == "R10":  # /blog/tag/A%2FB-test stays one [tag] segment
-            has = re.search(r"<h1[^>]*>\s*A/B-test\s*</h1>", body.decode("utf-8", "replace")) is not None
-            note = f"h1 A/B-test {'yes' if has else 'NO'}"
+        if ok and rid == "R10":  # BM-18 (review F2): /blog/tag/marketing shows the tag NAME in its <h1>, not the key (AC7)
+            has = re.search(rf"<h1[^>]*>\s*{re.escape(R10_H1)}\s*</h1>", body.decode("utf-8", "replace")) is not None
+            note = f"h1 {R10_H1} {'yes' if has else 'NO'}"
             ok = has
         if ok and rid == "R27":
             ct = hdrs.get("content-type", "")
